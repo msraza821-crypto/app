@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "navigation.component.scss",
+        "../../../../assets/_variables.scss"
+    ],
+    "names": [],
+    "file": "navigation.component.css"
+}

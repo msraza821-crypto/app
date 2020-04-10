@@ -1,0 +1,40 @@
+
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>ChicBee Reset Password</title>
+</head>
+<body>    
+  <br> <br><br>
+    <div id="logreg-forms">
+        <form class="form-signin">
+          <br>
+            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Reset Password</h1>
+            <br>
+            <input type="password" [formControl]="newpassword"  id="inputPassword" class="form-control" placeholder="Password" required="" autocomplete="new-password">
+            <span class="error text-danger">{{_util.errorMessage(newpassword,FORM_ERROR?.newpassword)}}</span>
+            <br>
+            <br>
+            <input type="password" [formControl]="confirmpassword"  id="inputPassword" class="form-control" placeholder="New Password" required="" autocomplete="new-password">
+            <span class="error text-danger">{{_util.errorMessage(confirmpassword,FORM_ERROR?.confirmpassword)}}</span>
+            <br>  
+            <br>
+            <app-loader-button class="btn-block" [loader]="loader" title="Submit" (click)="submit()">
+              </app-loader-button>
+            <a [routerLink] = "['/login']" id="forgot_pswd">Back to login</a>
+            <hr>
+            <!-- <p>Don't have an account!</p>  -->
+            </form>
+
+       
+            <br>
+            
+    </div>
+ 
+</body>
+</html>
