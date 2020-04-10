@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { PageComponent } from './page/page.component';
+import { UsersComponent } from './users/users.component';
 import { SharedModule } from '../shared/shared.module';
 
 const pageRoutes: Routes = [
 
-  { path: '', canActivate: [], component: PageComponent },
+  { path: '', canActivate: [], component: UsersComponent },
 ];
 
 
@@ -21,9 +21,9 @@ const pageRoutes: Routes = [
     RouterModule.forChild(pageRoutes),
     
   ],
-  declarations: [PageComponent],
+  declarations: [UsersComponent],
   entryComponents: []
 })
-export class DashboardModule { }
+export class UsersModule { }
 
 

@@ -1,0 +1,273 @@
+/******************Home Page CSS*****************/
+.banner-block figure img {
+    width: 100%;
+}
+agm-map {
+    height: 300px;
+  }
+  
+header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+    z-index: 9;
+}
+.brand {
+    float: left;
+    margin: 8px 0 0 4px;
+}
+.nav-side {
+    float: right;
+}
+.nav-side ul li{
+    margin: 0 10px;
+    padding: 0;
+    display: inline-block;
+}
+.nav-side ul li a {
+    display: block;
+    padding: 10px 25px;
+    color: #fff;
+    font-size: 14px;
+    border: 1px solid #fff;
+}
+.nav-side ul li a:hover{
+    background: #c9a04b;
+    border: 1px solid #c9a04b;
+    color: #fff;
+}
+.banner-block {
+    position: relative;
+}
+.banner-content {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+}
+.heading-sm {
+    font-size: 30px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.heading-lg{
+    font-size: 70px;
+    font-weight: 800;
+}
+.sub-para {
+    font-size: 20px;
+    margin: 0 0 0 0;
+}
+.outline-white-btn {
+    font-size: 14px;
+    padding: 16px 30px;
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+}
+.outline-white-btn:hover{
+    background: #c9a04b;
+    border: 1px solid #c9a04b;
+    color: #fff;
+}
+.btn-mg{
+    margin-top: 50px;
+}
+.hotel-owner-block {
+    padding: 25px 0;
+}
+.section-heading {
+    text-align: center;
+    font-size: 30px;
+    color: #2a2a2d;
+    margin: 40px 0;
+}
+.grid-wrapper {
+    display: flex;
+}
+.grid-col {
+    flex: 0 20%;
+    padding: 10px;
+}
+.grid-col  .title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #2a2a2d;
+    margin: 18px 0;
+    display: block;
+}
+.grid-col p {
+    font-size: 15px;
+    color: rgba(42, 42, 45, 0.60);
+    line-height: 1.6;
+}
+.seemore-wrap {
+    margin: 30px 0;
+}
+.grid-col {
+    flex: 0 33.3%;
+    padding: 30px;
+}
+.how-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.how-it-work {
+    background: #f5f3f0;
+    padding: 50px 0 200px;
+}
+.how-grid-col {
+    background: #ffffff;
+    padding: 25px 15px; 
+    margin: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-transition: all 600ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition:         all 600ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.how-grid-col:hover {
+    box-shadow: 0 0 6px #0003;
+}
+.how-grid-icon {
+    width: 82px;
+    height: 70px;
+    background: #fbf7ef;
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    margin: 0 20px 0 0;
+}
+.how-grid-icon img{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.how-grid-col .title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2a2a2d;
+    margin: 0 0 9px 0;
+    display: block;
+}
+.how-grid-col p {
+    font-size: 14px;
+    color: #2a2a2d;
+}
+
+.mat-tab-label {
+    padding-top: 30px;
+    padding-bottom:30px;
+}
+
+.cotnr-fld .mat-tab-header {
+  
+}
+
+
+
+@media (max-width:766px) {
+    .container {
+        width: 100%;
+    }
+    .heading-lg {
+        font-size: 16px !important;
+    }
+    header{
+        padding: 5px !important;
+    }
+    .brand a img{
+        width:80px;
+    }
+    .nav-side ul li a{
+        padding: 5px 19px;
+        font-size: 13px;
+    }
+    .heading-sm{
+        font-size: 20px;
+    }
+    .sub-para{
+        font-size: 14px !important;
+    }
+    .btn-mg{
+        margin-top: 5px;
+    }
+    .outline-white-btn {
+        font-size: 12px;
+        padding: 11px 18px;
+    }
+    .banner-content{
+        width: 80%;
+        margin: 0 auto;
+        padding: 30px 0 0 14px;
+    }
+    .grid-wrapper{
+        display: flex;
+        flex-flow: column;   
+    }
+    .grid-col{
+        padding: 10px;
+        width: 100%;
+        text-align: center;
+    }
+    .how-grid{
+        display: flex;
+        flex-direction: column;
+    }
+    .foot-wrap {
+      flex-flow: column;
+    }
+    .tnc-wrapper ul {
+        text-align: center;
+        margin: 10px 0;
+    }
+    .tnc-wrapper ul li {
+        display: inline-block;
+        margin: 8px 13px;
+    }
+    .how-it-work{
+        background: #f5f3f0;
+        padding: 50px 0 50px;
+    }
+    .section-heading{
+        font-size: 18px;
+        margin: 0px 0 20px;
+    }
+    .outline-white-btn{
+        font-size: 12px;
+        padding: 8px 18px;
+    }
+    .how-grid-icon {
+       
+    }
+}
+
+
+.page-wrapper {
+    position: relative;
+    padding: 0 !important;
+}
+.eate-you{font-size:3rem;}
+.eate-you1{font-size: 1.1rem;}
+
+
+.wrapper-tab-image{
+    animation: wrapper-tab-image 1s ease-in-out;
+    opacity: 1;
+}
+
+@keyframes wrapper-tab-image{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

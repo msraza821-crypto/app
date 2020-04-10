@@ -5,14 +5,13 @@ import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/services/loader.service';
 import { ERROR_MESSAGES, CONFIG,Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-
-FormControl
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-profile",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.css"]
 })
-export class LoginComponent implements OnInit {
+export class ProfileComponent implements OnInit {
+
   loader = false;
   CONFIG = CONFIG;
   loginForm: FormGroup;
@@ -31,9 +30,9 @@ export class LoginComponent implements OnInit {
         maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.EMAIL_LENGTH}`,
         pattern: ERROR_MESSAGES.INVALID_INPUT,
       },
-      password: {
-        required: ERROR_MESSAGES.PASSWORD_REQUIRED,
-        maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_LENGTH}`,
+      name: {
+        required: ERROR_MESSAGES.NAME_REQUIRED,
+        maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH}`,
         pattern: ERROR_MESSAGES.INVALID_INPUT,
       }
     };
@@ -41,7 +40,7 @@ export class LoginComponent implements OnInit {
     createForm() {
       this.loginForm = this._fb.group({
         email: ["", [Validators.required, Validators.pattern(Regex.email)]],
-        password: ["", [Validators.required,Validators.pattern(Regex.spaces)]],
+        name: ["", [Validators.required,Validators.pattern(Regex.spacecharacter)]],
 
       });
     }
@@ -52,8 +51,8 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get("email") as FormControl;
   }
 
-  get password(): FormControl {
-    return this.loginForm.get("password") as FormControl;
+  get name(): FormControl {
+    return this.loginForm.get("name") as FormControl;
   }
   
 

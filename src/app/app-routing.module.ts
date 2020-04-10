@@ -13,7 +13,6 @@ const routes: Routes = [
   { path: 'reset-password',component: ResetComponent },
   { path: 'forgot',component: ForgotComponent },
   { path: 'theme', loadChildren: './view/theme/theme.module#ThemeModule' },
-  { path: 'dashboard', loadChildren: './view/pages/dashboard/dashboard.module#DashboardModule' },
   { path: 'not-found', loadChildren: './view/pages/not-found/not-found.module#NotFoundModule' },
   { path: '**', loadChildren: './view/pages/not-found/not-found.module#NotFoundModule'}
 ];

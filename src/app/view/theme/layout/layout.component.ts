@@ -20,6 +20,9 @@ export class LayoutComponent implements OnInit {
   ngOnInit() {
 
   }
+  logout(){
+    alert('Sure to logout');
+  }
 
 }
 

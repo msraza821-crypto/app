@@ -1,7 +1,6 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({

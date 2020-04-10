@@ -13,6 +13,10 @@ const routes: Routes = [
     children: [
       { path: '', loadChildren: '../pages/dashboard/dashboard.module#DashboardModule' },
       { path: 'dashboard', loadChildren: '../pages/dashboard/dashboard.module#DashboardModule' },
+      { path: 'settings', loadChildren: '../pages/settings/settings.module#SettingsModule' },
+      { path: 'users', loadChildren: '../pages/users/users.module#UsersModule' },
+      { path: 'brands', loadChildren: '../pages/brands/brands.module#BrandsModule' },
+
     ]
   }
 ];

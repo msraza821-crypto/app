@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { PageComponent } from './page/page.component';
+import { BrandsComponent } from './brands/brands.component';
+import { AddBrandComponent } from './add-brand/add-brand.component';
 import { SharedModule } from '../shared/shared.module';
 
 const pageRoutes: Routes = [
 
-  { path: '', canActivate: [], component: PageComponent },
+  { path: '', canActivate: [], component: BrandsComponent },
+  { path: 'add', canActivate: [], component: AddBrandComponent },
 ];
 
 
@@ -21,9 +23,9 @@ const pageRoutes: Routes = [
     RouterModule.forChild(pageRoutes),
     
   ],
-  declarations: [PageComponent],
+  declarations: [BrandsComponent,AddBrandComponent],
   entryComponents: []
 })
-export class DashboardModule { }
+export class BrandsModule { }
 
 
