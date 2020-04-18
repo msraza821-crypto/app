@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   uploadurl: '',
   bucketname:'',
-  baseUrl : "",
+  baseUrl : "http://13.127.81.56:8090/v1/",
  };
 
 /*

@@ -13,7 +13,7 @@ export const Regex = {
     spaces: new RegExp(/^\S+$/),
     spacecharacter: new RegExp(/^[A-Za-z]+(?:[ -][A-Za-z]+)*$/),
     spacesData:new RegExp(/^[A-Za-z]+(?:[ -][A-Za-z]+)*$/),
-    
+    spacesDatas:new RegExp(/^[A-Za-z0-9]+(?:[ -][A-Za-z0-9]+)*$/),
     numberData:new RegExp(/^[0-9]*$/),
     Username:new RegExp(/^[a-zA-Z0-9]+$/),
   //  numberData:new RegExp(/^[0-9]*$/)

@@ -9,6 +9,9 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
+
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   AppAsideModule,
   AppBreadcrumbModule,
@@ -16,6 +19,7 @@ import {
   AppFooterModule,
   AppSidebarModule,
 } from '@coreui/angular';
+import { LoaderButtonComponent } from '../pages/shared/loader-button/loader-button.component';
 
 @NgModule({
   imports: [
@@ -25,11 +29,13 @@ import {
     AppHeaderModule,
     AppFooterModule,
     AppSidebarModule,
+    NgbModule,
     PerfectScrollbarModule,
     TabsModule.forRoot()
     ],
   declarations: [
     LayoutComponent
-  ]
+  ],
+  entryComponents:[]
 })
 export class ThemeModule { }

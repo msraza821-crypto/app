@@ -11,21 +11,21 @@ import {
 
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { LoginService } from '../services/login.service';
-import { LoaderService } from '../services/loader.service';
+//import { LoaderService } from '../services/loader.service';
+import { HttpService } from '../service';
 
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
     constructor(
-        private loginService: LoginService,
-        public ls: LoaderService
+        private _http: HttpService,
+     //   public ls: LoaderService
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (!window.navigator.onLine) {
 
-            this.ls.hide()
+           // this.ls.hide()
             //  return throwError( { error: 'Internet is required.' } )
             return throwError(new HttpErrorResponse({ error: 'Internet is required.', status: 900 }));
         }
@@ -48,7 +48,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             }),
             catchError((error: HttpErrorResponse) => {
                 // let data = {};
-                this.ls.hide()
+               // this.ls.hide()
                 // data = {
                 //     reason: error && error.error.reason ? error.error.reason : '',
                 //     status: error.status

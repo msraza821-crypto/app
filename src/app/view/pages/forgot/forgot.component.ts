@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { LoginService } from 'src/app/services/login.service';
+
 import { Router } from '@angular/router';
-import { LoaderService } from 'src/app/services/loader.service';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
+import { HttpService } from 'src/app/service';
 
 @Component({
   selector: 'app-forgot',
@@ -19,8 +19,8 @@ export class ForgotComponent implements OnInit {
   loginForm: FormGroup;
   constructor(
     private _fb: FormBuilder,
-    private api: LoginService,
-    private ls: LoaderService,
+    private _api: HttpService,
+    
     private _util: CommonUtil,
     private router: Router) {
 
@@ -30,13 +30,13 @@ export class ForgotComponent implements OnInit {
     email: {
       required: ERROR_MESSAGES.EMAIL_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.EMAIL_LENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
+      pattern: ERROR_MESSAGES.INVALID_INPUT_EMAIL,
     }
   };
 
   createForm() {
     this.loginForm = this._fb.group({
-      email: ["", [Validators.required, Validators.pattern(Regex.spaces)]]
+      email: ["", [Validators.required, Validators.pattern(Regex.email)]]
     });
   }
   ngOnInit() {
@@ -52,9 +52,42 @@ export class ForgotComponent implements OnInit {
     if (this.loginForm.valid) {
 
       this.loader = true;
+      this._api
+      .postReqUnauth("admin/forgot-password", this.loginForm.value)
+      .subscribe(
+        res => this.success(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
     } else {
       this._util.markError(this.loginForm);
     }
 
+  }
+  errorMessage:string="";
+  successMessage:string="";
+  success(res: any) {
+
+    if (res.status == true) {
+      this.successMessage = res.message;
+    
+      setTimeout(() => {
+        this.errorMessage = "";
+        this.successMessage ="";
+      }, 5000);
+    } else {
+      this.errorMessage = res.message;
+      setTimeout(() => {
+        this.errorMessage = "";
+        this.successMessage ="";
+      }, 5000);
+    }
+  }
+  error(res: any) {
+    this.errorMessage = res.message;
+    setTimeout(() => {
+      this.errorMessage = "";
+        this.successMessage ="";
+    }, 5000);
   }
 }

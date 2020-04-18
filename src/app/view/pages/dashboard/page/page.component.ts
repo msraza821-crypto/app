@@ -4,6 +4,7 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { Router, ActivatedRoute } from "@angular/router";
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: "app-page",
   templateUrl: "./page.component.html",
@@ -62,6 +63,11 @@ export class PageComponent implements OnInit {
       display: false
     }
   };
+  constructor(
+    private spinner: NgxSpinnerService,
+    private router: Router) {
+
+    }
   public lineChart1Colours: Array<any> = [
     {
       backgroundColor: getStyle('--primary'),
@@ -383,6 +389,13 @@ export class PageComponent implements OnInit {
 
   ngOnInit(): void {
     // generate random values for mainChart
+    this.spinner.show();
+ 
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 2000);
+    
     for (let i = 0; i <= this.mainChartElements; i++) {
       this.mainChartData1.push(this.random(50, 200));
       this.mainChartData2.push(this.random(80, 100));

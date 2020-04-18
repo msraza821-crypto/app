@@ -1,0 +1,173 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          Add
+          <small>Product</small>
+        </div>
+        <div class="card-body">
+
+
+          <div class="row ">
+            <form>
+                <div class="row ">
+                   
+              <div class="form-group col-md-6">
+                <label for="inputEmail4">Product Name(english)</label>
+                <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Product Name">
+
+                <br/>
+                <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+              </div>
+              
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">Product Description(english)</label>
+                <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4"
+                  placeholder="Product Description"></textarea>
+                  <br/>
+                  <span class="error text-danger">{{_util.errorMessage(descriptionen,FORM_ERROR?.descriptionen)}}</span>
+              </div>
+              
+              <div class="form-group col-md-6">
+                  <label for="inputEmail4">Product Name(arabic)</label>
+                  <input type="text" [formControl]="namear" class="form-control" id="inputEmail4"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="Product Name">
+                  <br/>
+                <span class="error text-danger">{{_util.errorMessage(namear,FORM_ERROR?.namear)}}</span>
+              </div>
+                <div class="form-group col-md-6">
+                  <label for="inputPassword4">Product Description(arabic)</label>
+                  <textarea type="text" [formControl]="descriptionar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
+                    placeholder="Product Description"></textarea>
+                    <br/> 
+              <span class="error text-danger">{{_util.errorMessage(descriptionar,FORM_ERROR?.descriptionar)}}</span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputState">Brand</label>
+                <select id="inputState" [formControl]="statusKey" class="form-control">
+                  <option value="">Please Select</option>
+               
+                </select>
+                <br/>
+              <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputState">Category</label>
+                <select id="inputState" [formControl]="statusKey" class="form-control">
+                  <option value="">Please Select</option>
+             
+                </select>
+                <br/>
+              <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputState">Sub-category</label>
+                <select id="inputState" [formControl]="statusKey" class="form-control">
+                  <option value="">Please Select</option>
+                
+                </select>
+                <br/>
+              <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputState">Child-category</label>
+                <select id="inputState" [formControl]="statusKey" class="form-control">
+                  <option value="">Please Select</option>
+               
+                </select>
+                <br/>
+              <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputState">Product Status</label>
+                <select id="inputState" [formControl]="statusKey" class="form-control">
+                  <option value="">Please Select</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+                <br/>
+              <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputEmail4">Product Quantity</label>
+                <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Product Quantity">
+
+                <br/>
+                <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+              </div>
+              <div class="form-group col-md-2">
+                  <label for="inputEmail4">Product Size</label>
+                  <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Product Size">
+  
+                  <br/>
+                  <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputEmail4">Product Price</label>
+                    <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Product Price">
+    
+                    <br/>
+                    <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label for="inputEmail4">Product Color</label>
+                      <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Product Color">
+      
+                      <br/>
+                      <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+                    </div>
+               
+                <hr>
+                  <div class="form-group col-md-4">
+                      <label for="inputState">Discount range date</label>
+                  <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
+                  
+                    placeholder="Select Range"  />
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputState">Discount Type</label>
+                        <select id="inputState" [formControl]="statusKey" class="form-control">
+                          <option value="">Please Select</option>
+                          
+                        </select>
+                        <br/>
+                      <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputEmail4">Discount Price</label>
+                        <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Discount price">
+        
+                        <br/>
+                        <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+                      </div>
+                      <hr>
+                      <div class="form-group col-md-12">
+           
+                          <label for="exampleFormControlFile1">Product Image</label>
+                          <input type="file" class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
+                        </div>
+                        <!-- <img [src]="url ? url : 'assets/img/avatars/avtar.svg'" /> -->
+                          
+                        <div class="form-group col-md-12">
+                        
+                          <label for="exampleFormControlFile1">Product Images</label>
+                          <input type="file" class="form-control" accept="image/*" multiple (change)="onSelectFile($event)" id="exampleFormControlFile1">
+                        </div>
+
+              
+            </div>
+
+              <br>
+              <button  *ngIf="this.id==null"  type="button" class="btn btn-success" (click)="submit()">Submit</button>
+              <button *ngIf="this.id" type="button" class="btn btn-success" (click)="update()">Update</button>
+
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

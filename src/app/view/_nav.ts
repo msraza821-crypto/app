@@ -3,7 +3,7 @@ import { INavData } from '@coreui/angular';
 export const navItems: INavData[] = [
   {
     name: 'Dashboard',
-    url: '/theme/dashboard',
+    url: '/theme',
     icon: 'icon-speedometer',
     // badge: {
     //   variant: 'info',
@@ -18,35 +18,62 @@ export const navItems: INavData[] = [
     name: 'Users',
     url: '/theme/users',
     icon: 'icon-drop',
-    children: [
-      {
-        name: 'All Users',
-        url: '/theme/users',
-        icon: 'icon-drops'
-      },
-]
+   
 },
   {
       name: 'Brands',
       url: '/theme/brands',
       icon: 'icon-puzzle',
-      children: [
-        {
-          name: 'All Brands',
-          url: '/theme/brands',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Add Brand',
-          url: '/theme/brands/add',
-          icon: 'icon-puzzle'
-        },
-  ]
+     
 },
+{
+    name: 'Categories',
+    url: '/theme/categories',
+    icon: 'icon-cursor',
+  
+},
+// {
+//   name: 'Products',
+//   url: '/theme/products',
+//   icon: 'icon-bell',
+//   children: [
+//     {
+//       name: 'All Products',
+//       url: '/theme/products',
+//       icon: 'icon-list'
+//     },
+//     {
+//       name: 'Add Product',
+//       url: '/theme/products/add',
+//       icon: 'icon-plus'
+//     },
+// ]
+// },
+{
+  name: 'Cms',
+  url: '/theme/cms',
+  icon: 'icon-pencil',
+  
+},{
+  name: 'Faqs',
+  url: '/theme/faqs',
+  icon: 'icon-star',
+ 
+},
+// {
+//   name: 'Contact us',
+//   url: '/theme/contactus',
+//   icon: 'icon-speedometer',
+//   // badge: {
+//   //   variant: 'info',
+//   //   text: 'NEW'
+//   // }
+// },
   {
     name: 'Settings',
     url: '/theme/settings',
-    icon: 'icon-cursor'
+    icon: 'icon-cursor',
+   
   },
   // {
   //   name: 'Typography',

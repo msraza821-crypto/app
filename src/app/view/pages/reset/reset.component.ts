@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { LoginService } from 'src/app/services/login.service';
-import { Router } from '@angular/router';
-import { LoaderService } from 'src/app/services/loader.service';
+
+import { Router, ActivatedRoute } from '@angular/router';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
+import { HttpService } from 'src/app/service';
 
 @Component({
   selector: 'app-reset',
@@ -17,55 +17,123 @@ export class ResetComponent implements OnInit {
   loader = false;
   CONFIG = CONFIG;
   loginForm: FormGroup;
+  showNew:boolean=false;
+  showConfirm:boolean=false;
   constructor(
     private _fb: FormBuilder,
-    private api: LoginService,
-    private ls: LoaderService,
+    private _api: HttpService,      
     private _util: CommonUtil,
+    private _route:ActivatedRoute,
     private router: Router) {
 
 
   }
   FORM_ERROR = {
    
-    newpassword: {
+    password: {
       required: ERROR_MESSAGES.PASSWORD_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_LENGTH}`,
-      pattern: ERROR_MESSAGES.PASSWORD_REQUIRED,
-    },
-    confirmpassword: {
+           
+      pattern: ERROR_MESSAGES.PASSWORD_REGEX,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_MAX}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.PASSWORD_MIN}`,
+  },
+  confirmpassword: {
       required: ERROR_MESSAGES.CONFIRM_PASSWORD,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_LENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
-    }
-  };
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_MAX}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.PASSWORD_MIN}`,
+      pattern: ERROR_MESSAGES.PASSWORD_REGEX, matchedPassword: ERROR_MESSAGES.PASSWORD_CONFIRMPASSWORD_MISMATCH
+  }};
 
   createForm() {
     this.loginForm = this._fb.group({
-      newpassword: ["", [Validators.required,Validators.pattern(Regex.spaces)]],
-      confirmpassword: ["", [Validators.required,Validators.pattern(Regex.spaces)]],
-    });
+      password: ["", [Validators.required,Validators.required,Validators.minLength(8), Validators.maxLength(15), Validators.pattern(Regex.password), Validators.pattern(Regex.spaces)]],
+      confirmpassword: ['', [Validators.required,Validators.minLength(8), Validators.maxLength(15), Validators.pattern(Regex.password), Validators.pattern(Regex.spaces)]],
+
+    },
+ 
+    { validator: this.checkPasswords });
   }
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+
+
+
+
+      if (group.controls.confirmpassword.value !== "") {
+          let pass = group.controls.password.value;
+          let confirmPass = group.controls.confirmpassword.value;
+
+          return pass === confirmPass ? null : { notSame: true }
+      }
+  }
+  id:string;
   ngOnInit() {
+    this._route.params.subscribe(param => {
+      if (param && param["token"]) {
+        this.id=param["token"];
+       
+      }
+      })
     this.createForm();
   }
 
-  get newpassword(): FormControl {
-    return this.loginForm.get("newpassword") as FormControl;
+  get password(): FormControl {
+    return this.loginForm.get("password") as FormControl;
   }
   get confirmpassword(): FormControl {
     return this.loginForm.get("confirmpassword") as FormControl;
   }
+  passwordHideShowNew(userInput) {
+    this.showNew = !this.showNew;
+  }
+  passwordHideShowConfirm(userInput) {
+    this.showConfirm = !this.showConfirm;
+  }
 
 
+  
 
   submit() {
     if (this.loginForm.valid) {
 
       this.loader = true;
+
+      this._api
+      .postReqUnauth("admin/reset-password", {password:this.loginForm.value.password,token:this.id})
+      .subscribe(
+        res => this.success(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
     } else {
       this._util.markError(this.loginForm);
     }
 
+  }
+  errorMessage:string="";
+  successMessage:string="";
+  success(res: any) {
+
+    if (res.status == true) {
+      this.successMessage = res.message;
+    
+      setTimeout(() => {
+        this.errorMessage = "";
+        this.successMessage ="";
+        this.router.navigate(['/login']);
+      }, 5000);
+    } else {
+      this.errorMessage = res.message;
+      setTimeout(() => {
+        this.errorMessage = "";
+        this.successMessage ="";
+      }, 5000);
+    }
+  }
+  error(res: any) {
+    this.errorMessage = res.message;
+    setTimeout(() => {
+      this.errorMessage = "";
+        this.successMessage ="";
+    }, 5000);
   }
 }

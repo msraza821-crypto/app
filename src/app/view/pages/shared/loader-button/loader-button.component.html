@@ -1,7 +1,7 @@
 <button  class=" btn btn-success btn-block" type="button" [disabled]="loader || disabled" (click)="clicked()"
   (keyup.enter)="clicked()">
 
-  <span [class.hide-text]="loader">{{title}}</span>
+  <span [class.hide-text]="loader"><b>{{title}}</b></span>
   <span>
     <app-loader *ngIf="loader"></app-loader>
   </span>

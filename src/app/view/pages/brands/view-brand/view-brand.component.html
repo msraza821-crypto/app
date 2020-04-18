@@ -1,0 +1,62 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          View
+          <small>Brand</small>
+        </div>
+        <div class="card-body">
+
+
+          <div class="row ">
+            <form>
+                <div class="row ">
+                   
+              <div class="form-group col-md-6">
+                <b for="inputEmail4">Name(english):</b><br/>
+                {{data.name}}
+              </div>
+              
+              <div class="form-group col-md-6">
+                <b for="inputPassword4">Description(english):</b><br/>
+                {{data.description}}
+              </div>
+              
+              <div class="form-group col-md-6">
+                  <b for="inputEmail4">Name(arabic):</b><br/>
+                  {{data.name_ar}}
+              </div>
+                <div class="form-group col-md-6">
+                  <b for="inputPassword4">Description(arabic):</b><br/>
+                  {{data.description_ar}}
+            </div>
+              <div class="form-group col-md-12">
+                <b for="exampleFormControlFile1">Brand Image:</b><br/>
+                <img [src]="data.brand_image" />
+              </div>
+            
+                
+              <div class="form-group col-md-12" *ngIf="data.status=='Active'" >
+                <b for="inputState">Status:</b><br/>
+                Unblock
+               
+            </div>
+            <div class="form-group col-md-12" *ngIf="data.status=='Inactive'" >
+                <b for="inputState">Status:</b><br/>
+                Block
+               
+            </div>
+            </div>
+            <button [routerLink]="['/theme/brands']"  type="button" class="btn btn-success" >Back</button>
+           
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

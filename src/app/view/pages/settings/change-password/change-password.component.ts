@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { LoginService } from 'src/app/services/login.service';
+
 import { Router } from '@angular/router';
-import { LoaderService } from 'src/app/services/loader.service';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
+import { HttpService } from 'src/app/service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: "app-change-password",
   templateUrl: "./change-password.component.html",
@@ -16,11 +17,14 @@ export class ChangePasswordComponent implements OnInit {
   loader = false;
   CONFIG = CONFIG;
   loginForm: FormGroup;
+  showOld:boolean=false;
+  showNew:boolean=false;
+  showConfirm:boolean=false;
   constructor(
     private _fb: FormBuilder,
-    private api: LoginService,
-    private ls: LoaderService,
+    private api:HttpService,    
     private _util: CommonUtil,
+    private spinner: NgxSpinnerService,
     private router: Router) {
 
 
@@ -33,23 +37,49 @@ export class ChangePasswordComponent implements OnInit {
     },
     newpassword: {
       required: ERROR_MESSAGES.PASSWORD_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_LENGTH}`,
-      pattern: ERROR_MESSAGES.PASSWORD_REQUIRED,
-    },
-    confirmpassword: {
+           
+      pattern: ERROR_MESSAGES.PASSWORD_REGEX,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_MAX}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.PASSWORD_MIN}`,
+  },
+  confirmpassword: {
       required: ERROR_MESSAGES.CONFIRM_PASSWORD,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_LENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
-    }
-  };
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_MAX}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.PASSWORD_MIN}`,
+      pattern: ERROR_MESSAGES.PASSWORD_REGEX, matchedPassword: ERROR_MESSAGES.PASSWORD_CONFIRMPASSWORD_MISMATCH
+  }};
 
   createForm() {
     this.loginForm = this._fb.group({
       oldpassword: ["", [Validators.required,Validators.pattern(Regex.spaces)]],
-      newpassword: ["", [Validators.required,Validators.pattern(Regex.spaces)]],
-      confirmpassword: ["", [Validators.required,Validators.pattern(Regex.spaces)]],
-    });
+      newpassword: ["", [Validators.required,Validators.required,Validators.minLength(8), Validators.maxLength(15), Validators.pattern(Regex.password), Validators.pattern(Regex.spaces)]],
+      confirmpassword: ['', [Validators.required,Validators.minLength(8), Validators.maxLength(15), Validators.pattern(Regex.password), Validators.pattern(Regex.spaces)]],
+
+    },
+    { validator: this.checkPasswords });
   }
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+
+
+
+
+      if (group.controls.confirmpassword.value !== "") {
+          let pass = group.controls.newpassword.value;
+          let confirmPass = group.controls.confirmpassword.value;
+
+          return pass === confirmPass ? null : { notSame: true }
+      }
+  }
+  passwordHideShowOld(userInput) {
+    this.showOld = !this.showOld;
+  }
+  passwordHideShowNew(userInput) {
+    this.showNew = !this.showNew;
+  }
+  passwordHideShowConfirm(userInput) {
+    this.showConfirm = !this.showConfirm;
+  }
+
   ngOnInit() {
     this.createForm();
   }
@@ -64,15 +94,56 @@ export class ChangePasswordComponent implements OnInit {
     return this.loginForm.get("confirmpassword") as FormControl;
   }
 
-
+  errorMessage:string='';
 
   submit() {
     if (this.loginForm.valid) {
+      this.spinner.show();
+      var data={'current_password':this.loginForm.value.oldpassword
+      ,'password':this.loginForm.value.newpassword,
+      'confirm_password':this.loginForm.value.confirmpassword
+      };
+     this.api
+      .putReqAuth("admin/change-password",data )
+      .subscribe(
+        res => this.success(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
 
-      this.loader = true;
     } else {
       this._util.markError(this.loginForm);
     }
 
+  }
+  successMessage:string="";
+  success(res: any) {
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 1000);
+    if (res.status == true) {
+      this.successMessage=res.message;
+     this.createForm();
+      setTimeout(() => {
+        this.errorMessage = "";
+        this.successMessage="";
+      }, 5000);
+    } else {
+      this.errorMessage = res.message;
+      setTimeout(() => {
+        this.errorMessage = "";
+      }, 5000);
+    }
+  }
+  error(res: any) {
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 1000);
+    this.errorMessage = res.message;
+    setTimeout(() => {
+      this.errorMessage = "";
+    }, 5000);
   }
 }

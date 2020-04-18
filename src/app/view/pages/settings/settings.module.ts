@@ -6,9 +6,12 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { SharedModule } from '../shared/shared.module';
 
 const pageRoutes: Routes = [
-  { path: '', canActivate: [], component: ProfileComponent },
-  { path: 'change-password', canActivate: [], component: ChangePasswordComponent },
-];
+  { path: '', canActivate: [],data: { title: 'Settings' }, children: [
+    {
+      path: '',  
+  data: { title: 'Edit Profile' }, component: ProfileComponent },
+  { path: 'change-password', canActivate: [],  data: { title: 'Change Password' },component: ChangePasswordComponent },
+]}];
 
 @NgModule({
   imports: [

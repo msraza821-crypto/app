@@ -1,0 +1,57 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          Add
+          <small>Faq</small>
+        </div>
+        <div class="card-body">
+
+
+          <div class="row ">
+            <form>
+                <div class="row ">
+                   
+              <div class="form-group col-md-12">
+                <label for="inputEmail4">Faq Question</label>
+                <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Question">
+              </div>
+              <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+              <div class="form-group col-md-12">
+                <label for="inputPassword4">Answer</label>
+                <textarea type="text" [formControl]="descriptions" class="form-control" id="inputPassword4"
+                  placeholder="Answer"></textarea>
+              </div>
+              <span class="error text-danger">{{_util.errorMessage(descriptions,FORM_ERROR?.descriptions)}}</span>
+              <!-- <div class="form-group col-md-12">
+                <label for="exampleFormControlFile1">Brand Image</label>
+                <input type="file" class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
+              </div> -->
+              <!-- <img [src]="url ? url : 'assets/img/avatars/avtar.svg'" /> -->
+                
+              <div class="form-group col-md-12">
+                <label for="inputState">Status</label>
+                <select id="inputState" [formControl]="statusKey" class="form-control">
+                  <option value="">Please Select</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+              <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+            </div>
+
+              <br>
+              <button  *ngIf="this.id==null"  type="button" class="btn btn-success" (click)="submit()">Submit</button>
+              <button *ngIf="this.id" type="button" class="btn btn-success" (click)="update()">Update</button>
+
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

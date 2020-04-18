@@ -7,14 +7,13 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
 
 import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginService } from './services/login.service';
+
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpConfigInterceptor } from './_interceptor/httpconfig.interceptor';
-import { ProfileService } from './services/profile.service';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { appReducer } from './store/reducers/app.reducer';
-import { AppService } from './services/app.service';
+
 import { ForgotComponent } from './view/pages/forgot/forgot.component';
 import { ResetComponent } from './view/pages/reset/reset.component';
 import { LoaderButtonComponent } from './view/pages/shared/loader-button/loader-button.component';
@@ -24,14 +23,15 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-
+import { HttpService, AppService  } from "./service";
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
 
+import { RichTextEditorAllModule } from '@syncfusion/ej2-angular-richtexteditor';
 
-
-
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { NgxSpinnerModule } from "ngx-spinner";
 import {
   AppAsideModule,
   AppBreadcrumbModule,
@@ -41,10 +41,12 @@ import {
 } from '@coreui/angular';
 
 
+import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 // Import 3rd party components
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,17 +57,20 @@ import { ChartsModule } from 'ng2-charts';
     LoaderComponent  
   ],
   imports: [
-
+    NgxPaginationModule,RichTextEditorAllModule,
     BrowserModule,
     AppRoutingModule,
+    NgxSpinnerModule,
     AppAsideModule,
     AppBreadcrumbModule.forRoot(),
     AppFooterModule,
     AppHeaderModule,
+    NgbModule,
     AppSidebarModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
+    NgxDaterangepickerMd.forRoot(),
     ChartsModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -84,7 +89,7 @@ import { ChartsModule } from 'ng2-charts';
    LoaderComponent
   ],
   
-  providers: [CommonUtil,LoginService, ProfileService,AppService,  { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }],
+  providers: [CommonUtil,AppService,HttpService,  { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true },{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent],
 
 

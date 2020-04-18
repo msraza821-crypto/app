@@ -6,7 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 
 const pageRoutes: Routes = [
 
-  { path: '', canActivate: [], component: PageComponent },
+  { path: '',  data: { title: '' },canActivate: [], component: PageComponent },
 ];
 
 

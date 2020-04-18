@@ -1,0 +1,162 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          View
+          <small>User</small>
+
+          <div class="col-md-12 float-left">
+              <a (click)="exportDataF()"> <button type="button" class="btn btn-primary float-right ml-1">Transactions</button></a>
+            <a *ngIf="data.status=='active'"> <button type="button" (click)="openVerticallyCentered(poup2,data)" class="btn btn-success float-right ml-1">Block</button></a>
+            <a *ngIf="data.status=='inactive'"> <button type="button" (click)="openVerticallyCentered(poup1,data)" class="btn btn-warning float-right ml-1">Unblock</button></a>
+            <a> <button type="button" (click)="openVerticallyCentered(poup,data)" class="btn btn-success float-right ml-1">Delete</button></a>
+
+
+          </div>
+        </div>
+        <div class="card-body">
+
+
+          <div class="row ">
+              <div class="col-md-4 ">
+                
+                <label for=""><b>Full Name</b></label><br/>
+              {{data.first_name}}
+                </div>
+                <div class="col-md-4">
+                
+                    <label for=""><b>Email</b></label><br/>
+                  {{data.email}}
+                    </div>
+                    <div class="col-md-4 ">
+                
+                        <label for=""><b>Mobile Number</b></label><br/>
+                      ({{data.country_code}}) {{data.mobile}}
+                        </div>
+          </div>
+         <br/><br/><br/>
+          <div class="row ">
+          <table class="table table-striped">
+              <thead>
+                <tr>
+
+                  <th scope="col">Order Id</th>
+                  <th scope="col">Total price</th>
+                  <th scope="col">Order Date</th>
+                   <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="collection.length>0">
+                <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                itemsPerPage: limit,
+                currentPage: page,
+                totalItems: totalRec };">
+                  <td scope="row">{{i.first_name}} {{i.last_name}}
+                  </td>
+                  <td>{{i.email}}
+                  </td>
+                  <td> ({{i.country_code}}){{i.mobile}}
+                    </td>
+                  <td> {{i.created_at}}
+                </td>
+                <td>{{i.status}}
+              </td>
+                  <td><img style="height: 60px;" class="img-circle"
+                      [src]="i.profile_picture ? i.profile_picture : 'assets/img/avatars/avtar.svg'" /></td>
+                  <td>
+                    <a > <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                      
+                   
+
+                  </td>
+                </tr>
+
+              </tbody>
+              <tbody *ngIf="collection.length==0">
+                <tr>
+                  <td colspan="4">No records found</td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls *ngIf="collection.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
+              (pageChange)="page = $event"></pagination-controls>
+</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #poup let-modal>
+    <!----- Header  ------>
+    <section id="modal-header"> 
+      <h5 class="p-3 primary-color-bg bg-dark text-center">Delete User</h5>
+      <div class="">
+        <div class="row pt-4">
+          <div class="col-md-12 frgtpass-head">
+            <p class="text-center"> Are you sure you want to delete this User ? </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-------------->
+    <section>
+      <div class=" frgtpass-btns mb-3">
+        <div class="row mt-3">
+          <div class="col-md-12 text-center">
+            <button type="button" class="ml-3 btn bg-dark  white" (click)="modal.close('Close click')">No</button>
+            <button type="button" class="ml-3 btn bg-dark  white" (click)="yes()">Yes</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+  <ng-template #poup1 let-modal>
+      <!----- Header  ------>
+      <section id="modal-header">
+        <h5 class="p-3 primary-color-bg bg-dark text-center">Block User</h5>
+        <div class="">
+          <div class="row pt-4">
+            <div class="col-md-12 frgtpass-head">
+              <p class="text-center"> Are you sure you want to block this User ? </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-------------->
+      <section>
+        <div class=" frgtpass-btns mb-3">
+          <div class="row mt-3">
+            <div class="col-md-12 text-center">
+              <button type="button" class="ml-3 btn bg-dark  white" (click)="modal.close('Close click')">No</button>
+              <button type="button" class="ml-3 btn bg-dark  white" (click)="yesStatus()">Yes</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </ng-template>
+    <ng-template #poup2 let-modal>
+        <!----- Header  ------>
+        <section id="modal-header">
+          <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock User</h5>
+          <div class="">
+            <div class="row pt-4">
+              <div class="col-md-12 frgtpass-head">
+                <p class="text-center"> Are you sure you want to unblock this User ? </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-------------->
+        <section>
+          <div class=" frgtpass-btns mb-3">
+            <div class="row mt-3">
+              <div class="col-md-12 text-center">
+                <button type="button" class="ml-3 btn bg-dark  white" (click)="modal.close('Close click')">No</button>
+                <button type="button" class="ml-3 btn bg-dark  white" (click)="yesStatus()">Yes</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </ng-template>

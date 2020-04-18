@@ -11,30 +11,47 @@
 </head>
 <body>    
   <br> <br><br>
+  
     <div id="logreg-forms">
+      
         <form class="form-signin">
+           <img src="assets/img/avatars/logo.jpg"  alt="Logo"    style="height: 100px;margin-left: 110px;">
           <br>
-            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Login</h1>
+            <br/>
+
+            <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
             <br>
-            <input type="email" [formControl]="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" autocomplete="new-password">
+            <input type="email" [formControl]="email" id="inputEmail" class="form-control" [maxlength]="CONFIG?.EMAIL_LENGTH" placeholder="Email address" required="" autofocus="" autocomplete="new-password">
 
             <span class="error text-danger">{{_util.errorMessage(email,FORM_ERROR?.email)}}</span>         
             <br/>
             <br/>
-            <input type="password" [formControl]="password" id="inputPassword" class="form-control" placeholder="Password" required="" autocomplete="new-password">
-            <span class="error text-danger">{{_util.errorMessage(password,FORM_ERROR?.password)}}</span>
-            <br>   <br/>
+            
+            <input [type]="show ? 'text' : 'password'"  [formControl]="password" id="inputPassword" (keyup.enter)="submit()" [minlength]="CONFIG?.PASSWORD_MIN" [maxlength]="CONFIG?.PASSWORD_MAX" class="form-control" placeholder="Password" required="" autocomplete="new-password">
+          
+            <span toggle="#password-field" (click)="passwordHideShow(inputPassword)" [class]="show ? 'fa fa-fw fa-eye field-icon toggle-password' : 'fa fa-fw fa-eye-slash field-icon toggle-password'" 
+         ></span>  <span class="error text-danger">{{_util.errorMessage(password,FORM_ERROR?.password)}}</span>
+            <br>
+          
+             
+             <br/>
+           
+                <input type="checkbox" [formControl]="rememberMe" id="remember_me" name="_remember_me" checked/>
+                <label for="remember_me">&nbsp;Remember me</label>
+                <a class="float-right" [routerLink] = "['/forgot']" id="forgot_pswd" style="margin-top: -8px;">Forgot password?</a>  
+                <br>
+          
+             
+             <br/>
            <app-loader-button class="btn-block" [loader]="loader" title="Login" (click)="submit()">
               </app-loader-button>
-            <a [routerLink] = "['/forgot']" id="forgot_pswd">Forgot password?</a>
-            <hr>
-            <!-- <p>Don't have an account!</p>  -->
+           
+
             </form>
 
-       
             <br>
             
     </div>
- 
+    
 </body>
 </html>

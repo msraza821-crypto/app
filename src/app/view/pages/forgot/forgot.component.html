@@ -14,15 +14,21 @@
   <br> <br><br>
   <div id="logreg-forms">
     <form class="form-signin">
+        <img src="assets/img/avatars/logo.jpg"  alt="Logo"    style="height: 100px;margin-left: 110px;">
+        <br>
+      <br>
       <br>
       <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Forgot Password</h1>
       <br>
-      <input type="email" [formControl]="email" id="inputEmail" class="form-control" placeholder="Email address"
+      <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
+      <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div>
+      <br>
+      <input type="email" [formControl]="email" id="inputEmail" (keyup.enter)="submit()" [maxlength]="CONFIG?.EMAIL_LENGTH"  class="form-control" placeholder="Enter a email here"
         required="" autofocus="" autocomplete="new-password">
       <span class="error text-danger">{{_util.errorMessage(email,FORM_ERROR?.email)}}</span>
       <br>
       <br>
-      <app-loader-button class="btn-block" [loader]="loader" title="Reset Password" (click)="submit()">
+      <app-loader-button class="btn-block" [loader]="loader" title="Submit" (click)="submit()">
       </app-loader-button>
       <a [routerLink]="['/login']" id="forgot_pswd">Back to login</a>
       <hr>
