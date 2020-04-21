@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
-import { catchError, retry, map, } from 'rxjs/operators';
+import { catchError, tap,retry, map, } from 'rxjs/operators';
 // Modules
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -18,6 +18,10 @@ export class HttpService {
   constructor(private http: HttpClient, private router: Router,
     private appSer: AppService, public appStateSer: AppStateService) {
   } 
+
+  private extractData(res) {
+    return res || {};
+  }
   // ------------------------------------------------------//
   get httpOptionsAuth() {
     return {
@@ -107,7 +111,19 @@ export class HttpService {
     const reqUrl = this.baseUrl + url;
     var test= this.http.get(reqUrl, this.httpOptionsAuth)
       .pipe(catchError((err: HttpErrorResponse) => this.handleError(err)));
-  return test;
+    return test;
+  }
+  getReqAuthExport(url: string) {
+    const reqUrl= this.baseUrl + url;
+    const headers= new HttpHeaders({
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Authorization': 'Bearer ' + localStorage.getItem('chicbeetoken'),
+        'token':localStorage.getItem('chicbeetoken')
+    })
+    return this.http.get(reqUrl, { headers, responseType: 'text' as 'json'}).pipe(tap((res) => { }),
+      map(this.extractData),
+      catchError(this.handleError),
+    );
   }
   getReqAuthLogout(url: string) {
     this.appSer.showLoader();
