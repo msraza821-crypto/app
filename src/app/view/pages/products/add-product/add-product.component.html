@@ -14,7 +14,7 @@
                 <div class="row ">
                    
               <div class="form-group col-md-6">
-                <label for="inputEmail4">Product Name(english)</label>
+                <label for="inputEmail4">Product Name(English)</label>
                 <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Product Name">
 
                 <br/>
@@ -22,7 +22,7 @@
               </div>
               
               <div class="form-group col-md-6">
-                <label for="inputPassword4">Product Description(english)</label>
+                <label for="inputPassword4">Product Description(English)</label>
                 <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4"
                   placeholder="Product Description"></textarea>
                   <br/>
@@ -30,13 +30,13 @@
               </div>
               
               <div class="form-group col-md-6">
-                  <label for="inputEmail4">Product Name(arabic)</label>
+                  <label for="inputEmail4">Product Name(Arabic)</label>
                   <input type="text" [formControl]="namear" class="form-control" id="inputEmail4"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="Product Name">
                   <br/>
                 <span class="error text-danger">{{_util.errorMessage(namear,FORM_ERROR?.namear)}}</span>
               </div>
                 <div class="form-group col-md-6">
-                  <label for="inputPassword4">Product Description(arabic)</label>
+                  <label for="inputPassword4">Product Description(Arabic)</label>
                   <textarea type="text" [formControl]="descriptionar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
                     placeholder="Product Description"></textarea>
                     <br/> 
@@ -82,8 +82,8 @@
                 <label for="inputState">Product Status</label>
                 <select id="inputState" [formControl]="statusKey" class="form-control">
                   <option value="">Please Select</option>
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
+                  <option value="active">Unblocked</option>
+                  <option value="inactive">Blocked</option>
                 </select>
                 <br/>
               <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
@@ -122,7 +122,7 @@
                       <label for="inputState">Discount range date</label>
                   <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
                   
-                    placeholder="Select Range"  />
+                    placeholder="Filter Date"  />
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputState">Discount Type</label>
@@ -146,7 +146,7 @@
                           <label for="exampleFormControlFile1">Product Image</label>
                           <input type="file" class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
                         </div>
-                        <!-- <img [src]="url ? url : 'assets/img/avatars/avtar.svg'" /> -->
+                        <!-- <img style="height:100px;width:100px;" class="img-circle"[src]="url ? url : 'assets/img/avatars/avtar.svg'" /> -->
                           
                         <div class="form-group col-md-12">
                         
@@ -158,8 +158,8 @@
             </div>
 
               <br>
-              <button  *ngIf="this.id==null"  type="button" class="btn btn-success" (click)="submit()">Submit</button>
-              <button *ngIf="this.id" type="button" class="btn btn-success" (click)="update()">Update</button>
+              <button  *ngIf="this.id==null"  type="button" class="btn btn-primary" (click)="submit()">Submit</button>
+              <button *ngIf="this.id" type="button" class="btn btn-primary" (click)="update()">Update</button>
 
 
             </form>

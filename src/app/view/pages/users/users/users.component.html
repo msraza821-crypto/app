@@ -3,40 +3,41 @@
       <div class="col-sm-12 col-lg-12">
         <div class="card">
           <div class="card-header">
-            Users
+          <b style="margin-left: 14px;font-size:18px;">Users</b>  
            
 
-            
+          <a (click)="exportDataF()"> <button  style="margin:0px 19px -2px 0px;color:white;" type="button" class="ml-3 btn bg-dark  white float-right ml-1">Export to
+              CSV</button></a>
             <hr />
-            <div class="col-sm-12 col-lg-12">
+            <div class="col-sm-12 col-lg-12"  style="margin-left: -17px;">
               <div class="col-md-2 float-left">
                 <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Email,Name or Phone number">
               </div>
               <div class="col-md-2 float-left">
                 <select id="inputState" class="form-control" [formControl]="status">
                   <option value="">All</option>
-                  <option value="Active">Unblock</option>
-                  <option value="Inactive">Block</option>
+                  <option value="Active">Unblocked</option>
+                  <option value="Inactive">Blocked</option>
+                  <option value="Pending">Pending</option>
                 </select>
               </div>
-              <div class="col-md-4 float-left">
+              <div class="col-md-2 float-left">
                  
                 <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
                 [formControl]="range"
-                  placeholder="Select Range"  />
+                  placeholder="Filter Date"  />
               </div>
-              <div class="col-md-4 float-left">
-                  <a (click)="exportDataF()"> <button type="button" class="ml-3 btn bg-dark  white float-right ml-1">Export to
-                      CSV</button></a>
-                <a> <button type="button" (click)="reset()" class="btn btn-danger float-right ml-1">Reset</button></a>
-                <a> <button type="button" (click)="filter()" class="btn btn-success float-right ml-1">Filter</button></a>
+              <div class="col-md-6 float-left">
+                
+                <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1"  style="margin-right: -29px;">Reset</button></a>
+                <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>
   
   
               </div>
             </div>
           </div>
           <div class="card-body">
-              <div class="col-sm-2 col-lg-2 float-left"> 
+              <div class="col-sm-1 col-lg-1 float-left"> 
                   <select class="form-control" (change)="filterSelected($event.target.value)">
                     <option value="10">10</option>
                     <option value="50">50</option>
@@ -48,15 +49,16 @@
           <div class="card-body">
             <div class="col-sm-12 col-lg-12">
               <div class="card text-white ">
-                <div class="card-body pb-0">
+                <div class=" pb-0">
                   <table class="table table-striped">
                     <thead>
                       <tr>
   
+                          <th scope="col">S.no.</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Mobile Number</th>
-                        <th scope="col">Created</th>
+                        <th scope="col">Mobile number</th>
+                        <th scope="col">Created at</th>
                         <th scope="col">Status</th>
                     
                         <th scope="col">Actions</th>
@@ -66,23 +68,29 @@
                       <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                       itemsPerPage: limit,
                       currentPage: page,
-                      totalItems: totalRec };">
-                        <td scope="row">{{i.first_name}} {{i.last_name}}
+                      totalItems: totalRec }; let ie = index" current-page="currentPage">
+                      <td>
+                          {{ ((limit * (page - 1)) + ie+1) }}
+
+                      </td>
+                        <td scope="row" style=" text-transform: capitalize;">{{i.first_name}} {{i.last_name}}
                         </td>
                         <td>{{i.email}}
                         </td>
-                        <td> ({{i.country_code}}){{i.mobile}}
+                        <td> (+{{i.country_code}}){{i.mobile}}
                           </td>
                         <td> {{i.created_at}}
                       </td>
-                      <td  *ngIf="i.status!='Active'" >Block
-                  </td>
-                  <td  *ngIf="i.status='Inactive'" >Unblock
-                    </td>
-
+                      <td  *ngIf="i.status=='Active'" >Blocked
+                        </td>
+                        <td  *ngIf="i.status=='Inactive'" >Unblocked
+                          </td>
+                          <td  *ngIf="i.status=='Pending'" >Pending
+                            </td>
                         <td>
                           <a [routerLink]="['/theme/users/view',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                      
-                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px" class="fa fa-ban"></i>&nbsp; </a>  
+                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px;" class="fa fa-ban"></i>&nbsp; </a> 
+                          <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Pending'"> <i style="font-size:24px;color:red;" class="fa fa-ban"></i>&nbsp; </a>  
                           <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i>&nbsp;</a>            
                           <a (click)="openVerticallyCentered(poup,i)"> <i style="font-size:24px"
                               class="fa fa-trash-o"></i></a>
@@ -92,8 +100,8 @@
   
                     </tbody>
                     <tbody *ngIf="collection.length==0">
-                      <tr>
-                        <td colspan="6">No records found</td>
+                      <tr class="text-center">
+                        <td colspan="7">No records found</td>
                       </tr>
                     </tbody>
                   </table>

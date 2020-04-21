@@ -1,65 +1,32 @@
-<!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-<div>
-<header>
-  <app-header></app-header>
-</header>
-<nav>
-  <app-navigation></app-navigation>
-</nav>
-<div class="row-fluid no-gutters">
-  <div class="col-md-12">
-      <div class="content-wrapper">
-          <router-outlet></router-outlet>
-      </div>
-  </div>
-</div>
-<app-footer></app-footer>
-</div> -->
 <app-header
-  [navbarBrandRouterLink]="['/theme/dashboard']"
+  [navbarBrandRouterLink]="['/theme']"
   [fixed]="true"
   [navbarBrandFull]="{src: 'assets/img/avatars/logo.jpg', width: 89, height: 50, alt: 'ChicBee'}"
   [navbarBrandMinimized]="{src: 'assets/img/avatars/logo.jpg', width: 30, height: 30, alt: 'ChicBee'}"
   [sidebarToggler]="'lg'"
-  [asideMenuToggler]="'lg'">
-  <ul class="nav navbar-nav d-md-down-none">
-    <!-- <li class="nav-item px-3">
-      <a class="nav-link" [routerLink]="['/theme/dashboard']">Dashboard</a>
-    </li>
-    <li class="nav-item px-3">
-      <a class="nav-link"[routerLink]="['/theme/users']">Users</a>
-    </li>
-    <li class="nav-item px-3">
-      <a class="nav-link" [routerLink]="['/theme/settings']">Settings</a>
-    </li> -->
-  </ul>
-  <ul class="nav navbar-nav ml-auto">
-    <!-- <li class="nav-item d-md-down-none">
-      <a class="nav-link" href="#"><i class="icon-bell"></i><span class="badge badge-pill badge-danger">5</span></a>
-    </li>
-    <li class="nav-item d-md-down-none">
-      <a class="nav-link" href="#"><i class="icon-list"></i></a>
-    </li>
-    <li class="nav-item d-md-down-none">
-      <a class="nav-link" href="#"><i class="icon-location-pin"></i></a>
-    </li> -->
-    <li class="nav-item dropdown" dropdown placement="bottom right">
-      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
-        <img src="assets/img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com"/>
-      </a>
-      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+  [asideMenuToggler]="false"
+  [mobileAsideMenuToggler]="false"
+>
 
-        <a class="dropdown-item"   [routerLink]="['/theme/settings']"><i class="fa fa-user"></i> Profile</a>
-        <a class="dropdown-item"[routerLink]="['/theme/settings/change-password']"><i class="fa fa-wrench"></i> Change Password</a>
-        <div class="divider"></div>
-       
-        <a class="dropdown-item"  (click)="openVerticallyCentered(deletepoup)"><i class="fa fa-lock"></i> Logout</a>
+  <ul class="nav navbar-nav ml-auto">
+<li>
+    <div class="dropdown" style="float:right;">
+     
+            <img [src]="url?url:'assets/img/avatars/avtar.svg'" class="img-avatar" style="height: 42px;" alt=""/>
+            
+        
+        <div class="dropdown-content pull-right dropdown-menu">
+            <a class="dropdown-item" [routerLink]="['/theme/settings']"><i class="fa fa-user"></i> Profile</a>
+            <a class="dropdown-item"[routerLink]="['/theme/settings/change-password']"><i class="fa fa-wrench"></i> Change Password</a>
+            <div class="divider"></div>
+            <a class="dropdown-item" (click)="openVerticallyCentered(deletepoup)"><i class="fa fa-lock"></i> Logout</a>
+        </div>
       </div>
     </li>
-  </ul>
- 
+    
+    </ul>  
+
 </app-header>
 
 <div class="app-body" style="min-height:800px;">
@@ -80,12 +47,12 @@
       <router-outlet></router-outlet>
     </div>
   </main>
-  <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
+  <!-- <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
     <tabset>
       <tab>
         <div class="list-group list-group-accent">
           <a class="dropdown-item" [routerLink]="['/theme/settings']"><i class="fa fa-user"></i> Profile</a>
-            <a class="dropdown-item"[routerLink]="['/theme/settings/change-password']"><i class="fa fa-wrench"></i> Change Password</a>
+            <a class="dropdown-item"[rpull-rightouterLink]="['/theme/settings/change-password']"><i class="fa fa-wrench"></i> Change Password</a>
             <div class="divider"></div>
             <a class="dropdown-item" (click)="openVerticallyCentered(deletepoup)"><i class="fa fa-lock"></i> Logout</a>
           </div>
@@ -94,8 +61,8 @@
       </tab>
     
     </tabset>
-  </app-aside>
-</div>
+  </app-aside> -->
+</div> 
 <app-footer>
   <span><a href="/"></a> &copy; 2020 appventurez.</span>
   <span class="ml-auto">Powered by <a href="/">Appventurez</a></span>
@@ -117,7 +84,7 @@
       <div class=" frgtpass-btns mb-3">
         <div class="row mt-3">
           <div class="col-md-12 text-center">
-            <button type="button" class="ml-3 btn bg-dark  white white" (click)="modal.close('Close click')">Cancel</button>
+            <button type="button" class="ml-3 btn bg-dark white" (click)="modal.close('Close click')">Cancel</button>
             <button type="button" class="ml-3 btn bg-dark white" (click)="logout()">Logout</button>
           </div>
         </div>

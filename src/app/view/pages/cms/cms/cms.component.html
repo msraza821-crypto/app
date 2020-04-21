@@ -3,8 +3,7 @@
       <div class="col-sm-12 col-lg-12">
         <div class="card">
           <div class="card-header">
-            Cms
-           
+              <b style="margin-left: 14px;font-size:18px;">CMS</b>
             <!-- <a [routerLink]="['/theme/cms/add']"> <button type="button" class="btn btn-primary float-right ml-1">Add
                 Cms</button></a>
           -->
@@ -13,7 +12,7 @@
           <div class="card-body">
             <div class="col-sm-12 col-lg-12">
               <div class="card text-white ">
-                <div class="card-body pb-0">
+                <div class="pb-0">
                   <table class="table table-striped">
                     <thead>
                       <tr>
@@ -28,12 +27,12 @@
                       itemsPerPage: limit,
                       currentPage: page,
                       totalItems: totalRec };">
-                        <td scope="row">{{i.content_title}}</td>
+                        <td scope="row" style=" text-transform: capitalize;">{{i.content_title}}</td>
                         <td>{{i.content_description}}</td>
                     <td>
                           <a [routerLink]="['/theme/cms/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;  
                           <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'"> <i style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;   
-                          <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='inactive'">   <i style="font-size:24px" class="fa fa-unlock"></i></a>&nbsp;
+                          <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i></a>&nbsp;
                           <a (click)="openVerticallyCentered(poup)"> <i style="font-size:24px"
                               class="fa fa-trash-o"></i></a>
   
@@ -42,7 +41,7 @@
                   
                     </tbody>
                     <tbody *ngIf="collection.length==0">
-                        <tr>
+                        <tr class="text-center">
                           <td colspan="3">No records found</td>
                         </tr>
                       </tbody>
@@ -60,11 +59,11 @@
   <ng-template #poup let-modal>
       <!----- Header  ------>
       <section id="modal-header"> 
-        <h5 class="p-3 primary-color-bg bg-dark text-center">Delete Cms</h5>
+        <h5 class="p-3 primary-color-bg bg-dark text-center">Delete CMS</h5>
         <div class="">
           <div class="row pt-4">
             <div class="col-md-12 frgtpass-head">
-              <p class="text-center"> Are you sure you want to delete this Cms ? </p>
+              <p class="text-center"> Are you sure you want to delete this CMS ? </p>
             </div>
           </div>
         </div>
@@ -84,11 +83,11 @@
     <ng-template #poup1 let-modal>
         <!----- Header  ------>
         <section id="modal-header">
-          <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock Cms</h5>
+          <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock CMS</h5>
           <div class="">
             <div class="row pt-4">
               <div class="col-md-12 frgtpass-head">
-                <p class="text-center"> Are you sure you want to unblock this Cms ? </p>
+                <p class="text-center"> Are you sure you want to unblock this CMS ? </p>
               </div>
             </div>
           </div>
@@ -108,11 +107,11 @@
       <ng-template #poup2 let-modal>
           <!----- Header  ------>
           <section id="modal-header">
-            <h5 class="p-3 primary-color-bg bg-dark text-center">Block Cms</h5>
+            <h5 class="p-3 primary-color-bg bg-dark text-center">Block CMS</h5>
             <div class="">
               <div class="row pt-4">
                 <div class="col-md-12 frgtpass-head">
-                  <p class="text-center"> Are you sure you want to block this Cms ? </p>
+                  <p class="text-center"> Are you sure you want to block this CMS ? </p>
                 </div>
               </div>
             </div>

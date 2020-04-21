@@ -2,3 +2,9 @@ form{
     width: 100%;
     margin-left: 20px;
 }
+.bg-dark{
+    color:white;
+  }
+  .btn-dark{
+    color:white;
+  }

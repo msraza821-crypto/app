@@ -104,6 +104,9 @@ export class UsersComponent implements OnInit {
         () => (this.loader = false)
       );
   }
+  absoluteIndex(indexOnPage: number): number {
+    return this.limit * (this.page - 1) + indexOnPage;
+  }
   success(res) {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
@@ -154,6 +157,7 @@ export class UsersComponent implements OnInit {
     this.exportData = 0;
     this.start = "";
     this.end = "";
+    this.loadBrands();
   }
   filter() {
     console.log(this.loginForm.value)
@@ -170,7 +174,8 @@ export class UsersComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-  successdelete(res) {
+    successdelete(res) {
+    this.page=1;
     this.ngOnInit();
   }
   yesStatus() {

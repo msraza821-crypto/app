@@ -3,8 +3,7 @@
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-          View
-          <small>Brand</small>
+            <b style="margin-left: 14px;font-size:18px;">View Brand</b>
         </div>
         <div class="card-body">
 
@@ -14,21 +13,21 @@
                 <div class="row ">
                    
               <div class="form-group col-md-6">
-                <b for="inputEmail4">Name(english):</b><br/>
+                <b for="inputEmail4">Name(English):</b><br/>
                 {{data.name}}
               </div>
               
               <div class="form-group col-md-6">
-                <b for="inputPassword4">Description(english):</b><br/>
+                <b for="inputPassword4">Description(English):</b><br/>
                 {{data.description}}
               </div>
               
               <div class="form-group col-md-6">
-                  <b for="inputEmail4">Name(arabic):</b><br/>
+                  <b for="inputEmail4">Name(Arabic):</b><br/>
                   {{data.name_ar}}
               </div>
                 <div class="form-group col-md-6">
-                  <b for="inputPassword4">Description(arabic):</b><br/>
+                  <b for="inputPassword4">Description(Arabic):</b><br/>
                   {{data.description_ar}}
             </div>
               <div class="form-group col-md-12">
@@ -39,16 +38,16 @@
                 
               <div class="form-group col-md-12" *ngIf="data.status=='Active'" >
                 <b for="inputState">Status:</b><br/>
-                Unblock
+                Unblocked
                
             </div>
             <div class="form-group col-md-12" *ngIf="data.status=='Inactive'" >
                 <b for="inputState">Status:</b><br/>
-                Block
+                Blocked
                
             </div>
             </div>
-            <button [routerLink]="['/theme/brands']"  type="button" class="btn btn-success" >Back</button>
+            <button [routerLink]="['/theme/brands']"  type="button" class="btn btn-primary" >Back</button>
            
 
             </form>

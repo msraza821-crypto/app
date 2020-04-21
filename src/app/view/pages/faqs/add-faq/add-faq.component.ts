@@ -31,13 +31,15 @@ export class AddFaqComponent implements OnInit {
   }
   FORM_ERROR = {
     name: {
-      required: ERROR_MESSAGES.REQUIRED,
+      required: ERROR_MESSAGES.QUESTION_REQURIED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_NAME_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     descriptions: {
-      required: ERROR_MESSAGES.REQUIRED,
+      required: ERROR_MESSAGES.ANSWER_REQURIED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     statusKey: {
@@ -47,8 +49,8 @@ export class AddFaqComponent implements OnInit {
 
   createForm() {
     this.loginForm = this._fb.group({
-      name: ["", [Validators.required, Validators.pattern(Regex.spacesDatas)]],
-      descriptions: ["", [Validators.required, Validators.pattern(Regex.description)]],
+      name: ["", [Validators.required, Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      descriptions: ["", [Validators.required, Validators.pattern(Regex.description),Validators.maxLength(CONFIG.DESCRIPTION_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
       statusKey: ["", [Validators.required]]
     });
   }

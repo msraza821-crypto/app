@@ -39,11 +39,13 @@ export class ProfileComponent implements OnInit {
     firstname: {
       required: ERROR_MESSAGES.NAME_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     lastname: {
       required: ERROR_MESSAGES.NAME_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     }
   };
@@ -51,8 +53,8 @@ export class ProfileComponent implements OnInit {
   createForm() {
     this.loginForm = this._fb.group({
       email: [this.userData.email, [Validators.required, Validators.pattern(Regex.email),Validators.maxLength(CONFIG.EMAIL_LENGTH)]],
-      firstname: [this.userData.first_name, [Validators.required, Validators.pattern(Regex.spacecharacter),Validators.maxLength(CONFIG.NAME_LENGTH)]],
-      lastname: [this.userData.last_name, [Validators.required, Validators.pattern(Regex.spacecharacter),Validators.maxLength(CONFIG.NAME_LENGTH)]],
+      firstname: [this.userData.first_name, [Validators.required, Validators.pattern(Regex.spacecharacter),Validators.maxLength(CONFIG.NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      lastname: [this.userData.last_name, [Validators.required, Validators.pattern(Regex.spacecharacter),Validators.maxLength(CONFIG.NAME_LENGTH),,Validators.minLength(CONFIG.NAME_MINLENGTH)]],
 
     });
   }
@@ -64,6 +66,7 @@ export class ProfileComponent implements OnInit {
         console.log(appState)
         if(appState && appState.user){
            this.userData=appState.user; 
+           this.url=this.userData.profile_picture;
         
       }
 
@@ -119,7 +122,9 @@ export class ProfileComponent implements OnInit {
     if (this.loginForm.valid) {
       this.spinner.show();
       const formData = new FormData();
+      if(this.url1){
       formData.append('profile_picture', this.url1);
+      }
       formData.append('first_name', this.loginForm.value.firstname);
       formData.append('last_name', this.loginForm.value.lastname);
       formData.append('email',this.userData.email);

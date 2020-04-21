@@ -165,6 +165,14 @@ export class HttpService {
   private handleError1(err){
     return of(err.error);
   }
+  exportCategoryService(url) {
+    // const reqUrl = this.baseUrl + url;
+    // const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+    // return this.http.get(`${reqUrl}`, { headers, responseType: 'text' as 'json' }).pipe(tap((res) => { }),
+    //   map(this.extractData),
+    //   catchError(this.handleError),
+    // );
+  }
 getReqAuthIP(url: string) {
   this.appSer.showLoader();
   const reqUrl = url;

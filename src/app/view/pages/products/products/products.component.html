@@ -16,21 +16,21 @@
             <!-- <div class="col-md-2 float-left">
               <select id="inputState" class="form-control" [formControl]="status">
                 <option value="">All</option>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
+                <option value="Active">Unblocked</option>
+                <option value="Inactive">Blocked</option>
               </select>
             </div> -->
             <div class="col-md-4 float-left">
                
               <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
               [formControl]="range"
-                placeholder="Select Range"  />
+                placeholder="Filter Date"  />
             </div>
             <div class="col-md-4 float-left">
                 <a (click)="exportDataF()"> <button type="button" class="ml-3 btn bg-dark  white float-right ml-1">Export to
                     CSV</button></a>
               <a> <button type="button" (click)="reset()" class="btn btn-danger float-right ml-1">Reset</button></a>
-              <a> <button type="button" (click)="filter()" class="btn btn-success float-right ml-1">Filter</button></a>
+              <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>
 
 
             </div>
@@ -47,15 +47,15 @@
               <div class="col-sm-2 col-lg-2 float-left"> 
                   <select class="form-control" [formControl]="status" (change)="filterSelectedStatus($event.target.value)">
                       <option value="">All</option>
-                      <option value="Active">Active</option>
-                      <option value="Inactive">Inactive</option>
+                      <option value="Active">Unblocked</option>
+                      <option value="Inactive">Blocked</option>
                   </select>
                 </div>
         </div>
         <div class="card-body">
           <div class="col-sm-12 col-lg-12">
             <div class="card text-white ">
-              <div class="card-body pb-0">
+              <div class="pb-0">
                 <table class="table table-striped">
                   <thead>
                     <tr>
@@ -75,7 +75,7 @@
                     itemsPerPage: limit,
                     currentPage: page,
                     totalItems: totalRec };">
-                      <td scope="row">en: {{i.name}}
+                      <td scope="row" style=" text-transform: capitalize;">en: {{i.name}}
                       </td>
                       <td>en: {{i.description}}
                       </td>
@@ -108,7 +108,7 @@
 
                   </tbody>
                   <tbody *ngIf="collection.length==0">
-                    <tr>
+                    <tr class="text-center">
                       <td colspan="8">No records found</td>
                     </tr>
                   </tbody>

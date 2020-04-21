@@ -5,7 +5,12 @@
 agm-map {
     height: 300px;
   }
-  
+  .bg-dark{
+    color:white;
+  }
+  .btn-dark{
+    color:white;
+  }
 header {
     position: absolute;
     top: 0;

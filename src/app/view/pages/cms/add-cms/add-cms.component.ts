@@ -31,13 +31,15 @@ export class AddCmsComponent implements OnInit {
   }
   FORM_ERROR = {
     name: {
-      required: ERROR_MESSAGES.REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH}`,
+      required: ERROR_MESSAGES.NAME_ENGLISH_REQUIREDCMS,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH_TITLE}`,
+      minlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     descriptions: {
-      required: ERROR_MESSAGES.REQUIRED,
+      required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIREDCMS,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     statusKey: {
@@ -47,8 +49,8 @@ export class AddCmsComponent implements OnInit {
 
   createForm() {
     this.loginForm = this._fb.group({
-      name: ["", [Validators.required, Validators.pattern(Regex.spacesDatas)]],
-      descriptions: ["", [Validators.required, Validators.pattern(Regex.description)]],
+      name: ["", [Validators.required, Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_LENGTH_TITLE),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      descriptions: ["", [Validators.required, Validators.pattern(Regex.description),Validators.maxLength(CONFIG.DESCRIPTION_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
       statusKey: ["", [Validators.required]]
     });
   }

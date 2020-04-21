@@ -3,8 +3,8 @@
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-          Add
-          <small>Cms</small>
+            
+<b style="font-size:18px;">Add CMS</b>
         </div>
         <div class="card-body">
 
@@ -15,35 +15,35 @@
                    
               <div class="form-group col-md-12">
                 <label for="inputEmail4">Title</label>
-                <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Name">
+                <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Name" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_LENGTH_TITLE">
               </div>
               <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
               <div class="form-group col-md-12">
                 <label for="inputPassword4">Description</label>
                 <!-- <textarea type="text" [formControl]="descriptions" class="form-control" id="inputPassword4"
                   placeholder="Description"></textarea> -->
-                  <ejs-richtexteditor [formControl]="descriptions"></ejs-richtexteditor>
+                  <ejs-richtexteditor [formControl]="descriptions" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_LENGTH"></ejs-richtexteditor>
               </div>
               <span class="error text-danger">{{_util.errorMessage(descriptions,FORM_ERROR?.descriptions)}}</span>
               <!-- <div class="form-group col-md-12">
                 <label for="exampleFormControlFile1">Cms Image</label>
                 <input type="file" class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
               </div> -->
-              <!-- <img [src]="url ? url : 'assets/img/avatars/avtar.svg'" /> -->
+              <!-- <img style="height:100px;width:100px;" class="img-circle"[src]="url ? url : 'assets/img/avatars/avtar.svg'" /> -->
             
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-6">
                 <label for="inputState">Status</label>
                 <select id="inputState" [formControl]="statusKey" class="form-control">
                   <option value="">Please Select</option>
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
+                  <option value="active">Unblocked</option>
+                  <option value="inactive">Blocked</option>
                 </select>
               </div>
               <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
             </div>
 
               <br>
-              <button type="button" class="btn btn-success" (click)="submit()">Submit</button>
+              <button type="button" class="btn btn-primary" (click)="submit()">Save</button>
 
             </form>
 

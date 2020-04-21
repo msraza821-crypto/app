@@ -2,6 +2,12 @@ form{
     width:100%;
     margin-left:10px;
 }
+.bg-dark{
+    color:white;
+  }
+  .btn-dark{
+    color:white;
+  }
 /******************Home Page CSS*****************/
 .banner-block figure img {
     width: 100%;

@@ -17,7 +17,7 @@ export const navItems: INavData[] = [
   {
     name: 'Users',
     url: '/theme/users',
-    icon: 'icon-drop',
+    icon: 'icon-user',
    
 },
   {
@@ -29,7 +29,7 @@ export const navItems: INavData[] = [
 {
     name: 'Categories',
     url: '/theme/categories',
-    icon: 'icon-cursor',
+    icon: 'icon-list',
   
 },
 // {
@@ -50,12 +50,12 @@ export const navItems: INavData[] = [
 // ]
 // },
 {
-  name: 'Cms',
+  name: 'CMS',
   url: '/theme/cms',
   icon: 'icon-pencil',
   
 },{
-  name: 'Faqs',
+  name: 'FAQs',
   url: '/theme/faqs',
   icon: 'icon-star',
  

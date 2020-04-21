@@ -60,6 +60,12 @@ export class ChildcategoriesComponent implements OnInit {
     this.createForm();
     this.loadCats();
   }
+  filterSelected(selectedValue) {
+    console.log('selected value= ' + selectedValue)
+    this.limit = selectedValue;
+    this.loadCats();
+
+  }
   viewCate(){
     this.api
     .getReqAuth("admin/category/detail?id="+this.id)
@@ -160,7 +166,8 @@ export class ChildcategoriesComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-  successdelete(res) {
+    successdelete(res) {
+    this.page=1;
     this.ngOnInit();
   }
   deletedId: number;

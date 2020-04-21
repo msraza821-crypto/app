@@ -9,7 +9,7 @@ const pageRoutes: Routes = [
   { path: '', canActivate: [],data: { title: 'Settings' }, children: [
     {
       path: '',  
-  data: { title: 'Edit Profile' }, component: ProfileComponent },
+  data: { title: '' }, component: ProfileComponent },
   { path: 'change-password', canActivate: [],  data: { title: 'Change Password' },component: ChangePasswordComponent },
 ]}];
 

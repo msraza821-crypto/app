@@ -139,7 +139,12 @@ export class SubcategoriesComponent implements OnInit {
     this.createForm();
     this.loadCats();
   }
+  filterSelected(selectedValue) {
+    console.log('selected value= ' + selectedValue)
+    this.limit = selectedValue;
+    this.loadCats();
 
+  }
   filter() {
     console.log(this.loginForm.value)
     this.loadCats();
@@ -153,7 +158,8 @@ export class SubcategoriesComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-  successdelete(res) {
+    successdelete(res) {
+    this.page=1;
     this.ngOnInit();
   }
   deletedId: number;

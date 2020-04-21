@@ -12,7 +12,7 @@
         <div class="card-body">
           <div class="col-sm-12 col-lg-12">
             <div class="card text-white ">
-              <div class="card-body pb-0">
+              <div class="pb-0">
                 <table class="table table-striped">
                   <thead>
                     <tr>
@@ -29,7 +29,7 @@
                       itemsPerPage: limit,
                       currentPage: page,
                       totalItems: totalRec };">
-                      <td scope="row">{{i.name}}
+                      <td scope="row" style=" text-transform: capitalize;">{{i.name}}
                       </td>
                       <td>{{i.description}}
                       </td>
@@ -43,7 +43,7 @@
 
                   </tbody>
                   <tbody *ngIf="collection.length==0">
-                    <tr>
+                    <tr class="text-center">
                       <td colspan="4">No records found</td>
                     </tr>
                   </tbody>

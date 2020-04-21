@@ -9,10 +9,11 @@ const routes: Routes = [
     path: "",
     component: LayoutComponent,
     data: {
-      title: 'Home'
+      title: 'Dashboard'
     },
     children: [
       { path: '',canLoad:[ActivateGuard], loadChildren: '../pages/dashboard/dashboard.module#DashboardModule' },
+      { path: 'Dashbaord',canLoad:[ActivateGuard], loadChildren: '../pages/dashboard/dashboard.module#DashboardModule' },
       { path: 'settings',canLoad:[ActivateGuard],  loadChildren: '../pages/settings/settings.module#SettingsModule' },
       { path: 'users',canLoad:[ActivateGuard], loadChildren: '../pages/users/users.module#UsersModule' },
       { path: 'brands',canLoad:[ActivateGuard], loadChildren: '../pages/brands/brands.module#BrandsModule' },

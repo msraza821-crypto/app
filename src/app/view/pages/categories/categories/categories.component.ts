@@ -108,11 +108,14 @@ export class CategoriesComponent implements OnInit {
   pageChanged(event) {
     console.log("pageChanged")
   }
+  url:string;
 
   openVerticallyCentered(poup, data) {
     this.modalService.open(poup, { centered: true });
     this.deletedId = data.id;
     this.statusData = data.status;
+    this.url=data.category_image;
+    alert(this.url)
   }
   reset() {
     this.createForm();
@@ -132,7 +135,8 @@ export class CategoriesComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-  successdelete(res) {
+    successdelete(res) {
+    this.page=1;
     this.ngOnInit();
   }
   filterSelected(selectedValue) {
