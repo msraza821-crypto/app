@@ -4,53 +4,27 @@
         <div class="card">
           <div class="card-header">
               <b style="margin-left: 14px;font-size:18px;">CMS</b>
-            <!-- <a [routerLink]="['/theme/cms/add']"> <button type="button" class="btn btn-primary float-right ml-1">Add
-                Cms</button></a>
-          -->
+ 
           
            </div>
           <div class="card-body">
             <div class="col-sm-12 col-lg-12">
-              <div class="card text-white ">
-                <div class="pb-0">
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-  
-                        <th scope="col">Title</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody *ngIf="collection.length>0">
-                      <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
-                      itemsPerPage: limit,
-                      currentPage: page,
-                      totalItems: totalRec };">
-                        <td scope="row" style=" text-transform: capitalize;">{{i.content_title}}</td>
-                        <td>{{i.content_description}}</td>
-                    <td>
-                          <a [routerLink]="['/theme/cms/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;  
-                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'"> <i style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;   
-                          <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i></a>&nbsp;
-                          <a (click)="openVerticallyCentered(poup)"> <i style="font-size:24px"
-                              class="fa fa-trash-o"></i></a>
-  
-                        </td>
-                      </tr>
-                  
-                    </tbody>
-                    <tbody *ngIf="collection.length==0">
-                        <tr class="text-center">
-                          <td colspan="3">No records found</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <pagination-controls *ngIf="collection.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
-                      (pageChange)="page = $event"></pagination-controls>
-                </div>
-              </div>
-            </div>
+            
+                
+                    <div class="list-group" *ngFor="let i of collection;" style="width: 15%;margin-bottom: 20px;border-bottom: 1px solid #3a4248;">
+                     
+                        <a [routerLink]="['/theme/cms/add',{id:i?.id}]"  style="text-decoration: none;color:#3a4248" class=" "><i class="fa fa-plus"></i> {{i.content_title}}</a>
+           
+                      </div>
+                      <div class="list-group" style="width: 15%;margin-bottom: 20px;border-bottom: 1px solid #3a4248;">
+                     
+                          <a [routerLink]="['/theme/faqs']" class=" " style="text-decoration: none;color:#3a4248"><i class="fa fa-plus"></i> FAQ's</a>
+             
+                        </div>
+                   
+                    
+                
+             
           </div>
         </div>
       </div>

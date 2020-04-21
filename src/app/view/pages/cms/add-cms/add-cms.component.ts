@@ -33,13 +33,13 @@ export class AddCmsComponent implements OnInit {
     name: {
       required: ERROR_MESSAGES.NAME_ENGLISH_REQUIREDCMS,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH_TITLE}`,
-      minlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+      
     },
     descriptions: {
       required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIREDCMS,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
-      minlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH_CMS}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     statusKey: {
@@ -49,8 +49,8 @@ export class AddCmsComponent implements OnInit {
 
   createForm() {
     this.loginForm = this._fb.group({
-      name: ["", [Validators.required, Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_LENGTH_TITLE),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-      descriptions: ["", [Validators.required, Validators.pattern(Regex.description),Validators.maxLength(CONFIG.DESCRIPTION_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      name: ["", [Validators.required,Validators.maxLength(CONFIG.NAME_LENGTH_TITLE),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      descriptions: ["", [Validators.required, Validators.pattern(Regex.description),Validators.maxLength(CONFIG.DESCRIPTION_LENGTH_CMS),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
       statusKey: ["", [Validators.required]]
     });
   }
@@ -151,7 +151,7 @@ id:string=null;
       formData.append('status', this.loginForm.value.statusKey);
       console.log(formData)
       this.api
-      .putReqAuth("admin/cms/edit",formData).subscribe(
+      .putReqAuth("admin/cms/edit",{id:this.id,'content_title':this.loginForm.value.name,'content_description':this.loginForm.value.descriptions,'status':this.loginForm.value.statusKey}).subscribe(
         res => this.success(res),
         err => this.error(err),
         () => (this.loader = false)
@@ -167,12 +167,13 @@ id:string=null;
       this.spinner.show();
 
       const formData = new FormData();
+      formData.append('id', this.id);
      formData.append('content_title', this.loginForm.value.name);
      formData.append('content_description', this.loginForm.value.descriptions);
 
       console.log(formData)
       this.api
-      .postReqAuth("admin/cms/add",formData).subscribe(
+      .postReqAuth("admin/cms/edit",{id:this.id,'content_title':this.loginForm.value.name,'content_description':this.loginForm.value.descriptions,'status':this.loginForm.value.statusKey}).subscribe(
         res => this.success(res),
         err => this.error(err),
         () => (this.loader = false)
@@ -181,6 +182,7 @@ id:string=null;
     this._util.markError(this.loginForm);
   }
 }
+errorMessage:string;
   success(res) {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
@@ -189,7 +191,11 @@ id:string=null;
     if(res.status==true){
       this.router.navigate(['theme/cms'])
   } else {
-    this._util.markError(this.loginForm);
+    this.errorMessage = res.message;
+    setTimeout(() => {
+      this.errorMessage = "";
+     
+    }, 5000);
   }
 
   }

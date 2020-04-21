@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header">
             
-<b style="font-size:18px;">Add CMS</b>
+<b style="font-size:18px;">Edit CMS</b>
         </div>
         <div class="card-body">
 
@@ -12,7 +12,7 @@
           <div class="row ">
             <form>
                 <div class="row ">
-                   
+                    <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
               <div class="form-group col-md-12">
                 <label for="inputEmail4">Title</label>
                 <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Name" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_LENGTH_TITLE">
@@ -22,7 +22,7 @@
                 <label for="inputPassword4">Description</label>
                 <!-- <textarea type="text" [formControl]="descriptions" class="form-control" id="inputPassword4"
                   placeholder="Description"></textarea> -->
-                  <ejs-richtexteditor [formControl]="descriptions" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_LENGTH"></ejs-richtexteditor>
+                  <ejs-richtexteditor [formControl]="descriptions" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_LENGTH_CMS"></ejs-richtexteditor>
               </div>
               <span class="error text-danger">{{_util.errorMessage(descriptions,FORM_ERROR?.descriptions)}}</span>
               <!-- <div class="form-group col-md-12">
@@ -31,7 +31,7 @@
               </div> -->
               <!-- <img style="height:100px;width:100px;" class="img-circle"[src]="url ? url : 'assets/img/avatars/avtar.svg'" /> -->
             
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-2">
                 <label for="inputState">Status</label>
                 <select id="inputState" [formControl]="statusKey" class="form-control">
                   <option value="">Please Select</option>
@@ -43,7 +43,7 @@
             </div>
 
               <br>
-              <button type="button" class="btn btn-primary" (click)="submit()">Save</button>
+              <button type="button" class="btn btn-primary" (click)="update()">Save</button>
 
             </form>
 

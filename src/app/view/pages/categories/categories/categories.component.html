@@ -3,7 +3,8 @@
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-            <b style="margin-left: 14px;font-size:18px;"> Categories</b>
+    
+             <b style="margin-left: 14px;font-size:24px;"> Categories</b>
          
           <a [routerLink]="['/theme/categories/add']" > <button type="button" style="margin:0px 18px -2px 0px"
               class="btn btn-primary float-right ml-1">Add
@@ -73,8 +74,8 @@
                       <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
                       <td>{{i.name_ar}}
                     </td>
-                    <td> {{i.description}}</td>
-                    <td> {{i.description_ar}}
+                    <td [title]="i.description"> {{i.description}}</td>
+                    <td [title]="i.description_ar"> {{i.description_ar}}
                     </td>
                       <td>{{i.totalCount}}
                       </td>
@@ -82,8 +83,10 @@
                   </td>
                   <td  *ngIf="i.status=='Inactive'" >Blocked
                     </td>
-                      <td><img (click)="openVerticallyCentered(poupimage,i)" style="height: 60px;width:60px;" class="img-circle zoom"
+                      <td *ngIf="i.category_image"><img (click)="openVerticallyCentered(poupimage,i)" style="height: 60px;width:60px;" class=""
                           [src]="i.category_image ? i.category_image : 'assets/img/avatars/avtar.svg'" /></td>
+                          <td *ngIf="i.category_image==null"><img style="height: 60px;width:60px;" class=""
+                            [src]="i.category_image ? i.category_image : 'assets/img/avatars/avtar.svg'" /></td>
                       <td>
                         <a [routerLink]="['/theme/categories/add',{id :i?.id}]"> <i style="font-size:24px"
                             class="fa fa-edit"></i></a>&nbsp;
@@ -119,10 +122,10 @@
 
 <ng-template #poupimage let-modal>
   <!----- Header  ------>
-  <section id="modal-header">
-    <h5 class="p-3 primary-color-bg bg-dark text-center">Image Category</h5>
+  <section >
   
-    <img class="modal-content" id="img01" [src]=url>
+  
+    <img class="modal-content" id="img01" [src]=url  style="width:100%;height:auto">
   </section>
 </ng-template>
 <ng-template #poup let-modal>

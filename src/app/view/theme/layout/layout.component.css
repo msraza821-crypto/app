@@ -9,7 +9,10 @@
     position: relative;
     display: inline-block;
   }
-  
+  .sidebar .nav-link.active {
+    color: #fff !important;
+    background: #20a8d8 !important;
+}
   .dropdown-content {
     display: none;
     position: absolute;

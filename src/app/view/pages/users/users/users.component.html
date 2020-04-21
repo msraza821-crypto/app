@@ -3,7 +3,8 @@
       <div class="col-sm-12 col-lg-12">
         <div class="card">
           <div class="card-header">
-          <b style="margin-left: 14px;font-size:18px;">Users</b>  
+  
+             <b style="margin-left: 14px;font-size:24px;">Users</b>  
            
 
           <a (click)="exportDataF()"> <button  style="margin:0px 19px -2px 0px;color:white;" type="button" class="ml-3 btn bg-dark  white float-right ml-1">Export to
@@ -81,9 +82,9 @@
                           </td>
                         <td> {{i.created_at}}
                       </td>
-                      <td  *ngIf="i.status=='Active'" >Blocked
+                      <td  *ngIf="i.status=='Active'" >Unblocked
                         </td>
-                        <td  *ngIf="i.status=='Inactive'" >Unblocked
+                        <td  *ngIf="i.status=='Inactive'" >Blocked
                           </td>
                           <td  *ngIf="i.status=='Pending'" >Pending
                             </td>

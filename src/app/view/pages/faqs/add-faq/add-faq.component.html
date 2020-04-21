@@ -4,7 +4,8 @@
       <div class="card">
         <div class="card-header">
             
-<b style="font-size:18px;">Add FAQ</b>
+            <b *ngIf="this.id==null" style="font-size:18px;">Add FAQ</b>
+            <b *ngIf="this.id" style="font-size:18px;">Edit FAQ</b>
         </div>
         <div class="card-body">
 
@@ -30,7 +31,7 @@
               </div> -->
               <!-- <img style="height:100px;width:100px;" class="img-circle"[src]="url ? url : 'assets/img/avatars/avtar.svg'" /> -->
                 
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-2">
                 <label for="inputState">Status</label>
                 <select id="inputState" [formControl]="statusKey" class="form-control">
                   <option value="">Please Select</option>

@@ -12,7 +12,7 @@ import { RichTextEditorAllModule } from '@syncfusion/ej2-angular-richtexteditor'
 const pageRoutes: Routes = [
 
   {path: '', data:{title:'CMS'},canActivate: [],children:[{ path: '', data:{title:''}, canActivate: [], component: CmsComponent },
-  { path: 'add', canActivate: [], component: AddCmsComponent, data:{title:'Add CMS'} }
+  { path: 'add', canActivate: [], component: AddCmsComponent, data:{title:'Edit CMS'} }
 ]}
 ];
 

@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
         
       });
       if(this.userVaild==true){
-        this.router.navigate(['/theme']);
+        this.router.navigate(['/theme/dashboard']);
       }
     this.createForm();
   }
@@ -122,7 +122,7 @@ export class LoginComponent implements OnInit {
       console.log(res.result)
       this.store.dispatch(new AppActions.UserSignup(res.result));
       localStorage.setItem("chicbeetoken", res.result.token);
-      this.router.navigate(['/theme']);
+      this.router.navigate(['/theme/dashboard']);
     } else {
       this.errorMessage = res.message;
       setTimeout(() => {

@@ -3,7 +3,8 @@
       <div class="col-sm-12 col-lg-12">
         <div class="card">
           <div class="card-header">
-              <b style="margin-left: 14px;font-size:18px;">  Child categories</b>
+      
+             <b style="margin-left: 14px;font-size:24px;">  Child categories</b>
            
             <a  [routerLink]="['/theme/categories/subcategories/add-childcategory',{parent_id:this.data.id}]" > <button type="button"
                 class="btn btn-primary float-right ml-1" style="margin:0px 18px -2px 0px">Add
@@ -69,8 +70,8 @@
                         <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
                         <td >{{i.name_ar}}
                       </td>
-                      <td> {{i.description}}</td>
-                      <td> {{i.description_ar}}
+                      <td [title]="i.description"> {{i.description}}</td>
+                      <td [title]="i.description_ar"> {{i.description_ar}}
                       </td>
                         <!-- <td>{{i.totalCount}}
                         </td> -->
@@ -78,8 +79,10 @@
                           </td>
                           <td  *ngIf="i.status=='Inactive'" >Blocked
                             </td>
-                        <td><img style="height: 60px;width:60px;" class="img-circle"
-                          [src]="i.category_image ? i.category_image : 'assets/img/avatars/avtar.svg'" /></td>
+                            <td *ngIf="i.category_image"><img (click)="openVerticallyCentered(poupimage,i)" style="height: 60px;width:60px;" class=""
+                              [src]="i.category_image ? i.category_image : 'assets/img/avatars/avtar.svg'" /></td>
+                              <td *ngIf="i.category_image==null"><img style="height: 60px;width:60px;" class=""
+                                [src]="i.category_image ? i.category_image : 'assets/img/avatars/avtar.svg'" /></td>
                       
                         <td>
                           <a [routerLink]="['/theme/categories/subcategories/add-childcategory',{parent_id:this.data.id,id :i?.id}]"> <i style="font-size:24px"
@@ -112,7 +115,14 @@
       </div>
     </div>
   </div>
-  
+  <ng-template #poupimage let-modal>
+    <!----- Header  ------>
+    <section >
+    
+    
+      <img class="modal-content" id="img01" [src]=url  style="width:100%;height:auto">
+    </section>
+  </ng-template> 
   <ng-template #poup let-modal>
     <!----- Header  ------>
     <section id="modal-header">

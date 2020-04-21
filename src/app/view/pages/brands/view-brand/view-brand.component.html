@@ -3,7 +3,8 @@
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-            <b style="margin-left: 14px;font-size:18px;">View Brand</b>
+    
+             <b style="font-size:24px;">View Brand</b>
         </div>
         <div class="card-body">
 
@@ -32,7 +33,7 @@
             </div>
               <div class="form-group col-md-12">
                 <b for="exampleFormControlFile1">Brand Image:</b><br/>
-                <img [src]="data.brand_image" />
+                <img (click)="openVerticallyCentered(poupimage,i)" style="height:100px;width:100px;" class="img-circle" [src]="data.brand_image" />
               </div>
             
                 
@@ -59,3 +60,13 @@
     </div>
   </div>
 </div>
+
+
+<ng-template #poupimage let-modal>
+    <!----- Header  ------>
+    <section >
+    
+    
+      <img class="modal-content" id="img01" [src]=url  style="width:100%;height:auto">
+    </section>
+  </ng-template>

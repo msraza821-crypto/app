@@ -5,7 +5,8 @@
         <div class="card-header">
           
             
-        <b style="margin-left: 14px;font-size:18px;"> Brands</b> 
+
+             <b style="margin-left: 14px;font-size:24px;"> Brands</b> 
         <a (click)="exportDataF()"> <button type="button" style="margin:0px 19px -2px 0px;color:white;" class="ml-3 btn bg-dark  white float-right ml-1" > Export to
             CSV</button></a>
           <a [routerLink]="['/theme/brands/add']"> <button type="button" style="margin-right: -11px"  class="btn btn-primary float-right ml-1">Add
@@ -20,8 +21,8 @@
             <div class="col-md-2 float-left">
               <select id="inputState" class="form-control" [formControl]="status">
                 <option value="">All</option>
-                <option value="Active">Unblocked</option>
-                <option value="Inactive">Blocked</option>
+             
+                <option value="inactive">Blocked</option>   <option value="active">Unblocked</option>
               </select>
             </div>
             <div class="col-md-2 float-left">               
@@ -76,8 +77,8 @@
                       <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
                         <td>{{i.name_ar}}
                       </td>
-                      <!-- <td> {{i.description}}</td>
-                      <td> {{i.description_ar}}
+                      <!-- <td [title]="i.description"> {{i.description}}</td>
+                      <td [title]="i.description_ar"> {{i.description_ar}}
                       </td> -->
                       <td> {{i.created_at}}
                     </td>
@@ -112,7 +113,14 @@
     </div>
   </div>
 </div>
-
+<ng-template #poupimage let-modal>
+  <!----- Header  ------>
+  <section >
+  
+  
+    <img class="modal-content" id="img01" [src]=url  style="width:100%;height:auto">
+  </section>
+</ng-template>
 <ng-template #poup let-modal>
   <!----- Header  ------>
   <section id="modal-header"> 

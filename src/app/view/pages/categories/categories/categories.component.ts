@@ -109,13 +109,23 @@ export class CategoriesComponent implements OnInit {
     console.log("pageChanged")
   }
   url:string;
-
+  showModal: boolean=true;
+  show()
+  {
+    this.showModal = true; // Show-Hide Modal Check
+    
+  }
+  //Bootstrap Modal Close event
+  hide()
+  {
+    this.showModal = false;
+  }
   openVerticallyCentered(poup, data) {
     this.modalService.open(poup, { centered: true });
     this.deletedId = data.id;
     this.statusData = data.status;
     this.url=data.category_image;
-    alert(this.url)
+   // alert(this.url)
   }
   reset() {
     this.createForm();
