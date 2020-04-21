@@ -77,13 +77,10 @@ export class BrandsComponent implements OnInit {
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
      var url="admin/brand/list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=1";
-    this.api
-      .getReqAuth(url)
-      .subscribe(
-        res => this.successFile(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
+    this.api.getReqAuthExport(url).subscribe(
+      res=> this.downloadFile(res),
+      err=> this.error(err),()=> (this.loader= false)
+    );
   }
   userExportCSV() {
     this.exportData = 1;
