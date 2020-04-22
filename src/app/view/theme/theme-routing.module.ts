@@ -21,6 +21,8 @@ const routes: Routes = [
       { path: 'faqs',canLoad:[ActivateGuard],loadChildren: '../pages/faqs/faqs.module#FaqsModule' },
       { path: 'contactus',canLoad:[ActivateGuard],  loadChildren: '../pages/contactus/contactus.module#ContactusModule' },
       { path: 'products',canLoad:[ActivateGuard], loadChildren: '../pages/products/products.module#ProductsModule' },
+      { path: 'banners',canLoad:[ActivateGuard], loadChildren: '../pages/banners/banners.module#BannersModule' },
+
 
 
     ]

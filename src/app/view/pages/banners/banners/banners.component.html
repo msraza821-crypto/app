@@ -1,0 +1,183 @@
+
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-sm-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            
+              
+          <b style="margin-left: 14px;">Banners </b> 
+      
+            <a [routerLink]="['/theme/banners/add']"> <button type="button" style="margin:0px 48px -2px 0px" class="btn btn-primary float-right ml-1">Add
+                Banner</button></a>
+            
+            <hr />
+           
+            <div class="col-sm-12 col-lg-12" style="margin-left: -17px;">
+              <div class="col-md-2 float-left">
+                <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Brand Name">
+              </div>
+              <div class="col-md-2 float-left">
+                <select id="inputState" class="form-control" [formControl]="status">
+                  <option value="">All</option>
+                  <option value="Active">Unblock</option>
+                  <option value="Inactive">Block</option>
+                </select>
+              </div>
+              <div class="col-md-4 float-left">               
+                <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
+                [formControl]="range"
+                  placeholder="Select Range"  />
+              </div>
+              <div class="col-md-4 float-left" style="margin:0px -14px 10px 0px">
+                  <a (click)="exportDataF()"> <button type="button" class="ml-3 btn bg-dark  white float-right ml-1" style="color: white;"> Export to
+                      CSV</button></a>
+                <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1">Reset</button></a>
+                <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+              <div class="col-sm-1 col-lg-1 float-left"> 
+                  <select class="form-control" (change)="filterSelected($event.target.value)">
+                    <option value="10">10</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
+              
+          </div>
+          <div class="card-body">
+            <div class="col-sm-12 col-lg-12">
+              <div class="card text-white ">
+                <div class="card-body pb-0">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">From Date</th>
+                        <th scope="col">Expiry Date</th>
+                        <th scope="col">Created at</th>
+                        <th scope="col">Status</th>
+                       
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="collection.length>0">
+                      <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                      itemsPerPage: limit,
+                      currentPage: page,
+                      totalItems: totalRec };">
+                        <td scope="row">{{i.name}}</td>
+                          <td scope="row">{{i.name_ar}}
+                        </td>
+                        <td> {{i.description}}</td>
+                        <td> {{i.description_ar}}
+                        </td>
+                        <td> {{i.created_at}}
+                      </td>
+                      <td  *ngIf="i.status=='Active'" >Unblock
+                    </td>
+                    <td  *ngIf="i.status=='Inactive'" >Block
+                      </td>
+                       
+                        <td>
+                            <a [routerLink]="['/theme/banners/view',{id :i?.id}]" title="View Brand"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
+                          <a [routerLink]="['/theme/banners/add',{id :i?.id}]" title="Edit Brand"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
+                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'" title="Block Brand"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
+                          <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
+                          <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px"
+                              class="fa fa-trash-o"></i></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="collection.length==0">
+                      <tr class="text-center">
+                        <td colspan="7">No records found</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <pagination-controls *ngIf="collection.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
+                    (pageChange)="page = $event"></pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #poup let-modal>
+    <!----- Header  ------>
+    <section id="modal-header"> 
+      <h5 class="p-3 primary-color-bg bg-dark text-center">Delete banner</h5>
+      <div class="">
+        <div class="row pt-4">
+          <div class="col-md-12 frgtpass-head">
+            <p class="text-center"> Are you sure you want to delete this banner? </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-------------->
+    <section>
+      <div class=" frgtpass-btns mb-3">
+        <div class="row mt-3">
+          <div class="col-md-12 text-center">
+            <button type="button" class="ml-3 ml-3 btn bg-dark  white white" (click)="modal.close('Close click')">No</button>
+            <button type="button" class="ml-3 ml-3 btn bg-dark  white white" (click)="yes()">Yes</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+  <ng-template #poup1 let-modal>
+      <!----- Header  ------>
+      <section id="modal-header">
+        <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock banner</h5>
+        <div class="">
+          <div class="row pt-4">
+            <div class="col-md-12 frgtpass-head">
+              <p class="text-center"> Are you sure you want to unblock this banner? </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-------------->
+      <section>
+        <div class=" frgtpass-btns mb-3">
+          <div class="row mt-3">
+            <div class="col-md-12 text-center">
+              <button type="button" class="ml-3 btn bg-dark white" (click)="modal.close('Close click')">No</button>
+              <button type="button" class="ml-3 btn bg-dark white" (click)="yesStatus()">Yes</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </ng-template>
+    <ng-template #poup2 let-modal>
+        <!----- Header  ------>
+        <section id="modal-header">
+          <h5 class="p-3 primary-color-bg bg-dark text-center">Block Banner</h5>
+          <div class="">
+            <div class="row pt-4">
+              <div class="col-md-12 frgtpass-head">
+                <p class="text-center"> Are you sure you want to block this brand ? </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-------------->
+        <section>
+          <div class=" frgtpass-btns mb-3">
+            <div class="row mt-3">
+              <div class="col-md-12 text-center">
+                <button type="button" class="ml-3 ml-3 btn bg-dark  white white" (click)="modal.close('Close click')">No</button>
+                <button type="button" class="ml-3 btn bg-dark white" (click)="yesStatus()">Yes</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </ng-template>
