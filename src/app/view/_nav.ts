@@ -32,6 +32,13 @@ export const navItems: INavData[] = [
     icon: 'icon-list',
   
 },
+
+{
+  name: 'Banners',
+  url: '/theme/banners',
+  icon: 'icon-cursor',
+
+},
 // {
 //   name: 'Products',
 //   url: '/theme/products',

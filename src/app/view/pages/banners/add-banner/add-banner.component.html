@@ -1,0 +1,225 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-sm-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            Add 
+            <small>Banner</small>
+          </div>
+          <div class="card-body">
+  
+  
+        
+              <form>
+                  <div class="row ">
+                     
+                <div class="form-group col-md-6">
+                  <b for="inputEmail4">Banner Title</b> <br/>
+                <input type="text" class="form-control">                
+                </div>
+                <div class="form-group col-md-6 " >
+                    <b>Banner Image</b>
+                    <input type="file" class="form-control" accept="image/*"  id="exampleFormControlFile1">
+                   
+                </div>
+                  </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <b>Minimum Value:</b>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                
+                  <div class="row">
+                    <div class="col-md-4 float-left">
+                        <b>Availbale On:</b>
+                        <select id="inputState" class="form-control" >
+                          <option value="product">Product</option>
+                          <option value="brand">Brand</option>
+
+                        </select>
+                    </div>
+                    <div class="col-md-4 float-left">
+                        <b>Discount of</b>
+                        <select id="inputState" class="form-control" placeholder="" >
+                          <option value="">Flat 5%</option>
+                          <option value="Active">Flat 20%</option>
+                          <option value="Inactive">Flat 30%</option>
+                        </select>
+                    </div>
+
+
+                    <div class="col-md-4 ">
+                        <b>Discount Value</b>
+                        <div class="form-group ">
+                        
+                            <input type="text" class="form-control">
+                        </div>
+                    
+                    </div>
+                   
+              
+                  
+               
+              
+
+             
+              </div>
+
+
+                  <div class="row">
+                    <div class="col-md-6 ">
+
+                              <mat-form-field>
+                                <mat-label>Toppings</mat-label>
+                                <mat-select [formControl]="toppings" multiple (change)="brand($event)">
+                                  <mat-select-trigger>
+                                    {{toppings.value ? toppings.value[0] : ''}}
+                                    <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
+                                      (+{{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
+                                    </span>
+                                  </mat-select-trigger>
+                                  <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                              </div>
+                  </div>
+
+              <div class="row">
+                <div class="col-md-4 float-left">
+                    <b>Select Category</b>
+                    <select id="inputState" class="form-control" >
+                      <option value="">All</option>
+                      <option value="Active">Unblock</option>
+                      <option value="Inactive">Block</option>
+                    </select>
+                </div>
+                <div class="col-md-4 float-left">
+                    <b>Select Sub Category</b>
+                    <select id="inputState" class="form-control" placeholder="" >
+                      <option value="">% Of  Off </option>
+                      <option value="Active">Flat</option>
+                  
+                    </select>
+                </div>
+
+
+              
+                <div class="col-md-4 float-left">
+                    <b>Select Child</b>
+                    <select id="inputState" class="form-control" >
+                      <option value="">All</option>
+                      <option value="Active">Unblock</option>
+                      <option value="Inactive">Block</option>
+                    </select>
+                </div>
+          
+              
+           
+          
+
+         
+          </div>
+          <br>
+          
+          <div class="row">
+            <div class="col-sm-3 float-left"> 
+                <select class="form-control">
+                  <option value="10">10</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+          <div class="col-md-4 float-left ">               
+            <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
+        
+              placeholder="Select Range"  />
+          </div>
+
+      
+    
+      <div class="col-sm-12 col-lg-12 mr-top">
+        <div class="card text-white ">
+          <div class="card-body pb-0">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Product ID</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Brand</th>
+         
+                 
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <td>1</td>
+                <td>263636</td>
+                <td>ABc</td>
+                <td>xyz</td>
+                <td><input type="checkbox"></td>
+              </tbody>
+              </table>
+            </div>
+          </div>
+        
+
+      </div>
+
+          </div>
+
+              <button type="button"  (click)="brand()" type="button" class="btn btn-success" >Save.</button>
+             
+  
+              </form>
+  
+            
+          </div>
+        </div>
+  
+      </div>
+    </div>
+
+<!-- 
+    <div class="card-body">
+      <div class="col-sm-12 col-lg-12">
+        <div class="card text-white ">
+          <div class="card-body pb-0">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">From Date</th>
+                  <th scope="col">Expiry Date</th>
+                  <th scope="col">Created at</th>
+                  <th scope="col">Status</th>
+                 
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div> -->
+<!-- 
+      <mat-form-field>
+        <mat-label>Toppings</mat-label>
+        <mat-select [formControl]="toppings" multiple>
+          <mat-select-trigger>
+            {{toppings.value ? toppings.value[0] : ''}}
+            <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
+              (+{{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+        </mat-select>
+      </mat-form-field> -->
+
+  </div>
+
+
+

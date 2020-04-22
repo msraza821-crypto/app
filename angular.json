@@ -28,18 +28,25 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/@coreui/icons/css/coreui-icons.css",
               "node_modules/flag-icon-css/css/flag-icon.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/simple-line-icons/css/simple-line-icons.css",
+<<<<<<< HEAD
+              "src/scss/style.scss"
+=======
               "src/scss/style.scss",
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
              
             
 
+>>>>>>> 7e07e823222d1226a1af8ace6dd4863ed8269b33
             ],
-            "scripts": [ "node_modules/chart.js/dist/Chart.min.js"]
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -102,10 +109,11 @@
               "src/assets"
             ],
             "styles": [
-                "node_modules/bootstrap-css-only/css/bootstrap.min.css",
-                "node_modules/font-awesome/css/font-awesome.css",
-                "node_modules/ionicons/css/ionicons.css",
-                "node_modules/admin-lte-css/dist/css/skins/_all-skins.css"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/bootstrap-css-only/css/bootstrap.min.css",
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/ionicons/css/ionicons.css",
+              "node_modules/admin-lte-css/dist/css/skins/_all-skins.css"
             ],
             "scripts": []
           }
@@ -136,6 +144,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "my-second-project"
+    }
+  },
+  "defaultProject": "my-second-project",
+  "cli": {
+    "analytics": "23671b8e-16d3-4877-98d3-0e44cf4aa81d"
+  }
 }
