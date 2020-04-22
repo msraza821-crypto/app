@@ -33,7 +33,16 @@
               "node_modules/flag-icon-css/css/flag-icon.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/simple-line-icons/css/simple-line-icons.css",
+<<<<<<< HEAD
               "src/scss/style.scss"
+=======
+              "src/scss/style.scss",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+             
+            
+
+>>>>>>> 7e07e823222d1226a1af8ace6dd4863ed8269b33
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.min.js"

@@ -6,16 +6,17 @@ import { filter } from 'rxjs/operators';
 import { navItems } from '../../_nav';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppService } from 'src/app/service/app.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']
+  styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent implements OnInit {
-
+  stateSub:Subscription;
   constructor( 
     private router: Router,
-    private modalService: NgbModal,
+    private modalService: NgbModal, 
     private store: Store<any>,
     private route:ActivatedRoute,
     private appSer: AppService
@@ -27,9 +28,20 @@ export class LayoutComponent implements OnInit {
       this.sidebarMinimized = e;
     }
 
-  
+    userData:any={};
+    url="";
   ngOnInit() {
-  
+    this.stateSub = this.store.pipe(select('applicationState')).subscribe(
+      (appState) => {
+     
+        if(appState && appState.user){
+           this.userData=appState.user; 
+           this.url=this.userData.profile_picture;
+        
+      }
+
+        
+      });
   }
  
 

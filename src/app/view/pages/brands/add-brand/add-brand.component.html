@@ -3,10 +3,11 @@
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-          Add
-          <small>Brand</small>
+            
+<b  *ngIf="this.id==null" style="font-size:18px;">Add Brand</b>
+<b  *ngIf="this.id" style="font-size:18px;">Edit Brand</b> 
         </div>
-        <div class="card-body">
+        <div class="card-body"> 
 
 
           <div class="row ">
@@ -15,7 +16,7 @@
                    
               <div class="form-group col-md-6">
                 <label for="inputEmail4"><b>Name(English)</b></label>
-                <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Name">
+                <input type="text" [formControl]="name" class="form-control" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_MAX_LENGTH" id="inputEmail4" placeholder="Name">
 
                 <br/>
                 <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
@@ -23,7 +24,7 @@
               
               <div class="form-group col-md-6">
                 <label for="inputPassword4"><b>Description(English)</b></label>
-                <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4"
+                <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_NAME_LENGTH"
                   placeholder="Description"></textarea>
                   <br/>
                   <span class="error text-danger">{{_util.errorMessage(descriptionen,FORM_ERROR?.descriptionen)}}</span>
@@ -31,13 +32,13 @@
               
               <div class="form-group col-md-6">
                   <label for="inputEmail4"><b>Name(Arabic)</b></label>
-                  <input type="text" [formControl]="namear" class="form-control" id="inputEmail4"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="اسم">
+                  <input type="text" [formControl]="namear" class="form-control" id="inputEmail4"  [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_MAX_LENGTH" style="direction:RTL;" onkeyup="rtl(this);" placeholder="اسم">
                   <br/>
                 <span class="error text-danger">{{_util.errorMessage(namear,FORM_ERROR?.namear)}}</span>
               </div>
                 <div class="form-group col-md-6">
                   <label for="inputPassword4"><b>Description(Arabic)</b></label>
-                  <textarea type="text" [formControl]="descriptionar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
+                  <textarea type="text" [formControl]="descriptionar" class="form-control" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_NAME_LENGTH"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
                     placeholder="وصف"></textarea>
                     <br/> 
               <span class="error text-danger">{{_util.errorMessage(descriptionar,FORM_ERROR?.descriptionar)}}</span>
@@ -46,16 +47,16 @@
                 <label for="exampleFormControlFile1"><b>Brand Image</b></label>
                 <input type="file" class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
                 <br/>
-                <img [src]="url" />
+                <img style="height:100px;width:100px;" class="img-circle"[src]="url ? url : 'assets/img/avatars/avtar.svg'" />
               </div>
               
                 
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-2">
                 <label for="inputState"><b>Status</b></label>
                 <select id="inputState" [formControl]="statusKey" class="form-control">
                   <option value="">Please Select</option>
-                  <option value="active">Unblock</option>
-                  <option value="inactive">Block</option>
+                  <option value="active">Unblocked</option>
+                  <option value="inactive">Blocked</option>
                 </select>
                 <br/>
               <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
@@ -63,8 +64,8 @@
             </div>
 
               <br>
-              <button  *ngIf="this.id==null"  type="button" class="btn btn-success" (click)="submit()">Save</button>
-              <button *ngIf="this.id" type="button" class="btn btn-success" (click)="update()">Save</button>
+              <button  *ngIf="this.id==null"  type="button" class="btn btn-primary" (click)="submit()">Save</button>
+              <button *ngIf="this.id" type="button" class="btn btn-primary" (click)="update()">Save</button>
 
 
             </form>

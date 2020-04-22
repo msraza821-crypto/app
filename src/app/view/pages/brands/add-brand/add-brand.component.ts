@@ -30,23 +30,27 @@ export class AddBrandComponent implements OnInit {
   }
   FORM_ERROR = {
     name: {
-      required: ERROR_MESSAGES.NAME_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH}`,
+      required: ERROR_MESSAGES.NAME_ENGLISH_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MAX_LENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     descriptionen: {
-      required: ERROR_MESSAGES.DESCRIPTION_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_NAME_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     namear: {
-      required: ERROR_MESSAGES.NAME_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH}`,
+      required: ERROR_MESSAGES.NAME_ARABIC_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MAX_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     descriptionar: {
-      required: ERROR_MESSAGES.DESCRIPTION_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_NAME_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     statusKey: {
@@ -56,10 +60,10 @@ export class AddBrandComponent implements OnInit {
 
   createForm() {
     this.loginForm = this._fb.group({
-      name: ["", [Validators.required]],
-     descriptionen: ["", [Validators.required, Validators.pattern(Regex.description)]],
-      namear: ["", [Validators.required]],
-      descriptionar: ["", [Validators.required]],
+      name: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+     descriptionen: ["", [Validators.required, Validators.pattern(Regex.description),Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      namear: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      descriptionar: ["", [Validators.required,Validators.pattern(Regex.description),Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
       statusKey: ["", [Validators.required]]
     });
   }
@@ -183,7 +187,7 @@ id:string=null;
 
       this.spinner.show();
       const formData = new FormData();
-      formData.append('brand_image', '');
+      formData.append('brand_image', this.url1);
       formData.append('name', this.loginForm.value.name);
      formData.append('description', this.loginForm.value.descriptionen);
       formData.append('name_ar', this.loginForm.value.namear);

@@ -174,7 +174,8 @@ export class ProductsComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-  successdelete(res) {
+    successdelete(res) {
+    this.page=1;
     this.ngOnInit();
   }
   yesStatus() {

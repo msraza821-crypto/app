@@ -3,7 +3,8 @@
         <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-          Profile
+    
+             <b style="margin-left: 14px;font-size:24px;">Profile</b>
          
         </div>
         <div class="card-body">
@@ -17,27 +18,32 @@
                             <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
                             <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div>
                             <br>
-                          <div class="input-group mb-3">
+                          <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="icon-user"></i></span>
                             </div>
-                            <input type="text" [formControl]="firstname" [maxlength]="CONFIG?.NAME_LENGTH" class="form-control" placeholder="First Name" autocomplete="username" required>
-                          </div> <span class="error text-danger">{{_util.errorMessage(firstname,FORM_ERROR?.firstname)}}</span>
+                            <input type="text" [formControl]="firstname" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_LENGTH" class="form-control" placeholder="First Name" autocomplete="username" required>
+                          </div><br/> <span class="error text-danger">{{_util.errorMessage(firstname,FORM_ERROR?.firstname)}}</span>
                           <br/>
-                          <div class="input-group mb-3">
+                          <br/>
+                          <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="icon-user"></i></span>
                             </div>
-                            <input type="text" [formControl]="lastname" [maxlength]="CONFIG?.NAME_LENGTH" class="form-control" placeholder="Last Name" autocomplete="username" required>
+                            <input type="text" [formControl]="lastname" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_LENGTH" class="form-control" placeholder="Last Name" autocomplete="username" required>
                           </div> <span class="error text-danger">{{_util.errorMessage(lastname,FORM_ERROR?.lastname)}}</span>
-                          <br/>
-                          <div class="form-group md-3">
+                          <br/>  <br/>
+                          <div class="form-group">
                               <div class="input-group-prepend">
                                 </div>
                             <label for="exampleFormControlFile1">Profile Image</label>
                             <input type="file" class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
+                            <br/>
+                            <img style="height: 42px;" [src]="url" />
                           </div>
-                          <div class="input-group mb-3">
+
+                          
+                          <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text">@</span>
                             </div>
@@ -45,7 +51,7 @@
                           </div>
                           <span class="error text-danger">{{_util.errorMessage(email,FORM_ERROR?.email)}}</span>
                               <br/>
-                          <button type="button" class="btn btn-success"  (click)="submit()"> Submit</button>
+                          <button type="button" class="btn btn-primary"  (click)="submit()"> Save</button>
                         </form>
                       </div>
                       </div>

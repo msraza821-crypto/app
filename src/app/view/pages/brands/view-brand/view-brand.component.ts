@@ -6,6 +6,7 @@ import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
 import { HttpService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: "app-view-brand",
   templateUrl: "./view-brand.component.html",
@@ -24,6 +25,7 @@ export class ViewBrandComponent implements OnInit {
     private _fb: FormBuilder,
     private _util: CommonUtil,
     private api:HttpService,
+    private modalService: NgbModal,
     private spinner:NgxSpinnerService,
     private _route:ActivatedRoute,
     private router: Router) {
@@ -93,7 +95,12 @@ id:string=null;
   get statusKey(): FormControl {
     return this.loginForm.get("statusKey") as FormControl;
   }
+  openVerticallyCentered(poup, data) {
+    this.modalService.open(poup, { centered: true });
 
+    this.url=this.data.brand_image;
+   // alert(this.url)
+  }
 
   onSelectFile(event) {
     this.keyValue = true;

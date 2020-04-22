@@ -77,15 +77,46 @@ export class BrandsComponent implements OnInit {
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
      var url="admin/brand/list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=1";
-    this.api
-      .getReqAuth(url)
-      .subscribe(
-        res => this.successFile(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
+    this.api.getReqAuthExport(url).subscribe(
+      res=> this.downloadFile(res),
+      err=> this.error(err),()=> (this.loader= false)
+    );
   }
-  
+  userExportCSV() {
+    this.exportData = 1;
+    var start1 = '';
+    var end1 = '';
+    //  console.log(this.loginForm.value)
+     if(this.loginForm.value.range){
+       start1=this.loginForm.value.range.startDate._d;
+       var startDate=new Date(start1)
+        start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
+       end1=this.loginForm.value.range.endDate._d;
+       var endDate=new Date(end1)
+       end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
+      }
+     var url="admin/brand/list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=1";
+
+    // this.api.exportCategoryService(url).pipe().subscribe(data => this.downloadFile(data)),//console.log(data),
+    //   error => console.log('Error downloading the file.'),
+    //   () => console.info('OK');
+  }
+
+  downloadFile(data: File) {
+    const blob= new Blob([data], { type: 'text/csv' });
+    const url= window.URL.createObjectURL(blob);
+    if (navigator.msSaveOrOpenBlob) {
+      navigator.msSaveBlob(blob, 'Category.csv');
+    } else {
+      let a= document.createElement('a');
+      a.href= url;
+      a.download= 'Category.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+    window.URL.revokeObjectURL(url);
+  }
   successFile(csv){
     // var hiddenElement = document.createElement('a');
     // hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
@@ -238,7 +269,9 @@ export class BrandsComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-  successdelete(res) {
+    successdelete(res) {
+    //this.page=1;
+    this.page=1;
     this.ngOnInit();
   }
   yesStatus() {

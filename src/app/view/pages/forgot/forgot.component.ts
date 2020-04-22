@@ -28,7 +28,7 @@ export class ForgotComponent implements OnInit {
   }
   FORM_ERROR = {
     email: {
-      required: ERROR_MESSAGES.EMAIL_REQUIRED,
+      required: ERROR_MESSAGES.EMAIL_REQUIRED_FORGOT,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.EMAIL_LENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT_EMAIL,
     }

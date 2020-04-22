@@ -31,23 +31,27 @@ export class AddCategoryComponent implements OnInit {
   }
   FORM_ERROR = {
     name: {
-      required: ERROR_MESSAGES.NAME_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH}`,
+      required: ERROR_MESSAGES.NAME_ENGLISH_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MAX_LENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     descriptionen: {
-      required: ERROR_MESSAGES.DESCRIPTION_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_NAME_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     namear: {
-      required: ERROR_MESSAGES.NAME_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH}`,
+      required: ERROR_MESSAGES.NAME_ARABIC_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MAX_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     descriptionar: {
-      required: ERROR_MESSAGES.DESCRIPTION_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_NAME_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     statusKey: {
@@ -57,10 +61,10 @@ export class AddCategoryComponent implements OnInit {
 
   createForm() {
     this.loginForm = this._fb.group({
-      name: ["", [Validators.required, Validators.pattern(Regex.spacesDatas)]],
-     descriptionen: ["", [Validators.required, Validators.pattern(Regex.description)]],
-      namear: ["", [Validators.required]],
-      descriptionar: ["", [Validators.required]],
+      name: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      descriptionen: ["", [Validators.required, Validators.pattern(Regex.description),Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+       namear: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+       descriptionar: ["", [Validators.required,Validators.pattern(Regex.description),Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]], 
       statusKey: ["", [Validators.required]]
     });
   }
@@ -99,11 +103,11 @@ export class AddCategoryComponent implements OnInit {
         this.message = "Only images are supported.";
         return;
       }
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-      reader.onload = (event: any) => { // called once readAsDataURL is completed
-        this.url = event.result;
-      }
+      // let reader = new FileReader();
+      // reader.readAsDataURL(event.target.files[0]); // read file as data url
+      // reader.onload = (event: any) => { // called once readAsDataURL is completed
+      //   this.url = event.result;
+      // }
      
 
         this.url1 = event.target.files[0];
@@ -136,7 +140,7 @@ export class AddCategoryComponent implements OnInit {
       this.loader = true;
 
       const formData = new FormData();
-      formData.append('cat_image', this.url1);
+      formData.append('category_image', this.url1);
       formData.append('name', this.loginForm.value.name);
      formData.append('description', this.loginForm.value.descriptionen);
       formData.append('name_ar', this.loginForm.value.namear);
@@ -169,7 +173,7 @@ export class AddCategoryComponent implements OnInit {
 
       const formData = new FormData();
       formData.append('id', this.id);
-      formData.append('cat_image', this.url1);
+      formData.append('category_image', this.url1);
       formData.append('name', this.loginForm.value.name);
      formData.append('description', this.loginForm.value.descriptionen);
       formData.append('name_ar', this.loginForm.value.namear);
@@ -205,6 +209,7 @@ id:string=null;
     this.loginForm.get('descriptionen').patchValue(data.description);
     this.loginForm.get('descriptionar').patchValue(data.description_ar);
     this.loginForm.get('statusKey').patchValue(data.status);
+    this.url=data.category_image;
     }
   }
   //  this.addProperty.get('beds').patchValue(property['bed']);

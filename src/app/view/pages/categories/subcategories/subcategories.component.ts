@@ -129,17 +129,23 @@ export class SubcategoriesComponent implements OnInit {
   pageChanged(event) {
     console.log("pageChanged")
   }
-
+url:string;
   openVerticallyCentered(poup, data) {
     this.modalService.open(poup, { centered: true });
     this.deletedId = data.id;
     this.statusData = data.status;
+    this.url=data.category_image
   }
   reset() {
     this.createForm();
     this.loadCats();
   }
+  filterSelected(selectedValue) {
+    console.log('selected value= ' + selectedValue)
+    this.limit = selectedValue;
+    this.loadCats();
 
+  }
   filter() {
     console.log(this.loginForm.value)
     this.loadCats();
@@ -153,7 +159,8 @@ export class SubcategoriesComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-  successdelete(res) {
+    successdelete(res) {
+    this.page=1;
     this.ngOnInit();
   }
   deletedId: number;

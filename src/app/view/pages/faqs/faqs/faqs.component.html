@@ -3,7 +3,8 @@
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-          Faqs
+    
+             <b style="margin-left: 14px;font-size:24px;">FAQS</b>
          
           <a [routerLink]="['/theme/faqs/add']"> <button type="button" class="btn btn-primary float-right ml-1">Add
               Faq</button></a>
@@ -13,7 +14,7 @@
         <div class="card-body">
           <div class="col-sm-12 col-lg-12">
             <div class="card text-white ">
-              <div class="card-body pb-0">
+              <div class="pb-0">
                 <table class="table table-striped">
                   <thead>
                     <tr>
@@ -28,12 +29,12 @@
                     itemsPerPage: limit,
                     currentPage: page,
                     totalItems: totalRec };">
-                      <td scope="row">{{i.question}}</td>
+                      <td scope="row" style=" text-transform: capitalize;">{{i.question}}</td>
                       <td>{{i.answer}}</td>
                   <td>
                         <a [routerLink]="['/theme/faqs/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;  
                         <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;   
-                        <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px" class="fa fa-unlock"></i></a>&nbsp;
+                        <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i></a>&nbsp;
                         <a (click)="openVerticallyCentered(poup)"> <i style="font-size:24px"
                             class="fa fa-trash-o"></i></a>
 
@@ -42,7 +43,7 @@
                 
                   </tbody>
                   <tbody *ngIf="collection.length==0">
-                      <tr>
+                      <tr class="text-center">
                         <td colspan="3">No records found</td>
                       </tr>
                     </tbody>

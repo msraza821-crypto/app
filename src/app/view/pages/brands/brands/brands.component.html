@@ -5,11 +5,13 @@
         <div class="card-header">
           
             
-        <b style="margin-left: 14px;"> Brands</b> 
-    
-          <a [routerLink]="['/theme/brands/add']"> <button type="button" style="margin:0px 48px -2px 0px" class="btn btn-primary float-right ml-1">Add
+
+             <b style="margin-left: 14px;font-size:24px;"> Brands</b> 
+        <a (click)="exportDataF()"> <button type="button" style="margin:0px 19px -2px 0px;color:white;" class="ml-3 btn bg-dark  white float-right ml-1" > Export to
+            CSV</button></a>
+          <a [routerLink]="['/theme/brands/add']"> <button type="button" style="margin-right: -11px"  class="btn btn-primary float-right ml-1">Add
               Brand</button></a>
-          
+             
           <hr />
          
           <div class="col-sm-12 col-lg-12" style="margin-left: -17px;">
@@ -19,19 +21,18 @@
             <div class="col-md-2 float-left">
               <select id="inputState" class="form-control" [formControl]="status">
                 <option value="">All</option>
-                <option value="Active">Unblock</option>
-                <option value="Inactive">Block</option>
+             
+                <option value="inactive">Blocked</option>   <option value="active">Unblocked</option>
               </select>
             </div>
-            <div class="col-md-4 float-left">               
+            <div class="col-md-2 float-left">               
               <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
               [formControl]="range"
-                placeholder="Select Range"  />
+                placeholder="Filter Date"  />
             </div>
-            <div class="col-md-4 float-left" style="margin:0px -14px 10px 0px">
-                <a (click)="exportDataF()"> <button type="button" class="ml-3 btn bg-dark  white float-right ml-1" style="color: white;"> Export to
-                    CSV</button></a>
-              <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1">Reset</button></a>
+            <div class="col-md-6 float-left" style="margin:0px -14px 10px 0px">
+             
+              <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1"   style="margin-right: -29px;">Reset</button></a>
               <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>
             </div>
           </div>
@@ -49,14 +50,15 @@
         <div class="card-body">
           <div class="col-sm-12 col-lg-12">
             <div class="card text-white ">
-              <div class="card-body pb-0">
+              <div class="pb-0">
                 <table class="table table-striped">
                   <thead>
                     <tr>
+                        <th scope="col">S. No.</th>
                       <th scope="col">Name(En)</th>
                       <th scope="col">Name(Ar)</th>
-                      <th scope="col">Description(En)</th>
-                      <th scope="col">Description(Ar)</th>
+                      <!-- <th scope="col">Description(En)</th>
+                      <th scope="col">Description(Ar)</th> -->
                       <th scope="col">Created at</th>
                       <th scope="col">Status</th>
                      
@@ -67,18 +69,22 @@
                     <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                     itemsPerPage: limit,
                     currentPage: page,
-                    totalItems: totalRec };">
-                      <td scope="row">{{i.name}}</td>
-                        <td scope="row">{{i.name_ar}}
+                    totalItems: totalRec }; let ie = index">
+                    <td>
+                        {{ ((limit * (page - 1)) + ie+1) }}
+
+                    </td>
+                      <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
+                        <td>{{i.name_ar}}
                       </td>
-                      <td> {{i.description}}</td>
-                      <td> {{i.description_ar}}
-                      </td>
+                      <!-- <td [title]="i.description"> {{i.description}}</td>
+                      <td [title]="i.description_ar"> {{i.description_ar}}
+                      </td> -->
                       <td> {{i.created_at}}
                     </td>
-                    <td  *ngIf="i.status=='Active'" >Unblock
+                    <td  *ngIf="i.status=='Active'" >Unblocked
                   </td>
-                  <td  *ngIf="i.status=='Inactive'" >Block
+                  <td  *ngIf="i.status=='Inactive'" >Blocked
                     </td>
                      
                       <td>
@@ -93,7 +99,7 @@
                   </tbody>
                   <tbody *ngIf="collection.length==0">
                     <tr class="text-center">
-                      <td colspan="7">No records found</td>
+                      <td colspan="6">No records found</td>
                     </tr>
                   </tbody>
                 </table>
@@ -107,7 +113,14 @@
     </div>
   </div>
 </div>
-
+<ng-template #poupimage let-modal>
+  <!----- Header  ------>
+  <section >
+  
+  
+    <img class="modal-content" id="img01" [src]=url  style="width:100%;height:auto">
+  </section>
+</ng-template>
 <ng-template #poup let-modal>
   <!----- Header  ------>
   <section id="modal-header"> 

@@ -3,31 +3,32 @@
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-            <b style="margin-left: 14px;"> Categories</b>
+    
+             <b style="margin-left: 14px;font-size:24px;"> Categories</b>
          
-          <a [routerLink]="['/theme/categories/add']" > <button type="button" style="margin:0px 48px -2px 0px"
+          <a [routerLink]="['/theme/categories/add']" > <button type="button" style="margin:0px 18px -2px 0px"
               class="btn btn-primary float-right ml-1">Add
               Category</button></a>
 
           <hr />
           <div class="col-sm-12 col-lg-12" style="margin-left: -17px;">
-            <div class="col-md-2 float-left">
+            <div class="col-md-4 float-left">
               <input type="text" [formControl]="name" class="form-control" id="inputEmail4"
                 placeholder="Search by Category Name">
             </div>
             <div class="col-md-2 float-left">
                 <select id="inputState" class="form-control" [formControl]="status">
                   <option value="">All</option>
-                  <option value="Active">Unblock</option>
-                  <option value="Inactive">Block</option>
+                  <option value="Active">Unblocked</option>
+                  <option value="Inactive">Blocked</option>
                 </select>
               </div>
 
 
-            <div class="col-md-8 float-left"  style="margin:0px -14px 10px 0px">
+            <div class="col-md-6 float-left"  style="margin:0px -14px 10px 0px">
 
-              <a> <button type="button" (click)="reset()" class="btn btn-dark float-right ml-1">Reset</button></a>
-              <a> <button type="button" (click)="filter()" class="btn btn-dark float-right ml-1">Filter</button></a>
+              <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1" style="margin-right: -29px;">Reset</button></a>
+              <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>
 
 
             </div>
@@ -46,16 +47,16 @@
         <div class="card-body">
           <div class="col-sm-12 col-lg-12">
             <div class="card text-white ">
-              <div class="card-body pb-0">
+              <div class="pb-0">
                 <table class="table table-striped">
                   <thead>
                     <tr>
-
+                        <th scope="col">S.No.</th>
                         <th scope="col">Name(En)</th>
                         <th scope="col">Name(Ar)</th>
                         <th scope="col">Description(En)</th>
                         <th scope="col">Description(Ar)</th>
-                      <th scope="col">Number of subcategories</th>
+                      <th scope="col">Number of sub-categories</th>
                       <th scope="col">Status</th>
                       <th scope="col">Image</th>
                       <th scope="col">Actions</th>
@@ -65,25 +66,32 @@
                     <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                       itemsPerPage: limit,
                       currentPage: page,
-                      totalItems: totalRec };">
-                      <td scope="row">{{i.name}}</td>
-                      <td scope="row">{{i.name_ar}}
+                      totalItems: totalRec }; let ie = index">
+                      <td>
+                          {{ ((limit * (page - 1)) + ie+1) }}
+
+                      </td>
+                      <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
+                      <td>{{i.name_ar}}
                     </td>
-                    <td> {{i.description}}</td>
-                    <td> {{i.description_ar}}
+                    <td [title]="i.description"> {{i.description}}</td>
+                    <td [title]="i.description_ar"> {{i.description_ar}}
                     </td>
                       <td>{{i.totalCount}}
                       </td>
-                      <td  *ngIf="i.status=='Active'" >Unblock
+                      <td  *ngIf="i.status=='Active'" >Unblocked
                   </td>
-                  <td  *ngIf="i.status=='Inactive'" >block
+                  <td  *ngIf="i.status=='Inactive'" >Blocked
                     </td>
-                      <td><img style="height: 60px;" class="img-thumbnail"
-                          [src]="url ? url : 'assets/img/avatars/avtar.svg'" /></td>
+                      <td *ngIf="i.category_image"><img (click)="openVerticallyCentered(poupimage,i)" style="height: 60px;width:60px;" class=""
+                          [src]="i.category_image ? i.category_image : 'assets/img/avatars/avtar.svg'" /></td>
+                          <td *ngIf="i.category_image==null"><img style="height: 60px;width:60px;" class=""
+                            [src]="i.category_image ? i.category_image : 'assets/img/avatars/avtar.svg'" /></td>
                       <td>
-                        <a [routerLink]="['/theme/categories/add-category',{id :i?.id}]"> <i style="font-size:24px"
+                        <a [routerLink]="['/theme/categories/add',{id :i?.id}]"> <i style="font-size:24px"
                             class="fa fa-edit"></i></a>&nbsp;
-
+                            <a [routerLink]="['/theme/categories/subcategories',{id :i?.id}]"> <i style="font-size:24px"
+                              class="fa fa-eye"></i></a>&nbsp;
                         <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'"> <i
                             style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;
                         <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'"> <i
@@ -97,7 +105,7 @@
                   </tbody>
                   <tbody *ngIf="collection.length==0">
                     <tr class="text-center">
-                      <td colspan="8">No records found</td>
+                      <td colspan="9">No records found</td>
                     </tr>
                   </tbody>
                 </table>
@@ -112,10 +120,18 @@
   </div>
 </div>
 
+<ng-template #poupimage let-modal>
+  <!----- Header  ------>
+  <section >
+  
+  
+    <img class="modal-content" id="img01" [src]=url  style="width:100%;height:auto">
+  </section>
+</ng-template>
 <ng-template #poup let-modal>
   <!----- Header  ------>
   <section id="modal-header">
-    <h5 class="p-3 primary-color-bg bg-dark text-center">Delete category</h5>
+    <h5 class="p-3 primary-color-bg bg-dark text-center">Delete Category</h5>
     <div class="">
       <div class="row pt-4">
         <div class="col-md-12 frgtpass-head">
@@ -139,7 +155,7 @@
 <ng-template #poup1 let-modal>
   <!----- Header  ------>
   <section id="modal-header">
-    <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock category</h5>
+    <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock Category</h5>
     <div class="">
       <div class="row pt-4">
         <div class="col-md-12 frgtpass-head">
@@ -163,7 +179,7 @@
 <ng-template #poup2 let-modal>
   <!----- Header  ------>
   <section id="modal-header">
-    <h5 class="p-3 primary-color-bg bg-dark text-center">Block category</h5>
+    <h5 class="p-3 primary-color-bg bg-dark text-center">Block Category</h5>
     <div class="">
       <div class="row pt-4">
         <div class="col-md-12 frgtpass-head">

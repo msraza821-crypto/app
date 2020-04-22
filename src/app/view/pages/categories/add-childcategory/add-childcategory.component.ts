@@ -33,23 +33,27 @@ export class AddChildcategoryComponent implements OnInit {
   }
   FORM_ERROR = {
     name: {
-      required: ERROR_MESSAGES.NAME_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH}`,
+      required: ERROR_MESSAGES.NAME_ENGLISH_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MAX_LENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     descriptionen: {
-      required: ERROR_MESSAGES.DESCRIPTION_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_NAME_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     namear: {
-      required: ERROR_MESSAGES.NAME_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH}`,
+      required: ERROR_MESSAGES.NAME_ARABIC_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MAX_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     descriptionar: {
-      required: ERROR_MESSAGES.DESCRIPTION_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_NAME_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     statusKey: {
@@ -59,10 +63,13 @@ export class AddChildcategoryComponent implements OnInit {
 
   createForm() {
     this.loginForm = this._fb.group({
-      name: ["", [Validators.required, Validators.pattern(Regex.spacesDatas)]],
-     descriptionen: ["", [Validators.required, Validators.pattern(Regex.description)]],
-      namear: ["", [Validators.required]],
-      descriptionar: ["", [Validators.required]],
+      name_pe: [this.data.name],
+      name_pa: [this.data.name_ar],
+      name: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+     descriptionen: ["", [Validators.required, Validators.pattern(Regex.description),Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      namear: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      descriptionar: ["", [Validators.required,Validators.pattern(Regex.description),Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+   
       statusKey: ["", [Validators.required]]
     });
   }
@@ -70,12 +77,22 @@ export class AddChildcategoryComponent implements OnInit {
     this._route.params.subscribe(param => {
       if (param && param["parent_id"]) {
         this.id=param["parent_id"];
+        this.viewCate();
+
+      }
+      if (param && param["id"]) {
         this.sub_id=param["id"];
         this.viewCate();
         this.viewSubCate();
       }
       })
     this.createForm();
+  }
+  get name_pe(): FormControl {
+    return this.loginForm.get("name_pe") as FormControl;
+  }
+  get name_pa(): FormControl {
+    return this.loginForm.get("name_pa") as FormControl;
   }
   get name(): FormControl {
     return this.loginForm.get("name") as FormControl;
@@ -103,11 +120,11 @@ export class AddChildcategoryComponent implements OnInit {
         this.message = "Only images are supported.";
         return;
       }
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-      reader.onload = (event: any) => { // called once readAsDataURL is completed
-        this.url = event.result;
-      }
+      // let reader = new FileReader();
+      // reader.readAsDataURL(event.target.files[0]); // read file as data url
+      // reader.onload = (event: any) => { // called once readAsDataURL is completed
+      //   this.url = event.result;
+      // }
      
 
         this.url1 = event.target.files[0];
@@ -128,7 +145,7 @@ export class AddChildcategoryComponent implements OnInit {
       this.spinner.hide();
     }, 1000);
     if(res.status==true){
-      this.router.navigate(['theme/categories/childcategories',{id:this.data.id}])
+      this.router.navigate(['theme/categories/subcategories/childcategories',{id:this.data.id}])
   } else {
     this._util.markError(this.loginForm);
   }
@@ -148,7 +165,7 @@ export class AddChildcategoryComponent implements OnInit {
       this.spinner.show();
 
       const formData = new FormData();
-      formData.append('cat_image', this.url1);
+      formData.append('category_image', this.url1);
       formData.append('name', this.loginForm.value.name);
      formData.append('description', this.loginForm.value.descriptionen);
       formData.append('name_ar', this.loginForm.value.namear);
@@ -183,7 +200,7 @@ export class AddChildcategoryComponent implements OnInit {
       const formData = new FormData();
       formData.append('id', this.sub_id);
       formData.append('parent_id', this.id);
-      formData.append('cat_image', this.url1);
+      formData.append('category_image', this.url1);
       formData.append('name', this.loginForm.value.name);
      formData.append('description', this.loginForm.value.descriptionen);
       formData.append('name_ar', this.loginForm.value.namear);
@@ -228,6 +245,8 @@ viewSubCate(){
     }, 1000);
     if(res.status==true){
     this.data= res.result;
+    this.loginForm.get('name_pe').patchValue(this.data.name);
+    this.loginForm.get('name_pa').patchValue(this.data.name_ar);
   
     }
   }
@@ -239,7 +258,7 @@ viewSubCate(){
     this.loginForm.get('descriptionen').patchValue(data.description);
     this.loginForm.get('descriptionar').patchValue(data.description_ar);
     this.loginForm.get('statusKey').patchValue(data.status);
-  
+    this.url=data.category_image;
     }
   }
   //  this.addProperty.get('beds').patchValue(property['bed']);

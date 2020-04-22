@@ -3,8 +3,9 @@
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-          Add
-          <small>Sub-category</small>
+            
+            <b *ngIf="this.sub_id==null" style="font-size:18px;">Add Sub-category</b>
+            <b *ngIf="this.sub_id" style="font-size:18px;">Edit Sub-category</b>
         </div>
         <div class="card-body">
 
@@ -13,67 +14,68 @@
             <form>
               <div class="row ">
                   <div class="form-group col-md-6">
-                      <label for="inputEmail4">Parent Category Name(english)</label>
-                    
-                      <div class="">{{this.data.name}}</div>
+                      <label for="inputEmail4">Category Name(English)</label>
+                      <input type="text" [formControl]="name_pe" readonly=true class="form-control" id="inputEmail4" placeholder="Name">
+
+                   
                    
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4">Parent Category Name(arabic)</label>
-                        <div class="">{{this.data.name_ar}}</div>
+                        <label for="inputEmail4">Category Name(Arabic)</label>
+                        <input type="text" [formControl]="name_pa" readonly=true class="form-control" id="inputEmail4" style="direction:RTL;" placeholder="اسم">
+
           
                   
                       </div>
             <div class="form-group col-md-6">
-              <label for="inputEmail4">Sub-category Name(english)</label>
-              <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Name">
+              <label for="inputEmail4">Sub-category Name(English)</label>
+              <input type="text" [formControl]="name" class="form-control" id="inputEmail4"  [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_MAX_LENGTH" placeholder="Name">
 
-              <br/>
               <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
             </div>
             
             <div class="form-group col-md-6">
-              <label for="inputPassword4">Sub-category Description(english)</label>
-              <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4"
+              <label for="inputPassword4">Sub-category Description(English)</label>
+              <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_NAME_LENGTH"
                 placeholder="Description"></textarea>
-                <br/>
+  
                 <span class="error text-danger">{{_util.errorMessage(descriptionen,FORM_ERROR?.descriptionen)}}</span>
             </div>
             
             <div class="form-group col-md-6">
-                <label for="inputEmail4">Sub-category Name(arabic)</label>
-                <input type="text" [formControl]="namear" class="form-control" id="inputEmail4"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="Name">
-                <br/>
+                <label for="inputEmail4">Sub-category Name(Arabic)</label>
+                <input type="text" [formControl]="namear" class="form-control" id="inputEmail4"  [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_MAX_LENGTH"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="اسم">
+          
               <span class="error text-danger">{{_util.errorMessage(namear,FORM_ERROR?.namear)}}</span>
             </div>
               <div class="form-group col-md-6">
-                <label for="inputPassword4">Sub-category Description(arabic)</label>
-                <textarea type="text" [formControl]="descriptionar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
-                  placeholder="Description"></textarea>
-                  <br/> 
+                <label for="inputPassword4">Sub-category Description(Arabic)</label>
+                <textarea type="text" [formControl]="descriptionar" class="form-control"   style="direction:RTL;" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_NAME_LENGTH" onkeyup="rtl(this);" id="inputPassword4"
+                  placeholder="وصف"></textarea>
+ 
             <span class="error text-danger">{{_util.errorMessage(descriptionar,FORM_ERROR?.descriptionar)}}</span>
           </div>
             <div class="form-group col-md-12">
               <label for="exampleFormControlFile1">Image</label>
               <input type="file" class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
-            </div>
-            <!-- <img [src]="url ? url : 'assets/img/avatars/avtar.svg'" /> -->
-              
-            <div class="form-group col-md-12">
+     
+            <img style="height:100px;width:100px;" class="img-circle"[src]="url ? url : 'assets/img/avatars/avtar.svg'" />
+          </div>
+            <div class="form-group col-md-2">
               <label for="inputState">Status</label>
               <select id="inputState" [formControl]="statusKey" class="form-control">
                 <option value="">Please Select</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
+             
+                <option value="inactive">Blocked</option>   <option value="active">Unblocked</option>
               </select>
-              <br/>
+            
             <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
           </div>
           </div>
 
             <br>
-            <button  *ngIf="this.sub_id==null"  type="button" class="btn btn-success" (click)="submit()">Submit</button>
-            <button *ngIf="this.sub_id" type="button" class="btn btn-success" (click)="update()">Update</button>
+            <button  *ngIf="this.sub_id==null"  type="button" class="btn btn-primary" (click)="submit()">Save</button>
+            <button *ngIf="this.sub_id" type="button" class="btn btn-primary" (click)="update()">Save</button>
 
 
           </form>

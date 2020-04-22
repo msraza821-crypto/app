@@ -59,7 +59,8 @@ export class ViewUserComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-  successdelete(res) {
+    successdelete(res) {
+  
     this.ngOnInit();
   }
   deletedId: string;

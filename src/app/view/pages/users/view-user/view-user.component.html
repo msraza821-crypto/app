@@ -3,14 +3,15 @@
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-          View
-          <small>User</small>
-
+    
+             <b style="font-size:24px;">View User</b>  
+<hr>
           <div class="col-md-12 float-left">
               <a (click)="exportDataF()"> <button type="button" class="btn btn-primary float-right ml-1">Transactions</button></a>
-            <a *ngIf="data.status=='active'"> <button type="button" (click)="openVerticallyCentered(poup2,data)" class="btn btn-success float-right ml-1">Block</button></a>
-            <a *ngIf="data.status=='inactive'"> <button type="button" (click)="openVerticallyCentered(poup1,data)" class="btn btn-warning float-right ml-1">Unblock</button></a>
-            <a> <button type="button" (click)="openVerticallyCentered(poup,data)" class="btn btn-success float-right ml-1">Delete</button></a>
+              <a *ngIf="data.status=='pending'"> <button type="button" (click)="openVerticallyCentered(poup1,data)" class="btn btn-primary float-right ml-1">Blocked</button></a>
+            <a *ngIf="data.status=='active'"> <button type="button" (click)="openVerticallyCentered(poup2,data)" class="btn btn-primary float-right ml-1">Unblocked</button></a>
+            <a *ngIf="data.status=='inactive'"> <button type="button" (click)="openVerticallyCentered(poup1,data)" class="btn btn-primary float-right ml-1">Blocked</button></a>
+            <a> <button type="button" (click)="openVerticallyCentered(poup,data)" class="btn btn-primary float-right ml-1">Delete</button></a>
 
 
           </div>
@@ -32,7 +33,7 @@
                     <div class="col-md-4 ">
                 
                         <label for=""><b>Mobile Number</b></label><br/>
-                      ({{data.country_code}}) {{data.mobile}}
+                      (+{{data.country_code}}) {{data.mobile}}
                         </div>
           </div>
          <br/><br/><br/>
@@ -52,7 +53,7 @@
                 itemsPerPage: limit,
                 currentPage: page,
                 totalItems: totalRec };">
-                  <td scope="row">{{i.first_name}} {{i.last_name}}
+                  <td scope="row" style=" text-transform: capitalize;">{{i.first_name}} {{i.last_name}}
                   </td>
                   <td>{{i.email}}
                   </td>
@@ -62,7 +63,7 @@
                 </td>
                 <td>{{i.status}}
               </td>
-                  <td><img style="height: 60px;" class="img-circle"
+                  <td><img style="height: 60px;width:60px;" class="img-circle"
                       [src]="i.profile_picture ? i.profile_picture : 'assets/img/avatars/avtar.svg'" /></td>
                   <td>
                     <a > <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                      
@@ -73,7 +74,7 @@
 
               </tbody>
               <tbody *ngIf="collection.length==0">
-                <tr>
+                <tr class="text-center">
                   <td colspan="4">No records found</td>
                 </tr>
               </tbody>
@@ -115,11 +116,11 @@
   <ng-template #poup1 let-modal>
       <!----- Header  ------>
       <section id="modal-header">
-        <h5 class="p-3 primary-color-bg bg-dark text-center">Block User</h5>
+        <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock User</h5>
         <div class="">
           <div class="row pt-4">
             <div class="col-md-12 frgtpass-head">
-              <p class="text-center"> Are you sure you want to block this User ? </p>
+              <p class="text-center"> Are you sure you want to unblock this User ? </p>
             </div>
           </div>
         </div>
@@ -139,11 +140,11 @@
     <ng-template #poup2 let-modal>
         <!----- Header  ------>
         <section id="modal-header">
-          <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock User</h5>
+          <h5 class="p-3 primary-color-bg bg-dark text-center">Block User</h5>
           <div class="">
             <div class="row pt-4">
               <div class="col-md-12 frgtpass-head">
-                <p class="text-center"> Are you sure you want to unblock this User ? </p>
+                <p class="text-center"> Are you sure you want to block this User ? </p>
               </div>
             </div>
           </div>
