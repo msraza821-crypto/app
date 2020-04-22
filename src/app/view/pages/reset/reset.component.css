@@ -6,7 +6,11 @@
   z-index: 2;
   margin-right: 10px;
 }
-
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  margin-left: 3px;
+}
 .container{
   padding-top:50px;
   margin: auto;

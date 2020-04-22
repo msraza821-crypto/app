@@ -121,10 +121,11 @@ id:string=null;
       () => (this.loader = false)
     );
   }
-
+  title:string;
   successView(res){
     if(res.status==true){
     var data= res.result;
+    this.title=data.content_title;
     this.loginForm.get('name').patchValue(data.content_title);
     this.loginForm.get('descriptions').patchValue(data.content_description);
 

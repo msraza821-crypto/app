@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header">
             
-<b style="font-size:18px;">Edit CMS</b>
+<b style="font-size:18px;">{{title}}</b>
         </div>
         <div class="card-body">
 
@@ -35,8 +35,8 @@
                 <label for="inputState">Status</label>
                 <select id="inputState" [formControl]="statusKey" class="form-control">
                   <option value="">Please Select</option>
-                  <option value="active">Unblocked</option>
-                  <option value="inactive">Blocked</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
                 </select>
               </div>
               <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>

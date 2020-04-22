@@ -54,13 +54,6 @@ export const navItems: INavData[] = [
   url: '/theme/cms',
   icon: 'icon-pencil',
   
-},
-
-  {
-    name: 'Settings',
-    url: '/theme/settings',
-    icon: 'icon-cursor',
-   
-  },
+}
   
 ];

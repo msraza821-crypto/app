@@ -8,54 +8,53 @@
          
         </div>
         <div class="card-body">
-          <div class="col-sm-12 col-lg-12">
-           
+      
 
               <div class="row">
-                  <div class="col-md-12 mx-auto">
+              
         
-                        <form>
+                        <form style="width:100%">
+                            <div class="col-md-4 float-left">
+                                <img style="height:360px;width:400px;margin-top:30px;" class=""[src]="url ? url : 'assets/img/avatars/avtar.svg'" />
+
+                            </div>
+                            <div class="col-md-8 float-left">
                             <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
                             <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div>
                             <br>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="icon-user"></i></span>
-                            </div>
-                            <input type="text" [formControl]="firstname" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_LENGTH" class="form-control" placeholder="First Name" autocomplete="username" required>
-                          </div><br/> <span class="error text-danger">{{_util.errorMessage(firstname,FORM_ERROR?.firstname)}}</span>
-                          <br/>
-                          <br/>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="icon-user"></i></span>
-                            </div>
-                            <input type="text" [formControl]="lastname" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_LENGTH" class="form-control" placeholder="Last Name" autocomplete="username" required>
-                          </div> <span class="error text-danger">{{_util.errorMessage(lastname,FORM_ERROR?.lastname)}}</span>
-                          <br/>  <br/>
-                          <div class="form-group">
-                              <div class="input-group-prepend">
+                            <div class="form-group col-lg-6">
+                                <label for="usr">First Name:</label>
+                                <input type="text" [formControl]="firstname" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_LENGTH" class="form-control" placeholder="First Name" autocomplete="username" required>
+                                <span class="error text-danger">{{_util.errorMessage(firstname,FORM_ERROR?.firstname)}}</span>
+                                <br/>
+                              </div>
+                              <div class="form-group col-lg-6">
+                                  <label for="usr">Last Name:</label>
+                                  <input type="text" [formControl]="lastname" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_LENGTH" class="form-control" placeholder="Last Name" autocomplete="username" required>
+                                  <span class="error text-danger">{{_util.errorMessage(lastname,FORM_ERROR?.lastname)}}</span>
+                                  <br/>
                                 </div>
-                            <label for="exampleFormControlFile1">Profile Image</label>
-                            <input type="file" class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
-                            <br/>
-                            <img style="height: 42px;" [src]="url" />
-                          </div>
-
+                                <div class="form-group col-lg-6">
+                                    <label for="usr">Email</label>
+                                    <input type="email" [formControl]="email" readonly=true [maxlength]="CONFIG?.EMAIL_LENGTH" class="form-control" placeholder="Email" autocomplete="email" required>
+                                    <span class="error text-danger">{{_util.errorMessage(email,FORM_ERROR?.email)}}</span>
+                                    <br/>
+                                  </div>
+                                  <div class="form-group col-lg-6">
+                                      <label for="usr">Upload Image</label>
+                                      <input type="file" style="height:40px;"class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
+                                       
+                                      <br/>
+                                    </div>
                           
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">@</span>
-                            </div>
-                            <input type="email" [formControl]="email" readonly=true [maxlength]="CONFIG?.EMAIL_LENGTH" class="form-control" placeholder="Email" autocomplete="email" required>
-                          </div>
-                          <span class="error text-danger">{{_util.errorMessage(email,FORM_ERROR?.email)}}</span>
-                              <br/>
-                          <button type="button" class="btn btn-primary"  (click)="submit()"> Save</button>
+
+                      
+                          <button type="button" style="margin-left:17px;" class="btn btn-primary"  (click)="submit()"> Save</button>
+                        </div>
                         </form>
+                      
                       </div>
-                      </div>
-                    </div>
+                  
                   </div>
                 </div>
           </div>

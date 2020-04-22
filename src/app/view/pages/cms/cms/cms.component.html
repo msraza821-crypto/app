@@ -11,12 +11,12 @@
             <div class="col-sm-12 col-lg-12">
             
                 
-                    <div class="list-group" *ngFor="let i of collection;" style="width: 15%;margin-bottom: 20px;border-bottom: 1px solid #3a4248;">
+                    <div class="list-group" *ngFor="let i of collection;" style="margin-bottom: 20px;border-bottom: 1px solid #B8B8B8;">
                      
                         <a [routerLink]="['/theme/cms/add',{id:i?.id}]"  style="text-decoration: none;color:#3a4248" class=" "><i class="fa fa-plus"></i> {{i.content_title}}</a>
            
                       </div>
-                      <div class="list-group" style="width: 15%;margin-bottom: 20px;border-bottom: 1px solid #3a4248;">
+                      <div class="list-group" style="margin-bottom: 20px;border-bottom: 1px solid #B8B8B8;">
                      
                           <a [routerLink]="['/theme/faqs']" class=" " style="text-decoration: none;color:#3a4248"><i class="fa fa-plus"></i> FAQ's</a>
              

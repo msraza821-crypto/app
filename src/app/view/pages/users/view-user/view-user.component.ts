@@ -71,7 +71,8 @@ export class ViewUserComponent implements OnInit {
     this.statusData = dataValue.status;
   }
   yesStatus() {
-    if (this.statusData == 'Active') {
+    console.log(this.statusData)
+    if (this.statusData == 'active') {
       this.statusData = "Inactive";
     } else {
       this.statusData = "Active";

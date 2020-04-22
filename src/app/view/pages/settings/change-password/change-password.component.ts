@@ -31,12 +31,12 @@ export class ChangePasswordComponent implements OnInit {
   }
   FORM_ERROR = {
     oldpassword: {
-      required: ERROR_MESSAGES.OLD_PASSWORD_REQUIRED,
+      required: ERROR_MESSAGES.OLD_PASSWORD,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_LENGTH}`,
       pattern: ERROR_MESSAGES.PASSWORD_REQUIRED,
     },
     newpassword: {
-      required: ERROR_MESSAGES.PASSWORD_REQUIRED,
+      required: ERROR_MESSAGES.NEWPASSWORD_REQUIRED,
            
       pattern: ERROR_MESSAGES.PASSWORD_REGEX,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_MAX}`,

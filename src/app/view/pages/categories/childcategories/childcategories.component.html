@@ -4,17 +4,17 @@
         <div class="card">
           <div class="card-header">
       
-             <b style="margin-left: 14px;font-size:24px;">  Child categories</b>
+             <b style="margin-left: 14px;font-size:24px;">  Child Categories / {{data.name}}</b>
            
             <a  [routerLink]="['/theme/categories/subcategories/add-childcategory',{parent_id:this.data.id}]" > <button type="button"
                 class="btn btn-primary float-right ml-1" style="margin:0px 18px -2px 0px">Add
-                Child-category</button></a>
+                Child-Category</button></a>
   
             <hr />
             <div class="col-sm-12 col-lg-12" style="margin-left: -17px;">
               <div class="col-md-4 float-left">
                 <input type="text" [formControl]="name" class="form-control" id="inputEmail4"
-                  placeholder="Search by Child-category name">
+                  placeholder="Search by Child-Category Name">
               </div>
   
   
@@ -46,7 +46,7 @@
                     <thead>
                       <tr>
                           <th scope="col">S.No.</th>
-                          <th>Category Name</th>
+                       
                           <th scope="col">Name(En)</th>
                           <th scope="col">Name(Ar)</th>
                           <th scope="col">Description(En)</th>
@@ -66,7 +66,7 @@
                             {{ ((limit * (page - 1)) + ie+1) }}
   
                         </td>
-                        <td scope="row" style=" text-transform: capitalize;">{{data.name}}</td>
+                       
                         <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
                         <td >{{i.name_ar}}
                       </td>
@@ -75,9 +75,9 @@
                       </td>
                         <!-- <td>{{i.totalCount}}
                         </td> -->
-                        <td  *ngIf="i.status=='Active'" >Unblocked
+                        <td  *ngIf="i.status=='Active'" >Active
                           </td>
-                          <td  *ngIf="i.status=='Inactive'" >Blocked
+                          <td  *ngIf="i.status=='Inactive'" >Inactive
                             </td>
                             <td *ngIf="i.category_image"><img (click)="openVerticallyCentered(poupimage,i)" style="height: 60px;width:60px;" class=""
                               [src]="i.category_image ? i.category_image : 'assets/img/avatars/avtar.svg'" /></td>
@@ -101,7 +101,7 @@
                     </tbody>
                     <tbody *ngIf="collection.length==0">
                       <tr class="text-center">
-                        <td colspan="8">No records found</td>
+                        <td colspan="7">No records found</td>
                       </tr>
                     </tbody>
                   </table>
@@ -150,11 +150,11 @@
   <ng-template #poup1 let-modal>
     <!----- Header  ------>
     <section id="modal-header">
-      <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock Category</h5>
+      <h5 class="p-3 primary-color-bg bg-dark text-center">Active Category</h5>
       <div class="">
         <div class="row pt-4">
           <div class="col-md-12 frgtpass-head">
-            <p class="text-center"> Are you sure you want to unblock this category ? </p>
+            <p class="text-center"> Are you sure you want to active this category ? </p>
           </div>
         </div>
       </div>
@@ -174,11 +174,11 @@
   <ng-template #poup2 let-modal>
     <!----- Header  ------>
     <section id="modal-header">
-      <h5 class="p-3 primary-color-bg bg-dark text-center">Block category</h5>
+      <h5 class="p-3 primary-color-bg bg-dark text-center">Inactive category</h5>
       <div class="">
         <div class="row pt-4">
           <div class="col-md-12 frgtpass-head">
-            <p class="text-center"> Are you sure you want to block this category ? </p>
+            <p class="text-center"> Are you sure you want to inactive this category ? </p>
           </div>
         </div>
       </div>

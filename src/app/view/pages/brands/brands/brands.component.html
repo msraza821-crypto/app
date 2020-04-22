@@ -22,7 +22,7 @@
               <select id="inputState" class="form-control" [formControl]="status">
                 <option value="">All</option>
              
-                <option value="inactive">Blocked</option>   <option value="active">Unblocked</option>
+                <option value="inactive">Inactive</option>   <option value="active">Active</option>
               </select>
             </div>
             <div class="col-md-2 float-left">               
@@ -82,9 +82,9 @@
                       </td> -->
                       <td> {{i.created_at}}
                     </td>
-                    <td  *ngIf="i.status=='Active'" >Unblocked
+                    <td  *ngIf="i.status=='Active'" >Active
                   </td>
-                  <td  *ngIf="i.status=='Inactive'" >Blocked
+                  <td  *ngIf="i.status=='Inactive'" >Inactive
                     </td>
                      
                       <td>
@@ -148,11 +148,11 @@
 <ng-template #poup1 let-modal>
     <!----- Header  ------>
     <section id="modal-header">
-      <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock Brand</h5>
+      <h5 class="p-3 primary-color-bg bg-dark text-center">Active Brand</h5>
       <div class="">
         <div class="row pt-4">
           <div class="col-md-12 frgtpass-head">
-            <p class="text-center"> Are you sure you want to unblock this brand ? </p>
+            <p class="text-center"> Are you sure you want to active this brand ? </p>
           </div>
         </div>
       </div>
@@ -172,11 +172,11 @@
   <ng-template #poup2 let-modal>
       <!----- Header  ------>
       <section id="modal-header">
-        <h5 class="p-3 primary-color-bg bg-dark text-center">Block Brand</h5>
+        <h5 class="p-3 primary-color-bg bg-dark text-center">Inactive Brand</h5>
         <div class="">
           <div class="row pt-4">
             <div class="col-md-12 frgtpass-head">
-              <p class="text-center"> Are you sure you want to block this brand ? </p>
+              <p class="text-center"> Are you sure you want to inactive this brand ? </p>
             </div>
           </div>
         </div>

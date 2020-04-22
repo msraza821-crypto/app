@@ -32,19 +32,19 @@
                   {{data.description_ar}}
             </div>
               <div class="form-group col-md-12">
-                <b for="exampleFormControlFile1">Brand Image:</b><br/>
-                <img (click)="openVerticallyCentered(poupimage,i)" style="height:100px;width:100px;" class="img-circle" [src]="data.brand_image" />
+                <b for="exampleFormControlFile1">Brand Image:</b><br/><br/>
+                <img (click)="openVerticallyCentered(poupimage,i)" style="height:200px;width:200px;"  [src]="data.brand_image" />
               </div>
             
                 
               <div class="form-group col-md-12" *ngIf="data.status=='Active'" >
                 <b for="inputState">Status:</b><br/>
-                Unblocked
+                Active
                
             </div>
             <div class="form-group col-md-12" *ngIf="data.status=='Inactive'" >
                 <b for="inputState">Status:</b><br/>
-                Blocked
+                Inactive
                
             </div>
             </div>

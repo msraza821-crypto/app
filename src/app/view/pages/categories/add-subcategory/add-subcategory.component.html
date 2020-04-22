@@ -58,15 +58,15 @@
             <div class="form-group col-md-12">
               <label for="exampleFormControlFile1">Image</label>
               <input type="file" class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
-     
-            <img style="height:100px;width:100px;" class="img-circle"[src]="url ? url : 'assets/img/avatars/avtar.svg'" />
+     <br/>
+            <img style="height:100px;width:100px;" class=""[src]="url ? url : 'assets/img/avatars/avtar.svg'" />
           </div>
             <div class="form-group col-md-2">
               <label for="inputState">Status</label>
               <select id="inputState" [formControl]="statusKey" class="form-control">
                 <option value="">Please Select</option>
              
-                <option value="inactive">Blocked</option>   <option value="active">Unblocked</option>
+                <option value="inactive">Inactive</option>   <option value="active">Active</option>
               </select>
             
             <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>

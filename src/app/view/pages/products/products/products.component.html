@@ -99,7 +99,7 @@
                           <a [routerLink]="['/theme/products/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-plus"></i></a>&nbsp;                   
                         <a [routerLink]="['/theme/products/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
                         <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;   
-                        <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px" class="fa fa-unlock"></i></a>&nbsp;            
+                        <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;            
                         <a (click)="openVerticallyCentered(poup,i)"> <i style="font-size:24px"
                             class="fa fa-trash-o"></i></a>
 

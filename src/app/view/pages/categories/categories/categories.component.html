@@ -19,8 +19,8 @@
             <div class="col-md-2 float-left">
                 <select id="inputState" class="form-control" [formControl]="status">
                   <option value="">All</option>
-                  <option value="Active">Unblocked</option>
-                  <option value="Inactive">Blocked</option>
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
                 </select>
               </div>
 
@@ -79,23 +79,23 @@
                     </td>
                       <td>{{i.totalCount}}
                       </td>
-                      <td  *ngIf="i.status=='Active'" >Unblocked
+                      <td  *ngIf="i.status=='Active'" >Active
                   </td>
-                  <td  *ngIf="i.status=='Inactive'" >Blocked
+                  <td  *ngIf="i.status=='Inactive'" >Inactive
                     </td>
                       <td *ngIf="i.category_image"><img (click)="openVerticallyCentered(poupimage,i)" style="height: 60px;width:60px;" class=""
                           [src]="i.category_image ? i.category_image : 'assets/img/avatars/avtar.svg'" /></td>
                           <td *ngIf="i.category_image==null"><img style="height: 60px;width:60px;" class=""
                             [src]="i.category_image ? i.category_image : 'assets/img/avatars/avtar.svg'" /></td>
                       <td>
-                        <a [routerLink]="['/theme/categories/add',{id :i?.id}]"> <i style="font-size:24px"
-                            class="fa fa-edit"></i></a>&nbsp;
+                        
                             <a [routerLink]="['/theme/categories/subcategories',{id :i?.id}]"> <i style="font-size:24px"
-                              class="fa fa-eye"></i></a>&nbsp;
+                              class="fa fa-eye"></i></a>&nbsp;<a [routerLink]="['/theme/categories/add',{id :i?.id}]"> <i style="font-size:24px"
+                                class="fa fa-edit"></i></a>
                         <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'"> <i
                             style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;
                         <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'"> <i
-                            style="font-size:24px" class="fa fa-unlock"></i></a>&nbsp;
+                            style="font-size:24px;color:red;" class="fa fa-ban"></i></a>&nbsp;
                         <a (click)="openVerticallyCentered(poup,i)"> <i style="font-size:24px"
                             class="fa fa-trash-o"></i></a>
 
@@ -155,11 +155,11 @@
 <ng-template #poup1 let-modal>
   <!----- Header  ------>
   <section id="modal-header">
-    <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock Category</h5>
+    <h5 class="p-3 primary-color-bg bg-dark text-center">Active Category</h5>
     <div class="">
       <div class="row pt-4">
         <div class="col-md-12 frgtpass-head">
-          <p class="text-center"> Are you sure you want to unblock this category ? </p>
+          <p class="text-center"> Are you sure you want to active this category ? </p>
         </div>
       </div>
     </div>
@@ -179,11 +179,11 @@
 <ng-template #poup2 let-modal>
   <!----- Header  ------>
   <section id="modal-header">
-    <h5 class="p-3 primary-color-bg bg-dark text-center">Block Category</h5>
+    <h5 class="p-3 primary-color-bg bg-dark text-center">Inactive Category</h5>
     <div class="">
       <div class="row pt-4">
         <div class="col-md-12 frgtpass-head">
-          <p class="text-center"> Are you sure you want to block this category ? </p>
+          <p class="text-center"> Are you sure you want to inactive this category ? </p>
         </div>
       </div>
     </div>

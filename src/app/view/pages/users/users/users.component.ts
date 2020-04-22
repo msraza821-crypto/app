@@ -71,7 +71,41 @@ export class UsersComponent implements OnInit {
     this.selected = '';
   }
   exportDataF() {
-    this.exportData = 1;
+    var start1 = '';
+    var end1 = '';
+    //  console.log(this.loginForm.value)
+    this.spinner.show();
+    if (this.loginForm.value.range) {
+      start1 = this.loginForm.value.range.startDate._d;
+      var startDate = new Date(start1)
+      start1 = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
+      end1 = this.loginForm.value.range.endDate._d;
+      var endDate = new Date(end1)
+      end1 = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
+    }
+    var url = "admin/user/list?search=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&fromDate=" + start1 + "&toDate=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=1";
+  
+    this.api.getReqAuthExport(url).subscribe(
+      res=> this.downloadFile(res),
+      err=> this.error(err),()=> (this.loader= false)
+    );
+  }
+  
+
+  downloadFile(data: File) {
+    const blob= new Blob([data], { type: 'text/csv' });
+    const url= window.URL.createObjectURL(blob);
+    if (navigator.msSaveOrOpenBlob) {
+      navigator.msSaveBlob(blob, 'Category.csv');
+    } else {
+      let a= document.createElement('a');
+      a.href= url;
+      a.download= 'users.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+    window.URL.revokeObjectURL(url);
   }
   get search(): FormControl {
     return this.loginForm.get("search") as FormControl;
@@ -95,7 +129,7 @@ export class UsersComponent implements OnInit {
       var endDate = new Date(end1)
       end1 = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
     }
-    var url = "admin/user/list?search=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&fromDate=" + start1 + "&toDate=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=" + this.exportData;
+    var url = "admin/user/list?search=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&fromDate=" + start1 + "&toDate=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=0";
     this.api
       .getReqAuth(url)
       .subscribe(

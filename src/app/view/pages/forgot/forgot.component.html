@@ -16,20 +16,25 @@
     <form class="form-signin">
         <img src="assets/img/avatars/logo.jpg"  alt="Logo"    style="height: 100px;margin-left: 110px;">
         <br>
-      <br>
+      
       <br>
       <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Forgot Password</h1>
       <br>
       <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
       <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div>
       <br>
-      <input type="email" [formControl]="email" id="inputEmail" (keyup.enter)="submit()" [maxlength]="CONFIG?.EMAIL_LENGTH"  class="form-control" placeholder="Enter a email here"
+      <div class="form-group col-lg-12">
+          <label for="usr">Email address:</label>
+      <input type="email" [formControl]="email" id="inputEmail" (keyup.enter)="submit()" [maxlength]="CONFIG?.EMAIL_LENGTH"  class="form-control" placeholder="Enter your email here"
         required="" autofocus="" autocomplete="new-password">
       <span class="error text-danger">{{_util.errorMessage(email,FORM_ERROR?.email)}}</span>
+    
       <br>
+      
       <br>
       <app-loader-button class="btn-block" [loader]="loader" title="Submit" (click)="submit()">
       </app-loader-button>
+    </div>
       <a [routerLink]="['/login']" id="forgot_pswd">Back to login</a>
       <hr>
       <!-- <p>Don't have an account!</p>  -->

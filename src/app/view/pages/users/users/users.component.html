@@ -17,7 +17,7 @@
               <div class="col-md-2 float-left">
                 <select id="inputState" class="form-control" [formControl]="status">
                   <option value="">All</option>
-                  <option value="Active">Unblocked</option>
+                  <option value="Active">Active</option>
                   <option value="Inactive">Blocked</option>
                   <option value="Pending">Pending</option>
                 </select>
@@ -82,7 +82,7 @@
                           </td>
                         <td> {{i.created_at}}
                       </td>
-                      <td  *ngIf="i.status=='Active'" >Unblocked
+                      <td  *ngIf="i.status=='Active'" >Active
                         </td>
                         <td  *ngIf="i.status=='Inactive'" >Blocked
                           </td>
@@ -91,7 +91,6 @@
                         <td>
                           <a [routerLink]="['/theme/users/view',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                      
                           <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px;" class="fa fa-ban"></i>&nbsp; </a> 
-                          <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Pending'"> <i style="font-size:24px;color:red;" class="fa fa-ban"></i>&nbsp; </a>  
                           <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i>&nbsp;</a>            
                           <a (click)="openVerticallyCentered(poup,i)"> <i style="font-size:24px"
                               class="fa fa-trash-o"></i></a>
@@ -145,11 +144,11 @@
   <ng-template #poup1 let-modal>
       <!----- Header  ------>
       <section id="modal-header">
-        <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock User</h5>
+        <h5 class="p-3 primary-color-bg bg-dark text-center">Activate User</h5>
         <div class="">
           <div class="row pt-4">
             <div class="col-md-12 frgtpass-head">
-              <p class="text-center"> Are you sure you want to unblock this User ? </p>
+              <p class="text-center"> Are you sure you want to make this user active? </p>
             </div>
           </div>
         </div>
