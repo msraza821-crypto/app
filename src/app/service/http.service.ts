@@ -195,4 +195,11 @@ getReqAuthIP(url: string) {
   return this.http.get(reqUrl,this.httpOptionsUnauth)
     .pipe(catchError((err: HttpErrorResponse) => this.handleError(err)));
 }
+getReqAuthBrands(url: string) {
+  this.appSer.showLoader();
+  const reqUrl = this.baseUrl + url;
+  return this.http.get(reqUrl,this.httpOptionsAuth)
+    .pipe(catchError((err: HttpErrorResponse) => this.handleError(err)));
+}
+
 }

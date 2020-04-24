@@ -8,36 +8,21 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 import { ViewBannerComponent } from './view-banner/view-banner.component';
-import { AddBannerComponent } from './add-banner/add-banner.component'; // <-- import the module
+import { AddBannerComponent } from './add-banner/add-banner.component'; 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
-
-import {CdkTableModule} from '@angular/cdk/table';
-
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-
-import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
-import {MatButtonModule} from '@angular/material/button';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-
-import {MatCheckboxModule} from '@angular/material/checkbox';
-
-
-import {MatInputModule} from '@angular/material/input';
-import {MatListModule} from '@angular/material/list';
-
-import {MatSelectModule} from '@angular/material/select';
 
 
 
 const pageRoutes: Routes = [
 
   {
-    path: '', canActivate: [], data: { title: 'Banners' },
+    path: '', canActivate: [], data: { title: 'Promotional Banners' },
     children: [{ path: '', canActivate: [], data:{title:''},component: BannersComponent },
               {path:'view',canActivate:[],data:{title:'View'}, component:ViewBannerComponent},
-              {path:'add', canActivate:[],data:{title:'Add Banner'},component:AddBannerComponent}
+              {path:'add', canActivate:[],data:{title:'Banner'},component:AddBannerComponent}
   
   ]
   }
@@ -48,29 +33,15 @@ const pageRoutes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(pageRoutes),
+    SharedModule,
     ReactiveFormsModule,
     FormsModule,
     NgxPaginationModule,
     NgxDaterangepickerMd,
+    NgbModule
 
 
   
-    CdkTableModule,
-   
-    MatAutocompleteModule,
-  
-    MatBottomSheetModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-   
-    MatCheckboxModule,
- 
-  
-    MatInputModule,
-    MatListModule,
-  
-   
-    MatSelectModule,
   
  
   ]

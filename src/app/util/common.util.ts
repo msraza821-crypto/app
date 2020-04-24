@@ -16,6 +16,7 @@ export class CommonUtil {
 
     public errorMessage(formControl: FormControl, errorMessage) {
         if (formControl.errors && formControl.dirty && formControl.touched) {
+            
             const errors = <Array<string>>Object.keys(formControl.errors);
             if (errors.includes('required')) {
                 return errorMessage.required;

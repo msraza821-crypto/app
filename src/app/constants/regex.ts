@@ -17,6 +17,7 @@ export const Regex = {
     numberData:new RegExp(/^[0-9]*$/),
     Username:new RegExp(/^[a-zA-Z0-9]+$/),
   //  numberData:new RegExp(/^[0-9]*$/)
+   pricePattern :new RegExp(/^(\d+)(\.)?\d{0,2}$/)
     
 };
 

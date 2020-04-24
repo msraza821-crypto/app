@@ -115,7 +115,15 @@ export const ERROR_MESSAGES = {
      
      ACCEPT_REQUEST_NEW:'Do you want to approve this tenant to rent your property?',
 
-};
+     BANNER_TITLE_REQUIRED:'Banner title is required',
+     MINIMUM_VALUE_REQUIRED:'Minimum value is required',
+     AVAILABLE_ON_REQUIRED:'Available on is required',
+    CATEGORY_REQUIRED:'Category is required',
+    SUBCATEGORY_REQUIRED:'Subcategory is required',
+    CHILD_CATEGORY_REQUIRED:'Child category is required',
+    DISCOUNT_TYPE_REQUIRED:'Discount type is required',
+    DISCOUNT_VALUE_REQUIRED:'Discount value is required',
 
+};
 
 

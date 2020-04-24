@@ -42,12 +42,8 @@
     "file-saver": "^2.0.2",
     "flag-icon-css": "^3.4.6",
     "font-awesome": "^4.7.0",
-<<<<<<< HEAD
-    "hammerjs": "^2.0.8",
-=======
     "install": "^0.13.0",
     "jquery": "^3.5.0",
->>>>>>> 7e07e823222d1226a1af8ace6dd4863ed8269b33
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.13",
     "mutationobserver-shim": "^0.3.3",

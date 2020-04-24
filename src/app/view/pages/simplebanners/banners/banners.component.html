@@ -10,7 +10,7 @@
             
           <a (click)="exportDataF()"> <button type="button" style="margin:0px 19px -2px 0px;color:white;" class="ml-3 btn bg-dark  white float-right ml-1" > Export to
             CSV</button></a>
-          <a [routerLink]="['/theme/banners/add']"> <button type="button" style="margin-right: -11px"  class="btn btn-primary float-right ml-1">Add
+          <a [routerLink]="['/theme/simplebanners/add']"> <button type="button" style="margin-right: -11px"  class="btn btn-primary float-right ml-1">Add
               Banner</button></a>
               
                
@@ -87,8 +87,8 @@
                       </td>
                        
                         <td>
-                            <a [routerLink]="['/theme/banners/view',{id :i?.id}]" title="View Brand"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
-                          <a [routerLink]="['/theme/banners/add',{id :i?.id}]" title="Edit Brand"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
+                            <a [routerLink]="['/theme/simplebanners/view',{id :i?.id}]" title="View Brand"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
+                          <a [routerLink]="['/theme/simplebanners/add',{id :i?.id}]" title="Edit Brand"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
                           <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'" title="Block Brand"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
                           <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
                           <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px"

@@ -27,6 +27,7 @@ export class AddBrandComponent implements OnInit {
     private spinner:NgxSpinnerService,
     private _route:ActivatedRoute,
     private router: Router) {
+      
   }
   FORM_ERROR = {
     name: {
