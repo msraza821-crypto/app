@@ -31,26 +31,26 @@ export class AddBrandComponent implements OnInit {
   FORM_ERROR = {
     name: {
       required: ERROR_MESSAGES.NAME_ENGLISH_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MAX_LENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_NAME}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
-      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MAX_B}`,
     },
     descriptionen: {
       required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_NAME_LENGTH}`,
-      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_DES}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MAX_B}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     namear: {
       required: ERROR_MESSAGES.NAME_ARABIC_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MAX_LENGTH}`,
-      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_NAME}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MAX_B}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     descriptionar: {
       required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_NAME_LENGTH}`,
-      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_DES}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MAX_B}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     statusKey: {
@@ -60,10 +60,10 @@ export class AddBrandComponent implements OnInit {
 
   createForm() {
     this.loginForm = this._fb.group({
-      name: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-     descriptionen: ["", [Validators.required, Validators.pattern(Regex.description),Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-      namear: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-      descriptionar: ["", [Validators.required,Validators.pattern(Regex.description),Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      name: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_NAME),Validators.minLength(CONFIG.MAX_B)]],
+     descriptionen: ["", [Validators.required, Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]],
+      namear: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_NAME),Validators.minLength(CONFIG.MAX_B)]],
+      descriptionar: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]],
       statusKey: ["", [Validators.required]]
     });
   }
@@ -98,21 +98,33 @@ id:string=null;
     return this.loginForm.get("statusKey") as FormControl;
   }
 
-
+  imageFormats: Array<string> = ['jpeg','png','jpg'];
   onSelectFile(event) {
     this.keyValue = true;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
-      if (mimeType.match(/image\/*/) == null) {
-        this.message = "Only images are supported.";
-        return;
+
+
+      const width = file.naturalWidth;
+      const height = file.naturalHeight;
+
+      window.URL.revokeObjectURL( file.src );
+    //  var checkimg = file.toLowerCase();
+      const type = file.type.split('/');
+    if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+
+    }else{
+      this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+      return false;
+    } 
+    
+     
+      let reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+      reader.onload = (event: any) => { // called once readAsDataURL is completed
+        this.url = event.result;
       }
-      // let reader = new FileReader();
-      // reader.readAsDataURL(event.target.files[0]); // read file as data url
-      // reader.onload = (event: any) => { // called once readAsDataURL is completed
-      //   this.url = event.result;
-      // }
 
 
       this.url1 = event.target.files[0];
@@ -122,6 +134,7 @@ id:string=null;
       setTimeout(() => {
         this.loader = false;
         this.keyValue = false;
+        this.errorMessage="";
       }, 3000)
       this.loader = true;
 
@@ -204,6 +217,7 @@ id:string=null;
     this._util.markError(this.loginForm);
 }
 }
+errorMessage:string;
   success(res) {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
@@ -213,6 +227,11 @@ id:string=null;
       this.router.navigate(['theme/brands'])
   } else {
     this._util.markError(this.loginForm);
+    this.errorMessage=res.message;
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.errorMessage="";
+    }, 2000);
   }
 
   }

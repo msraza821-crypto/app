@@ -20,7 +20,10 @@ export class LayoutComponent implements OnInit {
     private store: Store<any>,
     private route:ActivatedRoute,
     private appSer: AppService
-    ) { }
+    ) {
+
+    
+     }
     public sidebarMinimized = false;
     public navItems = navItems;
   

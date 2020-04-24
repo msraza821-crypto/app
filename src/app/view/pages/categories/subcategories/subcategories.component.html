@@ -1,14 +1,17 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" style="margin-top:30px;">
   <div class="row">
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-    
-             <b style="margin-left: 14px;font-size:24px;"> Sub-Categories / {{data.name}}</b>
+            <div class="row ">
+                <div class="breadc col-md-6 float-left"><a class="active" [routerLink]="['/theme/categories']" >Categories</a> / <a class="breada">Sub-Categories</a> / <a class="breada">{{data.name}}</a></div>    
+                <div class="col-md-6 float-left"> 
+                    <a  [routerLink]="['/theme/categories/subcategories/add-subcategory',{parent_id:this.data.id}]"> <button type="button"
+                      style="margin:0px 18px -2px 0px" class="btn btn-primary float-right ml-1">Add
+                        Sub-Category</button></a>
+                  </div>
+                 </div>
          
-          <a  [routerLink]="['/theme/categories/subcategories/add-subcategory',{parent_id:this.data.id}]"> <button type="button"
-            style="margin:0px 18px -2px 0px" class="btn btn-primary float-right ml-1">Add
-              Sub-Category</button></a>
         </div>
         <div class="card-header">
          
@@ -53,9 +56,9 @@
                  
                         <th scope="col">Name(En)</th>
                         <th scope="col">Name(Ar)</th>
-                        <th scope="col">Description(En)</th>
+                        <th scope="col" >Description(En)</th>
                         <th scope="col">Description(Ar)</th>
-                      <th scope="col">Number of child-categories</th>
+                      <th scope="col" style="text-align: center">No. of child-categories</th>
                       <th scope="col">Status</th>
                       <th scope="col">Image</th>
                       <th scope="col">Actions</th>
@@ -74,10 +77,10 @@
                         <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
                         <td scope="row" >{{i.name_ar}}
                       </td>
-                      <td [title]="i.description"> {{i.description}}</td>
-                      <td [title]="i.description_ar"> {{i.description_ar}}
+                      <td [title]="i.description"> {{this.add3Dots(i.description,20)}}</td>
+                      <td [title]="i.description_ar" > {{this.add3Dots(i.description_ar,20)}}
                       </td>
-                        <td>{{i.totalCount}}
+                        <td style="text-align:center;">{{i.totalCount}}
                         </td>
                         <td  *ngIf="i.status=='Active'" >Active
                     </td>

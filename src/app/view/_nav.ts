@@ -32,29 +32,17 @@ export const navItems: INavData[] = [
     icon: 'icon-list',
   
 },
+// {
+//   name: 'Banners',
+//   url: '/theme/banners',
+//   icon: 'icon-cursor',
 
-{
-  name: 'Banners',
-  url: '/theme/banners',
-  icon: 'icon-cursor',
-
-},
+// },
 // {
 //   name: 'Products',
 //   url: '/theme/products',
 //   icon: 'icon-bell',
-//   children: [
-//     {
-//       name: 'All Products',
-//       url: '/theme/products',
-//       icon: 'icon-list'
-//     },
-//     {
-//       name: 'Add Product',
-//       url: '/theme/products/add',
-//       icon: 'icon-plus'
-//     },
-// ]
+  
 // },
 {
   name: 'CMS',

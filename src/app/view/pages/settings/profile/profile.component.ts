@@ -19,7 +19,11 @@ export class ProfileComponent implements OnInit {
   loader = false;
   CONFIG = CONFIG;
   loginForm: FormGroup;
+  loginForm1:FormGroup;
   errorMessage: string = '';
+  showOld:boolean=false;
+  showNew:boolean=false;
+  showConfirm:boolean=false;
   constructor(
     private _fb: FormBuilder,
     private api: HttpService,
@@ -73,6 +77,7 @@ export class ProfileComponent implements OnInit {
         
       });
     this.createForm();
+    this.createForm1();
   }
   get email(): FormControl {
     return this.loginForm.get("email") as FormControl;
@@ -84,20 +89,44 @@ export class ProfileComponent implements OnInit {
   get lastname(): FormControl {
     return this.loginForm.get("lastname") as FormControl;
   }
+
+
+  get oldpassword(): FormControl {
+    return this.loginForm1.get("oldpassword") as FormControl;
+  }
+  get newpassword(): FormControl {
+    return this.loginForm1.get("newpassword") as FormControl;
+  }
+  get confirmpassword(): FormControl {
+    return this.loginForm1.get("confirmpassword") as FormControl;
+  }
+
   keyValue: boolean = false;
   message: string = '';
   url: string = '';
   url1: string = '';
-
+  imageFormats: Array<string> = ['jpeg','png','jpg'];
   onSelectFile(event) {
     this.keyValue = true;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
-      if (mimeType.match(/image\/*/) == null) {
-        this.message = "Only images are supported.";
-        return;
-      }
+
+
+      const width = file.naturalWidth;
+      const height = file.naturalHeight;
+
+      window.URL.revokeObjectURL( file.src );
+    //  var checkimg = file.toLowerCase();
+      const type = file.type.split('/');
+    if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+
+    }else{
+      this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+      return false;
+    } 
+    
+     
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event: any) => { // called once readAsDataURL is completed
@@ -112,6 +141,7 @@ export class ProfileComponent implements OnInit {
       setTimeout(() => {
         this.loader = false;
         this.keyValue = false;
+        this.errorMessage="";
       }, 3000)
       this.loader = true;
 
@@ -172,6 +202,109 @@ export class ProfileComponent implements OnInit {
     this.errorMessage = res.message;
     setTimeout(() => {
       this.errorMessage = "";
+    }, 5000);
+  }
+
+  FORM_ERROR1 = {
+    oldpassword: {
+      required: ERROR_MESSAGES.OLD_PASSWORD,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_LENGTH}`,
+      pattern: ERROR_MESSAGES.PASSWORD_REQUIRED,
+    },
+    newpassword: {
+      required: ERROR_MESSAGES.NEWPASSWORD_REQUIRED,
+           
+      pattern: ERROR_MESSAGES.PASSWORD_REGEX,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_MAX}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.PASSWORD_MIN}`,
+  },
+  confirmpassword: {
+      required: ERROR_MESSAGES.CONFIRM_PASSWORD,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PASSWORD_MAX}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.PASSWORD_MIN}`,
+      pattern: ERROR_MESSAGES.PASSWORD_REGEX, matchedPassword: ERROR_MESSAGES.PASSWORD_CONFIRMPASSWORD_MISMATCH
+  }};
+
+  createForm1() {
+    this.loginForm1 = this._fb.group({
+      oldpassword: ["", [Validators.required,Validators.pattern(Regex.spaces)]],
+      newpassword: ["", [Validators.required,Validators.required,Validators.minLength(8), Validators.maxLength(15), Validators.pattern(Regex.password), Validators.pattern(Regex.spaces)]],
+      confirmpassword: ['', [Validators.required,Validators.minLength(8), Validators.maxLength(15), Validators.pattern(Regex.password), Validators.pattern(Regex.spaces)]],
+
+    },
+    { validator: this.checkPasswords });
+  }
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+
+
+
+
+      if (group.controls.confirmpassword.value !== "") {
+          let pass = group.controls.newpassword.value;
+          let confirmPass = group.controls.confirmpassword.value;
+
+          return pass === confirmPass ? null : { notSame: true }
+      }
+  }
+  passwordHideShowOld(userInput) {
+    this.showOld = !this.showOld;
+  }
+  passwordHideShowNew(userInput) {
+    this.showNew = !this.showNew;
+  }
+  passwordHideShowConfirm(userInput) {
+    this.showConfirm = !this.showConfirm;
+  }
+  errorMessage1:string='';
+
+  changePassword() {
+    if (this.loginForm1.valid) {
+      this.spinner.show();
+      var data={'current_password':this.loginForm1.value.oldpassword
+      ,'password':this.loginForm1.value.newpassword,
+      'confirm_password':this.loginForm1.value.confirmpassword
+      };
+     this.api
+      .putReqAuth("admin/change-password",data )
+      .subscribe(
+        res => this.successC(res),
+        err => this.error1(err),
+        () => (this.loader = false)
+      );
+
+    } else {
+      this._util.markError(this.loginForm1);
+    }
+
+  }
+  successMessage1:string="";
+  successC(res: any) {
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 1000);
+    if (res.status == true) {
+      this.successMessage1=res.message;
+     this.createForm1();
+      setTimeout(() => {
+        this.errorMessage1 = "";
+        this.successMessage1="";
+      }, 5000);
+    } else {
+      this.errorMessage1 = res.message;
+      setTimeout(() => {
+        this.errorMessage1 = "";
+      }, 5000);
+    }
+  }
+  error1(res: any) {
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 1000);
+    this.errorMessage1 = res.message;
+    setTimeout(() => {
+      this.errorMessage1 = "";
     }, 5000);
   }
 }

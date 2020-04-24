@@ -1,10 +1,15 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" style="margin-top:30px;">
   <div class="row">
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-            
-<b style="font-size:18px;">{{title}}</b>
+            <div class="row ">
+                <div class="breadc col-md-6 float-left"> <a class="active" [routerLink]="['/theme/cms']"> CMS</a> / <a class="breada">{{title}}</a></div>    
+                <div class="col-md-6 float-left"> 
+                   
+                  </div>
+                 </div>
+          <hr>
         </div>
         <div class="card-body">
 
@@ -16,15 +21,17 @@
               <div class="form-group col-md-12">
                 <label for="inputEmail4">Title</label>
                 <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Name" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_LENGTH_TITLE">
+                <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
               </div>
-              <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+          
               <div class="form-group col-md-12">
                 <label for="inputPassword4">Description</label>
                 <!-- <textarea type="text" [formControl]="descriptions" class="form-control" id="inputPassword4"
                   placeholder="Description"></textarea> -->
                   <ejs-richtexteditor [formControl]="descriptions" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_LENGTH_CMS"></ejs-richtexteditor>
-              </div>
-              <span class="error text-danger">{{_util.errorMessage(descriptions,FORM_ERROR?.descriptions)}}</span>
+                  <span class="error text-danger">{{_util.errorMessage(descriptions,FORM_ERROR?.descriptions)}}</span>
+                </div>
+            
               <!-- <div class="form-group col-md-12">
                 <label for="exampleFormControlFile1">Cms Image</label>
                 <input type="file" class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
@@ -38,8 +45,9 @@
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
                 </select>
+                <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
               </div>
-              <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+
             </div>
 
               <br>

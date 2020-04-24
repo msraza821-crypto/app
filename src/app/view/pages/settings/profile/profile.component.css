@@ -5,7 +5,20 @@
 agm-map {
     height: 300px;
   }
-  
+  .field-icon {
+    float: right;
+    margin-left: 6px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+    margin-right: 9px;
+    }
+  .breadc{
+    margin-left:25px;
+    float:left;
+    font-weight: 500;
+    font-size:18px;
+  }
 header {
     position: absolute;
     top: 0;

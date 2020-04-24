@@ -91,7 +91,17 @@ export class UsersComponent implements OnInit {
     );
   }
   
-
+  add3Dots(string, limit)
+  {
+    var dots = "...";
+    if(string.length > limit)
+    {
+      // you can also use substr instead of substring
+      string = string.substring(0,limit) + dots;
+    }
+  
+      return string;
+  }
   downloadFile(data: File) {
     const blob= new Blob([data], { type: 'text/csv' });
     const url= window.URL.createObjectURL(blob);

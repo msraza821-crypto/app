@@ -1,14 +1,17 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" style="margin-top:30px;">
     <div class="row">
       <div class="col-sm-12 col-lg-12">
         <div class="card">
           <div class="card-header">
-  
-             <b style="margin-left: 14px;font-size:24px;">Users</b>  
-           
-
-          <a (click)="exportDataF()"> <button  style="margin:0px 19px -2px 0px;color:white;" type="button" class="ml-3 btn bg-dark  white float-right ml-1">Export to
-              CSV</button></a>
+              
+              <div class="row ">
+                  <div class="breadc col-md-6 float-left"> Users</div>    
+                  <div class="col-md-6 float-left"> 
+                      <a (click)="exportDataF()"> <button  style="margin:0px 19px -2px 0px;color:white;" type="button" class="ml-3 btn bg-dark  white float-right ml-1">Export to
+                          CSV</button></a>
+                    </div>
+                   </div>
+       
             <hr />
             <div class="col-sm-12 col-lg-12"  style="margin-left: -17px;">
               <div class="col-md-2 float-left">
@@ -74,9 +77,9 @@
                           {{ ((limit * (page - 1)) + ie+1) }}
 
                       </td>
-                        <td scope="row" style=" text-transform: capitalize;">{{i.first_name}} {{i.last_name}}
+                        <td scope="row" style=" text-transform: capitalize;" [title]='i.first_name+i.last_name'> {{this.add3Dots(i.first_name+i.last_name,30)}}
                         </td>
-                        <td>{{i.email}}
+                        <td [title]='i.email'>{{this.add3Dots(i.email,30)}}
                         </td>
                         <td> (+{{i.country_code}}){{i.mobile}}
                           </td>

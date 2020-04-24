@@ -1,23 +1,13 @@
-
-<!------ Include the above in your HEAD tag ---------->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>ChicBee Login</title>
-</head>
-<body>    
+ <div class="login-bg">
   <br> <br><br>
   
-    <div id="logreg-forms">
+    <div id="logreg-forms" style="border-radius: 28px;width: 500px;">
       
         <form class="form-signin">
-           <img src="assets/img/avatars/logo.jpg"  alt="Logo"    style="height: 100px;margin-left: 110px;">
+           <img src="assets/img/avatars/logo.jpg"  alt="Logo"    style="height: 100px;margin-left: 165px;">
           <br>  <br>
-          <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Login</h1>
+          <br>
+  
           
             <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
 
@@ -49,8 +39,5 @@
             </form>
 
             <br>
-            
+            </div>
     </div>
-    
-</body>
-</html>

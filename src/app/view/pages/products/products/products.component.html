@@ -1,54 +1,55 @@
-<div class="animated fadeIn">
-  <div class="row">
-    <div class="col-sm-12 col-lg-12">
-      <div class="card">
-        <div class="card-header">
-          Products
-         
-          <a [routerLink]="['/theme/products/add']"> <button type="button" class="btn btn-primary float-right ml-1">Add
-              Product</button></a>
-          
-          <hr />
-          <div class="col-sm-12 col-lg-12">
-            <div class="col-md-2 float-left">
-              <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Product Name">
-            </div>
-            <!-- <div class="col-md-2 float-left">
-              <select id="inputState" class="form-control" [formControl]="status">
-                <option value="">All</option>
-             
-                <option value="inactive">Blocked</option>   <option value="active">Unblocked</option>
-              </select>
-            </div> -->
-            <div class="col-md-4 float-left">
-               
-              <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
-              [formControl]="range"
-                placeholder="Filter Date"  />
-            </div>
-            <div class="col-md-4 float-left">
-                <a (click)="exportDataF()"> <button type="button" class="ml-3 btn bg-dark  white float-right ml-1">Export to
-                    CSV</button></a>
-              <a> <button type="button" (click)="reset()" class="btn btn-danger float-right ml-1">Reset</button></a>
-              <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>
+<div class="animated fadeIn" style="margin-top:30px;">
+    <div class="row">
+      <div class="col-sm-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
 
-
+             <div class="row ">
+                <div class="breadc col-md-6 float-left"> <a class="breada">Products</a></div>    
+                <div class="col-md-6 float-left"> 
+                    <a (click)="exportDataF()"> <button type="button" style="margin:0px 19px -2px 0px;color:white;" class="ml-3 btn bg-dark  white float-right ml-1" > Export to
+                        CSV</button></a>
+                      <a [routerLink]="['/theme/products/add']"> <button type="button" style="margin-right: -11px"  class="btn btn-primary float-right ml-1">Add
+                          Product</button></a>
+                  </div>
+                 </div>
+           
+     
+            <hr />
+            <div class="col-sm-12 col-lg-12"  style="margin-left: -17px;">
+              <div class="col-md-2 float-left">
+                <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Email,Name or Phone number">
+              </div>
+            
+              <div class="col-md-2 float-left">
+                 
+                <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
+                [formControl]="range"
+                  placeholder="Filter Date"  />
+              </div>
+              <div class="col-md-8 float-left">
+                
+                <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1"  style="margin-right: -29px;">Reset</button></a>
+                <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>
+  
+  
+              </div>
             </div>
           </div>
-        </div>
+         
         <div class="card-body">
-            <div class="col-sm-2 col-lg-2 float-left"> 
+            <div class="col-sm-1 col-lg-1 float-left"> 
                 <select class="form-control" (change)="filterSelected($event.target.value)">
                   <option value="10">10</option>
                   <option value="50">50</option>
                   <option value="100">100</option>
                 </select>
               </div>
-              <div class="col-sm-2 col-lg-2 float-left"> 
+              <div class="col-sm-1 col-lg-1 float-left"> 
                   <select class="form-control" [formControl]="status" (change)="filterSelectedStatus($event.target.value)">
                       <option value="">All</option>
-                      <option value="Active">Unblocked</option>
-                      <option value="Inactive">Blocked</option>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
                   </select>
                 </div>
         </div>
@@ -59,14 +60,15 @@
                 <table class="table table-striped">
                   <thead>
                     <tr>
-
-                      <th scope="col">Name</th>
+                        <th scope="col">S.No</th>
+                      <th scope="col">Name(English)</th>
+                      <th scope="col">Name(Arabic)</th>
                       <th scope="col">Price</th>
-                      <th scope="col">Category</th>
-                      <th scope="col">Created</th>
+                      <th scope="col">Category</th>                   
                       <th scope="col">Quantity</th>
                       <th scope="col">Brand</th>
                       <th scope="col">Status</th>
+                      <th scope="col">Created at</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
@@ -74,32 +76,39 @@
                     <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                     itemsPerPage: limit,
                     currentPage: page,
-                    totalItems: totalRec };">
-                      <td scope="row" style=" text-transform: capitalize;">en: {{i.name}}
-                      </td>
-                      <td>en: {{i.description}}
-                      </td>
-                      <td> {{i.created}}
+                    totalItems: totalRec }; let ie = index">
+                    <td>
+                        {{ ((limit * (page - 1)) + ie+1) }}
+
                     </td>
-                    <td>{{i.status}}
+                      <td scope="row" style=" text-transform: capitalize;">{{this.add3Dots(i.product_name_en,20)}}
+                      </td>
+                      <td scope="row" style=" text-transform: capitalize;">{{this.add3Dots(i.product_name_ar,20)}}
+                        </td>
+                      <td>{{i.product_prize}}
+                      </td>
+                      <td>
+                      
+                        </td>
+                    
+                    <td>{{i.quantity}}
                       
                   </td>
-                  <td>{{i.status}}
+                  <td>{{i.brand_name_en}}
                       
                     </td>
                     <td>{{i.status}}
                       
                       </td>
-                      <td>{{i.status}}
-                      
+                      <td> {{i.created_at}}
                         </td>
                 
                       <td>
                           <a [routerLink]="['/theme/products/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                   
                           <a [routerLink]="['/theme/products/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-plus"></i></a>&nbsp;                   
                         <a [routerLink]="['/theme/products/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
-                        <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;   
-                        <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;            
+                        <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;   
+                        <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i></a>&nbsp;            
                         <a (click)="openVerticallyCentered(poup,i)"> <i style="font-size:24px"
                             class="fa fa-trash-o"></i></a>
 
@@ -109,7 +118,7 @@
                   </tbody>
                   <tbody *ngIf="collection.length==0">
                     <tr class="text-center">
-                      <td colspan="8">No records found</td>
+                      <td colspan="10">No records found</td>
                     </tr>
                   </tbody>
                 </table>
@@ -152,11 +161,11 @@
 <ng-template #poup1 let-modal>
     <!----- Header  ------>
     <section id="modal-header">
-      <h5 class="p-3 primary-color-bg bg-dark text-center">Block Product</h5>
+      <h5 class="p-3 primary-color-bg bg-dark text-center">Deactivate Product</h5>
       <div class="">
         <div class="row pt-4">
           <div class="col-md-12 frgtpass-head">
-            <p class="text-center"> Are you sure you want to block this Product ? </p>
+            <p class="text-center"> Are you sure you want to deactive this Product ? </p>
           </div>
         </div>
       </div>
@@ -176,11 +185,11 @@
   <ng-template #poup2 let-modal>
       <!----- Header  ------>
       <section id="modal-header">
-        <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock Product</h5>
+        <h5 class="p-3 primary-color-bg bg-dark text-center">Activate Product</h5>
         <div class="">
           <div class="row pt-4">
             <div class="col-md-12 frgtpass-head">
-              <p class="text-center"> Are you sure you want to unblock this Product ? </p>
+              <p class="text-center"> Are you sure you want to active this Product ? </p>
             </div>
           </div>
         </div>

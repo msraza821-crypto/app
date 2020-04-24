@@ -1,10 +1,12 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" style="margin-top:30px;">
   <div class="row">
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-          Add
-          <small>Product</small>
+            <div *ngIf="this.id==null"  class="breadc"><a class="active" [routerLink]="['/theme/products']"> Products</a> / <a class="breada">Add Product</a></div> 
+            <div *ngIf="this.id"  class="breadc"> <a class="active" [routerLink]="['/theme/products']"> Products</a> / <a class="breada">Edit Product</a></div> 
+            
+          
         </div>
         <div class="card-body">
 
@@ -15,130 +17,134 @@
                    
               <div class="form-group col-md-6">
                 <label for="inputEmail4">Product Name(English)</label>
-                <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Product Name">
+                <input type="text" [formControl]="product_name_en" class="form-control" id="inputEmail4" placeholder="Product Name">
 
                 <br/>
-                <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+                <span class="error text-danger">{{_util.errorMessage(product_name_en,FORM_ERROR?.product_name_en)}}</span>
               </div>
               
               <div class="form-group col-md-6">
                 <label for="inputPassword4">Product Description(English)</label>
-                <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4"
+                <textarea type="text" [formControl]="product_description_en" class="form-control" id="inputPassword4"
                   placeholder="Product Description"></textarea>
                   <br/>
-                  <span class="error text-danger">{{_util.errorMessage(descriptionen,FORM_ERROR?.descriptionen)}}</span>
+                  <span class="error text-danger">{{_util.errorMessage(product_description_en,FORM_ERROR?.product_description_en)}}</span>
               </div>
               
               <div class="form-group col-md-6">
                   <label for="inputEmail4">Product Name(Arabic)</label>
-                  <input type="text" [formControl]="namear" class="form-control" id="inputEmail4"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="Product Name">
+                  <input type="text" [formControl]="product_name_ar" class="form-control" id="inputEmail4"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="اسم المنتج">
                   <br/>
-                <span class="error text-danger">{{_util.errorMessage(namear,FORM_ERROR?.namear)}}</span>
+                <span class="error text-danger">{{_util.errorMessage(product_name_ar,FORM_ERROR?.product_name_ar)}}</span>
               </div>
                 <div class="form-group col-md-6">
                   <label for="inputPassword4">Product Description(Arabic)</label>
-                  <textarea type="text" [formControl]="descriptionar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
-                    placeholder="Product Description"></textarea>
+                  <textarea type="text" [formControl]="product_description_ar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
+                    placeholder="وصف المنتج"></textarea>
                     <br/> 
-              <span class="error text-danger">{{_util.errorMessage(descriptionar,FORM_ERROR?.descriptionar)}}</span>
+              <span class="error text-danger">{{_util.errorMessage(product_description_ar,FORM_ERROR?.product_description_ar)}}</span>
             </div>
             <div class="form-group col-md-3">
                 <label for="inputState">Brand</label>
-                <select id="inputState" [formControl]="statusKey" class="form-control">
+                <select id="inputState" [formControl]="brand_id" class="form-control">
                   <option value="">Please Select</option>
+                  <option  *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</option>
                
                 </select>
                 <br/>
-              <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+              <span class="error text-danger">{{_util.errorMessage(brand_id,FORM_ERROR?.brand_id)}}</span>
             </div>
             <div class="form-group col-md-3">
                 <label for="inputState">Category</label>
-                <select id="inputState" [formControl]="statusKey" class="form-control">
+                <select id="inputState" [formControl]="category_id" class="form-control">
                   <option value="">Please Select</option>
              
                 </select>
                 <br/>
-              <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+              <span class="error text-danger">{{_util.errorMessage(category_id,FORM_ERROR?.category_id)}}</span>
             </div>
             <div class="form-group col-md-3">
                 <label for="inputState">Sub-category</label>
-                <select id="inputState" [formControl]="statusKey" class="form-control">
+                <select id="inputState" [formControl]="subCategory" class="form-control">
                   <option value="">Please Select</option>
                 
                 </select>
                 <br/>
-              <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+              <span class="error text-danger">{{_util.errorMessage(subCategory,FORM_ERROR?.subCategory)}}</span>
             </div>
             <div class="form-group col-md-3">
                 <label for="inputState">Child-category</label>
-                <select id="inputState" [formControl]="statusKey" class="form-control">
+                <select id="inputState" [formControl]="childCategory" class="form-control">
                   <option value="">Please Select</option>
                
                 </select>
                 <br/>
-              <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+              <span class="error text-danger">{{_util.errorMessage(childCategory,FORM_ERROR?.childCategory)}}</span>
             </div>
-            <div class="form-group col-md-3">
+            <!-- <div class="form-group col-md-3">
                 <label for="inputState">Product Status</label>
-                <select id="inputState" [formControl]="statusKey" class="form-control">
+                <select id="inputState" [formControl]="status" class="form-control">
                   <option value="">Please Select</option>
-                  <option value="active">Unblocked</option>
-                  <option value="inactive">Blocked</option>
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
                 </select>
                 <br/>
-              <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
-            </div>
+              <span class="error text-danger">{{_util.errorMessage(status,FORM_ERROR?.status)}}</span>
+            </div> -->
             <div class="form-group col-md-2">
                 <label for="inputEmail4">Product Quantity</label>
-                <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Product Quantity">
+                <input type="text" [formControl]="quantity" class="form-control" id="inputEmail4" placeholder="Product Quantity">
 
                 <br/>
-                <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+                <span class="error text-danger">{{_util.errorMessage(quantity,FORM_ERROR?.quantity)}}</span>
               </div>
               <div class="form-group col-md-2">
                   <label for="inputEmail4">Product Size</label>
-                  <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Product Size">
-  
+                  <input type="text" [formControl]="product_size" class="form-control" id="inputEmail4" placeholder="Product Size">
+                  <option  *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</option>
                   <br/>
-                  <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+                  <span class="error text-danger">{{_util.errorMessage(product_size,FORM_ERROR?.product_size)}}</span>
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputEmail4">Product Price</label>
-                    <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Product Price">
+                    <input type="text" [formControl]="product_prize" class="form-control" id="inputEmail4" placeholder="Product Price">
     
                     <br/>
-                    <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+                    <span class="error text-danger">{{_util.errorMessage(product_prize,FORM_ERROR?.product_prize)}}</span>
                   </div>
                   <div class="form-group col-md-2">
                       <label for="inputEmail4">Product Color</label>
-                      <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Product Color">
+                      <input type="text" [formControl]="product_colour" class="form-control" id="inputEmail4" placeholder="Product Color">
       
                       <br/>
-                      <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+                      <span class="error text-danger">{{_util.errorMessage(product_colour,FORM_ERROR?.product_colour)}}</span>
                     </div>
                
                 <hr>
-                  <div class="form-group col-md-4">
+                   <div class="form-group col-md-4">
                       <label for="inputState">Discount range date</label>
-                  <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
+                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range" class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
                   
-                    placeholder="Filter Date"  />
+                    placeholder="Discount Date Range"  />
+                    <span class="error text-danger">{{_util.errorMessage(discount_range,FORM_ERROR?.discount_range)}}</span>
                     </div>
-                    <div class="form-group col-md-2">
+                   <div class="form-group col-md-2">
                         <label for="inputState">Discount Type</label>
-                        <select id="inputState" [formControl]="statusKey" class="form-control">
+                        <select id="inputState" [formControl]="discount_type" class="form-control">
                           <option value="">Please Select</option>
+                          <option value="Percentage">Percentage</option>
+                          <option value="Fixed">Fixed</option>
                           
                         </select>
                         <br/>
-                      <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+                      <span class="error text-danger">{{_util.errorMessage(discount_type,FORM_ERROR?.discount_type)}}</span>
                     </div>
-                    <div class="form-group col-md-2">
+                   <div class="form-group col-md-2">
                         <label for="inputEmail4">Discount Price</label>
-                        <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Discount price">
+                        <input type="text" [formControl]="discount_value" class="form-control" id="inputEmail4" placeholder="Discount price">
         
                         <br/>
-                        <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+                        <span class="error text-danger">{{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
                       </div>
                       <hr>
                       <div class="form-group col-md-12">
@@ -146,20 +152,19 @@
                           <label for="exampleFormControlFile1">Product Image</label>
                           <input type="file" class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
                         </div>
-                        <!-- <img style="height:100px;width:100px;" class="img-circle"[src]="url ? url : 'assets/img/avatars/avtar.svg'" /> -->
-                          
+                       
                         <div class="form-group col-md-12">
                         
                           <label for="exampleFormControlFile1">Product Images</label>
                           <input type="file" class="form-control" accept="image/*" multiple (change)="onSelectFile($event)" id="exampleFormControlFile1">
                         </div>
 
-              
+               
             </div>
 
               <br>
-              <button  *ngIf="this.id==null"  type="button" class="btn btn-primary" (click)="submit()">Submit</button>
-              <button *ngIf="this.id" type="button" class="btn btn-primary" (click)="update()">Update</button>
+              <button  *ngIf="this.id==null"  type="button" class="btn btn-primary" (click)="submit()">Save</button>
+              <button *ngIf="this.id" type="button" class="btn btn-primary" (click)="update()">Save</button>
 
 
             </form>

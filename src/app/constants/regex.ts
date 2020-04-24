@@ -10,12 +10,13 @@ export const Regex = {
    //email:new RegExp(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
     webUrl: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
     password: new RegExp(/^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/),
-    spaces: new RegExp(/^\S+$/),
+    spaces: new RegExp(/^[^\s]+(\s+[^\s]+)*$/),
     spacecharacter: new RegExp(/^[A-Za-z]+(?:[ -][A-Za-z]+)*$/),
     spacesData:new RegExp(/^[A-Za-z]+(?:[ -][A-Za-z]+)*$/),
     spacesDatas:new RegExp(/^[A-Za-z0-9]+(?:[ -][A-Za-z0-9]+)*$/),
     numberData:new RegExp(/^[0-9]*$/),
     Username:new RegExp(/^[a-zA-Z0-9]+$/),
+    FIRSTSAPCE:new RegExp(/^[^0-9 ]{1}([a-zA-Z ])+[a-zA-Z]+$/)
   //  numberData:new RegExp(/^[0-9]*$/)
     
 };

@@ -1,10 +1,11 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" style="margin-top:30px;">
   <div class="row">
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
     
-             <b style="font-size:24px;">View Brand</b>
+            <div   class="breadc"><a class="active" [routerLink]="['/theme/brands']"> Brands</a> / <a class="breada">View Brand</a></div> 
+
         </div>
         <div class="card-body">
 
@@ -14,40 +15,41 @@
                 <div class="row ">
                    
               <div class="form-group col-md-6">
-                <b for="inputEmail4">Name(English):</b><br/>
+                <label><b for="inputEmail4">Name(English):</b></label><br/>
                 {{data.name}}
               </div>
               
               <div class="form-group col-md-6">
-                <b for="inputPassword4">Description(English):</b><br/>
+                  <label>  <b for="inputPassword4">Description(English):</b></label><br/>
                 {{data.description}}
               </div>
               
               <div class="form-group col-md-6">
-                  <b for="inputEmail4">Name(Arabic):</b><br/>
+                  <label>    <b for="inputEmail4">Name(Arabic):</b></label><br/>
                   {{data.name_ar}}
               </div>
                 <div class="form-group col-md-6">
-                  <b for="inputPassword4">Description(Arabic):</b><br/>
+                    <label>    <b for="inputPassword4">Description(Arabic):</b></label><br/>
                   {{data.description_ar}}
             </div>
               <div class="form-group col-md-12">
-                <b for="exampleFormControlFile1">Brand Image:</b><br/><br/>
+                  <label> <b for="exampleFormControlFile1">Brand Image:</b></label><br/>
                 <img (click)="openVerticallyCentered(poupimage,i)" style="height:200px;width:200px;"  [src]="data.brand_image" />
               </div>
             
                 
               <div class="form-group col-md-12" *ngIf="data.status=='Active'" >
-                <b for="inputState">Status:</b><br/>
+                  <label> <b for="inputState">Status:</b></label><br/>
                 Active
                
             </div>
             <div class="form-group col-md-12" *ngIf="data.status=='Inactive'" >
-                <b for="inputState">Status:</b><br/>
+                <label>  <b for="inputState">Status:</b></label><br/>
                 Inactive
                
             </div>
             </div>
+            <br/>
             <button [routerLink]="['/theme/brands']"  type="button" class="btn btn-primary" >Back</button>
            
 

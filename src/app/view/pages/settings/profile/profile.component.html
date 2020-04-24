@@ -1,10 +1,11 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" style="margin-top:30px;">
     <div class="row">
         <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
     
-             <b style="margin-left: 14px;font-size:24px;">Profile</b>
+            <div class="breadc"> Profile</div>    
+         
          
         </div>
         <div class="card-body">
@@ -15,7 +16,7 @@
         
                         <form style="width:100%">
                             <div class="col-md-4 float-left">
-                                <img style="height:360px;width:400px;margin-top:30px;" class=""[src]="url ? url : 'assets/img/avatars/avtar.svg'" />
+                                <img style="height:360px;width:300px;margin-top:30px;" class=""[src]="url ? url : 'assets/img/avatars/avtar.svg'" />
 
                             </div>
                             <div class="col-md-8 float-left">
@@ -54,7 +55,57 @@
                         </form>
                       
                       </div>
-                  
+        </div></div>
+        <div class="card">
+            <div class="card-header">
+        
+                <div class="breadc"> Change Password</div>    
+             
+             
+            </div>
+        <div class="card-body">
+      
+                      <div class="col-sm-12 col-lg-12">
+           
+
+                          <div class="row">
+                              <div class="col-md-12 mx-auto">
+                    
+                                  <form style="width:100%">
+                                        <div class="alert alert-danger" *ngIf="errorMessage1" role="alert">{{errorMessage1}}</div>
+                                        <div class="alert alert-danger" *ngIf="successMessage1" role="alert">{{successMessage1}}</div>
+                                        <br>
+                                        <div class="form-group col-lg-4 float-left">
+                                            <label for="usr">Current Password:</label>
+                                            <input [type]="showOld ? 'text' : 'password'" [maxlength]="CONFIG?.PASSWORD_MAX" [formControl]="oldpassword" [maxlength]="CONFIG?.NAME_LENGTH"  class="form-control" placeholder="Enter current password" autocomplete="new-password" required>
+                                            <span toggle="#password-field" (click)="passwordHideShowOld(inputPassword)" [class]="showOld ? 'fa fa-fw fa-eye field-icon toggle-password' : 'fa fa-fw fa-eye-slash field-icon toggle-password'" 
+                                            ></span>  
+                                            <span class="error text-danger">{{_util.errorMessage(oldpassword,FORM_ERROR1?.oldpassword)}}</span>
+                                          </div>
+                
+                                          <div class="form-group col-lg-4 float-left">
+                                              <label for="usr">New Password:</label>
+                                        <input [type]="showNew ? 'text' : 'password'" [minlength]="CONFIG?.PASSWORD_MIN" [maxlength]="CONFIG?.PASSWORD_MAX" class="form-control" [formControl]="newpassword"  placeholder="Enter new password" autocomplete="new-password" required>
+                                        <span toggle="#password-field" (click)="passwordHideShowNew(inputPassword)" [class]="showNew ? 'fa fa-fw fa-eye field-icon toggle-password' : 'fa fa-fw fa-eye-slash field-icon toggle-password'" 
+                                        ></span>
+                                       <span class="error text-danger">{{_util.errorMessage(newpassword,FORM_ERROR1?.newpassword)}}</span>
+                                      </div>
+                                        <div class="form-group col-lg-4 float-left">
+                                            <label for="usr">Confirm New Password:</label>
+                                        <input [type]="showConfirm ? 'text' : 'password'" [minlength]="CONFIG?.PASSWORD_MIN" [maxlength]="CONFIG?.PASSWORD_MAX" class="form-control" [formControl]="confirmpassword"  placeholder="Confirm new password" autocomplete="new-password" required>
+                                        <span toggle="#password-field" (click)="passwordHideShowConfirm(inputPassword)" [class]="showConfirm ? 'fa fa-fw fa-eye field-icon toggle-password' : 'fa fa-fw fa-eye-slash field-icon toggle-password'" 
+                                        ></span>  
+                                     
+                                      <span class="error text-danger" *ngIf="!loginForm1.hasError('notSame')">{{_util.errorMessage(confirmpassword,FORM_ERROR1?.confirmpassword)}}</span>
+                                      <span class="error text-danger" *ngIf="loginForm1.hasError('notSame')">New password and confirm new password doesn't match. Try Again</span>
+                                    </div>
+                        <br> <div class="form-group col-lg-12 ">
+                                      <button  type="button" class="btn btn-primary float-right" (click)="changePassword()">Save</button>
+                                    </div>
+                                    </form>
+                                  </div>
+                                  </div>
+                                </div>
                   </div>
                 </div>
           </div>

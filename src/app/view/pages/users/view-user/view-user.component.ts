@@ -61,7 +61,7 @@ export class ViewUserComponent implements OnInit {
   }
     successdelete(res) {
   
-    this.ngOnInit();
+    this.router.navigate(['/theme/users'])
   }
   deletedId: string;
   statusData: string;

@@ -1,13 +1,19 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" style="margin-top:30px;">
   <div class="row">
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
     
-             <b style="margin-left: 14px;font-size:24px;">FAQS</b>
+                    
+            <div class="row ">
+                <div class="breadc col-md-6 float-left"> <a class="active" [routerLink]="['/theme/cms']"> CMS</a> / <a class="breada" > FAQS</a> </div>    
+                <div class="col-md-6 float-left"> 
+                    <a [routerLink]="['/theme/faqs/add']"> <button type="button" class="btn btn-primary float-right ml-1">Add
+                        FAQ</button></a>
+                  </div>
+                 </div>
          
-          <a [routerLink]="['/theme/faqs/add']"> <button type="button" class="btn btn-primary float-right ml-1">Add
-              FAQ</button></a>
+        
        
         
          </div>
@@ -31,7 +37,7 @@
                     totalItems: totalRec };">
                       <td scope="row" style=" text-transform: capitalize;">{{i.question}}</td>
                       <td>{{i.answer}}</td>
-                  <td>
+                  <td style="width:120px;">
                         <a [routerLink]="['/theme/faqs/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;  
                         <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;   
                         <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i></a>&nbsp;

@@ -1,9 +1,11 @@
 import { Component, AfterViewInit, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Location } from "@angular/common";
+import { Location,PlatformLocation } from "@angular/common";
 import { AppService } from './service/app.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store, select } from '@ngrx/store';
+
+
 
 
 @Component({
@@ -15,12 +17,12 @@ export class AppComponent {
   promptEvent: any
   constructor(private router: Router,
     private _location: Location,
+    location: PlatformLocation, 
     private appSer: AppService,
     private modalService: NgbModal,
     private store: Store<any>
     ) {
   
-   
   }
   currentUser: any;
   city = '';
