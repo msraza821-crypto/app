@@ -5,7 +5,12 @@
 agm-map {
     height: 300px;
   }
-  
+  .breadc{
+    margin-left:1px;
+    float:left;
+    font-weight: 500;
+    font-size:18px;
+  }
 header {
     position: absolute;
     top: 0;

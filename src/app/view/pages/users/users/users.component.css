@@ -276,3 +276,13 @@ header {
         opacity: 1;
     }
 }
+.breadc{
+    padding-left:30px;
+    float:left;
+    font-weight: 500;
+    font-size:18px;
+    
+  }
+  .breada{
+    font-size: 16px;
+  }

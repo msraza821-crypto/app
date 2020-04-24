@@ -1,11 +1,10 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" style="margin-top:30px;">
   <div class="row">
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-            
-            <b *ngIf="this.id==null" style="font-size:18px;">Add FAQ</b>
-            <b *ngIf="this.id" style="font-size:18px;">Edit FAQ</b>
+            <div  *ngIf="this.id==null" class="breadc"><a class="active" [routerLink]="['/theme/cms']"> CMS</a> / <a class="active" [routerLink]="['/theme/faqs']"> FAQS</a> / <a class="breada">Add FAQ</a></div> 
+            <div    *ngIf="this.id" class="breadc"><a class="active" [routerLink]="['/theme/cms']"> CMS</a> / <a class="active" [routerLink]="['/theme/faqs']"> FAQS</a> / <a class="breada">Edit FAQ</a></div> 
         </div>
         <div class="card-body">
 
@@ -17,14 +16,16 @@
               <div class="form-group col-md-12">
                 <label for="inputEmail4">Question</label>
                 <input type="text" [formControl]="name" class="form-control" id="inputEmail4" placeholder="Question" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_NAME_LENGTH">
+                <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
               </div>
-              <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
+             
               <div class="form-group col-md-12">
                 <label for="inputPassword4">Answer</label>
                 <textarea type="text" [formControl]="descriptions" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_NAME_LENGTH" class="form-control" id="inputPassword4"
                   placeholder="Answer"></textarea>
+                  <span class="error text-danger">{{_util.errorMessage(descriptions,FORM_ERROR?.descriptions)}}</span>
               </div>
-              <span class="error text-danger">{{_util.errorMessage(descriptions,FORM_ERROR?.descriptions)}}</span>
+            
               <!-- <div class="form-group col-md-12">
                 <label for="exampleFormControlFile1">Brand Image</label>
                 <input type="file" class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
@@ -38,8 +39,9 @@
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
                 </select>
+                <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
               </div>
-              <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+             
             </div>
 
               <br>

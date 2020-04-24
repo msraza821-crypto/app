@@ -66,7 +66,10 @@ export class PageComponent implements OnInit {
   constructor(
     private spinner: NgxSpinnerService,
     private router: Router) {
-
+      history.pushState(null, null, location.href);
+      window.onpopstate = function () {
+        history.go(1);
+      };
     }
   public lineChart1Colours: Array<any> = [
     {

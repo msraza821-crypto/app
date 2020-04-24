@@ -1,19 +1,20 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" style="margin-top:30px;">
   <div class="row">
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
     
-             <b style="font-size:24px;">View User</b>  
-<hr>
-          <div class="col-md-12 float-left">
-              <a (click)="exportDataF()"> <button type="button" class="btn btn-primary float-right ml-1">Transactions</button></a>
-            <a *ngIf="data.status=='active'"> <button type="button" (click)="openVerticallyCentered(poup2,data)" class="btn btn-primary float-right ml-1">Block</button></a>
-            <a *ngIf="data.status=='inactive'"> <button type="button" (click)="openVerticallyCentered(poup1,data)" class="btn btn-primary float-right ml-1">Unblock</button></a>
-            <a> <button type="button" (click)="openVerticallyCentered(poup,data)" class="btn btn-primary float-right ml-1">Delete</button></a>
-
-
-          </div>
+            <div class="row ">
+                <div class="breadc col-md-6 float-left"> <a class="active" [routerLink]="['/theme/users']"> Users</a> / <a class="breada">View User</a></div>    
+                <div class="col-md-6 float-left"> 
+                    <a (click)="exportDataF()"> <button type="button" class="btn btn-primary float-right ml-1">Transactions</button></a>
+                    <a *ngIf="data.status=='active'"> <button type="button" (click)="openVerticallyCentered(poup2,data)" class="btn btn-primary float-right ml-1">Block</button></a>
+                    <a *ngIf="data.status=='inactive'"> <button type="button" (click)="openVerticallyCentered(poup1,data)" class="btn btn-primary float-right ml-1">Activate</button></a>
+                    <a> <button type="button" (click)="openVerticallyCentered(poup,data)" class="btn btn-primary float-right ml-1">Delete</button></a>
+        
+                  </div>
+                 </div>
+          <hr>
         </div>
         <div class="card-body">
 
@@ -21,7 +22,7 @@
           <div class="row ">
               <div class="col-md-4 ">
                 
-                <label for=""><b>Full Name</b></label><br/>
+                <label for=""><b>Name</b></label><br/>
               {{data.first_name}}
                 </div>
                 <div class="col-md-4">
@@ -115,11 +116,11 @@
   <ng-template #poup1 let-modal>
       <!----- Header  ------>
       <section id="modal-header">
-        <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock User</h5>
+        <h5 class="p-3 primary-color-bg bg-dark text-center">Activate User</h5>
         <div class="">
           <div class="row pt-4">
             <div class="col-md-12 frgtpass-head">
-              <p class="text-center"> Are you sure you want to unblock this User ? </p>
+              <p class="text-center"> Are you sure you want to make this user active ? </p>
             </div>
           </div>
         </div>

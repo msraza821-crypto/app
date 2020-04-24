@@ -6,15 +6,9 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule,ReactiveFormsModule} from "@angular/forms";
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { NgxPaginationModule } from 'ngx-pagination';
-
 import { ViewBannerComponent } from './view-banner/view-banner.component';
 import { AddBannerComponent } from './add-banner/add-banner.component'; 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-
-
-
-
 
 const pageRoutes: Routes = [
 

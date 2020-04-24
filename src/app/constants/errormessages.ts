@@ -26,7 +26,7 @@ export const ERROR_MESSAGES = {
     USERTYPE_REQUIRED:'User type is required',
     OLD_PASSWORD_REQUIRED: 'Old Password is required',
     PHONE_NUMBER_REQUIRED: 'Phone number is required',
-    CONFIRM_PASSWORD: 'Please enter confirm password',
+    CONFIRM_PASSWORD: 'Please enter confirm new password',
     OLD_PASSWORD: 'Please enter current password',
     PASSWORD_CONFIRMPASSWORD_MISMATCH: 'Password and confirm password does not match',
     INVALID_EMAIL: 'Please enter a vaild Email Id',
@@ -114,7 +114,6 @@ export const ERROR_MESSAGES = {
      ACCOUNTNAME:'Please enter vaild account name',
      
      ACCEPT_REQUEST_NEW:'Do you want to approve this tenant to rent your property?',
-
      BANNER_TITLE_REQUIRED:'Banner title is required',
      MINIMUM_VALUE_REQUIRED:'Minimum value is required',
      AVAILABLE_ON_REQUIRED:'Available on is required',
@@ -123,6 +122,15 @@ export const ERROR_MESSAGES = {
     CHILD_CATEGORY_REQUIRED:'Child category is required',
     DISCOUNT_TYPE_REQUIRED:'Discount type is required',
     DISCOUNT_VALUE_REQUIRED:'Discount value is required',
+
+     PRODUCT_SIZE_REQUIRED:'Product size is rquired',
+     PRODUCT_PRIZE_REQUIRED:'',
+     PRODUCT_COLOUR_REQUIRED:'',
+     BRAND_REQUIRED:'',
+     QUANTITY_REQUIRED:'',
+     
+     DISCOUNT_REQUIRED:''
+
 
 };
 

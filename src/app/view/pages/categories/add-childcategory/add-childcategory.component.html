@@ -1,15 +1,15 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" style="margin-top:30px;">
   <div class="row">
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
+            <div *ngIf="this.sub_id==null"  class="breadc"><a class="active" [routerLink]="['/theme/categories']"> Categories</a> / <a class="active" [routerLink]="['/theme/categories/subcategories',{id :data.parent_id}]"> Sub-Categories</a> / <a class="active" [routerLink]="['/theme/categories/subcategories/childcategories',{id :data.id}]"> Child-Categories</a> / <a class="breada">Add Child-Category</a></div> 
+            <div *ngIf="this.sub_id"   class="breadc"><a class="active" [routerLink]="['/theme/categories']"> Categories</a> / <a class="active" [routerLink]="['/theme/categories/subcategories',{id :data.parent_id}]"> Sub-Categories</a> / <a class="active" [routerLink]="['/theme/categories/subcategories/childcategories',{id :data.id}]"> Child-Categories</a> /  <a class="breada">Edit Child-Category</a></div> 
             
-            <b *ngIf="this.sub_id==null" style="font-size:18px;">Add Child-category</b>
-            <b *ngIf="this.sub_id" style="font-size:18px;">Edit Child-category</b>
         </div>
         <div class="card-body">
 
-
+            <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
       
             <div class="row ">
                 <form>
@@ -30,14 +30,14 @@
                           </div>
                 <div class="form-group col-md-6">
                   <label for="inputEmail4">Sub-category Name(English)</label>
-                  <input type="text" [formControl]="name" class="form-control"  [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_MAX_LENGTH" id="inputEmail4" placeholder="Name">
+                  <input type="text" [formControl]="name" class="form-control"  [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" id="inputEmail4" placeholder="Name">
     
                   <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
                 </div>
                 
                 <div class="form-group col-md-6">
                   <label for="inputPassword4">Sub-category Description(English)</label>
-                  <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_NAME_LENGTH"
+                  <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4" [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_DES"
                     placeholder="Description"></textarea>
                     
                     <span class="error text-danger">{{_util.errorMessage(descriptionen,FORM_ERROR?.descriptionen)}}</span>
@@ -45,13 +45,13 @@
                 
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">Sub-category Name(Arabic)</label>
-                    <input type="text" [formControl]="namear" class="form-control" id="inputEmail4"  [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_MAX_LENGTH"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="اسم">
+                    <input type="text" [formControl]="namear" class="form-control" id="inputEmail4"  [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="اسم">
      
                   <span class="error text-danger">{{_util.errorMessage(namear,FORM_ERROR?.namear)}}</span>
                 </div>
                   <div class="form-group col-md-6">
                     <label for="inputPassword4">Sub-category Description(Arabic)</label>
-                    <textarea type="text" [formControl]="descriptionar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_NAME_LENGTH"
+                    <textarea type="text" [formControl]="descriptionar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4" [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_DES"
                       placeholder="وصف"></textarea>
                 
                 <span class="error text-danger">{{_util.errorMessage(descriptionar,FORM_ERROR?.descriptionar)}}</span>

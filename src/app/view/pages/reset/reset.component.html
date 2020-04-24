@@ -1,23 +1,12 @@
-
-<!------ Include the above in your HEAD tag ---------->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>ChicBee Reset Password</title>
-</head>
-<body>    
-  <br> <br><br>
-    <div id="logreg-forms">
-        <form class="form-signin">
-            <img src="assets/img/avatars/logo.jpg"  alt="Logo"    style="height: 100px;margin-left: 110px;">
-        <br>
-     
-      <br>
-            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Reset Password</h1>
+<div class="login-bg">
+    <br> <br><br>
+    
+      <div id="logreg-forms" style="border-radius: 28px;width: 500px;">
+        
+          <form class="form-signin">
+             <img src="assets/img/avatars/logo.jpg"  alt="Logo"    style="height: 100px;margin-left: 155px;">
+            <br>  <br>
+           
             <br>
             <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
             <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div>
@@ -36,14 +25,14 @@
             ></span>
             <span class="error text-danger" *ngIf="!loginForm.hasError('notSame')">{{_util.errorMessage(confirmpassword,FORM_ERROR?.confirmpassword)}}</span>
             <span class="error text-danger" *ngIf="loginForm.hasError('notSame')">New password and confirm new password doesn't match. Try Again</span>
-           </div>
+         </div>
             <br>  
-            <br>
+            <div class="form-group col-lg-12">
             <app-loader-button class="btn-block" [loader]="loader" title="Submit" (click)="submit()">
               </app-loader-button>
-            <a [routerLink] = "['/login']" id="forgot_pswd">Back to login</a>
-            <hr>
-            <!-- <p>Don't have an account!</p>  -->
+            </div>
+            <a [routerLink] = "['/login']" style="margin-left: 20px;" id="forgot_pswd">Back to login</a>
+       
             </form>
 
        
@@ -51,5 +40,4 @@
             
     </div>
  
-</body>
-</html>
+</div>

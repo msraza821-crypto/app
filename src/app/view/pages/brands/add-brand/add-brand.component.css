@@ -2,6 +2,13 @@ form{
     width:100%;
     margin-left:10px;
 }
+
+.breadc{
+    margin-left:0px;
+    float:left;
+    font-weight: 500;
+    font-size:18px;
+  }
 .nav-tabs{
     display:none;
 }
@@ -278,3 +285,6 @@ header {
         opacity: 1;
     }
 }
+.breada{
+    font-size: 16px;
+  }

@@ -13,6 +13,13 @@
     color: #fff !important;
     background: #20a8d8 !important;
 }
+ol.breadcrumb {
+  padding-left: 33px !important;
+}
+.app-footer{
+  padding:10px 15px;
+  background: #fff;
+}
   .dropdown-content {
     display: none;
     position: absolute;

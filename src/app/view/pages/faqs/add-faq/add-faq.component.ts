@@ -33,13 +33,13 @@ export class AddFaqComponent implements OnInit {
     name: {
       required: ERROR_MESSAGES.QUESTION_REQURIED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_NAME_LENGTH}`,
-      minlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+      
     },
     descriptions: {
       required: ERROR_MESSAGES.ANSWER_REQURIED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
-      minlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_NAME_LENGTH}`,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     statusKey: {
@@ -49,8 +49,8 @@ export class AddFaqComponent implements OnInit {
 
   createForm() {
     this.loginForm = this._fb.group({
-      name: ["", [Validators.required, Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-      descriptions: ["", [Validators.required, Validators.pattern(Regex.description),Validators.maxLength(CONFIG.DESCRIPTION_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      name: ["", [Validators.required,Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      descriptions: ["", [Validators.required, Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
       statusKey: ["", [Validators.required]]
     });
   }
@@ -81,17 +81,30 @@ id:string=null;
     this.createForm();
   }
 
+  errorMessage:string;
 
-
+  imageFormats: Array<string> = ['jpeg','png','jpg'];
   onSelectFile(event) {
     this.keyValue = true;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
-      if (mimeType.match(/image\/*/) == null) {
-        this.message = "Only images are supported.";
-        return;
-      }
+
+
+      const width = file.naturalWidth;
+      const height = file.naturalHeight;
+
+      window.URL.revokeObjectURL( file.src );
+    //  var checkimg = file.toLowerCase();
+      const type = file.type.split('/');
+    if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+
+    }else{
+      this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+      return false;
+    } 
+    
+     
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event: any) => { // called once readAsDataURL is completed
@@ -106,6 +119,7 @@ id:string=null;
       setTimeout(() => {
         this.loader = false;
         this.keyValue = false;
+        this.errorMessage="";
       }, 3000)
       this.loader = true;
 

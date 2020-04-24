@@ -59,7 +59,7 @@ export class ViewBrandComponent implements OnInit {
   createForm() {
     this.loginForm = this._fb.group({
       name: [{value:"", disabled: false}, [Validators.required]],
-     descriptionen: [{value:"", disabled: false}, [Validators.required, Validators.pattern(Regex.description)]],
+     descriptionen: [{value:"", disabled: false}, [Validators.required, Validators.pattern(Regex.spacesDatas)]],
       namear: [{value:"", disabled: false}, [Validators.required]],
       descriptionar: [{value:"", disabled: false}, [Validators.required]],
       statusKey: [{value:"", disabled: false}, [Validators.required]]
@@ -101,16 +101,29 @@ id:string=null;
     this.url=this.data.brand_image;
    // alert(this.url)
   }
-
+  errorMessage:string
+  imageFormats: Array<string> = ['jpeg','png','jpg'];
   onSelectFile(event) {
     this.keyValue = true;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
-      if (mimeType.match(/image\/*/) == null) {
-        this.message = "Only images are supported.";
-        return;
-      }
+
+
+      const width = file.naturalWidth;
+      const height = file.naturalHeight;
+
+      window.URL.revokeObjectURL( file.src );
+    //  var checkimg = file.toLowerCase();
+      const type = file.type.split('/');
+    if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+
+    }else{
+      this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+      return false;
+    } 
+    
+     
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event: any) => { // called once readAsDataURL is completed
@@ -125,6 +138,7 @@ id:string=null;
       setTimeout(() => {
         this.loader = false;
         this.keyValue = false;
+        this.errorMessage="";
       }, 3000)
       this.loader = true;
 

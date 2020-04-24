@@ -23,7 +23,7 @@
         
         <div class="dropdown-content pull-right dropdown-menu">
             <a class="dropdown-item" [routerLink]="['/theme/settings']"><i class="fa fa-user"></i> Profile</a>
-            <a class="dropdown-item"[routerLink]="['/theme/settings/change-password']"><i class="fa fa-wrench"></i> Change Password</a>
+         
             <div class="divider"></div>
             <a class="dropdown-item" (click)="openVerticallyCentered(deletepoup)"><i class="fa fa-lock"></i> Logout</a>
         </div>
@@ -34,19 +34,19 @@
 
 </app-header>
 
-<div class="app-body" style="min-height:800px;">
+<div class="app-body" style="height: calc(100vh - 100px);">
   <app-sidebar #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized" (minimizedChange)="toggleMinimize($event)">
     <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized"></app-sidebar-nav>
     <app-sidebar-minimizer></app-sidebar-minimizer>
   </app-sidebar>
  
   <main class="main">
-   <cui-breadcrumb>      
+   <!-- <cui-breadcrumb>      
       <li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">         
         </div>
       </li>
-    </cui-breadcrumb>
+    </cui-breadcrumb> -->
    
     <div class="container-fluid">
       <router-outlet></router-outlet>
@@ -69,8 +69,12 @@
   </app-aside> -->
 </div> 
 <app-footer>
-  <span><a href="/"></a> &copy; 2020 appventurez.</span>
-  <span class="ml-auto">Powered by <a href="/">Appventurez</a></span>
+ 
+      <span><a href="/"></a> &copy; 2020 appventurez.</span>
+      <span class="ml-auto">Powered by <a href="/">Appventurez</a></span>
+
+  
+  
 </app-footer>
 <ng-template #deletepoup let-modal>
     <!----- Header  ------>
