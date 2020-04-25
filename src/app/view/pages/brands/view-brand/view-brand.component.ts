@@ -103,13 +103,14 @@ id:string=null;
   }
   errorMessage:string
   imageFormats: Array<string> = ['jpeg','png','jpg'];
+  choosefile: string = "No file chosen...";
   onSelectFile(event) {
     this.keyValue = true;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
 
-
+      this.choosefile=event.target.files[0].name;
       const width = file.naturalWidth;
       const height = file.naturalHeight;
 
@@ -127,7 +128,8 @@ id:string=null;
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event: any) => { // called once readAsDataURL is completed
-        this.url = event.result;
+   // this.url = event.result;
+   this.url = event.target.result;
       }
 
 

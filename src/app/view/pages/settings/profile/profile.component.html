@@ -16,7 +16,7 @@
         
                         <form style="width:100%">
                             <div class="col-md-4 float-left">
-                                <img style="height:360px;width:300px;margin-top:30px;" class=""[src]="url ? url : 'assets/img/avatars/avtar.svg'" />
+                                <img style="height:360px;width:300px;margin-top:30px;" id="ShowImage" class=""[src]="url ? url : 'assets/img/avatars/default.png'" />
 
                             </div>
                             <div class="col-md-8 float-left">
@@ -43,7 +43,15 @@
                                   </div>
                                   <div class="form-group col-lg-6">
                                       <label for="usr">Upload Image</label>
-                                      <input type="file" style="height:40px;"class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
+
+                                      <div class="file-upload">
+                                        <div class="file-select">
+                                          <div class="file-select-button" id="fileName">Choose File</div>
+                                          <div class="file-select-name" id="noFile">{{choosefile}}</div> 
+                                          <input type="file" name="chooseFile" id="chooseFile" accept="image/*" (change)="onSelectFile($event)">
+                                        </div>
+                                      </div>
+                                   
                                        
                                       <br/>
                                     </div>
@@ -73,7 +81,7 @@
                     
                                   <form style="width:100%">
                                         <div class="alert alert-danger" *ngIf="errorMessage1" role="alert">{{errorMessage1}}</div>
-                                        <div class="alert alert-danger" *ngIf="successMessage1" role="alert">{{successMessage1}}</div>
+                                        <div class="alert alert-success" *ngIf="successMessage1" role="alert">{{successMessage1}}</div>
                                         <br>
                                         <div class="form-group col-lg-4 float-left">
                                             <label for="usr">Current Password:</label>

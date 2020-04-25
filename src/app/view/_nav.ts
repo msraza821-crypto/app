@@ -5,15 +5,9 @@ export const navItems: INavData[] = [
     name: 'Dashboard',
     url: '/theme/dashboard',
     icon: 'icon-speedometer',
-    // badge: {
-    //   variant: 'info',
-    //   text: 'NEW'
-    // }
+
   },
-  // {
-  //   title: true,
-  //   name: 'Theme'
-  // },
+ 
   {
     name: 'Users',
     url: '/theme/users',
@@ -33,30 +27,26 @@ export const navItems: INavData[] = [
   
 },
 // {
-//   name: 'Banners',
-//   url: '/theme/banners',
-//   icon: 'icon-cursor',
-
-{
-  name: 'Promotions',
-  url: '/theme/banners',
-  icon: 'icon-cursor',
-
-},
-
-
-{
-  name: 'Banners',
-  url: '/theme/simplebanners',
-  icon: 'icon-cursor',
-
-},
-// {
 //   name: 'Products',
 //   url: '/theme/products',
 //   icon: 'icon-bell',
   
 // },
+// {
+//   name: 'Promotions',
+//   url: '/theme/banners',
+//   icon: 'icon-cursor',
+
+// },
+
+
+// {
+//   name: 'Banners',
+//   url: '/theme/simplebanners',
+//   icon: 'icon-cursor',
+
+// },
+
 {
   name: 'CMS',
   url: '/theme/cms',

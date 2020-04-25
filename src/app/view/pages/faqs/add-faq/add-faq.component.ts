@@ -54,7 +54,7 @@ export class AddFaqComponent implements OnInit {
       statusKey: ["", [Validators.required]]
     });
   }
-
+  successMessage: string;
   get name(): FormControl {
     return this.loginForm.get("name") as FormControl;
   }
@@ -84,13 +84,14 @@ id:string=null;
   errorMessage:string;
 
   imageFormats: Array<string> = ['jpeg','png','jpg'];
+  choosefile: string = "No file chosen...";
   onSelectFile(event) {
     this.keyValue = true;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
 
-
+      this.choosefile=event.target.files[0].name;
       const width = file.naturalWidth;
       const height = file.naturalHeight;
 
@@ -108,7 +109,8 @@ id:string=null;
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event: any) => { // called once readAsDataURL is completed
-        this.url = event.result;
+   // this.url = event.result;
+   this.url = event.target.result;
       }
 
 
@@ -179,8 +181,19 @@ id:string=null;
 }
   success(res) {
     if(res.status==true){
-      this.router.navigate(['theme/faqs'])
+      this.successMessage=res.message;
+      setTimeout(() => {
+        this.errorMessage = "";
+        this.successMessage = "";
+        this.router.navigate(['theme/faqs'])
+      }, 3000);
+     
   } else {
+    this.errorMessage=res.message;
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
     this._util.markError(this.loginForm);
   }
 

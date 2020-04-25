@@ -23,11 +23,11 @@ export class AddBrandComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _util: CommonUtil,
-    private api:HttpService,
-    private spinner:NgxSpinnerService,
-    private _route:ActivatedRoute,
+    private api: HttpService,
+    private spinner: NgxSpinnerService,
+    private _route: ActivatedRoute,
     private router: Router) {
-      
+
   }
   FORM_ERROR = {
     name: {
@@ -61,10 +61,10 @@ export class AddBrandComponent implements OnInit {
 
   createForm() {
     this.loginForm = this._fb.group({
-      name: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_NAME),Validators.minLength(CONFIG.MAX_B)]],
-     descriptionen: ["", [Validators.required, Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]],
-      namear: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_NAME),Validators.minLength(CONFIG.MAX_B)]],
-      descriptionar: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]],
+      name: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_NAME), Validators.minLength(CONFIG.MAX_B)]],
+      descriptionen: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_DES), Validators.minLength(CONFIG.MAX_B)]],
+      namear: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_NAME), Validators.minLength(CONFIG.MAX_B)]],
+      descriptionar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_DES), Validators.minLength(CONFIG.MAX_B)]],
       statusKey: ["", [Validators.required]]
     });
   }
@@ -73,14 +73,14 @@ export class AddBrandComponent implements OnInit {
       element.setSelectionRange(0, 0);
     }
   }
-id:string=null;
+  id: string = null;
   ngOnInit() {
     this._route.params.subscribe(param => {
       if (param && param["id"]) {
-        this.id=param["id"];
+        this.id = param["id"];
         this.viewBrand();
       }
-      })
+    })
     this.createForm();
   }
   get name(): FormControl {
@@ -99,32 +99,33 @@ id:string=null;
     return this.loginForm.get("statusKey") as FormControl;
   }
 
-  imageFormats: Array<string> = ['jpeg','png','jpg'];
+  imageFormats: Array<string> = ['jpeg', 'png', 'jpg'];
   onSelectFile(event) {
     this.keyValue = true;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
-
+      this.choosefile=event.target.files[0].name;
 
       const width = file.naturalWidth;
       const height = file.naturalHeight;
 
-      window.URL.revokeObjectURL( file.src );
-    //  var checkimg = file.toLowerCase();
+      window.URL.revokeObjectURL(file.src);
+      //  var checkimg = file.toLowerCase();
       const type = file.type.split('/');
-    if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+      if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
 
-    }else{
-      this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
-      return false;
-    } 
-    
-     
+      } else {
+        this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+        return false;
+      }
+
+
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event: any) => { // called once readAsDataURL is completed
-        this.url = event.result;
+       // this.url = event.result;
+        this.url = event.target.result;
       }
 
 
@@ -135,39 +136,41 @@ id:string=null;
       setTimeout(() => {
         this.loader = false;
         this.keyValue = false;
-        this.errorMessage="";
+        this.errorMessage = "";
       }, 3000)
       this.loader = true;
 
     }
   }
-  viewBrand(){
+  viewBrand() {
     this.spinner.show();
     this.api
-    .getReqAuth("admin/brand/detail?id="+this.id)
-    .subscribe(
-      res => this.successView(res),
-      err => this.error(err),
-      () => (this.loader = false)
-    );
+      .getReqAuth("admin/brand/detail?id=" + this.id)
+      .subscribe(
+        res => this.successView(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
   }
-
-  successView(res){
-    if(res.status==true){
-    var data= res.result;
-    this.loginForm.get('name').patchValue(data.name);
-    this.loginForm.get('namear').patchValue(data.name_ar);
-    this.loginForm.get('descriptionen').patchValue(data.description);
-    this.loginForm.get('descriptionar').patchValue(data.description_ar);
-    this.loginForm.get('statusKey').patchValue(data.status);
-  this.url=data.brand_image;
+  choosefile: string = "No file chosen...";
+  successView(res) {
+    if (res.status == true) {
+      var data = res.result;
+      this.loginForm.get('name').patchValue(data.name);
+      this.loginForm.get('namear').patchValue(data.name_ar);
+      this.loginForm.get('descriptionen').patchValue(data.description);
+      this.loginForm.get('descriptionar').patchValue(data.description_ar);
+      this.loginForm.get('statusKey').patchValue(data.status);
+      this.url = data.brand_image;
+      var str = this.url.split('/');
+      this.choosefile = str[str.length - 1];
     }
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
-   
-  //  this.addProperty.get('beds').patchValue(property['bed']);
+
+    //  this.addProperty.get('beds').patchValue(property['bed']);
 
   }
   update() {
@@ -180,21 +183,21 @@ id:string=null;
       formData.append('id', this.id);
       formData.append('brand_image', this.url1);
       formData.append('name', this.loginForm.value.name);
-     formData.append('description', this.loginForm.value.descriptionen);
+      formData.append('description', this.loginForm.value.descriptionen);
       formData.append('name_ar', this.loginForm.value.namear);
       formData.append('description_ar', this.loginForm.value.descriptionar);
       formData.append('status', this.loginForm.value.statusKey);
       console.log(formData)
       this.api
-      .putReqAuth("admin/brand/edit",formData).subscribe(
-        res => this.success(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
-  } else{
-    this._util.markError(this.loginForm);
-}
-}
+        .putReqAuth("admin/brand/edit", formData).subscribe(
+          res => this.success(res),
+          err => this.error(err),
+          () => (this.loader = false)
+        );
+    } else {
+      this._util.markError(this.loginForm);
+    }
+  }
   submit() {
     console.log(this.loginForm.value)
     if (this.loginForm.valid) {
@@ -203,45 +206,51 @@ id:string=null;
       const formData = new FormData();
       formData.append('brand_image', this.url1);
       formData.append('name', this.loginForm.value.name);
-     formData.append('description', this.loginForm.value.descriptionen);
+      formData.append('description', this.loginForm.value.descriptionen);
       formData.append('name_ar', this.loginForm.value.namear);
       formData.append('description_ar', this.loginForm.value.descriptionar);
       formData.append('status', this.loginForm.value.statusKey);
       console.log(formData)
       this.api
-      .postReqAuth("admin/brand/add",formData).subscribe(
-        res => this.success(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
-  } else{
-    this._util.markError(this.loginForm);
-}
-}
-errorMessage:string;
+        .postReqAuth("admin/brand/add", formData).subscribe(
+          res => this.success(res),
+          err => this.error(err),
+          () => (this.loader = false)
+        );
+    } else {
+      this._util.markError(this.loginForm);
+    }
+  }
+  errorMessage: string;
+  successMessage: string;
   success(res) {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
-    if(res.status==true){
-      this.router.navigate(['theme/brands'])
-  } else {
-    this._util.markError(this.loginForm);
-    this.errorMessage=res.message;
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.errorMessage="";
-    }, 2000);
-  }
+    if (res.status == true) {
+       this.successMessage=res.message;
+      setTimeout(() => {
+        this.errorMessage = "";
+        this.successMessage = "";
+        this.router.navigate(['theme/brands'])
+      }, 3000);
+    } else {
+      this._util.markError(this.loginForm);
+      this.errorMessage = res.message;
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.errorMessage = "";
+      }, 2000);
+    }
 
   }
-  error(res){
+  error(res) {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
     this._util.markError(res.message);
   }
-  
+
 }

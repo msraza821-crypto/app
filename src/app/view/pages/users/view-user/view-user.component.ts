@@ -59,10 +59,7 @@ export class ViewUserComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-    successdelete(res) {
-  
-    this.router.navigate(['/theme/users'])
-  }
+   
   deletedId: string;
   statusData: string;
   openVerticallyCentered(poup, dataValue) {
@@ -86,10 +83,35 @@ export class ViewUserComponent implements OnInit {
         () => (this.loader = false)
       );
   }
+  errorMessage:string = "";
+  successMessage:string = "";
   successStatus(res) {
     if (res.status == true) {
-      this.ngOnInit();
+      this.successMessage = res.message;
+      this.viewUser();
+    } else {
+      this.errorMessage = res.message;
+   
     }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
+  }
+  successdelete(res) {
+    if (res.status == true) {
+      this.successMessage = res.message;
+      this.router.navigate(['/theme/users'])
+    } else {
+      this.errorMessage = res.message;
+    
+    }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
   }
 
 

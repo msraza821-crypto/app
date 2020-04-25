@@ -16,9 +16,9 @@
       <input type="email" [formControl]="email" id="inputEmail" (keyup.enter)="submit()" [maxlength]="CONFIG?.EMAIL_LENGTH"  class="form-control" placeholder="Enter your email here"
         required="" autofocus="" autocomplete="new-password">
       <span class="error text-danger">{{_util.errorMessage(email,FORM_ERROR?.email)}}</span>
-    
+    </div>
       <br>
-      
+      <div class="form-group col-lg-12">
       <app-loader-button class="btn-block" [loader]="loader" title="Submit" (click)="submit()">
       </app-loader-button>
     </div>

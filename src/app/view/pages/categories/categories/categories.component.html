@@ -52,6 +52,8 @@
         </div>
         <div class="card-body">
           <div class="col-sm-12 col-lg-12">
+              <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
+              <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div>
             <div class="card text-white ">
               <div class="pb-0">
                 <table class="table table-striped">
@@ -90,18 +92,18 @@
                   <td  *ngIf="i.status=='Inactive'" >Inactive
                     </td>
                       <td *ngIf="i.category_image"><img (click)="openVerticallyCentered(poupimage,i)" style="height: 60px;width:60px;" class=""
-                          [src]="i.category_image ? i.category_image : 'assets/img/avatars/avtar.svg'" /></td>
+                          [src]="i.category_image ? i.category_image : 'assets/img/avatars/default.png'" /></td>
                           <td *ngIf="i.category_image==null"><img style="height: 60px;width:60px;" class=""
-                            [src]="i.category_image ? i.category_image : 'assets/img/avatars/avtar.svg'" /></td>
+                            [src]="i.category_image ? i.category_image : 'assets/img/avatars/default.png'" /></td>
                       <td>
                         
                             <a [routerLink]="['/theme/categories/subcategories',{id :i?.id}]"> <i style="font-size:24px"
                               class="fa fa-eye"></i></a>&nbsp;<a [routerLink]="['/theme/categories/add',{id :i?.id}]"> <i style="font-size:24px"
                                 class="fa fa-edit"></i></a>
                         <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'"> <i
-                            style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;
+                            style="font-size:24px" class="fa fa-ban"></i>&nbsp;</a>
                         <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'"> <i
-                            style="font-size:24px;color:red;" class="fa fa-ban"></i></a>&nbsp;
+                            style="font-size:24px;color:red;" class="fa fa-ban"></i>&nbsp;</a>
                         <a (click)="openVerticallyCentered(poup,i)"> <i style="font-size:24px"
                             class="fa fa-trash-o"></i></a>
 

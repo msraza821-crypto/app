@@ -47,6 +47,8 @@ export class UsersComponent implements OnInit {
   }
   start = "";
   end = "";
+  successMessage: string;
+  errorMessage: string;
   ngOnInit(): void {
     this.createForm();
     this.loadBrands();
@@ -103,6 +105,10 @@ export class UsersComponent implements OnInit {
       return string;
   }
   downloadFile(data: File) {
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 1000);
     const blob= new Blob([data], { type: 'text/csv' });
     const url= window.URL.createObjectURL(blob);
     if (navigator.msSaveOrOpenBlob) {
@@ -218,9 +224,20 @@ export class UsersComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-    successdelete(res) {
-    this.page=1;
-    this.ngOnInit();
+  successdelete(res) {
+    if (res.status == true) {
+      this.successMessage = res.message;
+      this.page = 1;
+      this.ngOnInit();
+    } else {
+      this.errorMessage = res.message;
+    
+    }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
   }
   yesStatus() {
     if (this.statusData == 'Active') {
@@ -239,7 +256,16 @@ export class UsersComponent implements OnInit {
   }
   successStatus(res) {
     if (res.status == true) {
+      this.successMessage = res.message;
       this.ngOnInit();
+    } else {
+      this.errorMessage = res.message;
+   
     }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
   }
 }

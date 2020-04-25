@@ -18,19 +18,25 @@
         </div>
         <div class="card-body">
 
-
+            <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
+            <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div>
           <div class="row ">
-              <div class="col-md-4 ">
+              <div class="col-md-3 ">
                 
-                <label for=""><b>Name</b></label><br/>
+                <label for=""><b>First Name</b></label><br/>
               {{data.first_name}}
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3 ">
+                
+                  <label for=""><b>Last Name</b></label><br/>
+                {{data.last_name}}
+                  </div>
+                <div class="col-md-3">
                 
                     <label for=""><b>Email</b></label><br/>
                   {{data.email}}
                     </div>
-                    <div class="col-md-4 ">
+                    <div class="col-md-3 ">
                 
                         <label for=""><b>Mobile Number</b></label><br/>
                       (+{{data.country_code}}) {{data.mobile}}
@@ -64,7 +70,7 @@
                 <td>{{i.status}}
               </td>
                   <td><img style="height: 60px;width:60px;" class="img-circle"
-                      [src]="i.profile_picture ? i.profile_picture : 'assets/img/avatars/avtar.svg'" /></td>
+                      [src]="i.profile_picture ? i.profile_picture : 'assets/img/avatars/default.png'" /></td>
                   <td>
                     <a > <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                      
                    

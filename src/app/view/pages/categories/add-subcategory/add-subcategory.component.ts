@@ -111,13 +111,14 @@ export class AddSubcategoryComponent implements OnInit {
 
 
   imageFormats: Array<string> = ['jpeg','png','jpg'];
+  choosefile: string = "No file chosen...";
   onSelectFile(event) {
     this.keyValue = true;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
 
-
+      this.choosefile=event.target.files[0].name;
       const width = file.naturalWidth;
       const height = file.naturalHeight;
 
@@ -135,7 +136,8 @@ export class AddSubcategoryComponent implements OnInit {
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event: any) => { // called once readAsDataURL is completed
-        this.url = event.result;
+   // this.url = event.result;
+   this.url = event.target.result;
       }
 
 
@@ -152,23 +154,36 @@ export class AddSubcategoryComponent implements OnInit {
 
     }
   }
+
+
+  successMessage:string;
   success(res) {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
     if(res.status==true){
-      this.router.navigate(['theme/categories/subcategories',{id:this.data.id}])
+      this.successMessage=res.message;
+      setTimeout(() => {
+        this.errorMessage = "";
+        this.successMessage="";
+        this.router.navigate(['theme/categories/subcategories',{id:this.data.id}])
+      }, 3000);
   } else {
     this._util.markError(this.loginForm);
     this.errorMessage=res.message;
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.errorMessage="";
-    }, 5000);
+    }, 3000);
+   
   }
 
   }
+
+
+
+
   error(res){
     setTimeout(() => {
       /** spinner ends after 5 seconds */
@@ -278,7 +293,8 @@ viewSubCate(){
     this.loginForm.get('descriptionar').patchValue(data.description_ar);
     this.loginForm.get('statusKey').patchValue(data.status);
     this.url=data.category_image;
-  
+    var str = this.url.split('/');
+    this.choosefile = str[str.length - 1];
     }
   }
   //  this.addProperty.get('beds').patchValue(property['bed']);

@@ -29,7 +29,7 @@ export class ChildcategoriesComponent implements OnInit {
   key: string = 'name'; //set default
   reverse: boolean = false;
   title = 'app';
-  employees: Array<any>;
+  employees: Array<any>; 
   totalRec: number;
   page: number = 1;
   id:number;
@@ -177,10 +177,7 @@ url:string;
         () => (this.loader = false)
       );
   }
-    successdelete(res) {
-    this.page=1;
-    this.ngOnInit();
-  }
+  
   deletedId: number;
   statusData: string;
   yesStatus() {
@@ -198,9 +195,35 @@ url:string;
         () => (this.loader = false)
       );
   }
+  successMessage: string;
+  errorMessage: string;
   successStatus(res) {
     if (res.status == true) {
+      this.successMessage = res.message;
       this.ngOnInit();
+    } else {
+      this.errorMessage = res.message;
+   
     }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
+  }
+  successdelete(res) {
+    if (res.status == true) {
+      this.successMessage = res.message;
+      this.page = 1;
+      this.ngOnInit();
+    } else {
+      this.errorMessage = res.message;
+    
+    }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
   }
 }

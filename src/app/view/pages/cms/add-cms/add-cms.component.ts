@@ -82,13 +82,14 @@ id:string=null;
   }
 
   imageFormats: Array<string> = ['jpeg','png','jpg'];
+  choosefile: string = "No file chosen...";
   onSelectFile(event) {
     this.keyValue = true;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
 
-
+      this.choosefile=event.target.files[0].name;
       const width = file.naturalWidth;
       const height = file.naturalHeight;
 
@@ -106,7 +107,8 @@ id:string=null;
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event: any) => { // called once readAsDataURL is completed
-        this.url = event.result;
+   // this.url = event.result;
+   this.url = event.target.result;
       }
 
 
@@ -196,19 +198,26 @@ id:string=null;
   }
 }
 errorMessage:string;
+successMessage:string;
   success(res) {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
     if(res.status==true){
-      this.router.navigate(['theme/cms'])
+      this.successMessage = res.message;
+      setTimeout(() => {
+        this.errorMessage = "";
+        this.successMessage="";
+        this.router.navigate(['theme/cms'])
+      }, 3000);
+    
   } else {
     this.errorMessage = res.message;
     setTimeout(() => {
       this.errorMessage = "";
-     
-    }, 5000);
+      this.successMessage="";
+    }, 3000);
   }
 
   }
