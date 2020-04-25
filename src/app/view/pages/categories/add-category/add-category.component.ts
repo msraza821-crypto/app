@@ -147,14 +147,14 @@ export class AddCategoryComponent implements OnInit {
         this.errorMessage = "";
         this.successMessage="";
         this.router.navigate(['theme/categories'])
-      }, 3000);
+      }, 2000);
   } else {
     this._util.markError(this.loginForm);
     this.errorMessage=res.message;
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.errorMessage="";
-    }, 3000);
+    }, 2000);
    
   }
 
@@ -232,6 +232,12 @@ id:string=null;
       err => this.error(err),
       () => (this.loader = false)
     );
+  }
+  trimFunction(event){
+    var str=event.target.value;
+    alert();
+    return str.trim();
+
   }
 
   successView(res){

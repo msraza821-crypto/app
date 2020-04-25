@@ -34,7 +34,7 @@ export class AddCmsComponent implements OnInit {
       required: ERROR_MESSAGES.NAME_ENGLISH_REQUIREDCMS,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH_TITLE}`,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
-      
+      pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     descriptions: {
       required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIREDCMS,
@@ -49,7 +49,7 @@ export class AddCmsComponent implements OnInit {
 
   createForm() {
     this.loginForm = this._fb.group({
-      name: ["", [Validators.required,Validators.maxLength(CONFIG.NAME_LENGTH_TITLE),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      name: ["", [Validators.required,Validators.maxLength(CONFIG.NAME_LENGTH_TITLE),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.pattern(Regex.spaces)]],
       descriptions: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.DESCRIPTION_LENGTH_CMS),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
       statusKey: ["", [Validators.required]]
     });
@@ -210,14 +210,14 @@ successMessage:string;
         this.errorMessage = "";
         this.successMessage="";
         this.router.navigate(['theme/cms'])
-      }, 3000);
+      }, 2000);
     
   } else {
     this.errorMessage = res.message;
     setTimeout(() => {
       this.errorMessage = "";
       this.successMessage="";
-    }, 3000);
+    }, 2000);
   }
 
   }

@@ -234,7 +234,7 @@ export class AddBrandComponent implements OnInit {
         this.errorMessage = "";
         this.successMessage = "";
         this.router.navigate(['theme/brands'])
-      }, 3000);
+      }, 2000);
     } else {
       this._util.markError(this.loginForm);
       this.errorMessage = res.message;

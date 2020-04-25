@@ -168,14 +168,14 @@ export class AddChildcategoryComponent implements OnInit {
         this.errorMessage = "";
         this.successMessage="";
         this.router.navigate(['theme/categories/subcategories/childcategories',{id:this.data.id}])
-      }, 3000);
+      }, 2000);
   } else {
     this._util.markError(this.loginForm);
     this.errorMessage=res.message;
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.errorMessage="";
-    }, 3000);
+    }, 2000);
    
   }
 
