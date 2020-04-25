@@ -18,7 +18,7 @@
             <hr />
             <div class="col-sm-12 col-lg-12"  style="margin-left: -17px;">
               <div class="col-md-2 float-left">
-                <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Email,Name or Phone number">
+                <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Product Name">
               </div>
             
               <div class="col-md-2 float-left">
@@ -55,6 +55,8 @@
         </div>
         <div class="card-body">
           <div class="col-sm-12 col-lg-12">
+              <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
+              <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div>
             <div class="card text-white ">
               <div class="pb-0">
                 <table class="table table-striped">
@@ -107,8 +109,8 @@
                           <a [routerLink]="['/theme/products/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                   
                           <a [routerLink]="['/theme/products/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-plus"></i></a>&nbsp;                   
                         <a [routerLink]="['/theme/products/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
-                        <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;   
-                        <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i></a>&nbsp;            
+                        <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px" class="fa fa-ban"></i>&nbsp;   </a>
+                        <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i>&nbsp;   </a>           
                         <a (click)="openVerticallyCentered(poup,i)"> <i style="font-size:24px"
                             class="fa fa-trash-o"></i></a>
 

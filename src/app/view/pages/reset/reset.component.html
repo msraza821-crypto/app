@@ -20,7 +20,7 @@
             </div>
             <div class="form-group col-lg-12">
                 <label for="usr">Confirm New Password:</label>
-            <input [type]="showConfirm ? 'text' : 'password'"  [formControl]="confirmpassword"  id="inputPassword" class="form-control" placeholder="New Password" required="" autocomplete="new-password">
+            <input [type]="showConfirm ? 'text' : 'password'"  [formControl]="confirmpassword"  id="inputPassword" class="form-control" placeholder="Confirm New Password" required="" autocomplete="new-password">
             <span toggle="#password-field" (click)="passwordHideShowConfirm(inputPassword)" [class]="showConfirm ? 'fa fa-fw fa-eye field-icon toggle-password' : 'fa fa-fw fa-eye-slash field-icon toggle-password'" 
             ></span>
             <span class="error text-danger" *ngIf="!loginForm.hasError('notSame')">{{_util.errorMessage(confirmpassword,FORM_ERROR?.confirmpassword)}}</span>

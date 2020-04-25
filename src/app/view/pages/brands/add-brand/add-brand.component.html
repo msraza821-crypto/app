@@ -13,6 +13,7 @@
           <div class="row ">
             <form>
                 <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div> 
+                <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div> 
                 <div class="row ">
                    
               <div class="form-group col-md-6">
@@ -46,9 +47,15 @@
             </div>
               <div class="form-group col-md-12">
                 <label for="exampleFormControlFile1"><b>Brand Image</b></label>
-                <input type="file" class="form-control" accept="image/*" (change)="onSelectFile($event)" id="exampleFormControlFile1">
+                <div class="file-upload">
+                  <div class="file-select">
+                    <div class="file-select-button" id="fileName">Choose File</div>
+                    <div class="file-select-name" id="noFile">{{choosefile}}</div> 
+                    <input type="file" name="chooseFile" id="chooseFile" accept="image/*" (change)="onSelectFile($event)">
+                  </div>
+                </div>
                 <br/>
-                <img style="height:100px;width:100px;" [src]="url ? url : 'assets/img/avatars/avtar.svg'" />
+                <img style="height:100px;width:100px;" [src]="url ? url : 'assets/img/avatars/default.png'" />
               </div>
               
                 

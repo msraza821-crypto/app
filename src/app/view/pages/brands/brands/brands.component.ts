@@ -63,10 +63,13 @@ export class BrandsComponent implements OnInit {
   defaultValue() {
     this.selected = '';
   }
+  successMessage: string;
+  errorMessage: string;
   exportDataF() {
     this.exportData = 1;
     var start1 = '';
     var end1 = '';
+    this.spinner.show();
     //  console.log(this.loginForm.value)
      if(this.loginForm.value.range){
        start1=this.loginForm.value.range.startDate._d;
@@ -85,6 +88,10 @@ export class BrandsComponent implements OnInit {
   
 
   downloadFile(data: File) {
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 1000);
     const blob= new Blob([data], { type: 'text/csv' });
     const url= window.URL.createObjectURL(blob);
     if (navigator.msSaveOrOpenBlob) {
@@ -245,11 +252,7 @@ export class BrandsComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-    successdelete(res) {
-    //this.page=1;
-    this.page=1;
-    this.ngOnInit();
-  }
+
   yesStatus() {
     if (this.statusData == 'Active') {
       this.statusData = "Inactive";
@@ -265,9 +268,34 @@ export class BrandsComponent implements OnInit {
         () => (this.loader = false)
       );
   }
+
   successStatus(res) {
     if (res.status == true) {
+      this.successMessage = res.message;
       this.ngOnInit();
+    } else {
+      this.errorMessage = res.message;
+   
     }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
+  }
+  successdelete(res) {
+    if (res.status == true) {
+      this.successMessage = res.message;
+      this.page = 1;
+      this.ngOnInit();
+    } else {
+      this.errorMessage = res.message;
+    
+    }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
   }
 }

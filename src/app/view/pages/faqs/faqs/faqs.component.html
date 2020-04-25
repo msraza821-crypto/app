@@ -8,7 +8,7 @@
             <div class="row ">
                 <div class="breadc col-md-6 float-left"> <a class="active" [routerLink]="['/theme/cms']"> CMS</a> / <a class="breada" > FAQS</a> </div>    
                 <div class="col-md-6 float-left"> 
-                    <a [routerLink]="['/theme/faqs/add']"> <button type="button" class="btn btn-primary float-right ml-1">Add
+                    <a [routerLink]="['/theme/faqs/add']"> <button type="button" class="btn btn-primary float-right ml-1" style="margin-right:17px;">Add
                         FAQ</button></a>
                   </div>
                  </div>
@@ -19,6 +19,8 @@
          </div>
         <div class="card-body">
           <div class="col-sm-12 col-lg-12">
+              <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
+              <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div>
             <div class="card text-white ">
               <div class="pb-0">
                 <table class="table table-striped">
@@ -35,12 +37,12 @@
                     itemsPerPage: limit,
                     currentPage: page,
                     totalItems: totalRec };">
-                      <td scope="row" style=" text-transform: capitalize;">{{i.question}}</td>
-                      <td>{{i.answer}}</td>
+                      <td scope="row" style=" text-transform: capitalize;" [title]="i.question"> {{this.add3Dots(i.question,30)}}</td>
+                      <td  [title]="i.answer">  {{this.add3Dots(i.answer,30)}}</td>
                   <td style="width:120px;">
                         <a [routerLink]="['/theme/faqs/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;  
-                        <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px" class="fa fa-ban"></i></a>&nbsp;   
-                        <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i></a>&nbsp;
+                        <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px" class="fa fa-ban"></i>&nbsp; </a>  
+                        <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i>&nbsp; </a>
                         <a (click)="openVerticallyCentered(poup)"> <i style="font-size:24px"
                             class="fa fa-trash-o"></i></a>
 

@@ -54,6 +54,17 @@ export class FaqsComponent implements OnInit {
     this.loadFaqs();
 
   }
+  add3Dots(string, limit)
+  {
+    var dots = "...";
+    if(string.length > limit)
+    {
+      // you can also use substr instead of substring
+      string = string.substring(0,limit) + dots;
+    }
+  
+      return string;
+  }
 
   createForm() {
     this.loginForm = this._fb.group({
@@ -157,10 +168,7 @@ export class FaqsComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-    successdelete(res) {
-    this.page=1;
-    this.ngOnInit();
-  }
+  
   yesStatus() {
     if (this.statusData == 'Active') {
       this.statusData = "Inactive";
@@ -176,9 +184,36 @@ export class FaqsComponent implements OnInit {
         () => (this.loader = false)
       );
   }
+  successMessage: string;
+  errorMessage: string;
   successStatus(res) {
     if (res.status == true) {
+      this.successMessage = res.message;
       this.ngOnInit();
+    } else {
+      this.errorMessage = res.message;
+   
     }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
   }
+  successdelete(res) {
+    if (res.status == true) {
+      this.successMessage = res.message;
+      this.page = 1;
+      this.ngOnInit();
+    } else {
+      this.errorMessage = res.message;
+    
+    }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
+  }
+
 }

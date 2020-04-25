@@ -98,7 +98,7 @@ export class AddProductComponent implements OnInit {
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     childCategory: {
-      required: ERROR_MESSAGES.CHILDCATEGORY_REQUIRED,
+      required: ERROR_MESSAGES.CHILD_CATEGORY_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
@@ -262,13 +262,14 @@ id:string=null;
 
   errorMessage:string
   imageFormats: Array<string> = ['jpeg','png','jpg'];
+  choosefile: string = "No file chosen...";
   onSelectFile(event) {
     this.keyValue = true;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
 
-
+      this.choosefile=event.target.files[0].name;
       const width = file.naturalWidth;
       const height = file.naturalHeight;
 
@@ -286,7 +287,8 @@ id:string=null;
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event: any) => { // called once readAsDataURL is completed
-        this.url = event.result;
+   // this.url = event.result;
+   this.url = event.target.result;
       }
 
 

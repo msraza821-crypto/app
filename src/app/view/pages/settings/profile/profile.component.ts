@@ -9,6 +9,8 @@ import { Store, select } from '@ngrx/store';
 import * as AppActions from "src/app/store/actions/app.actions";
 import { Subscription } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
@@ -24,11 +26,13 @@ export class ProfileComponent implements OnInit {
   showOld:boolean=false;
   showNew:boolean=false;
   showConfirm:boolean=false;
+  choosefile:string="No file chosen...";
   constructor(
     private _fb: FormBuilder,
     private api: HttpService,
     private _util: CommonUtil,
     private store: Store<any>,
+    private _sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
     private router: Router) {
 
@@ -54,6 +58,7 @@ export class ProfileComponent implements OnInit {
     }
   };
 
+
   createForm() {
     this.loginForm = this._fb.group({
       email: [this.userData.email, [Validators.required, Validators.pattern(Regex.email),Validators.maxLength(CONFIG.EMAIL_LENGTH)]],
@@ -71,6 +76,9 @@ export class ProfileComponent implements OnInit {
         if(appState && appState.user){
            this.userData=appState.user; 
            this.url=this.userData.profile_picture;
+          var str= this.url.split('/');
+          this.choosefile=str[str.length-1];
+
         
       }
 
@@ -105,14 +113,14 @@ export class ProfileComponent implements OnInit {
   message: string = '';
   url: string = '';
   url1: string = '';
+  newdata:string;
   imageFormats: Array<string> = ['jpeg','png','jpg'];
   onSelectFile(event) {
     this.keyValue = true;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
-
-
+this.choosefile=event.target.files[0].name;
       const width = file.naturalWidth;
       const height = file.naturalHeight;
 
@@ -124,20 +132,20 @@ export class ProfileComponent implements OnInit {
     }else{
       this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
       return false;
-    } 
-    
-     
+    }      
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event: any) => { // called once readAsDataURL is completed
-        this.url = event.result;
+        this.url = event.target.result;
+
       }
-
-
+ 
+      
+      
       this.url1 = event.target.files[0];
-      console.log(this.url1)
-
-
+     // console.log(this.url1)
+    //  alert(window.URL.createObjectURL(event.target.files[0]));
+     
       setTimeout(() => {
         this.loader = false;
         this.keyValue = false;
@@ -147,6 +155,16 @@ export class ProfileComponent implements OnInit {
 
     }
   }
+  dataURItoBlob(dataURI) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/jpeg' });    
+    return blob;
+ }
 
   submit() {
     if (this.loginForm.valid) {
