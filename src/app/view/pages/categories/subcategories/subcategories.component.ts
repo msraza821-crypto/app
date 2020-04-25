@@ -83,8 +83,8 @@ export class SubcategoriesComponent implements OnInit {
   loadCats() {
     var search = this.loginForm.value.name;
     this.spinner.show();
-    this.api
-      .getReqAuth("admin/category/list?search=" + search + "&limit=" + this.limit + "&page=" + this.page+'&parent_id='+this.id)
+    this.api   
+   .getReqAuth("admin/category/list?search=" + search + "&limit=" + this.limit + "&page=" + this.page+'&parent_id='+this.id)
       .subscribe(
         res => this.success(res),
         err => this.error(err),

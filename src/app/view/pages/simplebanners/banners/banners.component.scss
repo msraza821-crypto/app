@@ -108,3 +108,25 @@
   .card-body{
     overflow: auto!important;
   }
+  .my-margin{
+    margin-right: 50px;
+  }
+
+.mr-top{
+  margin-top:0;
+}
+@media screen and(max-width:500px)
+{
+    .my-margin{
+        margin-right: 0;
+    }
+   
+}
+
+@media screen and(max-width:800px)
+{
+  .mr-top{
+    margin-top:20px;
+  }
+ 
+}

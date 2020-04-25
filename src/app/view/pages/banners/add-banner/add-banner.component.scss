@@ -29,3 +29,13 @@ padding:20px;
 .card-body{
     overflow: auto!important;
   }
+  .my-margin{
+      margin-right: 50px;
+  }
+
+  @media screen and(max-width:800px)
+  {
+      .mr-top{
+          margin-right: 0;
+      }
+  }
