@@ -1,10 +1,11 @@
-<div class="animated fadeIn" *ngIf="showPage">
+<div class="animated fadeIn" style="margin-top:30px;" *ngIf="showPage">
     <div class="row">
       <div class="col-sm-12 col-lg-12">
         <div class="card">
           <div class="card-header">
-            Add 
-            <small>Banner</small>
+           
+<div *ngIf="this.id==null"  class="breadc"><a class="active" [routerLink]="['/theme/simplebanners']">  Banners</a> / <a class="breada">Add Banner</a></div> 
+<div *ngIf="this.id"  class="breadc"> <a class="active" [routerLink]="['/theme/simplebanners']"> Banners</a> / <a class="breada">Edit Brand</a></div> 
           </div>
           <div class="card-body">
   
@@ -28,10 +29,10 @@
                 
                   <div class="row">
                     <div class="col-md-4 float-left">
-                        <b>Available On:</b>
+                        <b>Available On</b>
                         <select  class="form-control"  [formControl]="available_on"  (change)="changeProduct()" >
-                          <option value="product">Product</option>
-                          <option value="brand">Brand</option>
+                          <option value="1">Product</option>
+                          <option value="2">Brand</option>
 
                         </select>
                         <span class="error text-danger"> {{_util.errorMessage(available_on,FORM_ERROR?.available_on)}}</span>
@@ -39,8 +40,8 @@
                     <div class="col-md-4 float-left">
                         <b>Discount Type</b>
                         <select  class="form-control" placeholder=""  [formControl]="discount_type"  (change)="changeDiscountType()">
-                          <option value="flat">Flat </option>
-                          <option value="percentage">% of Off</option>
+                          <option value="1">Flat </option>
+                          <option value="2">% of Off</option>
                          </select>
                          <span class="error text-danger"> {{_util.errorMessage(discount_type,FORM_ERROR?.discount_type)}}</span>
                     </div>
@@ -62,10 +63,10 @@
               <div class="col">
                 <div ngbDropdown class="d-inline-block">
                   <button class="btn btn-outline-primary" id="dropdownForm1"  type="button" ngbDropdownToggle>Select Brands</button>
-                  <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+                  <div   ngbDropdownMenu aria-labelledby="dropdownForm1" >
                 
-                    
-                      <div class="row" *ngFor="let brand of brandArray;let i = index">
+                    <div  style="overflow-y:auto ;max-height:300px">
+                      <div class="row"  *ngFor="let brand of brandArray;let i = index">
                         <div class="col-2 ">
                           <input type="checkbox" class="mr-left" (change)="getSelectedValue()" [formControl]="brand"  id="inlineCheckbox{{i}}" >
                         </div>
@@ -74,6 +75,7 @@
                         </div>
                         <hr>
                       </div>
+                    </div>
                     <div class="dropdown-divider"></div>
               
                     <button  type="button" class="my-button" ngbDropdownItem>Done.</button>
@@ -88,10 +90,9 @@
               <div class="row" *ngIf="isProduct">
                 <div class="col-md-4 float-left">
                     <b>Select Category</b>
-                    <select  class="form-control"   [formControl]="category">
-                      <option value="ss">Select Category</option>
-                      <option value="cat1">cat1</option>
-                      <option value="cat2">cat2</option>
+                    <select  class="form-control"   [formControl]="category"  (change)="getSubcategory()">
+                      <option *ngFor="let cat of categoryList" value="{{cat.id}}"> {{cat.name}} </option>
+                      
 
                     </select>
                     <span class="error text-danger"> {{_util.errorMessage(category,FORM_ERROR?.category)}}</span>
@@ -100,9 +101,9 @@
                 <div class="col-md-4 float-left">
                     <b>Select Sub Category</b>
                     <select  class="form-control"   [formControl]="sub_category" >
-                      <option value="ss">sub cat1</option>
-                      <option value="Active">sub cat2</option>
-                      
+                       <option  *ngFor="let sab of subCategoryList" value="{{sab.id}}">{{sab.name}}</option>
+                     
+                       
                     </select>
                     <span class="error text-danger">   {{_util.errorMessage(sub_category,FORM_ERROR?.sub_category)}}</span>
                   
@@ -128,7 +129,7 @@
          
           </div>
 
-          <div class="row">
+          <div class="row" >
             <div class="col-12">
             <label for="exampleFormControlFile1"><b>Banner Image</b></label>
             <div class="file-upload">
@@ -150,10 +151,10 @@
           
           <div class="row">
             <div class="col-sm-3 float-left"> 
-                <select class="form-control">
-                  <option value="10">10</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
+                <select class="form-control" [formControl]="display_order">
+                  <option value="10">2</option>
+                  <option value="50">5</option>
+                  <option value="100">10</option>
                 </select>
               </div>
           <div class="col-md-4 float-left ">               
@@ -162,9 +163,8 @@
               placeholder="Select Range"  />
           <span class="error text-danger">{{_util.errorMessage(date,FORM_ERROR?.date)}}</span>
           </div>
-
       
-    
+    <br/>
       <div class="col-sm-12 col-lg-12 mr-top">
         <div class="card text-white ">
           <div class="card-body pb-0 ">
@@ -181,13 +181,17 @@
                 </tr>
               </thead>
               <tbody>
-                <td>1</td>
-                <td>263636</td>
-                <td>ABc</td>
-                <td>xyz</td>
-                <td><input type="checkbox"></td>
+                <tr *ngFor="let product of productLis">
+                <td></td>
+                <td>hghgh</td>
+                <td>product.product_name_en</td>
+                <td>product.brand_name_en</td>
+                <td><input type="checkbox"  value="product.id"></td>
+                </tr>
               </tbody>
               </table>
+              <pagination-controls  id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
+                (pageChange)="page = $event"></pagination-controls>
               
             </div>
           </div>

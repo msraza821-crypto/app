@@ -178,7 +178,7 @@ export class AddBrandComponent implements OnInit {
     if (this.loginForm.valid) {
 
       this.spinner.show();
-
+      console.log(this.url1)
       const formData = new FormData();
       formData.append('id', this.id);
       formData.append('brand_image', this.url1);

@@ -6,11 +6,11 @@
           <div class="card-header">
             
               
-          <b style="margin-left: 14px;">Banners </b> 
+          <b style="margin-left: 14px;">Promotional Banners </b> 
             
-          <a (click)="exportDataF()"> <button type="button" style="margin:0px 19px -2px 0px;color:white;" class="ml-3 btn bg-dark  white float-right ml-1" > Export to
-            CSV</button></a>
-          <a [routerLink]="['/theme/banners/add']"> <button type="button" style="margin-right: -11px"  class="btn btn-primary float-right ml-1">Add
+          <!-- <a (click)="exportDataF()"> <button type="button" style="margin:0px 19px -2px 0px;color:white;" class="ml-3 btn bg-dark  white float-right ml-1" > Export to
+            CSV</button></a> -->
+          <a [routerLink]="['/theme/banners/add']"> <button type="button"   class="btn btn-primary float-right my-margin">Add
               Banner</button></a>
               
                
@@ -19,13 +19,13 @@
            
             <div class="col-sm-12 col-lg-12" style="margin-left: -17px;">
               <div class="col-md-2 float-left">
-                <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Brand Name">
+                <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Banner title">
               </div>
               <div class="col-md-2 float-left">
                 <select id="inputState" class="form-control" [formControl]="status">
                   <option value="">All</option>
-                  <option value="Active">Unblock</option>
-                  <option value="Inactive">Block</option>
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
                 </select>
               </div>
               <div class="col-md-4 float-left">               
@@ -36,8 +36,8 @@
               </div>
               <div class="col-md-4 float-left" style="margin:0px -14px 10px 0px">
                   
-                <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1">Reset</button></a>
-                <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>
+                <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1 mr-top">Reset</button></a>
+                <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1 mr-top">Filter</button></a>
               </div>
             </div>
           </div>

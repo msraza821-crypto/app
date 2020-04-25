@@ -202,4 +202,11 @@ getReqAuthBrands(url: string) {
     .pipe(catchError((err: HttpErrorResponse) => this.handleError(err)));
 }
 
+
+getAllActivities(val):Observable<any>{
+  console.log(val)
+  return this.http.post<any>("http://157.175.28.107:8090/v1/admin/banner/add-banner",val,this.httpOptionsAuth)
+}
+
+
 }
