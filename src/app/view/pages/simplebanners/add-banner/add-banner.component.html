@@ -19,7 +19,7 @@
 
               <div class="form-group col-md-4">
                   <label for="inputEmail4"><b for="inputEmail4">Banner Title</b></label> <br />
-                <input type="text" class="form-control" (keypress)="namePress($event)"
+                <input type="text" class="form-control"  [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_LENGTH_TITLE"
                   placeholder="Banner Title" [formControl]="title">
                 <span class="error text-danger">{{_util.errorMessage(title,FORM_ERROR?.title)}}</span>
               </div>

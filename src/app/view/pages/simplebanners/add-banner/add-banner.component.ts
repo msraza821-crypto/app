@@ -64,7 +64,7 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
   createForm()
   {
     this.bannerForm=this.fb.group({
-      title:['',[Validators.required,Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      title:['',[Validators.required,Validators.pattern(Regex.spaces) ,Validators.maxLength(CONFIG.NAME_LENGTH_TITLE),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
 
       category:['',[Validators.required]],
       sub_category:['',[Validators.required]],
@@ -79,28 +79,12 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
   FORM_ERROR = {
     title: {
       required: ERROR_MESSAGES.BANNER_TITLE_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MAX_LENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH_TITLE}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+     
     },
-    // minimum_value: {
-    //   required: ERROR_MESSAGES.MINIMUM_VALUE_REQUIRED,
   
-    //   pattern: ERROR_MESSAGES.INVALID_INPUT,
-    // },
-    // available_on: {
-    //   required: ERROR_MESSAGES.AVAILABLE_ON_REQUIRED,
-     
-    // },
-    // discount_type: {
-    //   required: ERROR_MESSAGES.DISCOUNT_TYPE_REQUIRED,
-     
-    // },
-    // discount_value: {
-    //   required: ERROR_MESSAGES.DISCOUNT_VALUE_REQUIRED,
-    //   pattern: ERROR_MESSAGES.INVALID_INPUT,
-     
-    // },
     category: {
       required: ERROR_MESSAGES.CATEGORY_REQUIRED,
    
@@ -252,7 +236,7 @@ this.viewBanner()
     {
       this.spinner.show();
       const formData = new FormData();
-    formData.append('title', this.bannerForm.value.title);
+    formData.append('title', this.bannerForm.value.title.trim());
     formData.append('banner_type','1');
    formData.append('display_order',this.bannerForm.value.display_order)
    formData.append('image', this.url1);
@@ -456,7 +440,7 @@ update()
     this.spinner.show();
     const formData = new FormData();
     formData.append('id',this.id);
-  formData.append('title', this.bannerForm.value.title);
+  formData.append('title', this.bannerForm.value.title.trim());
   formData.append('banner_type','1');
  formData.append('display_order',this.bannerForm.value.display_order)
  if(this.url1){

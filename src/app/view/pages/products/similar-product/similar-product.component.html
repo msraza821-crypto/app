@@ -115,8 +115,8 @@
                   <div class="form-group col-md-2">
                       <label for="inputEmail4">Product Color</label>
                       <input type="text" [formControl]="product_colour" class="form-control" id="inputEmail4" placeholder="Product Color">
-      
-                  
+      <br/>
+                      <color-hue-picker [color]="state" (onChange)="handleChange($event)"></color-hue-picker>
                       <span class="error text-danger">{{_util.errorMessage(product_colour,FORM_ERROR?.product_colour)}}</span>
                     </div>
                

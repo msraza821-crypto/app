@@ -9,7 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { LoaderButtonComponent } from '../shared/loader-button/loader-button.component';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
-
+import { ColorHueModule } from 'ngx-color/hue';
 const pageRoutes: Routes = [
 
   { path: '', canActivate: [],  data: { title: 'Products' },children:[{path:'',component: ProductsComponent ,data:{title:''}},
@@ -25,7 +25,7 @@ const pageRoutes: Routes = [
 @NgModule({
   imports: [
     NgxPaginationModule,NgxDaterangepickerMd,
-    CommonModule, SharedModule,
+    CommonModule, SharedModule,ColorHueModule, 
 
     RouterModule.forChild(pageRoutes),
     

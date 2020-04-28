@@ -7,7 +7,7 @@ import { CommonUtil } from 'src/app/util';
 import { HttpService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { rangeValidator } from 'src/app/validators/range.validator';
-
+import { ColorEvent } from 'ngx-color';
 @Component({
   selector: "app-similar-product",
   templateUrl: "./similar-product.component.html",
@@ -114,17 +114,22 @@ export class SimilarProductComponent implements OnInit {
     },
     
   };
+  handleChange($event: ColorEvent) {
+    var hex=$event.color.hex;
+    this.state=hex;
+   this.loginForm.get('product_colour').patchValue(hex);
+  }
 
   createForm() {
     this.loginForm = this._fb.group({
-      product_name_en: [{value:"", disabled: true}, [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
-      product_description_en: [{value:"", disabled: true},[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
-     product_name_ar: [{value:"", disabled: true}, [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
-     product_description_ar: [{value:"", disabled: true}, [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+      product_name_en: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
+      product_description_en: ["",[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+     product_name_ar: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
+     product_description_ar: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
      product_size: ["", [Validators.required]],
      product_prize: ["", [Validators.required,rangeValidator(0, 10000)]],
      product_colour: ["", [Validators.required, Validators.pattern(Regex.spacesDatas)]],
-     brand_id: [{value:"", disabled: true}, [Validators.required]],
+     brand_id: ["", [Validators.required]],
      quantity: ["", [Validators.required,Validators.pattern(Regex.phoneNumber),rangeValidator(0, 10000)]],
      category_id: [{value:"", disabled: true}, [Validators.required]],
      subCategory: [{value:"", disabled: true}, [Validators.required]],
@@ -406,6 +411,7 @@ for (var x = 0; x < ins; x++) {
         () => (this.loader = false)
       );
   }
+  state:any;
   successView(res){
     if(res.status==true){
     var data= res.result;
@@ -423,6 +429,7 @@ for (var x = 0; x < ins; x++) {
     this.loginForm.get('discount_range').patchValue({ startDate: data['discount_start_date'], endDate: data['discount_end_date'] })
   //  this.loginForm.get
     }
+    this.state=data['product_colour']
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();

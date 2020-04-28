@@ -7,7 +7,7 @@ import { CommonUtil } from 'src/app/util';
 import { HttpService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { rangeValidator } from 'src/app/validators/range.validator';
-
+import { ColorEvent } from 'ngx-color';
 @Component({
   selector: "app-add-product",
   templateUrl: "./add-product.component.html",
@@ -21,6 +21,7 @@ export class AddProductComponent implements OnInit {
   loginForm: FormGroup;
   url1 = ''; url: string = '';
   message: string = '';
+  state:any;
   keyValue: boolean = false;
   constructor(
     private _fb: FormBuilder,
@@ -29,6 +30,11 @@ export class AddProductComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private _route: ActivatedRoute,
     private router: Router) {
+  }
+  handleChange($event: ColorEvent) {
+    var hex=$event.color.hex;
+    this.state=hex;
+   this.loginForm.get('product_colour').patchValue(hex);
   }
   FORM_ERROR = {
     product_name_en: {
@@ -429,6 +435,7 @@ export class AddProductComponent implements OnInit {
       this.loginForm.get('statusKey').patchValue(data['status'])
       //  this.loginForm.get
     }
+    this.state=data['product_colour'];
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
@@ -548,6 +555,9 @@ export class AddProductComponent implements OnInit {
     }
   }
   successMessage: string;
+  changeComplete(event){
+console.log(event)
+  }
   success(res) {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
