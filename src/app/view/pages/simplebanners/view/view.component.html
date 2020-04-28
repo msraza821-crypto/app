@@ -1,77 +1,56 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" style="margin-top:30px;">
     <div class="row">
       <div class="col-sm-12 col-lg-12">
         <div class="card">
           <div class="card-header">
-            View
-            <small>Brand</small>
+      
+              <div   class="breadc"><a class="active" [routerLink]="['/theme/simplebanners']"> Banners</a> / <a class="breada">View Banner</a></div> 
+  
           </div>
           <div class="card-body">
   
   
             <div class="row ">
-              <form>
+              <form>   
                   <div class="row ">
                      
                 <div class="form-group col-md-6">
-                s  <b for="inputEmail4">Banner Title:</b> <br/>
-                  ABC
-                
-                </div>
-                <div class="form-group col-md-6" >
-                    <b for="inputState">Status:</b><br/>
-                    Unblock
-                   
+                  <label><b for="inputEmail4">Title:</b></label><br/>
+                  {{data.title}}
                 </div>
                 
                 <div class="form-group col-md-6">
-                  <b for="inputPassword4"> From Date:</b><br/>
-                12/223/2020
-                 </div>
-                
-                <div class="form-group col-md-6">
-                    <b for="inputEmail4">Expiry Date:</b><br/>
-                    12/12/2020
-                    
-                </div>
-
-
-                <div class="form-group col-md-6">
-                  <b for="inputEmail4">Minimum Value:</b> <br/>
-                  ABC
-                
-                </div>
-                <div class="form-group col-md-6" >
-                    <b for="inputState">Discount Type</b><br/>
-                    Flat
-                   
+                    <label>  <b for="inputPassword4">Category Name:</b></label><br/>
+                  {{data.category_name}}
                 </div>
                 
                 <div class="form-group col-md-6">
-                  <b for="inputPassword4"> Discount Value:</b><br/>
-                125
-                 </div>
-                
-                <div class="form-group col-md-6">
-                    <b for="inputEmail4">Available On:</b><br/>
-                    Product
-                    
+                    <label>    <b for="inputEmail4">Sub-Category Name:</b></label><br/>
+                    {{data.sub_category_name}}
                 </div>
+                  <div class="form-group col-md-6">
+                      <label>    <b for="inputPassword4">Display Order:</b></label><br/>
+                    {{data.display_order}}
+              </div>
+                <div class="form-group col-md-12">
+                    <label> <b for="exampleFormControlFile1">Banner Image:</b></label><br/>
+                  <img (click)="openVerticallyCentered(poupimage,i)" style="height:200px;width:200px;"  [src]="data.image" />
+                </div>
+              
                   
-               
-              
-
-              <div class="form-group col-md-12">
-                <b for="exampleFormControlFile1">Banner Image:</b><br/>
-                
-                
+                <div class="form-group col-md-12" *ngIf="data?.status=='Active'" >
+                    <label> <b for="inputState">Status:</b></label><br/>
+                  Active
+                 
               </div>
-              <div class="col-12">
-                <img style="height:100px;width:100px;" [src]="'assets/img/avatars/default.png'" />
+              <div class="form-group col-md-12" *ngIf="data?.status=='Inactive'" >
+                  <label>  <b for="inputState">Status:</b></label><br/>
+                  Inactive
+                 
               </div>
               </div>
-              
-              <button [routerLink]="['/theme/banners']"  style="margin-top: 20px;" type="button" class="btn btn-success" >Back</button>
+              <br/>
+              <button [routerLink]="['/theme/simplebanners']"  type="button" class="btn btn-primary" >Back</button>
              
   
               </form>
@@ -83,3 +62,13 @@
       </div>
     </div>
   </div>
+  
+  
+  <ng-template #poupimage let-modal>
+      <!----- Header  ------>
+      <section >
+      
+      
+        <img class="modal-content" id="img01" [src]=url  style="width:100%;height:auto">
+      </section>
+    </ng-template>

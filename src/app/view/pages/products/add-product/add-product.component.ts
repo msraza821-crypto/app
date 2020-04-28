@@ -131,7 +131,8 @@ export class AddProductComponent implements OnInit {
       childCategory: ["", [Validators.required]],
       discount_type: ["", [Validators.required]],
       discount_value: ["", [Validators.required, rangeValidator(0, 10000), Validators.pattern(Regex.phoneNumbers)]],
-      discount_range: ["", [Validators.required]]
+      discount_range: ["", [Validators.required]],
+      statusKey:[""]
     });
   }
   rtl(element) {
@@ -283,7 +284,9 @@ export class AddProductComponent implements OnInit {
   }
 
 
-
+  get statusKey(): FormControl {
+    return this.loginForm.get("statusKey") as FormControl;
+  }
   get product_name_en(): FormControl {
     return this.loginForm.get("product_name_en") as FormControl;
   }
@@ -422,7 +425,8 @@ export class AddProductComponent implements OnInit {
 
       this.loginForm.get('subCategory').patchValue(data['sub_category']);
       this.loginForm.get('childCategory').patchValue(data['child_category']);
-      this.loginForm.get('discount_range').patchValue({ startDate: data['discount_start_date'], endDate: data['discount_end_date'] })
+      this.loginForm.get('discount_range').patchValue({ startDate:{_d: data['discount_start_date']}, endDate:{_d: data['discount_end_date'] }})
+      this.loginForm.get('statusKey').patchValue(data['status'])
       //  this.loginForm.get
     }
     setTimeout(() => {
@@ -435,6 +439,7 @@ export class AddProductComponent implements OnInit {
   }
   update() {
     console.log(this.loginForm.value)
+    console.log(this.loginForm.value.discount_range)
     if (this.loginForm.valid) {
       var start1 = "";
       var end1 = "";
@@ -469,6 +474,7 @@ export class AddProductComponent implements OnInit {
       formData.append('discount_value', this.loginForm.value.discount_value);
       formData.append('discount_start_date', start1);
       formData.append('discount_end_date', end1);
+      formData.append('status',  this.loginForm.value.statusKey);
 
       formData.append('product_image', this.url1);
       for (var x = 0; x < this.urlForm.length; x++) {
