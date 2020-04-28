@@ -17,7 +17,7 @@
             
             <hr />
            
-            <div class="col-sm-12 col-lg-12" style="margin-left: -17px;">
+            <div class="col-sm-12 col-lg-12" style="margin-left: -17px; padding-right: 0px;">
               <div class="col-md-2 float-left">
                 <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Banner title">
               </div>
@@ -31,10 +31,10 @@
               <div class="col-md-4 float-left">               
                 <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
                 [formControl]="range"
-                  placeholder="Select Range"  />
+                  placeholder="Filter Date"  />
                 
               </div>
-              <div class="col-md-4 float-left" style="margin:0px -14px 10px 0px">
+              <div class="col-md-4 float-right">
                   
                 <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1 mr-top">Reset</button></a>
                 <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1 mr-top">Filter</button></a>
@@ -65,7 +65,7 @@
                         <th scope="col">Created At</th>
                         <th scope="col">Status</th>
                        
-                        <th scope="col" style="min-width:200px">Actions</th>
+                        <th scope="col" style="min-width:100px">Actions</th>
                       </tr>
                     </thead>
                     <tbody *ngIf="collection.length>0">
@@ -79,19 +79,19 @@
                         </td>
                         <td> {{i.banner_end_date|date:'longDate'}}</td>
                         
-                        <td> {{i.createdAt | date:'medium'}}
+                        <td> {{i.created_at | date:'medium'}}
                       </td>
                       <td  *ngIf="i.status=='active'" >Active
                     </td>
                     <td  *ngIf="i.status=='inactive'" >Inactive
                       </td>
                        
-                        <td>
+                        <td >
                             <a [routerLink]="['/theme/banners/view',{id :i?.id}]" title="View Brand"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
                           <a [routerLink]="['/theme/banners/add',{id :i?.id}]" title="Edit Brand"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
-                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Block Brand"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
-                          <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
-                          <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px"
+                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Block Banner"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
+                          <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='inactive'" title="Unblock Banner">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
+                          <a (click)="openVerticallyCentered(poup,i)" title="Delete Banner"> <i style="font-size:24px"
                               class="fa fa-trash-o"></i></a>
                         </td>
                       </tr>

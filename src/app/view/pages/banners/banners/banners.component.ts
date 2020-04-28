@@ -241,7 +241,7 @@ export class BannersComponent implements OnInit {
     //var formData=new FormData();
     //   formData.append('id',this.deletedId)
     this.api
-      .putReqAuth("admin/brand/delete", { id: this.deletedId }).subscribe(
+      .putReqAuth("admin/banner/update-status", { id: this.deletedId,status:'trashed'}).subscribe(
         res => this.successdelete(res),
         err => this.error(err),
         () => (this.loader = false)
@@ -251,10 +251,10 @@ export class BannersComponent implements OnInit {
     this.ngOnInit();
   }
   yesStatus() {
-    if (this.statusData == 'Active') {
-      this.statusData = "Inactive";
+    if (this.statusData == 'active') {
+      this.statusData = "inactive";
     } else {
-      this.statusData = "Active";
+      this.statusData = "active";
     }
     this.modalService.dismissAll();
     this.api
