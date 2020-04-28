@@ -14,21 +14,25 @@
               <form [formGroup]="bannerForm" (ngSubmit)="onSubmit()">
                   <div class="row ">
                      
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                   <b for="inputEmail4">Banner Title</b> <br/>
                 <input type="text" class="form-control"  (keypress)="namePress($event)" placeholder="Enter title here.... "  [formControl]="title">  
                 <span class="error text-danger">{{_util.errorMessage(title,FORM_ERROR?.title)}}</span>             
                 </div>
-                <div class="form-group col-md-6 " >
-                  <b>Minimum Value:</b>
-                  <input type="text" class="form-control" (keypress)="keyPress($event)" placeholder="Enter minimum value here...." [formControl]="minimum_value">
-                  <span class="error text-danger">{{_util.errorMessage(minimum_value,FORM_ERROR?.minimum_value)}}</span>
+                <div class="form-group col-md-4 " >
+          <b>Select Display Order</b>
+                  <select class="form-control" [formControl]="display_order">
+                    <option value="10">2</option>
+                    <option value="50">5</option>
+                    <option value="100">10</option>
+                  </select>
+                  <span class="error text-danger">{{_util.errorMessage(display_order,FORM_ERROR?.display_order)}}</span>             
                 </div>
                   </div>
                    
                 
                   <div class="row">
-                    <div class="col-md-4 float-left">
+                    <!-- <div class="col-md-4 float-left">
                         <b>Available On</b>
                         <select  class="form-control"  [formControl]="available_on"  (change)="changeProduct()" >
                           <option value="1">Product</option>
@@ -36,18 +40,18 @@
 
                         </select>
                         <span class="error text-danger"> {{_util.errorMessage(available_on,FORM_ERROR?.available_on)}}</span>
-                    </div>
-                    <div class="col-md-4 float-left">
+                    </div> -->
+                    <!-- <div class="col-md-4 float-left">
                         <b>Discount Type</b>
                         <select  class="form-control" placeholder=""  [formControl]="discount_type"  (change)="changeDiscountType()">
                           <option value="1">Flat </option>
                           <option value="2">% of Off</option>
                          </select>
                          <span class="error text-danger"> {{_util.errorMessage(discount_type,FORM_ERROR?.discount_type)}}</span>
-                    </div>
+                    </div> -->
 
 
-                    <div class="col-md-4 ">
+                    <!-- <div class="col-md-4 ">
                         <b>Discount Value</b>
                         <div class="form-group ">
                         
@@ -55,11 +59,11 @@
                             <span class="error text-danger">  {{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
                         </div>
                     
-                    </div>
+                    </div> -->
                    
              </div>
 
-             <div class="row" *ngIf="isBrand">
+             <!-- <div class="row" *ngIf="isBrand">
               <div class="col">
                 <div ngbDropdown class="d-inline-block">
                   <button class="btn btn-outline-primary" id="dropdownForm1"  type="button" ngbDropdownToggle>Select Brands</button>
@@ -83,11 +87,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             
                 
 
-              <div class="row" *ngIf="isProduct">
+               <div class="row" >
                 <div class="col-md-4 float-left">
                     <b>Select Category</b>
                     <select  class="form-control"   [formControl]="category"  (change)="getSubcategory()">
@@ -106,28 +110,29 @@
                        
                     </select>
                     <span class="error text-danger">   {{_util.errorMessage(sub_category,FORM_ERROR?.sub_category)}}</span>
+
+                    
                   
                 </div>
 
-
               
-                <div class="col-md-4 float-left">
-                    <b>Select Child</b>
-                    <select  class="form-control"   [formControl]="child_category">
-                      <option value="">child1</option>
-                      <option value="Active">child2</option>
-                      <option value="Inactive">child3</option>
-      
-                    </select>
-                    <span class="error text-danger">{{_util.errorMessage(child_category,FORM_ERROR?.child_category)}}</span>
-                </div>
+                 <!-- <div class="col-md-4 float-left">
+
+                <b>Select Display Order</b>
+                  <select class="form-control" [formControl]="display_order">
+                    <option value="10">2</option>
+                    <option value="50">5</option>
+                    <option value="100">10</option>
+                  </select>
+                </div>  -->
           
               
            
           
 
          
-          </div>
+          </div> 
+          
 
           <div class="row" >
             <div class="col-12">
@@ -149,7 +154,7 @@
           </div>
           <br>
           
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-sm-3 float-left"> 
                 <select class="form-control" [formControl]="display_order">
                   <option value="10">2</option>
@@ -168,10 +173,10 @@
       <div class="col-sm-12 col-lg-12 mr-top">
         <div class="card text-white ">
           <div class="card-body pb-0 ">
-            <table class="table table-striped table-response">
+            <table   *ngIf="productList.length>0" class="table table-striped table-response">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
+                  <th scope="col">S.No.</th>
                   <th scope="col">Product ID</th>
                   <th scope="col">Product Name</th>
                   <th scope="col">Brand</th>
@@ -181,17 +186,29 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let product of productLis">
-                <td></td>
-                <td>hghgh</td>
-                <td>product.product_name_en</td>
-                <td>product.brand_name_en</td>
-                <td><input type="checkbox"  value="product.id"></td>
+                <tr *ngFor="let product of   productList|paginate: { id: 'listing_pagination',
+                itemsPerPage: limit,
+                currentPage: page,
+                totalItems: totalRec }; let ie = index">
+                <td>  {{ ((limit * (page - 1)) + ie+1) }}</td>
+                <td>{{product.id}}</td>
+                <td>{{product.product_name_en}}</td>
+                <td>{{product.brand_name_en}}</td>
+                
+                <button style="border:0px" type="button" class="btn btn-outline-secondary mr-2" placement="right"
+                ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." ><input type="checkbox" id="{{product.id}}"
+                                          (change)="onFilterChange($event,product.id)" placement="right">
+                  
+  Popover on right
+</button>
+
+
                 </tr>
               </tbody>
-              </table>
-              <pagination-controls  id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
-                (pageChange)="page = $event"></pagination-controls>
+            </table>
+            <pagination-controls *ngIf="productList.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
+              (pageChange)="page = $event"></pagination-controls>
+
               
             </div>
           </div>
@@ -199,7 +216,7 @@
 
       </div>
 
-          </div>
+         </div> -->
 
               <button   *ngIf="this.id==null" type="submit"  class="btn btn-success" >Save.</button>
               <button type="button" *ngIf="this.id!=null"  class="btn btn-success" >Save.</button>

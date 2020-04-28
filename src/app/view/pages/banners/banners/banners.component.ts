@@ -170,11 +170,11 @@ export class BannersComponent implements OnInit {
        var endDate=new Date(end1)
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
-     var url="admin/brand/list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=0";
+     var url="admin/banner/banner-list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=0"+"&banner_type=2";
     this.api
       .getReqAuth(url)
       .subscribe(
-        res => this.success(res),
+        res =>this.success(res),
         err => this.error(err),
         () => (this.loader = false)
       );
@@ -182,8 +182,10 @@ export class BannersComponent implements OnInit {
   success(res) {
     if (res.status == true) {
       this.spinner.hide();
+      
       this.collection = res.result.data;
-      this.totalRec = res.result.globelCount;
+    console.log(this.collection,res)
+      this.totalRec = res.result.globalCount;
       // this.page=this.page;
       //this.limit=this.limit;
     }
@@ -256,7 +258,7 @@ export class BannersComponent implements OnInit {
     }
     this.modalService.dismissAll();
     this.api
-      .putReqAuth("admin/brand/status", { id: this.deletedId, status: this.statusData })
+      .putReqAuth("admin/banner/update-status", { id: this.deletedId, status: this.statusData })
       .subscribe(
         res => this.successStatus(res),
         err => this.error(err),

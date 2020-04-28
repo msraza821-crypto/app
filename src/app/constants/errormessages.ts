@@ -129,7 +129,8 @@ export const ERROR_MESSAGES = {
      BRAND_REQUIRED:'',
      QUANTITY_REQUIRED:'',
      
-     DISCOUNT_REQUIRED:''
+     DISCOUNT_REQUIRED:'',
+     DISPLAY_ORDER_REQUIRED:'Display order is equired!'
 
 
 };
