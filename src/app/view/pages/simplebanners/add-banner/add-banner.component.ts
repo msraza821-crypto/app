@@ -65,14 +65,10 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
   {
     this.bannerForm=this.fb.group({
       title:['',[Validators.required,Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-      // minimum_value:['',[Validators.required,Validators.pattern(Regex.pricePattern)]],
-      // available_on:['',[Validators.required]],
-      // discount_type:['',[Validators.required]],
-      // discount_value:['',[Validators.required,Validators.pattern(Regex.pricePattern)]],
+
       category:['',[Validators.required]],
       sub_category:['',[Validators.required]],
-      // child_category:['',[Validators.required]],
-      // date:['',[Validators.required]],
+      status:['',[Validators.required]],
       display_order:['',[Validators.required]]
     
     });
@@ -114,10 +110,10 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
     },
     display_order: {
       required: ERROR_MESSAGES. DISPLAY_ORDER_REQUIRED
+    },
+   status:{
+     required:ERROR_MESSAGES.STATUS_REQUIRED
     }
-    // date:{
-    //   required:ERROR_MESSAGES.INSPECTIONDATE_REQUIRED
-    // }
  };
 
 id;
@@ -206,7 +202,10 @@ this.viewBanner()
   {
     return this.bannerForm.get("display_order") as FormControl 
   }
-
+  get  status ():FormControl
+  {
+    return this.bannerForm.get("status") as FormControl 
+  }
 
   getSelectedValue()
   {
@@ -249,44 +248,19 @@ this.viewBanner()
   }
   onSubmit()
   {
-
-    // var start1 = '';
-    // var end1 = '';
-  
-    //  if(this.bannerForm.value.date){
-    //    start1=this.bannerForm.value.date.startDate._d;
-    //    var startDate=new Date(start1)
-    //     start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
-    //    end1=this.bannerForm.value.date.endDate._d;
-    //    var endDate=new Date(end1)
-    //    end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
-    //  }
-    // console.log(start1)
-    // console.log(end1)
     if(this.bannerForm.valid)
     {
-
       this.spinner.show();
       const formData = new FormData();
     formData.append('title', this.bannerForm.value.title);
     formData.append('banner_type','1');
    formData.append('display_order',this.bannerForm.value.display_order)
    formData.append('image', this.url1);
-  //   formData.append('available_on', this.bannerForm.value.available_on);
-  //   formData.append('discount_type', this.bannerForm.value.discount_type);
-  //   formData.append('discount_value', this.bannerForm.value.discount_type);
-  //   formData.append('minimum_value', this.bannerForm.value.minimum_value);
+   formData.append('status',this.bannerForm.value.status)
     formData.append('category', this.bannerForm.value.category);
     formData.append('sub_category', this.bannerForm.value.sub_category);
-  //   formData.append('brands',JSON.stringify(this.selectedValue) );
-    
-  
-    // console.log('sss',formData)
      this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
-      res =>{
-        this.spinner.hide()
-        console.log(res)
-      },
+      res =>this.success(res),
       err => this.error(err),
       () => (this.loader = false)
 
@@ -298,7 +272,30 @@ this.viewBanner()
     this._util.markError(this.bannerForm);
 
     }
-
+    successMessage:string="";
+    success(res) {
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+      }, 1000);
+      if (res.status == true) {
+        this.successMessage = res.message;
+        setTimeout(() => {
+          this.errorMessage = "";
+          this.successMessage = "";
+          this.router.navigate(['theme/simplebanners'])
+        }, 3000);
+      } else {
+        this._util.markError(this.bannerForm);
+        this.errorMessage = res.message;
+        setTimeout(() => {
+          /** spinner ends after 5 seconds */
+          this.errorMessage = "";
+        }, 3000);
+  
+      }
+  
+    }
   keyPress(event: any) {
     const pattern = /[0-9.]/;
     const inputChar = String.fromCharCode(event.charCode);
@@ -344,31 +341,35 @@ console.log('from discount change')
   else
   this.discountType="% of Off...."
 }
+
+errorMessage;
+choosefile="No choose file...";
 onSelectFile(event) {
   this.keyValue = true;
   if (event.target.files && event.target.files[0]) {
     var mimeType = event.target.files[0].type;
     var file = event.target.files[0];
-
+    this.choosefile=event.target.files[0].name;
 
     const width = file.naturalWidth;
     const height = file.naturalHeight;
 
-    window.URL.revokeObjectURL( file.src );
-  //  var checkimg = file.toLowerCase();
+    window.URL.revokeObjectURL(file.src);
+    //  var checkimg = file.toLowerCase();
     const type = file.type.split('/');
-  if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+    if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
 
-  }else{
-    this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
-    return false;
-  } 
-  
-   
+    } else {
+      this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+      return false;
+    }
+
+
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]); // read file as data url
     reader.onload = (event: any) => { // called once readAsDataURL is completed
-      this.url = event.result;
+     // this.url = event.result;
+      this.url = event.target.result;
     }
 
 
@@ -379,38 +380,53 @@ onSelectFile(event) {
     setTimeout(() => {
       this.loader = false;
       this.keyValue = false;
-      this.errorMessage="";
+      this.errorMessage = "";
     }, 3000)
     this.loader = true;
 
   }
 }
-errorMessage
-
+  sub_cate(event) {
+    const value = event;
+    this.api
+      .getReqAuth("admin/product/category-list?parent_id=" + value).subscribe(
+        res => this.successCategorySub(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
+  }
+  successCategorySub(res){
+    if(res.status==true){
+      this.subCategoryList=res.result
+    }
+  }
 viewBanner(){
   this.spinner.show();
   this.api
-  .getReqAuth("admin/brand/detail?id="+this.id)
+  .getReqAuth("admin/banner/banner-detail?id="+this.id)
   .subscribe(
     res => this.successView(res),
     err => this.error(err),
     () => (this.loader = false)
   );
 }
-success(res) {
-  setTimeout(() => {
-    /** spinner ends after 5 seconds */
-    this.spinner.hide();
-  }, 1000);
-  if(res.status==true){
-    this.router.navigate(['theme/brands'])
-} else {
-  this._util.markError(this.bannerForm);
-}
-}
+
 successView(res){
   if(res.status==true){
   var data= res.result;
+  if(data['category']!=null){
+  this.sub_cate(data['category']);
+  }
+  this.getCategory();
+  Object.keys(this.bannerForm.controls).forEach((control) => {
+
+    this.bannerForm.get(control).patchValue(data[control]);
+
+  });
+  this.url=data.image;
+
+  var str = this.url.split('/');
+  this.choosefile = str[str.length - 1];
   // this.bannerForm.get('title').patchValue('shabbir');
   // this.bannerForm.get('minimum_value').patchValue(1223);
   // this.bannerForm.get('available_on').patchValue('brand');
@@ -435,74 +451,34 @@ error(res){
 
 update()
 {
-  var start1 = '';
-  var end1 = '';
-
-   if(this.bannerForm.value.date){
-     start1=this.bannerForm.value.date.startDate._d;
-     var startDate=new Date(start1)
-      start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
-     end1=this.bannerForm.value.date.endDate._d;
-     var endDate=new Date(end1)
-     end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
-   }
-  console.log(start1)
-  console.log(end1)
-  // if(this.bannerForm.valid)
-  // {
-  console.log(this.bannerForm.value)
-  console.log(this.url1)
-  console.log('json',JSON.stringify(this.selectedValue))
-
+  if(this.bannerForm.valid)
+  {
     this.spinner.show();
-  //   const formData = new FormData();
-  //   formData.append('title', this.bannerForm.value.title);
-  //   formData.append('banner_type',this.bannerForm.value.display_order);
-  //  formData.append('display_order','5')
-  // //  formData.append('image', this.url1);
-  // //   formData.append('available_on', this.bannerForm.value.available_on);
-  // //   formData.append('discount_type', this.bannerForm.value.discount_type);
-  // //   formData.append('discount_value', this.bannerForm.value.discount_type);
-  // //   formData.append('minimum_value', this.bannerForm.value.minimum_value);
-  // //   formData.append('category', this.bannerForm.value.category);
-  // //   formData.append('sub_category', this.bannerForm.value.sub_category);
-  // //   formData.append('brands',JSON.stringify(this.selectedValue) );
-    
+    const formData = new FormData();
+    formData.append('id',this.id);
+  formData.append('title', this.bannerForm.value.title);
+  formData.append('banner_type','1');
+ formData.append('display_order',this.bannerForm.value.display_order)
+ if(this.url1){
+ formData.append('image', this.url1);
+ }
+ formData.append('status',this.bannerForm.value.status)
+  formData.append('category', this.bannerForm.value.category);
+  formData.append('sub_category', this.bannerForm.value.sub_category);
+   this.api.putReqAuth("admin/banner/edit-banner",formData).subscribe(
+    res =>this.success(res),
+    err => this.error(err),
+    () => (this.loader = false)
+
+
+  );
   
-  //   // console.log('sss',formData)
-  //    this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
-  //     res =>{
-  //       console.log(res)
-  //     },
-  //     err => this.error(err),
-  //     () => (this.loader = false)
+  }
+  else
+  this._util.markError(this.bannerForm);
 
-
-  //   );
-  this.api.getAllActivities({title:this.bannerForm.value.title,
-    banner_type:2,
-    display_order:7,
-    // image:this.url1,
-    available_on:this.bannerForm.value.available_on,
-    minimum_value:this.bannerForm.value.minimum_value,
-    discount_type:this.bannerForm.value.discount_type,
-    discount_value:this.bannerForm.value.discount_value,
-    category:this.bannerForm.value.category,
-    sub_category:this.bannerForm.value.sub_category,
-    // child_category:this.bannerForm.value.child_category,
-    brands:this.selectedValue,
-    banner_start_date:start1,
-    banner_end_date:end1
-
-
-
-
-
-  }).pipe().subscribe(res=>{
-console.log('succes',res)
-this.spinner.hide()
-})
-  
-  // this._util.markError(this.bannerForm)
+}
+counter(i: number) {
+  return new Array(i);
 }
 }

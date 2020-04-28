@@ -14,7 +14,7 @@
             <div> <img  [src]="data.productMedia && data.productMedia[0]?data.productMedia[0].media_url:'assets/img/avatars/default.png'"></div>
           </div> <!-- slider-product.// -->
           <div class="img-small-wrap">
-            <div class="item-gallery" *ngFor="let product_image of productMedia"> <img [src]="product_image.media_url"> </div>
+            <div class="item-gallery" *ngFor="let product_image of data.productMedia"> <img [src]="product_image.media_url"> </div>
             
           </div> <!-- slider-nav.// -->
           </article> <!-- gallery-wrap .end// -->
