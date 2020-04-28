@@ -5,59 +5,50 @@
           <div class="card-header">
            
 <div *ngIf="this.id==null"  class="breadc"><a class="active" [routerLink]="['/theme/simplebanners']">  Banners</a> / <a class="breada">Add Banner</a></div> 
-<div *ngIf="this.id"  class="breadc"> <a class="active" [routerLink]="['/theme/simplebanners']"> Banners</a> / <a class="breada">Edit Brand</a></div> 
+<div *ngIf="this.id"  class="breadc"> <a class="active" [routerLink]="['/theme/simplebanners']"> Banners</a> / <a class="breada">Edit Banner</a></div> 
           </div>
           <div class="card-body">
   
   
         
-              <form [formGroup]="bannerForm" (ngSubmit)="onSubmit()">
-                  <div class="row ">
-                     
-                <div class="form-group col-md-6">
-                  <b for="inputEmail4">Banner Title</b> <br/>
-                <input type="text" class="form-control"  (keypress)="namePress($event)" placeholder="Enter title here.... "  [formControl]="title">  
-                <span class="error text-danger">{{_util.errorMessage(title,FORM_ERROR?.title)}}</span>             
-                </div>
-                <div class="form-group col-md-6 " >
-                  <b>Minimum Value:</b>
-                  <input type="text" class="form-control" (keypress)="keyPress($event)" placeholder="Enter minimum value here...." [formControl]="minimum_value">
-                  <span class="error text-danger">{{_util.errorMessage(minimum_value,FORM_ERROR?.minimum_value)}}</span>
-                </div>
-                  </div>
-                   
+              <form [formGroup]="bannerForm">
                 
-                  <div class="row">
-                    <div class="col-md-4 float-left">
-                        <b>Available On</b>
-                        <select  class="form-control"  [formControl]="available_on"  (change)="changeProduct()" >
-                          <option value="1">Product</option>
-                          <option value="2">Brand</option>
-
-                        </select>
-                        <span class="error text-danger"> {{_util.errorMessage(available_on,FORM_ERROR?.available_on)}}</span>
-                    </div>
-                    <div class="col-md-4 float-left">
-                        <b>Discount Type</b>
-                        <select  class="form-control" placeholder=""  [formControl]="discount_type"  (change)="changeDiscountType()">
-                          <option value="1">Flat </option>
-                          <option value="2">% of Off</option>
-                         </select>
-                         <span class="error text-danger"> {{_util.errorMessage(discount_type,FORM_ERROR?.discount_type)}}</span>
-                    </div>
+                      <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div> 
+                      <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div> 
+                      <div class="row ">
+                         
+                    <div class="form-group col-md-6">
+                      <label for="inputEmail4"><b>Banner Title</b></label>
+                      <input type="text" class="form-control"  placeholder="Banner title"  [formControl]="title">  
+                      <span class="error text-danger">{{_util.errorMessage(title,FORM_ERROR?.title)}}</span>       
+                    </div>     
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4"><b>Minimum Amount</b></label>
+                        <input type="text" class="form-control" placeholder="Minimum Amount" [formControl]="minimum_value">
+                        <span class="error text-danger">{{_util.errorMessage(minimum_value,FORM_ERROR?.minimum_value)}}</span>  
+                      </div>  
+           
+                  </div>
 
 
-                    <div class="col-md-4 ">
-                        <b>Discount Value</b>
-                        <div class="form-group ">
-                        
-                            <input type="text" class="form-control"  (keypress)="keyPress($event)" placeholder="{{discountType}}" [formControl]="discount_value">
-                            <span class="error text-danger">  {{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
-                        </div>
-                    
-                    </div>
                    
-             </div>
+                    <div class="row" >
+                        <div class="col-12">
+                        <label for="exampleFormControlFile1"><b>Banner Image</b></label>
+                        <div class="file-upload">
+                                                    <div class="file-select">
+                                                      <div class="file-select-button" id="fileName">Choose File</div>
+                                                      <div class="file-select-name" id="noFile">{{choosefile}}</div> 
+                                                      <input type="file" name="chooseFile" id="chooseFile" accept="image/*" (change)="onSelectFile($event)">
+                                                    </div>
+                                                  </div>
+                        <br/>
+                        </div>
+                      </div>
+                
+
+                 
+
 
              <div class="row" *ngIf="isBrand">
               <div class="col">
@@ -129,19 +120,7 @@
          
           </div>
 
-          <div class="row" >
-            <div class="col-12">
-            <label for="exampleFormControlFile1"><b>Banner Image</b></label>
-            <div class="file-upload">
-                                        <div class="file-select">
-                                          <div class="file-select-button" id="fileName">Choose File</div>
-                                          <div class="file-select-name" id="noFile">{{choosefile}}</div> 
-                                          <input type="file" name="chooseFile" id="chooseFile" accept="image/*" (change)="onSelectFile($event)">
-                                        </div>
-                                      </div>
-            <br/>
-            </div>
-          </div>
+      
           <div class="row">
             <div class="col-12">
             <img style="height:100px;width:100px;" [src]="url ? url : 'assets/img/avatars/default.png'" />
@@ -199,10 +178,10 @@
 
       </div>
 
-          </div>
+          </div> 
 
-              <button   *ngIf="this.id==null" type="submit"  class="btn btn-success" >Save.</button>
-              <button type="button" *ngIf="this.id!=null"  class="btn btn-success" >Save.</button>
+              <button   *ngIf="this.id==null" type="submit"  class="btn btn-success"  (click)="onSubmit()">Save</button>
+              <button type="button" *ngIf="this.id!=null"  class="btn btn-success" >Save</button>
              
   
               </form>

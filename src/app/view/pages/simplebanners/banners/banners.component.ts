@@ -68,28 +68,28 @@ export class BannersComponent implements OnInit {
   defaultValue() {
     this.selected = '';
   }
-  exportDataF() {
-    this.exportData = 1;
-    var start1 = '';
-    var end1 = '';
-    //  console.log(this.loginForm.value)
-     if(this.loginForm.value.range){
-       start1=this.loginForm.value.range.startDate._d;
-       var startDate=new Date(start1)
-        start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
-       end1=this.loginForm.value.range.endDate._d;
-       var endDate=new Date(end1)
-       end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
-      }
-     var url="admin/brand/list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=1";
-    this.api
-      .getReqAuth(url)
-      .subscribe(
-        res => this.successFile(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
-  }
+  // exportDataF() {
+  //   this.exportData = 1;
+  //   var start1 = '';
+  //   var end1 = '';
+  //   //  console.log(this.loginForm.value)
+  //    if(this.loginForm.value.range){
+  //      start1=this.loginForm.value.range.startDate._d;
+  //      var startDate=new Date(start1)
+  //       start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
+  //      end1=this.loginForm.value.range.endDate._d;
+  //      var endDate=new Date(end1)
+  //      end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
+  //     }
+  //    var url="admin/banner/banner-list?status="+this.loginForm.value.status+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&banner_type=1";
+  //   this.api
+  //     .getReqAuth(url)
+  //     .subscribe(
+  //       res => this.successFile(res),
+  //       err => this.error(err),
+  //       () => (this.loader = false)
+  //     );
+  // }
   
   successFile(csv){
     // var hiddenElement = document.createElement('a');
@@ -170,8 +170,8 @@ export class BannersComponent implements OnInit {
        var endDate=new Date(end1)
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
-     var url="admin/brand/list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=0";
-    this.api
+      var url="admin/banner/banner-list?status="+this.loginForm.value.status+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&banner_type=1";
+      this.api
       .getReqAuth(url)
       .subscribe(
         res => this.success(res),
@@ -183,7 +183,7 @@ export class BannersComponent implements OnInit {
     if (res.status == true) {
       this.spinner.hide();
       this.collection = res.result.data;
-      this.totalRec = res.result.globelCount;
+      this.totalRec = res.result.globalCount;
       // this.page=this.page;
       //this.limit=this.limit;
     }
@@ -239,33 +239,57 @@ export class BannersComponent implements OnInit {
     //var formData=new FormData();
     //   formData.append('id',this.deletedId)
     this.api
-      .putReqAuth("admin/brand/delete", { id: this.deletedId }).subscribe(
+      .putReqAuth("admin/banner/update-status", { id: this.deletedId , status: 'trashed'}).subscribe(
         res => this.successdelete(res),
         err => this.error(err),
         () => (this.loader = false)
       );
   }
-  successdelete(res) {
-    this.ngOnInit();
-  }
+
   yesStatus() {
-    if (this.statusData == 'Active') {
-      this.statusData = "Inactive";
+    if (this.statusData == 'active') {
+      this.statusData = "inactive";
     } else {
-      this.statusData = "Active";
+      this.statusData = "active";
     }
     this.modalService.dismissAll();
     this.api
-      .putReqAuth("admin/brand/status", { id: this.deletedId, status: this.statusData })
+      .putReqAuth("admin/banner/update-status", { id: this.deletedId, status: this.statusData })
       .subscribe(
         res => this.successStatus(res),
         err => this.error(err),
         () => (this.loader = false)
       );
   }
+  successMessage:string="";
+  errorMessage:string="";
   successStatus(res) {
     if (res.status == true) {
+      this.successMessage = res.message;
       this.ngOnInit();
+    } else {
+      this.errorMessage = res.message;
+   
     }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
+  }
+  successdelete(res) {
+    if (res.status == true) {
+      this.successMessage = res.message;
+      this.page = 1;
+      this.ngOnInit();
+    } else {
+      this.errorMessage = res.message;
+    
+    }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
   }
 }

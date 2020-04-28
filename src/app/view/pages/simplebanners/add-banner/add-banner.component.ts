@@ -243,7 +243,7 @@ console.log(this.categoryList)
 
     var start1 = '';
     var end1 = '';
-  
+    if(this.bannerForm.valid){
      if(this.bannerForm.value.date){
        start1=this.bannerForm.value.date.startDate._d;
        var startDate=new Date(start1)
@@ -314,8 +314,10 @@ console.log(this.categoryList)
       //   console.log('succes',res)
       //   this.spinner.hide()
       // })
+      }else{
+        this._util.markError(this.bannerForm);
+      }
     
-    // this._util.markError(this.bannerForm);
 
     }
 
