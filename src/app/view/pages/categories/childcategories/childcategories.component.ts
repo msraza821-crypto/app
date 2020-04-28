@@ -208,7 +208,7 @@ url:string;
     setTimeout(() => {
       this.errorMessage = "";
       this.successMessage = "";
-    }, 2000);
+    }, 3000);
 
   }
   successdelete(res) {
@@ -223,7 +223,7 @@ url:string;
     setTimeout(() => {
       this.errorMessage = "";
       this.successMessage = "";
-    }, 2000);
+    }, 3000);
 
   }
 }

@@ -197,7 +197,7 @@ export class FaqsComponent implements OnInit {
     setTimeout(() => {
       this.errorMessage = "";
       this.successMessage = "";
-    }, 2000);
+    }, 3000);
 
   }
   successdelete(res) {
@@ -212,7 +212,7 @@ export class FaqsComponent implements OnInit {
     setTimeout(() => {
       this.errorMessage = "";
       this.successMessage = "";
-    }, 2000);
+    }, 3000);
 
   }
 

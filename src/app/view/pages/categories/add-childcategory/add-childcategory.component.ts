@@ -168,14 +168,14 @@ export class AddChildcategoryComponent implements OnInit {
         this.errorMessage = "";
         this.successMessage="";
         this.router.navigate(['theme/categories/subcategories/childcategories',{id:this.data.id}])
-      }, 2000);
+      }, 3000);
   } else {
     this._util.markError(this.loginForm);
     this.errorMessage=res.message;
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.errorMessage="";
-    }, 2000);
+    }, 3000);
    
   }
 
@@ -198,10 +198,10 @@ export class AddChildcategoryComponent implements OnInit {
 
       const formData = new FormData();
       formData.append('category_image', this.url1);
-      formData.append('name', this.loginForm.value.name);
-     formData.append('description', this.loginForm.value.descriptionen);
-      formData.append('name_ar', this.loginForm.value.namear);
-      formData.append('description_ar', this.loginForm.value.descriptionar);
+      formData.append('name', this.loginForm.value.name.trim());
+     formData.append('description', this.loginForm.value.descriptionen.trim());
+      formData.append('name_ar', this.loginForm.value.namear.trim());
+      formData.append('description_ar', this.loginForm.value.descriptionar.trim());
       formData.append('status', this.loginForm.value.statusKey);
       formData.append('parent_id', this.data.id);
       console.log(formData)
@@ -233,10 +233,10 @@ export class AddChildcategoryComponent implements OnInit {
       formData.append('id', this.sub_id);
       formData.append('parent_id', this.id);
       formData.append('category_image', this.url1);
-      formData.append('name', this.loginForm.value.name);
-     formData.append('description', this.loginForm.value.descriptionen);
-      formData.append('name_ar', this.loginForm.value.namear);
-      formData.append('description_ar', this.loginForm.value.descriptionar);
+      formData.append('name', this.loginForm.value.name.trim());
+     formData.append('description', this.loginForm.value.descriptionen.trim());
+      formData.append('name_ar', this.loginForm.value.namear.trim());
+      formData.append('description_ar', this.loginForm.value.descriptionar.trim());
       formData.append('status', this.loginForm.value.statusKey);
       console.log(formData)
       this.api
@@ -285,10 +285,10 @@ viewSubCate(){
   successViewSub(res){
     if(res.status==true){
       var data= res.result;
-    this.loginForm.get('name').patchValue(data.name);
-    this.loginForm.get('namear').patchValue(data.name_ar);
-    this.loginForm.get('descriptionen').patchValue(data.description);
-    this.loginForm.get('descriptionar').patchValue(data.description_ar);
+    this.loginForm.get('name').patchValue(data.name.trim());
+    this.loginForm.get('namear').patchValue(data.name_ar.trim());
+    this.loginForm.get('descriptionen').patchValue(data.description.trim());
+    this.loginForm.get('descriptionar').patchValue(data.description_ar.trim());
     this.loginForm.get('statusKey').patchValue(data.status);
     this.url=data.category_image;
     var str = this.url.split('/');

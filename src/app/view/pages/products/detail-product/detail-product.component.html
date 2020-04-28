@@ -1,0 +1,119 @@
+<div class="animated fadeIn" style="margin-top:30px;">
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+            <div  class="breadc"><a class="active" [routerLink]="['/theme/products']"> Products</a> / <a class="breada">Detail Product</a></div> 
+           
+        </div>
+        <div class="card-body">
+            <div class="row">
+              <aside class="col-sm-12 border-right">
+          <article class="gallery-wrap"> 
+          <div class="img-big-wrap">
+            <div> <img [src]="data.productMedia && data.productMedia[0]?data.productMedia[0]:'assets/img/avatars/default.png'"></div>
+          </div> <!-- slider-product.// -->
+          <div class="img-small-wrap">
+            <div class="item-gallery" *ngFor="let product_image of productMedia"> <img [src]="product_image"> </div>
+            
+          </div> <!-- slider-nav.// -->
+          </article> <!-- gallery-wrap .end// -->
+              </aside>
+              <div class="card new-card">
+                  <div class="card-header">
+                      <div  class="breadc"><a class="breada"> Product Detail(English)</a></div>                      
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                         <label class="float-left"> <b > Product Name : </b></label>
+                          <p>{{data.product_name_en}}</p>
+                        </div>
+                        <div class="col-md-6">
+                           <label class="float-left"> <b >Product Description : </b></label>
+                            <p>{{data.product_description_en}}</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="card new-card">
+                  <div class="card-header">
+                      <div  class="breadc"><a class="breada"> Product Detail(Arabic)</a></div>                      
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+                          <div class="col-md-6">
+                              <label class="float-left"> <b > Product Name : </b></label>
+                               <p>{{data.product_name_ar}}</p>
+                             </div>
+                             <div class="col-md-6">
+                                <label class="float-left"> <b >Product Description : </b></label>
+                                 <p>{{data.product_description_ar}}</p>
+                               </div>
+                      </div>
+                  </div></div>
+                  <div class="card col-md-12">
+                  <div class="card-header">
+                      <div  class="breadc"><a class="breada"> Other Details</a></div>                      
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+                          <div class="col-md-6">
+                         <label class="float-left"> <b >Brand Name : </b></label>
+                          <p>{{data.brand_name}}</p>
+                        </div>
+                        <div class="col-md-6">
+                           <label class="float-left"> <b >Category Name : </b></label>
+                            <p>{{data.category_name}}</p>
+                          </div>
+                          <div class="col-md-6">
+                             <label class="float-left"> <b >Sub-Category Name : </b></label>
+                              <p>{{data.sub_category_name}}</p>
+                            </div>
+                            <div class="col-md-6">
+                               <label class="float-left"> <b >Child-Category Name : </b></label>
+                                <p>{{data.child_category_name}}</p>
+                              </div>
+                              <div class="col-md-6">
+                                  <label class="float-left"> <b >Product Quantity : </b></label>
+                                   <p>{{data.quantity}}</p>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <label class="float-left"> <b >Product Price : </b></label>
+                                     <p>QAR {{data.product_prize}}</p>
+                                   </div>
+                                   <div class="col-md-6">
+                                      <label class="float-left"> <b >Product Size : </b></label>
+                                       <p>{{data.product_size}}</p>
+                                     </div>
+                                     <div class="col-md-6">
+                                        <label class="float-left"> <b >Product Colour : </b></label>
+                                         <p>{{data.product_colour}}</p>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <label class="float-left"> <b >Discount Start Date : </b></label>
+                                           <p>{{data.discount_start_date}}</p>
+                                         </div>
+                                         <div class="col-md-6">
+                                            <label class="float-left"> <b >Discount End Date : </b></label>
+                                             <p>{{data.discount_end_date}}</p>
+                                           </div>
+                                           <div class="col-md-6">
+                                              <label class="float-left"> <b >Discount type : </b></label>
+                                               <p *ngIf="data.discount_type==1">Percentage</p>
+                                               <p *ngIf="data.discount_type==2">Fixed</p>
+                                             </div>
+                                             <div class="col-md-6">
+                                                <label class="float-left"> <b >Discount Value : </b></label>
+                                                 <p>{{data.discount_value}}</p>
+                                               </div>
+                            </div>
+                          </div></div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+            </div> <!-- row.// -->
+          </div> <!-- card.// -->
+          
+     

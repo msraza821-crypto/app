@@ -156,7 +156,7 @@ id:string=null;
       this.loader = true;
 
       this.api
-      .putReqAuth("admin/faqs/edit",{'id':this.id,'status':this.loginForm.value.statusKey,'question':this.loginForm.value.name,'answer':this.loginForm.value.descriptions}).subscribe(
+      .putReqAuth("admin/faqs/edit",{'id':this.id,'status':this.loginForm.value.statusKey,'question':this.loginForm.value.name.trim(),'answer':this.loginForm.value.descriptions.trim()}).subscribe(
         res => this.success(res),
         err => this.error(err),
         () => (this.loader = false)
@@ -170,7 +170,7 @@ id:string=null;
     if (this.loginForm.valid) {
       this.loader = true;
       this.api
-      .postReqAuth("admin/faqs/add",{'status':this.loginForm.value.statusKey,'question':this.loginForm.value.name,'answer':this.loginForm.value.descriptions}).subscribe(
+      .postReqAuth("admin/faqs/add",{'status':this.loginForm.value.statusKey,'question':this.loginForm.value.name.trim(),'answer':this.loginForm.value.descriptions.trim()}).subscribe(
         res => this.success(res),
         err => this.error(err),
         () => (this.loader = false)
@@ -186,14 +186,14 @@ id:string=null;
         this.errorMessage = "";
         this.successMessage = "";
         this.router.navigate(['theme/faqs'])
-      }, 2000);
+      }, 3000);
      
   } else {
     this.errorMessage=res.message;
     setTimeout(() => {
       this.errorMessage = "";
       this.successMessage = "";
-    }, 2000);
+    }, 3000);
     this._util.markError(this.loginForm);
   }
 

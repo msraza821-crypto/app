@@ -161,8 +161,8 @@ id:string=null;
 
       const formData = new FormData();
       formData.append('id', this.id);
-      formData.append('content_title', this.loginForm.value.name);
-     formData.append('content_description', this.loginForm.value.descriptions);   
+      formData.append('content_title', this.loginForm.value.name.trim());
+     formData.append('content_description', this.loginForm.value.descriptions.trim());   
       formData.append('status', this.loginForm.value.statusKey);
       console.log(formData)
       this.api
@@ -183,8 +183,8 @@ id:string=null;
 
       const formData = new FormData();
       formData.append('id', this.id);
-     formData.append('content_title', this.loginForm.value.name);
-     formData.append('content_description', this.loginForm.value.descriptions);
+     formData.append('content_title', this.loginForm.value.name.trim());
+     formData.append('content_description', this.loginForm.value.descriptions.trim());
 
       console.log(formData)
       this.api
@@ -210,14 +210,14 @@ successMessage:string;
         this.errorMessage = "";
         this.successMessage="";
         this.router.navigate(['theme/cms'])
-      }, 2000);
+      }, 3000);
     
   } else {
     this.errorMessage = res.message;
     setTimeout(() => {
       this.errorMessage = "";
       this.successMessage="";
-    }, 2000);
+    }, 3000);
   }
 
   }

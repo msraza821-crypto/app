@@ -26,26 +26,26 @@ export const navItems: INavData[] = [
     icon: 'icon-list',
   
 },
-// {
-//   name: 'Products',
-//   url: '/theme/products',
-//   icon: 'icon-bell',
+{
+  name: 'Products',
+  url: '/theme/products',
+  icon: 'icon-bell',
   
-// },
-// {
-//   name: 'Promotions',
-//   url: '/theme/banners',
-//   icon: 'icon-cursor',
+},
+{
+  name: 'Promotions',
+  url: '/theme/banners',
+  icon: 'icon-cursor',
 
-// },
+},
 
 
-// {
-//   name: 'Banners',
-//   url: '/theme/simplebanners',
-//   icon: 'icon-cursor',
+{
+  name: 'Banners',
+  url: '/theme/simplebanners',
+  icon: 'icon-cursor',
 
-// },
+},
 
 {
   name: 'CMS',

@@ -96,7 +96,7 @@ export class ViewUserComponent implements OnInit {
     setTimeout(() => {
       this.errorMessage = "";
       this.successMessage = "";
-    }, 2000);
+    }, 3000);
 
   }
   successdelete(res) {
@@ -110,7 +110,7 @@ export class ViewUserComponent implements OnInit {
     setTimeout(() => {
       this.errorMessage = "";
       this.successMessage = "";
-    }, 2000);
+    }, 3000);
 
   }
 

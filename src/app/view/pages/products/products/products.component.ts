@@ -248,7 +248,7 @@ export class ProductsComponent implements OnInit {
     setTimeout(() => {
       this.errorMessage = "";
       this.successMessage = "";
-    }, 2000);
+    }, 3000);
 
   }
   successdelete(res) {
@@ -263,7 +263,7 @@ export class ProductsComponent implements OnInit {
     setTimeout(() => {
       this.errorMessage = "";
       this.successMessage = "";
-    }, 2000);
+    }, 3000);
 
   }
 }

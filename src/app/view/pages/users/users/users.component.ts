@@ -236,7 +236,7 @@ export class UsersComponent implements OnInit {
     setTimeout(() => {
       this.errorMessage = "";
       this.successMessage = "";
-    }, 2000);
+    }, 3000);
 
   }
   yesStatus() {
@@ -265,7 +265,7 @@ export class UsersComponent implements OnInit {
     setTimeout(() => {
       this.errorMessage = "";
       this.successMessage = "";
-    }, 2000);
+    }, 3000);
 
   }
 }
