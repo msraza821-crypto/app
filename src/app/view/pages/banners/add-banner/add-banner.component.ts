@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 
 
+
 @Component({
   selector: 'app-add-banner',
   templateUrl: './add-banner.component.html',
@@ -25,12 +26,20 @@ showPage=false;
   brands=[];
   inlineCheckbox='checkbox'
   loader = false;
-  discountType=""
+  discountType="";
+  selectedProduct=[];
 
 
   url1 = ''; url: string = '';
   message: string = '';
   keyValue: boolean = false;
+
+
+
+  page: number = 1;
+  limit=10;
+  totalRec=50;
+
 
   constructor(private fb:FormBuilder,
     private _util: CommonUtil,
@@ -40,21 +49,8 @@ showPage=false;
     private router:Router
     
     ) {
-   this.spinner.show();
-    this.api.getReqAuthBrands("admin/product/brand-list").pipe().subscribe(res=>{
-      if(res)
-      {this.spinner.hide()
-        this.brands=res.result;
-        this.showPage=true;
-        console.log(this.brands)
+   
       this.createForm()
-      
-    
-      }
-     
-      
-    });
-console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
 
   }
   createForm()
@@ -69,8 +65,8 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
       sub_category:['',[Validators.required]],
       child_category:['',[Validators.required]],
       date:['',[Validators.required]],
-      display_order:'',
-     brand:this.addBrandControl()
+      display_order:['',[Validators.required]]
+    //  brand:this.addBrandControl()
     });
   }
 
@@ -113,6 +109,10 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
     },
     date:{
       required:ERROR_MESSAGES.INSPECTIONDATE_REQUIRED
+    },
+
+    display_order: {
+      required: ERROR_MESSAGES. DISPLAY_ORDER_REQUIRED
     }
  };
 
@@ -133,6 +133,67 @@ this.viewBanner()
    
 }
 
+
+
+brandChange(event,id)
+{
+  this.selectedValue=this.productCompare(id,this.selectedValue)
+  console.log(this.selectedValue)
+}
+
+getBrandList()
+{
+
+}
+onFilterChange(eve: any,id) {
+
+  console.log(this.selectedProduct)
+  this.selectedProduct=this.productCompare(id,this.selectedProduct);
+  console.log(this.selectedProduct)
+}
+productCompare(id:any,arr)
+{
+  
+  for(let i=0;i<arr.length;i++)
+  {
+    if(id==arr[i])
+    {
+      const index = arr.indexOf(arr[i], 0);
+      if (index > -1) {
+      arr.splice(index, 1);
+        return arr
+              }
+
+    }
+  }
+
+      arr.push(id)
+      return arr;
+    
+
+  }
+
+  getCurrentDate()
+  {
+
+    var start1 = '';
+    var end1 = '';
+  
+        if(this.bannerForm.value.date)
+          {
+                    start1=this.bannerForm.value.date.startDate._d;
+                    var startDate=new Date(start1)
+                      start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
+                    end1=this.bannerForm.value.date.endDate._d;
+                    var endDate=new Date(end1)
+                    end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
+                    return {'start':start1,'end':end1}
+         }  
+     
+    
+    }
+
+
   checked = "";
   indeterminate = false;
   labelPosition: 'before' | 'after' = 'after';
@@ -140,15 +201,40 @@ this.viewBanner()
   changeProduct()
   {
     console.log(this.bannerForm.value.available_on)
-    if(this.bannerForm.value.available_on=='1')
+    if(this.bannerForm.value.available_on=='2')
     {
       this.isProduct=true;
       this.isBrand=false;
       this.getCategory()
+      this.getProductList()
+    
       return;
     }
+    if(this.bannerForm.value.available_on=='1')
+    {
     this.isBrand=true;
     this.isProduct=false;
+  //   this.bannerForm.patchValue({
+  //   category:" ",
+  //   sub_category:" ",
+  // child_category:" ",
+  //   });
+
+    this.spinner.show();
+    this.api.getReqAuthBrands("admin/product/brand-list").pipe().subscribe(res=>{
+      if(res)
+      {
+        this.spinner.hide()
+        this.brands=res.result;
+       
+    
+      
+    
+      }
+     
+      
+    });
+  }
   
   
   }
@@ -198,26 +284,45 @@ this.viewBanner()
     return this.bannerForm.get("display_order") as FormControl 
   }
 
-
-  getSelectedValue()
-  {
-    this.selectedValue=[];
-    this.brandArray.forEach((control,i)=>{
-      if(control.value)
-      {
-        this.selectedValue.push(this.brands[i]);
-      }
-    });
+  // getSelectedValue()
+  // {
+  //   this.selectedValue=[];
+  //   this.brandArray.forEach((control,i)=>{
+  //     if(control.value)
+  //     {
+  //       this.selectedValue.push(this.brands[i]);
+  //     }
+  //   });
     
-  }
+  // }
+
+  productList=[];
+  getProductList()
+{
+  var url="admin/product/list"
+  this.api
+    .getReqAuth(url)
+    .subscribe(
+      res =>{
+        console.log(res)
+        this.productList=res.result.data;
+        console.log('product',this.productList)
+      },
+
+      err => this.error(err),
+      () => (this.loader = false)
+    );
+
+}
   categoryList;
   getCategory(){
   this.api
-  .getReqAuth("admin/category/list")
+  .getReqAuth("admin/product/category-list?parent_id="+0)
   .subscribe(
     res =>{
-this.categoryList=res.result.data
-console.log(this.categoryList)
+      console.log('categort',res)
+this.categoryList=res.result
+console.log('categorlist',this.categoryList)
     },
     err => this.error(err),
     () => (this.loader = false)
@@ -237,78 +342,119 @@ console.log(this.categoryList)
       () => (this.loader = false)
     );
   }
-  onSubmit()
+
+  childList=[];
+  getChildList()
+  {
+    this.api.getReqAuth("admin/category/list?&parent_id="+this.bannerForm.value.sub_category)
+    
+    .subscribe(
+      res => {
+        if(res)
+        this.childList=res.result.data;
+        if(this.childList==null)
+        this.childList=res.ressult.message
+      },
+      err => this.error(err),
+      () => (this.loader = false)
+    );
+
+  }
+
+    onSubmit()
   {
 
-    var start1 = '';
-    var end1 = '';
-  
-     if(this.bannerForm.value.date){
-       start1=this.bannerForm.value.date.startDate._d;
-       var startDate=new Date(start1)
-        start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
-       end1=this.bannerForm.value.date.endDate._d;
-       var endDate=new Date(end1)
-       end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
-     }
-    console.log(start1)
-    console.log(end1)
-    // if(this.bannerForm.valid)
-    // {
-    console.log(this.bannerForm.value)
-    console.log(this.url1)
-    console.log('json',JSON.stringify(this.selectedValue))
 
-      this.spinner.show();
-      const formData = new FormData();
-      formData.append('title', this.bannerForm.value.title);
-      formData.append('banner_type',this.bannerForm.value.display_order);
-     formData.append('display_order','5')
-     formData.append('image', this.url1);
-      formData.append('available_on', this.bannerForm.value.available_on);
-      formData.append('discount_type', this.bannerForm.value.discount_type);
-      formData.append('discount_value', this.bannerForm.value.discount_type);
-      formData.append('minimum_value', this.bannerForm.value.minimum_value);
-      formData.append('category', this.bannerForm.value.category);
-      formData.append('sub_category', this.bannerForm.value.sub_category);
-      formData.append('brands',JSON.stringify(this.selectedValue) );
-      
+     
+
+  if(this.bannerForm.value.available_on=='1')
+  {
+    if(this.bannerForm.value.title!=''&& this.bannerForm.value.date!=''&&
+    this.bannerForm.value.display_order!='' && this.bannerForm.value.minimum_value!='' && this.bannerForm.value.discount_type!=''
+    &&this.bannerForm.value.minimum_value!='')
+      {
+        let mydate=this.getCurrentDate()
     
-      console.log('sss',formData)
+        let start1=mydate['start']
+         let end1=mydate['end']
+    
+    
+        this.spinner.show();
+        const formData = new FormData();
+        formData.append('title', this.bannerForm.value.title);
+        formData.append('banner_type','2');
+        formData.append('display_order',this.bannerForm.value.display_order)
+        formData.append('image', this.url1);
+       formData.append('available_on', this.bannerForm.value.available_on);
+       formData.append('discount_type', this.bannerForm.value.discount_type);
+       formData.append('discount_value', this.bannerForm.value.discount_type);
+        formData.append('minimum_value', this.bannerForm.value.minimum_value);
+        // formData.append('category', this.bannerForm.value.category);
+        // formData.append('sub_category', this.bannerForm.value.sub_category);
+        formData.append('brands',JSON.stringify(this.selectedValue) );
+        formData.append('products',JSON.stringify(this.selectedProduct))
+        formData.append('banner_start_date',start1)
+        formData.append('banner_end_date',end1)
+        // formData.append('child_category',this.bannerForm.value.child_category)
+      
+        
+
+      
        this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
         res =>{
-          console.log(res)
+          console.log('success',res)
+          this.spinner.hide()
         },
         err => this.error(err),
         () => (this.loader = false)
 
 
       );
-      // this.api.getAllActivities({title:this.bannerForm.value.title,
-      //                           banner_type:1,
-      //                           display_order:this.bannerForm.value.display_order,
-      //                           image:this.url1,
-      //                           available_on:this.bannerForm.value.available_on,
-      //                           minimum_value:this.bannerForm.value.minimum_value,
-      //                           discount_type:this.bannerForm.value.discount_type,
-      //                           discount_value:this.bannerForm.value.discount_value,
-      //                           category:this.bannerForm.value.category,
-      //                           sub_category:this.bannerForm.value.sub_category,
-      //                           // child_category:this.bannerForm.value.child_category,
-      //                           brands:this.selectedValue,
-      //                           banner_start_date:start1,
-      //                           banner_end_date:end1
-              
-
-
-
-
-      //                         }).pipe().subscribe(res=>{
-      //   console.log('succes',res)
-      //   this.spinner.hide()
-      // })
+      return
     
-    // this._util.markError(this.bannerForm);
+      }
+    }
+    if(this.bannerForm.valid)
+    {
+          let mydate=this.getCurrentDate()
+    
+    let start1=mydate['start']
+     let end1=mydate['end']
+
+
+    this.spinner.show();
+    const formData = new FormData();
+    formData.append('title', this.bannerForm.value.title);
+    formData.append('banner_type','2');
+    formData.append('display_order',this.bannerForm.value.display_order)
+    formData.append('image', this.url1);
+   formData.append('available_on', this.bannerForm.value.available_on);
+   formData.append('discount_type', this.bannerForm.value.discount_type);
+   formData.append('discount_value', this.bannerForm.value.discount_type);
+    formData.append('minimum_value', this.bannerForm.value.minimum_value);
+    formData.append('category', this.bannerForm.value.category);
+    formData.append('sub_category', this.bannerForm.value.sub_category);
+    formData.append('brands',JSON.stringify(this.selectedValue) );
+    formData.append('products',JSON.stringify(this.selectedProduct))
+    formData.append('banner_start_date',start1)
+    formData.append('banner_end_date',end1)
+    formData.append('child_category',this.bannerForm.value.child_category)
+  
+    
+      this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
+        res =>{
+          console.log('success',res)
+          this.spinner.hide()
+        },
+        err => this.error(err),
+        () => (this.loader = false)
+
+
+      );
+      return
+
+    }
+     this._util.markError(this.bannerForm);
 
     }
 
@@ -430,19 +576,11 @@ error(res){
 
 update()
 {
-  var start1 = '';
-  var end1 = '';
-
-   if(this.bannerForm.value.date){
-     start1=this.bannerForm.value.date.startDate._d;
-     var startDate=new Date(start1)
-      start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
-     end1=this.bannerForm.value.date.endDate._d;
-     var endDate=new Date(end1)
-     end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
-   }
-  console.log(start1)
-  console.log(end1)
+  
+  let mydate=this.getCurrentDate()
+    
+  let start1=mydate['start']
+   let end1=mydate['end']
   // if(this.bannerForm.valid)
   // {
   console.log(this.bannerForm.value)

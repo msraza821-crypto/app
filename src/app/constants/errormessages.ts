@@ -129,8 +129,9 @@ export const ERROR_MESSAGES = {
      PRODUCT_COLOUR_REQUIRED:'Product colour is required',
      BRAND_REQUIRED:'Brand name is required',
      QUANTITY_REQUIRED:'Product quantity is required',
-     
+     DISPLAY_ORDER_REQUIRED:'Display order is required',
      DISCOUNT_REQUIRED:'Discount amount is required'
+
 
 
 };

@@ -24,8 +24,8 @@
               <div class="col-md-2 float-left">
                 <select id="inputState" class="form-control" [formControl]="status">
                   <option value="">All</option>
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
                 </select>
               </div>
               <div class="col-md-4 float-left">               
@@ -62,7 +62,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">From Date</th>
                         <th scope="col">Expiry Date</th>
-                        <th scope="col">Created at</th>
+                        <th scope="col">Created At</th>
                         <th scope="col">Status</th>
                        
                         <th scope="col" style="min-width:200px">Actions</th>
@@ -72,25 +72,25 @@
                       <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                       itemsPerPage: limit,
                       currentPage: page,
-                      totalItems: totalRec };">
-                        <td scope="row">{{i.name}}</td>
-                          <td scope="row">{{i.name_ar}}
+                      totalItems: totalRec };let ie=index">
+                      <td>  {{ ((limit * (page - 1)) + ie+1) }}</td>
+                        <td scope="row">{{i.title}}</td>
+                          <td scope="row">{{i.banner_start_date | date:'longDate'}}
                         </td>
-                        <td> {{i.description}}</td>
-                        <td> {{i.description_ar}}
-                        </td>
-                        <td> {{i.created_at}}
+                        <td> {{i.banner_end_date|date:'longDate'}}</td>
+                        
+                        <td> {{i.createdAt | date:'medium'}}
                       </td>
-                      <td  *ngIf="i.status=='Active'" >Unblock
+                      <td  *ngIf="i.status=='active'" >Active
                     </td>
-                    <td  *ngIf="i.status=='Inactive'" >Block
+                    <td  *ngIf="i.status=='inactive'" >Inactive
                       </td>
                        
                         <td>
                             <a [routerLink]="['/theme/banners/view',{id :i?.id}]" title="View Brand"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
                           <a [routerLink]="['/theme/banners/add',{id :i?.id}]" title="Edit Brand"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
-                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'" title="Block Brand"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
-                          <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
+                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Block Brand"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
+                          <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
                           <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px"
                               class="fa fa-trash-o"></i></a>
                         </td>
@@ -168,7 +168,7 @@
           <div class="">
             <div class="row pt-4">
               <div class="col-md-12 frgtpass-head">
-                <p class="text-center"> Are you sure you want to block this brand ? </p>
+                <p class="text-center"> Are you sure you want to block this banner ? </p>
               </div>
             </div>
           </div>
