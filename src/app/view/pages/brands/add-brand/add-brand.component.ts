@@ -156,10 +156,10 @@ export class AddBrandComponent implements OnInit {
   successView(res) {
     if (res.status == true) {
       var data = res.result;
-      this.loginForm.get('name').patchValue(data.name);
-      this.loginForm.get('namear').patchValue(data.name_ar);
-      this.loginForm.get('descriptionen').patchValue(data.description);
-      this.loginForm.get('descriptionar').patchValue(data.description_ar);
+      this.loginForm.get('name').patchValue(data.name.trim());
+      this.loginForm.get('namear').patchValue(data.name_ar.trim());
+      this.loginForm.get('descriptionen').patchValue(data.description.trim());
+      this.loginForm.get('descriptionar').patchValue(data.description_ar.trim());
       this.loginForm.get('statusKey').patchValue(data.status);
       this.url = data.brand_image;
       var str = this.url.split('/');
@@ -182,10 +182,10 @@ export class AddBrandComponent implements OnInit {
       const formData = new FormData();
       formData.append('id', this.id);
       formData.append('brand_image', this.url1);
-      formData.append('name', this.loginForm.value.name);
-      formData.append('description', this.loginForm.value.descriptionen);
-      formData.append('name_ar', this.loginForm.value.namear);
-      formData.append('description_ar', this.loginForm.value.descriptionar);
+      formData.append('name', this.loginForm.value.name.trim());
+      formData.append('description', this.loginForm.value.descriptionen.trim());
+      formData.append('name_ar', this.loginForm.value.namear.trim());
+      formData.append('description_ar', this.loginForm.value.descriptionar.trim());
       formData.append('status', this.loginForm.value.statusKey);
       console.log(formData)
       this.api
@@ -241,7 +241,7 @@ export class AddBrandComponent implements OnInit {
       setTimeout(() => {
         /** spinner ends after 5 seconds */
         this.errorMessage = "";
-      }, 2000);
+      }, 3000);
     }
 
   }

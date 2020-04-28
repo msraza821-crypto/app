@@ -34,7 +34,7 @@ export class AddCmsComponent implements OnInit {
       required: ERROR_MESSAGES.NAME_ENGLISH_REQUIREDCMS,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_LENGTH_TITLE}`,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
-      
+      pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     descriptions: {
       required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIREDCMS,
@@ -49,7 +49,7 @@ export class AddCmsComponent implements OnInit {
 
   createForm() {
     this.loginForm = this._fb.group({
-      name: ["", [Validators.required,Validators.maxLength(CONFIG.NAME_LENGTH_TITLE),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      name: ["", [Validators.required,Validators.maxLength(CONFIG.NAME_LENGTH_TITLE),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.pattern(Regex.spaces)]],
       descriptions: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.DESCRIPTION_LENGTH_CMS),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
       statusKey: ["", [Validators.required]]
     });
@@ -161,8 +161,8 @@ id:string=null;
 
       const formData = new FormData();
       formData.append('id', this.id);
-      formData.append('content_title', this.loginForm.value.name);
-     formData.append('content_description', this.loginForm.value.descriptions);   
+      formData.append('content_title', this.loginForm.value.name.trim());
+     formData.append('content_description', this.loginForm.value.descriptions.trim());   
       formData.append('status', this.loginForm.value.statusKey);
       console.log(formData)
       this.api
@@ -183,8 +183,8 @@ id:string=null;
 
       const formData = new FormData();
       formData.append('id', this.id);
-     formData.append('content_title', this.loginForm.value.name);
-     formData.append('content_description', this.loginForm.value.descriptions);
+     formData.append('content_title', this.loginForm.value.name.trim());
+     formData.append('content_description', this.loginForm.value.descriptions.trim());
 
       console.log(formData)
       this.api

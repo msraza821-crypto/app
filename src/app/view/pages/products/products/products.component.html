@@ -106,8 +106,8 @@
                         </td>
                 
                       <td>
-                          <a [routerLink]="['/theme/products/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                   
-                          <a [routerLink]="['/theme/products/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-plus"></i></a>&nbsp;                   
+                          <a [routerLink]="['/theme/products/detail-product',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                   
+                          <a [routerLink]="['/theme/products/similar-product',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-plus"></i></a>&nbsp;                   
                         <a [routerLink]="['/theme/products/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
                         <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px" class="fa fa-ban"></i>&nbsp;   </a>
                         <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i>&nbsp;   </a>           

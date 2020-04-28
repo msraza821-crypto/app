@@ -174,10 +174,10 @@ export class AddCategoryComponent implements OnInit {
 
       const formData = new FormData();
       formData.append('category_image', this.url1);
-      formData.append('name', this.loginForm.value.name);
-     formData.append('description', this.loginForm.value.descriptionen);
-      formData.append('name_ar', this.loginForm.value.namear);
-      formData.append('description_ar', this.loginForm.value.descriptionar);
+      formData.append('name', this.loginForm.value.name.trim());
+     formData.append('description', this.loginForm.value.descriptionen.trim());
+      formData.append('name_ar', this.loginForm.value.namear.trim());
+      formData.append('description_ar', this.loginForm.value.descriptionar.trim());
       formData.append('status', this.loginForm.value.statusKey);
       console.log(formData)
       this.api
@@ -207,10 +207,10 @@ export class AddCategoryComponent implements OnInit {
       const formData = new FormData();
       formData.append('id', this.id);
       formData.append('category_image', this.url1);
-      formData.append('name', this.loginForm.value.name);
-     formData.append('description', this.loginForm.value.descriptionen);
-      formData.append('name_ar', this.loginForm.value.namear);
-      formData.append('description_ar', this.loginForm.value.descriptionar);
+      formData.append('name', this.loginForm.value.name.trim());
+     formData.append('description', this.loginForm.value.descriptionen.trim());
+      formData.append('name_ar', this.loginForm.value.namear.trim());
+      formData.append('description_ar', this.loginForm.value.descriptionar.trim());
       formData.append('status', this.loginForm.value.statusKey);
       console.log(formData)
       this.api
@@ -232,6 +232,12 @@ id:string=null;
       err => this.error(err),
       () => (this.loader = false)
     );
+  }
+  trimFunction(event){
+    var str=event.target.value;
+    alert();
+    return str.trim();
+
   }
 
   successView(res){

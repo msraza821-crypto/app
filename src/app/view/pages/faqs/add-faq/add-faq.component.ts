@@ -34,7 +34,7 @@ export class AddFaqComponent implements OnInit {
       required: ERROR_MESSAGES.QUESTION_REQURIED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_NAME_LENGTH}`,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
-      
+      pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     descriptions: {
       required: ERROR_MESSAGES.ANSWER_REQURIED,
@@ -49,7 +49,7 @@ export class AddFaqComponent implements OnInit {
 
   createForm() {
     this.loginForm = this._fb.group({
-      name: ["", [Validators.required,Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      name: ["", [Validators.required,Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.pattern(Regex.spaces)]],
       descriptions: ["", [Validators.required, Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.DESCRIPTION_NAME_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
       statusKey: ["", [Validators.required]]
     });
@@ -156,7 +156,7 @@ id:string=null;
       this.loader = true;
 
       this.api
-      .putReqAuth("admin/faqs/edit",{'id':this.id,'status':this.loginForm.value.statusKey,'question':this.loginForm.value.name,'answer':this.loginForm.value.descriptions}).subscribe(
+      .putReqAuth("admin/faqs/edit",{'id':this.id,'status':this.loginForm.value.statusKey,'question':this.loginForm.value.name.trim(),'answer':this.loginForm.value.descriptions.trim()}).subscribe(
         res => this.success(res),
         err => this.error(err),
         () => (this.loader = false)
@@ -170,7 +170,7 @@ id:string=null;
     if (this.loginForm.valid) {
       this.loader = true;
       this.api
-      .postReqAuth("admin/faqs/add",{'status':this.loginForm.value.statusKey,'question':this.loginForm.value.name,'answer':this.loginForm.value.descriptions}).subscribe(
+      .postReqAuth("admin/faqs/add",{'status':this.loginForm.value.statusKey,'question':this.loginForm.value.name.trim(),'answer':this.loginForm.value.descriptions.trim()}).subscribe(
         res => this.success(res),
         err => this.error(err),
         () => (this.loader = false)

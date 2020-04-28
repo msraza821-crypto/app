@@ -19,7 +19,7 @@
                  
             <div class="form-group col-md-6">
               <label for="inputEmail4">Name(English)</label>
-              <input type="text" [formControl]="name" class="form-control"  [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" id="inputEmail4" placeholder="Name">
+              <input type="text" [formControl]="name" class="form-control"  (onchange)="trimFunction(event)"[minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" id="inputEmail4" placeholder="Name">
 
               <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
             </div>

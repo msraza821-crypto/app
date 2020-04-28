@@ -197,10 +197,10 @@ export class AddSubcategoryComponent implements OnInit {
      this.spinner.show();
       const formData = new FormData();
       formData.append('category_image', this.url1);
-      formData.append('name', this.loginForm.value.name);
-     formData.append('description', this.loginForm.value.descriptionen);
-      formData.append('name_ar', this.loginForm.value.namear);
-      formData.append('description_ar', this.loginForm.value.descriptionar);
+      formData.append('name', this.loginForm.value.name.trim());
+     formData.append('description', this.loginForm.value.descriptionen.trim());
+      formData.append('name_ar', this.loginForm.value.namear.trim());
+      formData.append('description_ar', this.loginForm.value.descriptionar.trim());
       formData.append('status', this.loginForm.value.statusKey);
       formData.append('parent_id', this.data.id);
       console.log(formData)

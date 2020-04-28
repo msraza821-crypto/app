@@ -25,14 +25,14 @@ export class AddProductComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _util: CommonUtil,
-    private api:HttpService,
-    private spinner:NgxSpinnerService,
-    private _route:ActivatedRoute,
+    private api: HttpService,
+    private spinner: NgxSpinnerService,
+    private _route: ActivatedRoute,
     private router: Router) {
   }
   FORM_ERROR = {
     product_name_en: {
-      required: ERROR_MESSAGES.NAME_ENGLISH_REQUIRED, 
+      required: ERROR_MESSAGES.NAME_ENGLISH_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_NAME}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
@@ -44,7 +44,7 @@ export class AddProductComponent implements OnInit {
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     product_name_ar: {
-      required: ERROR_MESSAGES.NAME_ARABIC_REQUIRED, 
+      required: ERROR_MESSAGES.NAME_ARABIC_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_NAME}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
@@ -58,14 +58,15 @@ export class AddProductComponent implements OnInit {
     product_size: {
       required: ERROR_MESSAGES.PRODUCT_SIZE_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
+
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     product_prize: {
       required: ERROR_MESSAGES.PRODUCT_PRIZE_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NUMBER_LENGTH}`,
+      pattern: ERROR_MESSAGES.NUMBER_REQUIRED,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+      range: ERROR_MESSAGES.RANGE,
     },
     product_colour: {
       required: ERROR_MESSAGES.PRODUCT_COLOUR_REQUIRED,
@@ -75,45 +76,35 @@ export class AddProductComponent implements OnInit {
     },
     brand_id: {
       required: ERROR_MESSAGES.BRAND_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
-      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+
     },
     quantity: {
       required: ERROR_MESSAGES.QUANTITY_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NUMBER_LENGTH}`,
+      pattern: ERROR_MESSAGES.NUMBER_REQUIRED,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+      range: ERROR_MESSAGES.RANGE,
     },
     category_id: {
       required: ERROR_MESSAGES.CATEGORY_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
-      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     subCategory: {
       required: ERROR_MESSAGES.SUBCATEGORY_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
-      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     childCategory: {
       required: ERROR_MESSAGES.CHILD_CATEGORY_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
-      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+
     },
     discount_value: {
       required: ERROR_MESSAGES.DISCOUNT_VALUE_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NUMBER_LENGTH}`,
+      pattern: ERROR_MESSAGES.NUMBER_REQUIRED,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+      range: ERROR_MESSAGES.RANGE,
     },
     discount_type: {
       required: ERROR_MESSAGES.DISCOUNT_TYPE_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
-      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+
     },
     discount_range: {
       required: ERROR_MESSAGES.DISCOUNT_REQUIRED,
@@ -121,25 +112,26 @@ export class AddProductComponent implements OnInit {
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
+
   };
 
   createForm() {
     this.loginForm = this._fb.group({
-      product_name_en: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
-      product_description_en: ["",[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
-     product_name_ar: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
-     product_description_ar: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
-     product_size: ["", [Validators.required]],
-     product_prize: ["", [Validators.required,rangeValidator(0, 10000),Validators.pattern(Regex.phoneNumbers)]],
-     product_colour: ["", [Validators.required, Validators.pattern(Regex.spacesDatas)]],
-     brand_id: ["", [Validators.required]],
-     quantity: ["", [Validators.required,Validators.pattern(Regex.phoneNumbers),rangeValidator(0, 10000)]],
-     category_id: ["", [Validators.required]],
-     subCategory: ["", [Validators.required]],
-     childCategory: ["", [Validators.required]],     
-     discount_type: ["", [Validators.required]],
-     discount_value: ["", [Validators.required,rangeValidator(0, 10000),Validators.pattern(Regex.phoneNumbers)]],
-     discount_range:["",[Validators.required]]
+      product_name_en: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_MAX)]],
+      product_description_en: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+      product_name_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_MAX)]],
+      product_description_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+      product_size: ["", [Validators.required]],
+      product_prize: ["", [Validators.required, rangeValidator(0, 10000)]],
+      product_colour: ["", [Validators.required, Validators.pattern(Regex.spaces)]],
+      brand_id: ["", [Validators.required]],
+      quantity: ["", [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
+      category_id: ["", [Validators.required]],
+      subCategory: ["", [Validators.required]],
+      childCategory: ["", [Validators.required]],
+      discount_type: ["", [Validators.required]],
+      discount_value: ["", [Validators.required, rangeValidator(0, 10000), Validators.pattern(Regex.phoneNumbers)]],
+      discount_range: ["", [Validators.required]]
     });
   }
   rtl(element) {
@@ -147,68 +139,116 @@ export class AddProductComponent implements OnInit {
       element.setSelectionRange(0, 0);
     }
   }
-id:string=null;
+  id: string = null;
   ngOnInit() {
     this.productSize();
     this.productSiz();
     this.productCategory();
     this._route.params.subscribe(param => {
       if (param && param["id"]) {
-        this.id=param["id"];
+        this.id = param["id"];
         this.viewBrand();
       }
-      })
+    })
     this.createForm();
   }
 
-  productSiz(){
+  productSiz() {
     this.api
-    .getReqAuth("admin/product/product-size").subscribe(
-      res => this.successSiz(res),
-      err => this.error(err),
-      () => (this.loader = false)
-    );
+      .getReqAuth("admin/product/product-size").subscribe(
+        res => this.successSiz(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
   }
-  sizes:any=[];
-  successSiz(res:any){
-    if(res.status){
-     // console.log(res)
-     this.sizes=res.result;
-    }
-  }
-
-
-
-
-  productSize(){
-    this.api
-    .getReqAuth("admin/product/brand-list").subscribe(
-      res => this.successBrand(res),
-      err => this.error(err),
-      () => (this.loader = false)
-    );
-  }
-  brands:any=[];
-  successBrand(res:any){
-    if(res.status){
-     // console.log(res)
-     this.brands=res.result;
-    }
-  }
-  categories:any=[];
-  productCategory(){
-    this.api
-    .getReqAuth("admin/product/category-list?parent_id=0").subscribe(
-      res => this.successCategory(res),
-      err => this.error(err),
-      () => (this.loader = false)
-    );
-  }
-  successCategory(res){
-    if(res.status){
+  sizes: any = [];
+  successSiz(res: any) {
+    if (res.status) {
       // console.log(res)
-      this.categories=res.result;
-     }
+      this.sizes = res.result;
+    }
+  }
+
+
+
+
+  productSize() {
+    this.api
+      .getReqAuth("admin/product/brand-list").subscribe(
+        res => this.successBrand(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
+  }
+  brands: any = [];
+  successBrand(res: any) {
+    if (res.status) {
+      // console.log(res)
+      this.brands = res.result;
+    }
+  }
+  categories: any = [];
+  subcategories: any = [];
+  childcategories: any = [];
+  onOptionsSelectedSub(event) {
+    const value = event.target.value;
+    this.api
+      .getReqAuth("admin/product/category-list?parent_id=" + value).subscribe(
+        res => this.successCategorySub(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
+  }
+  onOptionsSelectedChild(event) {
+    const value = event.target.value;
+    this.api
+      .getReqAuth("admin/product/category-list?parent_id=" + value).subscribe(
+        res => this.successCategoryChild(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
+  }
+  successCategorySub(res) {
+    if (res.status) {
+      this.subcategories = res.result;
+    }
+  }
+  successCategoryChild(res) {
+    if (res.status) {
+      this.childcategories = res.result;
+    }
+  }
+  sub_cate(event) {
+    const value = event;
+    this.api
+      .getReqAuth("admin/product/category-list?parent_id=" + value).subscribe(
+        res => this.successCategorySub(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
+  }
+  child_cate(event) {
+    const value = event;
+    this.api
+      .getReqAuth("admin/product/category-list?parent_id=" + value).subscribe(
+        res => this.successCategoryChild(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
+  }
+  productCategory() {
+    this.api
+      .getReqAuth("admin/product/category-list?parent_id=0").subscribe(
+        res => this.successCategory(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
+  }
+  successCategory(res) {
+    if (res.status) {
+      // console.log(res)
+      this.categories = res.result;
+    }
   }
   get category_id(): FormControl {
     return this.loginForm.get("category_id") as FormControl;
@@ -260,35 +300,87 @@ id:string=null;
     return this.loginForm.get("product_size") as FormControl;
   }
 
-  errorMessage:string
-  imageFormats: Array<string> = ['jpeg','png','jpg'];
+  errorMessage: string
+  imageFormats: Array<string> = ['jpeg', 'png', 'jpg'];
+  videoFormats: Array<string> = ["webm", "mp4", "ogv"]
   choosefile: string = "No file chosen...";
+  urlData: any = [];
+  urlForm: any = [];
+  choosefileData: any = [];
+  choosefileDatas: string = "No file chosen";
+  onSelectFileMultiple(event) {
+    this.keyValue = true;
+    if (event.target.files.length > 0) {
+      var ins = event.target.files.length;
+      for (var x = 0; x < ins; x++) {
+
+        var mimeType = event.target.files[x].type;
+        var file = event.target.files[x];
+
+        this.choosefileData.push(event.target.files[x].name);
+        const width = file.naturalWidth;
+        const height = file.naturalHeight;
+
+        window.URL.revokeObjectURL(file.src);
+        //  var checkimg = file.toLowerCase();
+        const type = file.type.split('/');
+        if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+
+        } else {
+          this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+          return false;
+        }
+
+
+        let reader = new FileReader();
+        reader.readAsDataURL(event.target.files[x]); // read file as data url
+        reader.onload = (event: any) => { // called once readAsDataURL is completed
+          // this.url = event.result;
+          this.urlData.push(event.target.result);
+        }
+
+
+        this.urlForm.push(event.target.files[0]);
+        console.log(this.url1)
+
+
+        setTimeout(() => {
+          this.loader = false;
+          this.keyValue = false;
+          this.errorMessage = "";
+        }, 3000)
+        this.loader = true;
+
+      }
+    }
+    this.choosefileDatas = this.choosefileData.join();
+  }
   onSelectFile(event) {
     this.keyValue = true;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
 
-      this.choosefile=event.target.files[0].name;
+      this.choosefile = event.target.files[0].name;
       const width = file.naturalWidth;
       const height = file.naturalHeight;
 
-      window.URL.revokeObjectURL( file.src );
-    //  var checkimg = file.toLowerCase();
+      window.URL.revokeObjectURL(file.src);
+      //  var checkimg = file.toLowerCase();
       const type = file.type.split('/');
-    if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+      if (type[0] === 'video' && this.videoFormats.includes(type[1].toLowerCase())) {
 
-    }else{
-      this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
-      return false;
-    } 
-    
-     
+      } else {
+        this.errorMessage = "Please use proper format of video like webm,mp4 or ogv only.";
+        return false;
+      }
+
+
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event: any) => { // called once readAsDataURL is completed
-   // this.url = event.result;
-   this.url = event.target.result;
+        // this.url = event.result;
+        this.url = event.target.result;
       }
 
 
@@ -299,104 +391,187 @@ id:string=null;
       setTimeout(() => {
         this.loader = false;
         this.keyValue = false;
-        this.errorMessage="";
+        this.errorMessage = "";
       }, 3000)
       this.loader = true;
 
     }
   }
-  viewBrand(){
+  viewBrand() {
     this.spinner.show();
     this.api
-    .getReqAuth("admin/brand/detail?id="+this.id)
-    .subscribe(
-      res => this.successView(res),
-      err => this.error(err),
-      () => (this.loader = false)
-    );
+      .getReqAuth("admin/product/product-detail?id=" + this.id)
+      .subscribe(
+        res => this.successView(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
   }
 
-  successView(res){
-    if(res.status==true){
-    var data= res.result;
-    this.loginForm.get('name').patchValue(data.name);
-    this.loginForm.get('namear').patchValue(data.name_ar);
-    this.loginForm.get('descriptionen').patchValue(data.description);
-    this.loginForm.get('descriptionar').patchValue(data.description_ar);
-    this.loginForm.get('statusKey').patchValue(data.status);
+  successView(res) {
+    if (res.status == true) {
+      var data = res.result;
+      this.sub_cate(data['category']);
+      this.child_cate(data['sub_category'])
+      Object.keys(this.loginForm.controls).forEach((control) => {
+
+        this.loginForm.get(control).patchValue(data[control]);
+
+      });
+      this.loginForm.get('category_id').patchValue(data['category']);
+
+      this.loginForm.get('subCategory').patchValue(data['sub_category']);
+      this.loginForm.get('childCategory').patchValue(data['child_category']);
+      this.loginForm.get('discount_range').patchValue({ startDate: data['discount_start_date'], endDate: data['discount_end_date'] })
+      //  this.loginForm.get
     }
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
-   
-  //  this.addProperty.get('beds').patchValue(property['bed']);
+
+    //  this.addProperty.get('beds').patchValue(property['bed']);
 
   }
   update() {
     console.log(this.loginForm.value)
     if (this.loginForm.valid) {
+      var start1 = "";
+      var end1 = "";
 
       this.spinner.show();
+      if (this.loginForm.value.discount_range) {
 
+        start1 = this.loginForm.value.discount_range.startDate._d;
+
+        var startDate = new Date(start1)
+        start1 = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
+        end1 = this.loginForm.value.discount_range.endDate._d;
+        var endDate = new Date(end1)
+        end1 = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
+      }
       const formData = new FormData();
       formData.append('id', this.id);
-      formData.append('brand_image', this.url1);
-      formData.append('name', this.loginForm.value.name);
-     formData.append('description', this.loginForm.value.descriptionen);
-      formData.append('name_ar', this.loginForm.value.namear);
-      formData.append('description_ar', this.loginForm.value.descriptionar);
-      formData.append('status', this.loginForm.value.statusKey);
+      formData.append('product_name_en', this.loginForm.value.product_name_en);
+      formData.append('product_description_en', this.loginForm.value.product_description_en);
+      formData.append('product_name_ar', this.loginForm.value.product_name_ar);
+      formData.append('product_description_ar', this.loginForm.value.product_description_ar);
+
+      formData.append('product_size', this.loginForm.value.product_size);
+      formData.append('product_prize', this.loginForm.value.product_prize);
+      formData.append('product_colour', this.loginForm.value.product_colour);
+      formData.append('brand_id', this.loginForm.value.brand_id);
+      formData.append('quantity', this.loginForm.value.quantity);
+      formData.append('category', this.loginForm.value.category_id);
+      formData.append('sub_category', this.loginForm.value.subCategory);
+      formData.append('child_category', this.loginForm.value.childCategory);
+      formData.append('discount_type', this.loginForm.value.discount_type);
+      formData.append('discount_value', this.loginForm.value.discount_value);
+      formData.append('discount_start_date', start1);
+      formData.append('discount_end_date', end1);
+
+      formData.append('product_image', this.url1);
+      for (var x = 0; x < this.urlForm.length; x++) {
+        formData.append('products_images', this.urlForm[x]);
+      }
+
+
+
       console.log(formData)
       this.api
-      .putReqAuth("admin/brand/edit",formData).subscribe(
-        res => this.success(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
+        .putReqAuth("admin/product/edit-product", formData).subscribe(
+          res => this.success(res),
+          err => this.error(err),
+          () => (this.loader = false)
+        );
+    } else {
+      this._util.markError(this.loginForm);
+    }
   }
-}
   submit() {
     console.log(this.loginForm.value)
     if (this.loginForm.valid) {
+      var start1 = "";
+      var end1 = "";
 
       this.spinner.show();
+      if (this.loginForm.value.discount_range) {
+
+        start1 = this.loginForm.value.discount_range.startDate._d;
+
+        var startDate = new Date(start1)
+        start1 = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
+        end1 = this.loginForm.value.discount_range.endDate._d;
+        var endDate = new Date(end1)
+        end1 = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
+      }
       const formData = new FormData();
-      formData.append('brand_image', '');
-      formData.append('name', this.loginForm.value.name);
-     formData.append('description', this.loginForm.value.descriptionen);
-      formData.append('name_ar', this.loginForm.value.namear);
-      formData.append('description_ar', this.loginForm.value.descriptionar);
-      formData.append('status', this.loginForm.value.statusKey);
+      formData.append('product_name_en', this.loginForm.value.product_name_en);
+      formData.append('product_description_en', this.loginForm.value.product_description_en);
+      formData.append('product_name_ar', this.loginForm.value.product_name_ar);
+      formData.append('product_description_ar', this.loginForm.value.product_description_ar);
+
+      formData.append('product_size', this.loginForm.value.product_size);
+      formData.append('product_prize', this.loginForm.value.product_prize);
+      formData.append('product_colour', this.loginForm.value.product_colour);
+      formData.append('brand_id', this.loginForm.value.brand_id);
+      formData.append('quantity', this.loginForm.value.quantity);
+      formData.append('category', this.loginForm.value.category_id);
+      formData.append('sub_category', this.loginForm.value.subCategory);
+      formData.append('child_category', this.loginForm.value.childCategory);
+      formData.append('discount_type', this.loginForm.value.discount_type);
+      formData.append('discount_value', this.loginForm.value.discount_value);
+      formData.append('discount_start_date', start1);
+      formData.append('discount_end_date', end1);
+      formData.append('product_video', this.url1);
+
+      var ins = this.urlForm.length;
+      for (var x = 0; x < ins; x++) {
+        formData.append('product_images', this.urlForm[x]);
+      }
+
       console.log(formData)
       this.api
-      .postReqAuth("admin/brand/add",formData).subscribe(
-        res => this.success(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
-  }else{
-    this._util.markError(this.loginForm);
+        .postReqAuth("admin/product/add-product", formData).subscribe(
+          res => this.success(res),
+          err => this.error(err),
+          () => (this.loader = false)
+        );
+    } else {
+      this._util.markError(this.loginForm);
+    }
   }
-}
+  successMessage: string;
   success(res) {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
-    if(res.status==true){
-      this.router.navigate(['theme/brands'])
-  } else {
-    this._util.markError(this.loginForm);
-  }
+    if (res.status == true) {
+      this.successMessage = res.message;
+      setTimeout(() => {
+        this.errorMessage = "";
+        this.successMessage = "";
+        this.router.navigate(['theme/products'])
+      }, 3000);
+    } else {
+      this._util.markError(this.loginForm);
+      this.errorMessage = res.message;
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.errorMessage = "";
+      }, 3000);
+
+    }
 
   }
-  error(res){
+
+  error(res) {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
     this._util.markError(res.message);
   }
-  
+
 }

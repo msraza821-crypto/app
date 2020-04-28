@@ -2,6 +2,7 @@
 
 export const ERROR_MESSAGES = {
     STATUS_REQUIRED:'Status is required',
+    NUMBER_REQUIRED:'Enter a number ',
     isRentRecurring:'Please select payment for rent',
     isSubscriptionRecurring:'Please select payment for subscription',
     INSPECTIONDATE_REQUIRED:'Please select a date',
@@ -82,7 +83,7 @@ export const ERROR_MESSAGES = {
     REJECT_REQUEST:'Are you sure you want to reject this request?',
     FAQ_QUESTION:'',
     ACCEPT_REQUEST:'Are you sure you want to accept this request?',
-    RANGE:"Enter value greater than zero",
+    RANGE:"Enter range between 0 to 10000",
     RENTAMOUNT_REQUIRED:'Rent amount is required',
     USER_TYPE:'Tenant Type is required',
     RULESTYPE:'Rules and regulations is required',
@@ -124,13 +125,13 @@ export const ERROR_MESSAGES = {
     DISCOUNT_VALUE_REQUIRED:'Discount value is required',
 
      PRODUCT_SIZE_REQUIRED:'Product size is rquired',
-     PRODUCT_PRIZE_REQUIRED:'',
-     PRODUCT_COLOUR_REQUIRED:'',
-     BRAND_REQUIRED:'',
-     QUANTITY_REQUIRED:'',
-     
-     DISCOUNT_REQUIRED:'',
-     DISPLAY_ORDER_REQUIRED:'Display order is equired!'
+     PRODUCT_PRIZE_REQUIRED:'Product Price is required',
+     PRODUCT_COLOUR_REQUIRED:'Product colour is required',
+     BRAND_REQUIRED:'Brand name is required',
+     QUANTITY_REQUIRED:'Product quantity is required',
+     DISPLAY_ORDER_REQUIRED:'Display order is required',
+     DISCOUNT_REQUIRED:'Discount amount is required'
+
 
 
 };
