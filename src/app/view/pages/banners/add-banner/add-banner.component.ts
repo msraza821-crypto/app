@@ -65,7 +65,8 @@ showPage=false;
       sub_category:['',[Validators.required]],
       child_category:['',[Validators.required]],
       date:['',[Validators.required]],
-      display_order:['',[Validators.required]]
+      display_order:['',[Validators.required]],
+      status:''
     //  brand:this.addBrandControl()
     });
   }
@@ -283,6 +284,10 @@ productCompare(id:any,arr)
   {
     return this.bannerForm.get("display_order") as FormControl 
   }
+  get  status ():FormControl
+  {
+    return this.bannerForm.get("status") as FormControl 
+  }
 
   // getSelectedValue()
   // {
@@ -337,10 +342,12 @@ console.log('categorlist',this.categoryList)
       res => {
         this.subCategoryList=res.result.data;
         console.log(this.subCategoryList)
+        return true;
       },
       err => this.error(err),
       () => (this.loader = false)
     );
+    
   }
 
   childList=[];
@@ -354,6 +361,7 @@ console.log('categorlist',this.categoryList)
         this.childList=res.result.data;
         if(this.childList==null)
         this.childList=res.ressult.message
+        this.got=true;
       },
       err => this.error(err),
       () => (this.loader = false)
@@ -361,11 +369,8 @@ console.log('categorlist',this.categoryList)
 
   }
 
-    onSubmit()
-  {
-
-
-     
+getFormData()
+{
 
   if(this.bannerForm.value.available_on=='1')
   {
@@ -395,22 +400,23 @@ console.log('categorlist',this.categoryList)
         formData.append('products',JSON.stringify(this.selectedProduct))
         formData.append('banner_start_date',start1)
         formData.append('banner_end_date',end1)
-        // formData.append('child_category',this.bannerForm.value.child_category)
+        if(this.id!=null)
+        formData.append('status',this.bannerForm.value.status)
       
         
 
       
-       this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
-        res =>{
-          console.log('success',res)
-          this.spinner.hide()
-        },
-        err => this.error(err),
-        () => (this.loader = false)
+      //  this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
+      //   res =>{
+      //     console.log('success',res)
+      //     this.spinner.hide()
+      //   },
+      //   err => this.error(err),
+      //   () => (this.loader = false)
 
 
-      );
-      return
+      // );
+      return formData
     
       }
     }
@@ -439,22 +445,39 @@ console.log('categorlist',this.categoryList)
     formData.append('banner_start_date',start1)
     formData.append('banner_end_date',end1)
     formData.append('child_category',this.bannerForm.value.child_category)
+    if(this.id!=null)
+    formData.append('status',this.bannerForm.value.status)
   
     
+  
+    
+ 
+      return formData
+
+    }
+     this._util.markError(this.bannerForm);
+
+
+}
+
+
+    onSubmit()
+  {
+
+
+
+  
+    var formData=this.getFormData()
       this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
-        res =>{
-          console.log('success',res)
-          this.spinner.hide()
-        },
+        res =>this.success(res),
         err => this.error(err),
         () => (this.loader = false)
 
 
       );
-      return
+    
 
-    }
-     this._util.markError(this.bannerForm);
+    
 
     }
 
@@ -485,11 +508,13 @@ console.log('from discount change')
   else
   this.discountType="% of Off...."
 }
+choosefile: string = "No file chosen...";
 onSelectFile(event) {
   this.keyValue = true;
   if (event.target.files && event.target.files[0]) {
     var mimeType = event.target.files[0].type;
     var file = event.target.files[0];
+    this.choosefile=event.target.files[0].name;
 
 
     const width = file.naturalWidth;
@@ -530,8 +555,9 @@ errorMessage
 
 viewBanner(){
   this.spinner.show();
+  console.log('vieew')
   this.api
-  .getReqAuth("admin/brand/detail?id="+this.id)
+  .getReqAuth("admin/banner/banner-detail?id="+this.id)
   .subscribe(
     res => this.successView(res),
     err => this.error(err),
@@ -544,26 +570,43 @@ success(res) {
     this.spinner.hide();
   }, 1000);
   if(res.status==true){
-    this.router.navigate(['theme/brands'])
+    this.router.navigate(['theme/banners'])
 } else {
   this._util.markError(this.bannerForm);
 }
 }
+got=false;
 successView(res){
-  if(res.status==true){
+  this.spinner.hide();
+
+    console.log(res)
+  
   var data= res.result;
-  this.bannerForm.get('title').patchValue('shabbir');
-  this.bannerForm.get('minimum_value').patchValue(1223);
-  this.bannerForm.get('available_on').patchValue('brand');
+
+  this.bannerForm.get('title').patchValue(res.result.title);
+  this.bannerForm.get('minimum_value').patchValue(res.result.minimum_value);
+  this.bannerForm.get('available_on').patchValue(res.result.available_on);
   this.changeProduct();
-  this.bannerForm.get('discount_type').patchValue("flat");
-  this.bannerForm.get('discount_value').patchValue(1223);
-  this.bannerForm.get('minimum_value').patchValue(1223);
-  this.bannerForm.get('minimum_value').patchValue(1223);
-  this.bannerForm.get('minimum_value').patchValue(1223);
+  this.bannerForm.get('discount_type').patchValue(res.result.discount_type);
+  this.changeDiscountType()
 
+  this.bannerForm.get('discount_value').patchValue(res.result.discount_value);
+  if(res.result.available_on=='2')
+  {
+  this.bannerForm.get('category').patchValue(res.result.category);
+  this.bannerForm.get('sub_category').patchValue(res.result.sub_category);
+var aaa=this.getSubcategory()
+this.getChildList()
+if(this.got)
 
+  this.bannerForm.get('child_category').patchValue(res.result.child_category);
   }
+var mydate=res.result.banner_start_date+" "+res.result.banner_end_date
+this.bannerForm.get('date').patchValue({ startDate:{_d: res.result.banner_start_date}, endDate:{_d:res.result.banner_end_date }})
+this.bannerForm.get('display_order').patchValue(res.result.display_order)
+this.url=res.result.image;
+this.bannerForm.get("status").patchValue(res.result.status)
+  
 }
 
 error(res){
@@ -576,66 +619,18 @@ error(res){
 
 update()
 {
+
+  var formData=this.getFormData()
   
-  let mydate=this.getCurrentDate()
-    
-  let start1=mydate['start']
-   let end1=mydate['end']
-  // if(this.bannerForm.valid)
-  // {
-  console.log(this.bannerForm.value)
-  console.log(this.url1)
-  console.log('json',JSON.stringify(this.selectedValue))
-
-    this.spinner.show();
-    const formData = new FormData();
-    formData.append('title', this.bannerForm.value.title);
-    formData.append('banner_type',this.bannerForm.value.display_order);
-   formData.append('display_order','5')
-  //  formData.append('image', this.url1);
-  //   formData.append('available_on', this.bannerForm.value.available_on);
-  //   formData.append('discount_type', this.bannerForm.value.discount_type);
-  //   formData.append('discount_value', this.bannerForm.value.discount_type);
-  //   formData.append('minimum_value', this.bannerForm.value.minimum_value);
-  //   formData.append('category', this.bannerForm.value.category);
-  //   formData.append('sub_category', this.bannerForm.value.sub_category);
-  //   formData.append('brands',JSON.stringify(this.selectedValue) );
-    
   
-    // console.log('sss',formData)
-     this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
-      res =>{
-        console.log(res)
-      },
-      err => this.error(err),
-      () => (this.loader = false)
+  this.api
+  .putReqAuth("admin/banner/edit-banner", formData).subscribe(
+    res => {
+      this.success(res)
+    },
+    err => this.error(err),
+    () => (this.loader = false)
+  );
 
-
-    );
-    // this.api.getAllActivities({title:this.bannerForm.value.title,
-    //                           banner_type:1,
-    //                           display_order:7,
-    //                           image:this.url1,
-    //                           available_on:this.bannerForm.value.available_on,
-    //                           minimum_value:this.bannerForm.value.minimum_value,
-    //                           discount_type:this.bannerForm.value.discount_type,
-    //                           discount_value:this.bannerForm.value.discount_value,
-    //                           category:this.bannerForm.value.category,
-    //                           sub_category:this.bannerForm.value.sub_category,
-    //                           // child_category:this.bannerForm.value.child_category,
-    //                           brands:this.selectedValue,
-    //                           banner_start_date:start1,
-    //                           banner_end_date:end1
-            
-
-
-
-
-    //                         }).pipe().subscribe(res=>{
-    //   console.log('succes',res)
-    //   this.spinner.hide()
-    // })
-  
-  // this._util.markError(this.bannerForm)
 }
 }

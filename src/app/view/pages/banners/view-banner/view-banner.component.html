@@ -1,4 +1,4 @@
-<div class="animated fadeIn" style="margin-top:30px;">
+<div class="animated fadeIn" style="margin-top:30px;" *ngIf="flag">
     <div class="row">
       <div class="col-sm-12 col-lg-12">
         <div class="card">
@@ -15,60 +15,77 @@
                      
                 <div class="form-group col-md-6">
                   <b for="inputEmail4">Banner Title:</b> <br/>
-                  ABC
+                  {{data.title}}
                 
                 </div>
-                <div class="form-group col-md-6" >
+                <div class="form-group col-md-6 float-right" >
                     <b for="inputState">Status:</b><br/>
-                    Unblock
+                    {{data.status}}
                    
                 </div>
                 
                 <div class="form-group col-md-6">
                   <b for="inputPassword4"> From Date:</b><br/>
-                12/223/2020
+                {{data.banner_start_date}}
                  </div>
                 
                 <div class="form-group col-md-6">
                     <b for="inputEmail4">Expiry Date:</b><br/>
-                    12/12/2020
+                    {{data.banner_end_date}}
                     
                 </div>
 
 
                 <div class="form-group col-md-6">
                   <b for="inputEmail4">Minimum Value:</b> <br/>
-                  ABC
-                
+                  {{data.minimum_value}}
+
                 </div>
                 <div class="form-group col-md-6" >
                     <b for="inputState">Discount Type</b><br/>
-                    Flat
-                   
+                    {{discountType}}
+
                 </div>
                 
                 <div class="form-group col-md-6">
                   <b for="inputPassword4"> Discount Value:</b><br/>
-                125
+                {{data.discount_value}}
                  </div>
-                
+                  </div>
+                  <div class="row" *ngIf="data.available_on==2">
                 <div class="form-group col-md-6">
                     <b for="inputEmail4">Available On:</b><br/>
-                    Product
+                  {{avilableOn}}
                     
                 </div>
-                  
+                <div class="form-group col-md-6">
+                  <b for="inputPassword4"> Category:</b><br/>
+                {{data.category}}
+                 </div>
+                 <div class="form-group col-md-6">
+                  <b for="inputPassword4"> Sub-Category:</b><br/>
+                {{data.sub_category}}
+                 </div>
+                 <div class="form-group col-md-6">
+                  <b for="inputPassword4"> Child-Category:</b><br/>
+                {{data.child_category}}
+                 </div>
+                  </div>
                
-              
+                  <div class="row" *ngIf="data.available_on==1">
+                    <div class="form-group col-md-6">
+                        <b for="inputEmail4">Available On:</b><br/>
+                      {{avilableOn}}
 
-              <div class="form-group col-md-12">
-                <b for="exampleFormControlFile1">Banner Image:</b><br/>
-                
-                
-              </div>
-              <div class="col-12">
-                <img style="height:100px;width:100px;" [src]="'assets/img/avatars/default.png'" />
-              </div>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                        
+                  <div class="form-group col-md-6 ">
+                     <b for="exampleFormControlFile1">Banner Image:</b><br/>
+                  <img (click)="openVerticallyCentered(poupimage,i)" style="height:200px;width:200px;"  [src]="data.image" />
+                </div>
               </div>
               
               <button [routerLink]="['/theme/banners']"  style="margin-top: 20px;" type="button" class="btn btn-success" >Back</button>
@@ -83,3 +100,111 @@
       </div>
     </div>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+
+
+  <div class="animated fadeIn" style="margin-top:30px;">
+    <div class="row">
+      <div class="col-sm-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+      
+              <div   class="breadc"><a class="active" [routerLink]="['/theme/banners']">Promotional  Banners</a> / <a class="breada">View Banners</a></div> 
+  
+          </div>
+          <div class="card-body">
+  
+  
+            <div class="row ">
+              <form>
+                  <div class="row ">
+                     
+                <div class="form-group col-md-6">
+                  <b for="inputEmail4">Banner Title:</b> <br/>
+                  {{data.title}}
+                </div>
+                
+                <div class="form-group col-md-6">
+                  <b for="inputState">Status:</b><br/>
+                    {{data.status}}
+                </div>
+                
+                <div class="form-group col-md-6">
+                  <b for="inputPassword4"> From Date:</b><br/>
+                  {{data.banner_start_date}}
+                </div>
+                  <div class="form-group col-md-6">
+                      <label>    <b for="inputPassword4">Description(Arabic):</b></label><br/>
+                    {{data.description_ar}}
+              </div>
+                <div class="form-group col-md-12">
+                    <label> <b for="exampleFormControlFile1">Brand Image:</b></label><br/>
+                  <img (click)="openVerticallyCentered(poupimage,i)" style="height:200px;width:200px;"  [src]="data.brand_image" />
+                </div>
+              
+                  
+                <div class="form-group col-md-12" *ngIf="data.status=='Active'" >
+                    <label> <b for="inputState">Status:</b></label><br/>
+                  Active
+                 
+              </div>
+              <div class="form-group col-md-12" *ngIf="data.status=='Inactive'" >
+                  <label>  <b for="inputState">Status:</b></label><br/>
+                  Inactive
+                 
+              </div>
+              </div>
+              <br/>
+              <button [routerLink]="['/theme/banners']"  type="button" class="btn btn-primary" >Back</button>
+             
+  
+              </form>
+  
+            </div>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div> -->
+  
+  
+  <ng-template #poupimage let-modal>
+      <!----- Header  ------>
+      <section >
+      
+      
+        <img class="modal-content" id="img01" [src]=url  style="width:100%;height:auto">
+      </section>
+    </ng-template>
+
+
+
+<!-- 
+
+
+  
+  <ng-template #poupimage let-modal>
+      <!----- Header  ------>
+      <!-- <section >
+      
+      
+        <img class="modal-content" id="img01" [src]=url  style="width:100%;height:auto">
+      </section>
+    </ng-template> -->

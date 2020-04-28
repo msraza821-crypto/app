@@ -116,7 +116,15 @@
     
   }
   .my-margin{
-    margin-right: 50px;
+    margin-right: 32px;
+};
+.row{
+  width:100%!important;
+
+}
+
+.card-header{
+  padding-right:0!important;
 }
 
 .mr-top{
@@ -124,9 +132,9 @@
 }
 @media screen and(max-width:500px)
 {
-    .my-margin{
-        margin-right: 0;
-    }
+    // .my-margin{
+    //     margin-right: 0;
+    // }
    
 }
 

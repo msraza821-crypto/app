@@ -153,13 +153,25 @@
             </div>
 
             <div class="row mr-top">
+              <!-- <div class="form-group col-md-12">
+                <label for="exampleFormControlFile1"><b>Banner Image</b></label>
+                <div class="file-upload">
+                  <div class="file-select">
+                    <div class="file-select-button" id="fileName">Choose File</div>
+                    <div class="file-select-name" id="noFile">{{choosefile}}</div> 
+                    <input type="file" name="chooseFile" id="chooseFile" accept="image/*" (change)="onSelectFile($event)">
+                  </div>
+                </div>
+                <br/>
+                <img style="height:100px;width:100px;" [src]="url ? url : 'assets/img/avatars/default.png'" />
+              </div> -->
               <div class="col-12">
                 <label for="exampleFormControlFile1"><b>Banner Image</b></label>
                 <div class="file-upload">
                   <div class="file-select">
                     <div class="file-select-button" id="fileName">Choose File</div>
                     <div class="file-select-name" id="noFile">{{choosefile}}</div>
-                    <input type="file" name="chooseFile" id="chooseFile" accept="image/*"
+                    <input type="file" style="color:black" name="chooseFile" id="chooseFile" accept="image/*"
                       (change)="onSelectFile($event)">
                   </div>
                 </div>
@@ -188,6 +200,15 @@
                 <span class="error text-danger">{{_util.errorMessage(date,FORM_ERROR?.date)}}</span>
               </div>
 
+              <div class="col-sm-3 float-left" *ngIf="id!=null">
+                <select class="form-control" [formControl]="status">
+                  <option value="">Select Status</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="trashed">Delete</option>
+                </select>
+                <span class="error text-danger">{{_util.errorMessage(display_order,FORM_ERROR?.display_order)}}</span>
+              </div>
 
 
               <div class="col-sm-12 col-lg-12 mr-top" *ngIf="productList.length>0">
@@ -237,7 +258,7 @@
             </div>
 
             <button *ngIf="this.id==null" type="submit" class="btn btn-success mr-top">Save.</button>
-            <button type="button" *ngIf="this.id!=null" class="btn btn-success mr-top">Save.</button>
+            <button type="button" (click)="update()" *ngIf="this.id!=null" class="btn btn-success mr-top">Save.</button>
 
 
           </form>
