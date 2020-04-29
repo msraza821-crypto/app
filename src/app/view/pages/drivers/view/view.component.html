@@ -1,0 +1,162 @@
+<div class="animated fadeIn" style="margin-top:30px;">
+    <div class="row">
+      <div class="col-sm-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+      
+              <div   class="breadc"><a class="active" [routerLink]="['/theme/simplebanners']"> Banners</a> / <a class="breada">View Banner</a></div> 
+  
+          </div>
+          <div class="card-body" style="border:1px solid black">
+  
+        
+            <div class="row ">
+               
+              <form>   
+                  <div class="row ">
+                    <div class="col-sm-12">
+                        <h3 >Driver Details</h3>
+                        <hr>
+                    </div>
+                <div class="form-group col-md-6">
+                  <label><b for="inputEmail4">Driver Name:</b></label><br/>
+                  w32werefrseew
+                </div>
+                
+                <div class="form-group col-md-6">
+                    <label>  <b for="inputPassword4">Contact Number:</b></label><br/>
+                  2323443342
+                </div>
+                
+                <div class="form-group col-md-6">
+                    <label>    <b for="inputEmail4">Address:</b></label><br/>
+                    aa,swdsd,sdsdds
+                </div>
+                  <div class="form-group col-md-6">
+                      <label>    <b for="inputPassword4">Email:</b></label><br/>
+                    abc@gmail.com
+              </div>
+               
+              <div class="form-group col-md-6">
+                <label>    <b for="inputPassword4">license Number:</b></label><br/>
+              123232342@wsejnhwsj
+        </div>
+              
+                  
+   
+              </div>
+              <br/>
+              <!-- <button [routerLink]="['/theme/simplebanners']"  type="button" class="btn btn-primary" >Back</button>
+              -->
+  
+              </form>
+  
+            </div>
+    
+
+
+
+          <!-- <div class="card-body" style="border:1px solid black"> -->
+  
+        
+            <div class="row ">
+                <div class="col-sm-12">
+                    <hr>
+                    <h6 style="text-align:center;margin:10px;">SHIPPING DETAILS</h6>
+                    <hr>
+                </div>
+              <form>   
+                  <div class="row ">
+                     
+                <div class="form-group col-md-6">
+                  <label><b for="inputEmail4">Customer  Name:</b></label><br/>
+                  w32werefrseew
+                </div>
+                
+                <div class="form-group col-md-6">
+                    <label>  <b for="inputPassword4">Mobile Number:</b></label><br/>
+                  2323443342
+                </div>
+                
+                <div class="form-group col-md-6">
+                    <label>    <b for="inputEmail4"> Delivery Address:</b></label><br/>
+                    aa,swdsd,sdsdds
+                </div>
+                  
+            
+              
+                  
+   
+              </div>
+              <br/>
+              <!-- <button [routerLink]="['/theme/simplebanners']"  type="button" class="btn btn-primary" >Back</button> -->
+             
+  
+              </form>
+              
+           
+              
+  
+            </div>
+
+
+            <div class="card-body pb-0 ">
+                <hr>
+                <h3>Order Details</h3>
+            
+  
+
+
+                <table class="table table-striped" style="overflow: auto;padding:20px">
+                    <thead>
+                        <tr>
+                            <th>S No.</th>
+                            <th>Order ID</th>
+                            <th>Quantity</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>121222</td>
+                            <td>3</td>
+                            <td>Delivered</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" title="Reassign">Reassign</button>
+                                <a [routerLink]="['/theme/drivers/view',{id :i?.id}]" title="View driver" > <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
+                                <a [routerLink]="['/theme/drivers/addDriver',{id :i?.id}]" title="Edit driver"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;  
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls  id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
+                    (pageChange)="page = $event"></pagination-controls>
+            </div>
+          <!-- < -->
+        </div>
+
+
+
+
+
+
+
+
+        
+  
+      </div>
+    </div>
+  </div>
+  
+  
+  <ng-template #poupimage let-modal>
+      <!----- Header  ------>
+      <section >
+      
+      
+        <img class="modal-content" id="img01" [src]=url  style="width:100%;height:auto">
+      </section>
+    </ng-template>

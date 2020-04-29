@@ -4,23 +4,30 @@
       <div class="col-sm-12 col-lg-12">
         <div class="card">
           <div class="card-header">
-            
-              
-          <b style="margin-left: 14px;">Promotional Banners </b> 
+            <!-- <div class="row">
+            <div class="breadc col-md-6 float-left"> <a class="breada">Banners</a></div>    
+            <div class="col-md-6 float-left"> 
+       
+              <a [routerLink]="['/theme/banners/add']"> <button type="button"   class="btn btn-primary float-right my-margin">Add
+                Banner</button></a>
+              </div>
+             </div>
+               -->
+         <b  style="margin-left: 14px;" class="breada">Promotional Banners </b> 
             
           <!-- <a (click)="exportDataF()"> <button type="button" style="margin:0px 19px -2px 0px;color:white;" class="ml-3 btn bg-dark  white float-right ml-1" > Export to
             CSV</button></a> -->
-          <a [routerLink]="['/theme/banners/add']"> <button type="button"   class="btn btn-primary float-right my-margin">Add
-              Banner</button></a>
+           <a [routerLink]="['/theme/banners/add']"> <button type="button"   class="btn btn-primary float-right my-margin">Add
+              Banner</button></a> 
               
                
-            
+          
             <hr />
            
             <div class="col-sm-12 col-lg-12" style="margin-left: -17px; padding-right: 0px;">
-              <div class="col-md-2 float-left">
+              <!-- <div class="col-md-2 float-left">
                 <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Banner title">
-              </div>
+              </div> -->
               <div class="col-md-2 float-left">
                 <select id="inputState" class="form-control" [formControl]="status">
                   <option value="">All</option>
@@ -28,7 +35,7 @@
                   <option value="inactive">Inactive</option>
                 </select>
               </div>
-              <div class="col-md-4 float-left">               
+              <div class="col-md-2 float-left">               
                 <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
                 [formControl]="range"
                   placeholder="Filter Date"  />
@@ -58,7 +65,7 @@
                   <table class="table table-striped" style="overflow: auto;padding:20px">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">S No.</th>
                         <th scope="col">Title</th>
                         <th scope="col">From Date</th>
                         <th scope="col">Expiry Date</th>
@@ -140,11 +147,11 @@
   <ng-template #poup1 let-modal>
       <!----- Header  ------>
       <section id="modal-header">
-        <h5 class="p-3 primary-color-bg bg-dark text-center">Unblock banner</h5>
+        <h5 class="p-3 primary-color-bg bg-dark text-center">Activate banner</h5>
         <div class="">
           <div class="row pt-4">
             <div class="col-md-12 frgtpass-head">
-              <p class="text-center"> Are you sure you want to unblock this banner? </p>
+              <p class="text-center"> Are you sure you want to Active this banner? </p>
             </div>
           </div>
         </div>
@@ -164,11 +171,11 @@
     <ng-template #poup2 let-modal>
         <!----- Header  ------>
         <section id="modal-header">
-          <h5 class="p-3 primary-color-bg bg-dark text-center">Block Banner</h5>
+          <h5 class="p-3 primary-color-bg bg-dark text-center">Inactive  Banner</h5>
           <div class="">
             <div class="row pt-4">
               <div class="col-md-12 frgtpass-head">
-                <p class="text-center"> Are you sure you want to block this banner ? </p>
+                <p class="text-center"> Are you sure you want to inactive this banner ? </p>
               </div>
             </div>
           </div>
