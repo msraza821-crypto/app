@@ -196,8 +196,41 @@ namePress(event: any) {
     
       event.preventDefault();
   }
-  
 }
+discountType='';
+changeDiscountType(){
+console.log('from discount change')
+  if(this.driverForm.value.discount_type=='1')
+  this.discountType="Enter discount value..."
+  else
+  this.discountType="% of Off...."
+}
+errorMessage:string;
+onSelectFile(event) {
+  this.keyValue = true;
+  if (event.target.files && event.target.files[0]) {
+    var mimeType = event.target.files[0].type;
+    var file = event.target.files[0];
+
+
+    const width = file.naturalWidth;
+    const height = file.naturalHeight;
+
+    window.URL.revokeObjectURL( file.src );
+  //  var checkimg = file.toLowerCase();
+    const type = file.type.split('/');
+  if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+
+  }else{
+    this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+ setTimeout(() => {
+      this.keyValue = false;
+      this.errorMessage="";
+    }, 3000)
+    return false;
+  } 
+  
+}}
 
 
 numberPress(event: any) {
