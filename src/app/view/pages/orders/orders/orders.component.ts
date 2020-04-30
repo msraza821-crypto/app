@@ -1,21 +1,21 @@
 import { Component, OnInit, ViewChild, HostBinding } from "@angular/core";
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute, Route } from "@angular/router";
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { HttpService, AppService } from 'src/app/service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpService } from 'src/app/service';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: "app-users",
-  templateUrl: "./users.component.html",
-  styleUrls: ["./users.component.css"]
+  selector: "app-orders",
+  templateUrl: "./orders.component.html",
+  styleUrls: ["./orders.component.css"]
 })
-export class UsersComponent implements OnInit {
+export class OrdersComponent implements OnInit {
   collection = [];
   // pager object
   pager: any = {};
@@ -39,30 +39,20 @@ export class UsersComponent implements OnInit {
     private router: Router,
     private _route: ActivatedRoute,
     private modalService: NgbModal,
-    private spinner: NgxSpinnerService,
+    private spinner:NgxSpinnerService,
     private api: HttpService,
     private _fb: FormBuilder,
     private store: Store<any>,
-    private _api:AppService
   ) {
   }
   start = "";
   end = "";
-  successMessage: string;
-  errorMessage: string;
   ngOnInit(): void {
     this.createForm();
     this.loadBrands();
 
   }
-  filterSelected(selectedValue) {
-    console.log('selected value= ' + selectedValue)
-    this.limit = selectedValue;
-    this.loadBrands();
 
-  }
- 
- 
   createForm() {
     this.loginForm = this._fb.group({
       search: [""],
@@ -73,38 +63,30 @@ export class UsersComponent implements OnInit {
   defaultValue() {
     this.selected = '';
   }
+  successMessage: string;
+  errorMessage: string;
   exportDataF() {
+    this.exportData = 1;
     var start1 = '';
     var end1 = '';
-    //  console.log(this.loginForm.value)
     this.spinner.show();
-    if (this.loginForm.value.range) {
-      start1 = this.loginForm.value.range.startDate._d;
-      var startDate = new Date(start1)
-      start1 = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
-      end1 = this.loginForm.value.range.endDate._d;
-      var endDate = new Date(end1)
-      end1 = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
-    }
-    var url = "admin/user/list?search=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&fromDate=" + start1 + "&toDate=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=1";
-  
+    //  console.log(this.loginForm.value)
+     if(this.loginForm.value.range){
+       start1=this.loginForm.value.range.startDate._d;
+       var startDate=new Date(start1)
+        start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
+       end1=this.loginForm.value.range.endDate._d;
+       var endDate=new Date(end1)
+       end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
+      }
+     var url="admin/brand/list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=1";
     this.api.getReqAuthExport(url).subscribe(
       res=> this.downloadFile(res),
       err=> this.error(err),()=> (this.loader= false)
     );
   }
   
-  add3Dots(string, limit)
-  {
-    var dots = "...";
-    if(string.length > limit)
-    {
-      // you can also use substr instead of substring
-      string = string.substring(0,limit) + dots;
-    }
-  
-      return string;
-  }
+
   downloadFile(data: File) {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
@@ -117,13 +99,14 @@ export class UsersComponent implements OnInit {
     } else {
       let a= document.createElement('a');
       a.href= url;
-      a.download= 'users.csv';
+      a.download= 'brands.csv';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
     }
     window.URL.revokeObjectURL(url);
   }
+ 
   get search(): FormControl {
     return this.loginForm.get("search") as FormControl;
   }
@@ -133,20 +116,69 @@ export class UsersComponent implements OnInit {
   get range(): FormControl {
     return this.loginForm.get("range") as FormControl;
   }
+  download_csv() {
+    var data = [
+      ['Foo', 'programmer'],
+      ['Bar', 'bus driver'],
+      ['Moo', 'Reindeer Hunter']
+   ];
+    var csv = 'Name,Title\n';
+    data.forEach(function(row) {
+            csv += row.join(',');
+            csv += "\n";
+    });
+  
+    console.log(csv);
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'people.csv';
+    hiddenElement.click();
+  }
+
+  convertArrayOfObjectsToCSV(args) {
+    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+    data = args.data || null;
+    if (data == null || !data.length) {
+        return null;
+    }
+
+    columnDelimiter = args.columnDelimiter || ',';
+    lineDelimiter = args.lineDelimiter || '\n';
+
+    keys = Object.keys(data[0]);
+
+    result = '';
+    result += keys.join(columnDelimiter);
+    result += lineDelimiter;
+
+    data.forEach(function(item) {
+        ctr = 0;
+        keys.forEach(function(key) {
+            if (ctr > 0) result += columnDelimiter;
+
+            result += item[key];
+            ctr++;
+        });
+        result += lineDelimiter;
+    });
+
+    return result;
+}
   loadBrands() {
     var start1 = '';
     var end1 = '';
     //  console.log(this.loginForm.value)
-    this.spinner.show();
-    if (this.loginForm.value.range) {
-      start1 = this.loginForm.value.range.startDate._d;
-      var startDate = new Date(start1)
-      start1 = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
-      end1 = this.loginForm.value.range.endDate._d;
-      var endDate = new Date(end1)
-      end1 = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
-    }
-    var url = "admin/user/list?search=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&fromDate=" + start1 + "&toDate=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=0";
+     if(this.loginForm.value.range){
+       start1=this.loginForm.value.range.startDate._d;
+       var startDate=new Date(start1)
+        start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
+       end1=this.loginForm.value.range.endDate._d;
+       var endDate=new Date(end1)
+       end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
+      }
+     var url="admin/brand/list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=0";
     this.api
       .getReqAuth(url)
       .subscribe(
@@ -155,14 +187,7 @@ export class UsersComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-  absoluteIndex(indexOnPage: number): number {
-    return this.limit * (this.page - 1) + indexOnPage;
-  }
   success(res) {
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 1000);
     if (res.status == true) {
       this.collection = res.result.data;
       this.totalRec = res.result.globelCount;
@@ -172,17 +197,18 @@ export class UsersComponent implements OnInit {
 
   }
   error(err) {
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 1000);
- this._api.showNotification( 'error', err );
+
   }
   sort(key) {
     this.key = key;
     this.reverse = !this.reverse;
   }
+  filterSelected(selectedValue) {
+    console.log('selected value= ' + selectedValue)
+    this.limit = selectedValue;
+    this.loadBrands();
 
+  }
   onScroll() {
     const currentDataLength = this.page * this.limit;
     console.log(currentDataLength, this.totalRec);
@@ -220,7 +246,7 @@ export class UsersComponent implements OnInit {
     //var formData=new FormData();
     //   formData.append('id',this.deletedId)
     this.api
-      .putReqAuth("admin/user/delete", { id: this.deletedId }).subscribe(
+      .putReqAuth("admin/brand/delete", { id: this.deletedId }).subscribe(
         res => this.successdelete(res),
         err => this.error(err),
         () => (this.loader = false)
@@ -235,34 +261,41 @@ export class UsersComponent implements OnInit {
     }
     this.modalService.dismissAll();
     this.api
-      .putReqAuth("admin/user/status", { id: this.deletedId, status: this.statusData })
+      .putReqAuth("admin/brand/status", { id: this.deletedId, status: this.statusData })
       .subscribe(
         res => this.successStatus(res),
         err => this.error(err),
         () => (this.loader = false)
       );
   }
+
   successStatus(res) {
     if (res.status == true) {
-     
-      this._api.showNotification( 'success', res.message );
+      this.successMessage = res.message;
       this.ngOnInit();
     } else {
-      this._api.showNotification( 'error', res.message );
+      this.errorMessage = res.message;
    
-    }   
+    }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
 
   }
   successdelete(res) {
     if (res.status == true) {
-      this._api.showNotification( 'success', res.message );
+      this.successMessage = res.message;
       this.page = 1;
       this.ngOnInit();
     } else {
-      this._api.showNotification( 'error', res.message );
+      this.errorMessage = res.message;
     
     }
-
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
 
   }
 }

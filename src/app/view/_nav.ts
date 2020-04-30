@@ -33,6 +33,18 @@ export const navItems: INavData[] = [
   
 },
 {
+  name: 'Discount',  
+  url: '/theme/discount',
+  icon: 'icon-star',
+  
+},
+{
+  name: 'Orders',  
+  url: '/theme/orders',
+  icon: 'icon-minus',
+  
+},
+{
   name: 'Promotions',
   url: '/theme/banners',
   icon: 'icon-cursor',
@@ -43,7 +55,7 @@ export const navItems: INavData[] = [
 {
   name: 'Banners',
   url: '/theme/simplebanners',
-  icon: 'icon-cursor',
+  icon: 'icon-plus',
 
 },
 

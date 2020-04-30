@@ -1,0 +1,105 @@
+<div class="animated fadeIn" style="margin-top:30px;">
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+            <div *ngIf="this.id==null"  class="breadc"><a class="active" [routerLink]="['/theme/discount']"> Discounts</a> / <a class="breada">Add Discount</a></div> 
+            <div *ngIf="this.id"  class="breadc"> <a class="active" [routerLink]="['/theme/discount']"> Discounts</a> / <a class="breada">Edit Discount</a></div> 
+            
+          
+        </div>
+        <div class="card-body">
+
+
+          <div class="row ">
+            <form>
+                <div class="row ">
+                   
+              <div class="form-group col-md-6">
+                <label for="inputEmail4">Discount Name(English)</label>
+                <input type="text" [formControl]="product_name_en" class="form-control" id="inputEmail4" placeholder="Discount Name">
+
+            
+                <span class="error text-danger">{{_util.errorMessage(product_name_en,FORM_ERROR?.product_name_en)}}</span>
+              </div>
+              
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">Discount Description(English)</label>
+                <textarea type="text" [formControl]="product_description_en" class="form-control" id="inputPassword4"
+                  placeholder="Discount Description"></textarea>
+              
+                  <span class="error text-danger">{{_util.errorMessage(product_description_en,FORM_ERROR?.product_description_en)}}</span>
+              </div>
+              
+    
+    
+            <div class="form-group col-md-3">
+                <label for="inputEmail4">Discount Promo Code</label>
+                <input type="text" [formControl]="quantity" class="form-control" id="inputEmail4" placeholder="Discount Promo Code">
+
+            
+                <span class="error text-danger">{{_util.errorMessage(quantity,FORM_ERROR?.quantity)}}</span>
+              </div>
+            
+               
+                  <div class="form-group col-md-3">
+                      <label for="inputEmail4">Discount Min Order Value</label>
+                      <input type="text" [formControl]="product_colour" class="form-control" id="inputEmail4" placeholder="Discount Min Order Value">
+              
+                      <span class="error text-danger">{{_util.errorMessage(product_colour,FORM_ERROR?.product_colour)}}</span>
+                    </div>
+               
+                <hr>
+                   <div class="form-group col-md-4">
+                      <label for="inputState">Discount range date</label>
+                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range" class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-DD-MM'}"
+                  
+                    placeholder="Discount Date Range"  />
+                    <span class="error text-danger">{{_util.errorMessage(discount_range,FORM_ERROR?.discount_range)}}</span>
+                    </div>
+                   <div class="form-group col-md-2">
+                        <label for="inputState">Discount Type</label>
+                        <select id="inputState" [formControl]="discount_type" class="form-control">
+                          <option value="">Please Select</option>
+                          <option value="1">Percentage</option>
+                          <option value="2">Fixed</option>
+                          
+                        </select>
+                    
+                      <span class="error text-danger">{{_util.errorMessage(discount_type,FORM_ERROR?.discount_type)}}</span>
+                    </div>
+                   <div class="form-group col-md-3">
+                        <label for="inputEmail4">Discount Price</label>
+                        <input type="text" [formControl]="discount_value" class="form-control" id="inputEmail4" placeholder="Discount price">
+        
+                    
+                        <span class="error text-danger">{{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
+                      </div>
+                      <div class="form-group col-md-3" *ngIf="this.id">
+                          <label for="inputState">Status</label>
+                          <select id="inputState" [formControl]="statusKey" class="form-control">
+                          
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                          </select>
+                          <br/>
+                        <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+                      </div>
+                    
+               
+            </div>
+
+              <br>
+              <button  *ngIf="this.id==null"  type="button" class="btn btn-primary" (click)="submit()">Save</button>
+              <button *ngIf="this.id" type="button" class="btn btn-primary" (click)="update()">Save</button>
+
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

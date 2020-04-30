@@ -4,7 +4,7 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -26,6 +26,7 @@ export class AddSubcategoryComponent implements OnInit {
     private _util: CommonUtil,
     private api:HttpService,private spinner:NgxSpinnerService,
     private _route:ActivatedRoute,
+    private _api:AppService,
     private router: Router) {
 
 
@@ -163,19 +164,12 @@ export class AddSubcategoryComponent implements OnInit {
       this.spinner.hide();
     }, 1000);
     if(res.status==true){
-      this.successMessage=res.message;
-      setTimeout(() => {
-        this.errorMessage = "";
-        this.successMessage="";
+      this._api.showNotification( 'success', res.message );
         this.router.navigate(['theme/categories/subcategories',{id:this.data.id}])
-      }, 3000);
+     
   } else {
     this._util.markError(this.loginForm);
-    this.errorMessage=res.message;
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.errorMessage="";
-    }, 3000);
+    this._api.showNotification( 'error', res.message );
    
   }
 

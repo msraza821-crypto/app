@@ -4,7 +4,7 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 
 @Component({
   selector: "app-add-category",
@@ -24,6 +24,7 @@ export class AddCategoryComponent implements OnInit {
     private _fb: FormBuilder,
     private _util: CommonUtil,
     private api:HttpService,
+    private _api:AppService,
     private _route:ActivatedRoute,
     private router: Router) {
 
@@ -142,19 +143,12 @@ export class AddCategoryComponent implements OnInit {
   successMessage:string;
   success(res) {
     if(res.status==true){
-      this.successMessage=res.message;
-      setTimeout(() => {
-        this.errorMessage = "";
-        this.successMessage="";
+      this._api.showNotification( 'success', res.message );
         this.router.navigate(['theme/categories'])
-      }, 3000);
+
   } else {
     this._util.markError(this.loginForm);
-    this.errorMessage=res.message;
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.errorMessage="";
-    }, 3000);
+    this._api.showNotification( 'error', res.message );
    
   }
 
@@ -164,7 +158,7 @@ export class AddCategoryComponent implements OnInit {
 
 
   error(res){
-    this._util.markError(res.message);
+    this._api.showNotification( 'error', res.message );
   }
   submit() {
     console.log(this.loginForm.value)

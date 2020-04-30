@@ -42,6 +42,8 @@ export class AppComponent {
       window.scrollTo(0, 0)
     });
   }
+
+  
   subscribeToBlocked() {
     this.appSer.blocked.subscribe((block) => {
       if (block) {

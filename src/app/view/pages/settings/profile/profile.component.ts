@@ -4,7 +4,7 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { Router } from '@angular/router';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { Store, select } from '@ngrx/store';
 import * as AppActions from "src/app/store/actions/app.actions";
 import { Subscription } from 'rxjs';
@@ -34,6 +34,7 @@ export class ProfileComponent implements OnInit {
     private store: Store<any>,
     private _sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
+    private _api:AppService,
     private router: Router) {
 
 
@@ -196,20 +197,12 @@ this.choosefile=event.target.files[0].name;
       this.spinner.hide();
     }, 1000);
     if (res.status == true) {
-      console.log(res.result)
-      this.successMessage=res.message;
-      setTimeout(() => {
-        this.errorMessage = "";
-        this.successMessage='';
-      }, 5000);
+      this._api.showNotification( 'success', res.message );
       this.store.dispatch(new AppActions.UserSignup(res.result));
       //localStorage.setItem("chicbeetoken", res.result.token);
     //  this.router.navigate(['/theme/settings']);
     } else {
-      this.errorMessage = res.message;
-      setTimeout(() => {
-        this.errorMessage = "";
-      }, 5000);
+      this._api.showNotification( 'error', res.message );
     }
   }
   error(res: any) {
@@ -217,10 +210,7 @@ this.choosefile=event.target.files[0].name;
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
-    this.errorMessage = res.message;
-    setTimeout(() => {
-      this.errorMessage = "";
-    }, 5000);
+    this._api.showNotification( 'error', res.message );
   }
 
   FORM_ERROR1 = {
@@ -302,17 +292,11 @@ this.choosefile=event.target.files[0].name;
       this.spinner.hide();
     }, 1000);
     if (res.status == true) {
-      this.successMessage1=res.message;
+      this._api.showNotification( 'success', res.message );
      this.createForm1();
-      setTimeout(() => {
-        this.errorMessage1 = "";
-        this.successMessage1="";
-      }, 5000);
+     
     } else {
-      this.errorMessage1 = res.message;
-      setTimeout(() => {
-        this.errorMessage1 = "";
-      }, 5000);
+      this._api.showNotification( 'error', res.message );
     }
   }
   error1(res: any) {

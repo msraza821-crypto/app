@@ -4,7 +4,7 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 
 @Component({
   selector: "app-add-faq",
@@ -25,6 +25,7 @@ export class AddFaqComponent implements OnInit {
     public _route:ActivatedRoute,
     private api:HttpService,
     private _util: CommonUtil,
+    private _api:AppService,
     private router: Router) {
 
 
@@ -181,25 +182,18 @@ id:string=null;
 }
   success(res) {
     if(res.status==true){
-      this.successMessage=res.message;
-      setTimeout(() => {
-        this.errorMessage = "";
-        this.successMessage = "";
+      this._api.showNotification( 'success', res.message );
         this.router.navigate(['theme/faqs'])
-      }, 3000);
+    
      
   } else {
-    this.errorMessage=res.message;
-    setTimeout(() => {
-      this.errorMessage = "";
-      this.successMessage = "";
-    }, 3000);
+    this._api.showNotification( 'error', res.message );
     this._util.markError(this.loginForm);
   }
 
   }
   error(res){
-    this._util.markError(res.message);
+    this._api.showNotification( 'error', res.message );
   }
   
 }
