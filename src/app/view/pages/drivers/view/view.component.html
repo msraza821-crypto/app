@@ -1,4 +1,4 @@
-<div class="animated fadeIn" style="margin-top:30px;">
+<div class="animated fadeIn" style="margin-top:30px;" *ngIf="yes">
     <div class="row">
       <div class="col-sm-12 col-lg-12">
         <div class="card">
@@ -19,29 +19,42 @@
                         <hr>
                     </div>
                 <div class="form-group col-md-6">
-                  <label><b for="inputEmail4">Driver Name:</b></label><br/>
-                  w32werefrseew
+                  <label class="float-left"><b for="inputEmail4">Driver Name :</b></label>
+                  {{data.name}}
                 </div>
                 
                 <div class="form-group col-md-6">
-                    <label>  <b for="inputPassword4">Contact Number:</b></label><br/>
-                  2323443342
+                    <label>  <b for="inputPassword4">Contact Number :</b></label>
+                  {{data.contact_number}}
                 </div>
                 
-                <div class="form-group col-md-6">
-                    <label>    <b for="inputEmail4">Address:</b></label><br/>
-                    aa,swdsd,sdsdds
-                </div>
-                  <div class="form-group col-md-6">
-                      <label>    <b for="inputPassword4">Email:</b></label><br/>
-                    abc@gmail.com
-              </div>
-               
-              <div class="form-group col-md-6">
-                <label>    <b for="inputPassword4">license Number:</b></label><br/>
-              123232342@wsejnhwsj
-        </div>
               
+                  <div class="form-group col-md-6">
+                      <label>    <b for="inputPassword4">Email :</b></label>
+                    {{data.email}}
+              </div>
+              <div class="form-group col-md-6">
+                <label>    <b for="inputPassword4">Status :</b></label>
+              {{data.status}}
+        </div>
+               
+        <div class="form-group col-md-6">
+          <label>    <b for="inputPassword4">Plate Number :</b></label>
+        {{data.plate_number}}
+  </div>
+              <div class="form-group col-md-6">
+                <label>    <b for="inputPassword4">License Number :</b></label>
+              {{data.license_number}}
+        </div>
+        <div class="form-group col-md-6">
+          <label>    <b for="inputPassword4">Vehicle Type :</b></label>
+        {{data.vehicle_type}}
+  </div>
+              
+        <div class="form-group col-md-6">
+          <label>    <b for="inputEmail4">Address :</b></label>
+          {{data.address}}
+      </div>
                   
    
               </div>
@@ -69,17 +82,17 @@
                   <div class="row ">
                      
                 <div class="form-group col-md-6">
-                  <label><b for="inputEmail4">Customer  Name:</b></label><br/>
+                  <label><b for="inputEmail4">Customer  Name :</b></label>
                   w32werefrseew
                 </div>
                 
                 <div class="form-group col-md-6">
-                    <label>  <b for="inputPassword4">Mobile Number:</b></label><br/>
+                    <label>  <b for="inputPassword4">Mobile Number :</b></label>
                   2323443342
                 </div>
                 
                 <div class="form-group col-md-6">
-                    <label>    <b for="inputEmail4"> Delivery Address:</b></label><br/>
+                    <label>    <b for="inputEmail4"> Delivery Address :</b></label>
                     aa,swdsd,sdsdds
                 </div>
                   
@@ -135,7 +148,7 @@
                 <pagination-controls  id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
                     (pageChange)="page = $event"></pagination-controls>
             </div>
-          <!-- < -->
+          <button type="button" class="btn btn-primary"  [routerLink]="['/theme/drivers']" routerLinkActive="router-link-active" >Back.</button>
         </div>
 
 

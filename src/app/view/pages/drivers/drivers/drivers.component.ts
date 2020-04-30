@@ -5,7 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpService } from 'src/app/service';
+import { HttpService ,AppService} from 'src/app/service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -43,6 +43,7 @@ export class DriversComponent implements OnInit {
     private api: HttpService,
     private _fb: FormBuilder,
     private store: Store<any>,
+    private _api:AppService
   ) {
   }
   start = "";
@@ -60,6 +61,20 @@ export class DriversComponent implements OnInit {
       range: [""]
     });
   }
+  activeStatus(){
+
+      this.statusData = "active";
+  
+    this.loadBanners()
+  }
+
+
+  inactiveStatus(){
+
+    this.statusData = "inactive";
+
+  this.loadBanners()
+}
   defaultValue() {
     this.selected = '';
   }
@@ -166,7 +181,7 @@ Mystatus='active'
        var endDate=new Date(end1)
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
-      var url="admin/driver/list?status="+this.Mystatus+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&banner_type=1";
+      var url="admin/driver/list?status="+this.statusData+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&banner_type=1";
       this.api
       .getReqAuth(url)
       .subscribe(
@@ -207,7 +222,7 @@ Mystatus='active'
   //initializing p to one
   p: number = 1;
   deletedId: string;
-  statusData: string;
+  statusData: string="active";
   pageChanged(event) {
     console.log("pageChanged")
   }

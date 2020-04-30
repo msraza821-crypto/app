@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl,FormGroup,FormArray,FormBuilder,Validators} from  "@angular/forms";
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-import { HttpService } from 'src/app/service';
+import { HttpService,AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -28,19 +28,20 @@ CONFIG = CONFIG;
   url1 = ''; url: string = '';
   message: string = '';
   keyValue: boolean = false;
+  loader=false;
 
   constructor(private fb:FormBuilder,
     private _util: CommonUtil,
     private api:HttpService,
     private spinner:NgxSpinnerService,
     private route:ActivatedRoute,
-    private router:Router
-    
+    private router:Router,
+    private _api:AppService
     ) {
  
       this.createForm()
 
-      this.driverForm.get('country_code').patchValue('+974')
+      // this.driverForm.get('country_code').patchValue('+974')
      
     
       // }
@@ -122,10 +123,12 @@ onFilterChange(eve: any,id) {
 
 }
 
-
+countryCode='(+974)'
 
 ngOnInit()
 {
+  
+  console.log(this.countryCode)
   this.route.params.subscribe(param=>
     {
       if(param && param['id'])
@@ -133,11 +136,12 @@ ngOnInit()
 
 this.id=param.id
 console.log(this.id)
-this.myPatchValue()
+this.loadDriverDetails()
 
 
       }
     })
+    
    
 }
 
@@ -177,38 +181,55 @@ this.myPatchValue()
   }
 
 
-  myPatchValue()
+  loadDriverDetails()
+
   {
-    this.driverForm.get('name').patchValue('shabbir')
-    this.driverForm.get('email').patchValue('shabbir@gmail.com')
-    this.driverForm.get('mobile').patchValue('27376324472389')
+    this.spinner.show();
+  // console.log('vieew')
+  this.api
+  .getReqAuth("admin/driver/detail?id="+this.id)
+  .subscribe(
+    res => this.successView(res),
+    err => this.error(err),
+    () => (this.loader = false)
+  );
+    
 
-    this.driverForm.get('license').patchValue('123123432')
-    this.driverForm.get('plate_number').patchValue('1233322')
-    this.driverForm.get('vehicle_type').patchValue('2 Wheeler')
-    this.driverForm.get('address').patchValue('noida')
+  }
 
+  successView(res){
+    this.spinner.hide();
+    console.log(res)
+    this.driverForm.get('name').patchValue(res.result.name)
+    this.driverForm.get('email').patchValue(res.result.email)
+    this.driverForm.get('mobile').patchValue(res.result.contact_number)
 
+    this.driverForm.get('license').patchValue(res.result.license_number)
+    this.driverForm.get('plate_number').patchValue(res.result.plate_number)
+    this.driverForm.get('vehicle_type').patchValue(res.result.vehicle_type)
+    this.driverForm.get('address').patchValue(res.result.address)
   }
 
   
   onSubmit()
   {
     
-
+console.log('submit')
      
     if(this.driverForm.valid)
     {
           
-
+this.spinner.show()
   
     
   this.api.postReqAuth("admin/driver/add-driver",this.getFormData()
 
     ).subscribe(
-    res =>{
-      console.log(res)
-    }
+    res =>this.success(res),
+    err=>this.error(err),
+    ()=>(this.loader=false)
+
+    
 
 
   );
@@ -292,7 +313,7 @@ getFormData()
 
 
       let data={name:this.driverForm.value.name,
-        email:this.driverForm.value.email,contact_number:this.driverForm.value.mobile,
+        email:this.driverForm.value.email,contact_number:this.countryCode+this.driverForm.value.mobile,
         licence_number:this.driverForm.value.license,vehicle_type:this.driverForm.value.vehicle_type,
         address:this.driverForm.value.address,plate_number:this.driverForm.value.plate_number}
     
@@ -324,9 +345,10 @@ update()
   
     this.api
     .putReqAuth("admin/driver/edit-driver", data).subscribe(
-      res => {
-        console.log(res)
-      },
+      res =>this.success(res),
+      err=>this.error(err),
+       () => (this.loader = false)
+
       
     );
   
@@ -336,5 +358,30 @@ update()
   this._util.markError(this.driverForm)
 
 
+}
+
+
+success(res) {
+  console.log(res)
+  setTimeout(() => {     
+    this.spinner.hide();
+  }, 1000);
+  if (res.status == true) {
+     this._api.showNotification( 'success', res.message );     
+      this.router.navigate(['theme/drivers'])
+  } else {
+    this._util.markError(this.driverForm);
+    this._api.showNotification( 'error', res.message );
+  }
+
+}
+
+error(res) {
+  setTimeout(() => {     
+    this.spinner.hide();
+  }, 1000);
+  this._api.showNotification( 'error', res.message );
+  console.log(res)
+  
 }
 }
