@@ -34,6 +34,7 @@ showPage=false;
   message: string = '';
   keyValue: boolean = false;
 
+  displayOrder=[]
 
 
   page: number = 1;
@@ -70,7 +71,57 @@ showPage=false;
     //  brand:this.addBrandControl()
     });
   }
+  counter()
+{
+  for(let v=1;v<=100;v++)
+  {
+    this.displayOrder[v]=v
+  }
 
+}
+getProductBrand()
+{
+  this.api.getReqAuth("admin/banner/brand-products?brands="+'['+this.selectedValue+']').subscribe(res=>
+    {
+      if(res)
+      {
+        console.log(res)
+      this.productList=res.result
+      }
+    });
+  
+}
+getCategoryId()
+{
+  if(this.bannerForm.value.child_category!='')
+  {
+    return {id:this.bannerForm.value.child_category,type:'child_category'}
+  }
+  else
+  {
+    if(this.bannerForm.value.sub_category!='')
+    return {id:this.bannerForm.value.sub_category,type:'sub_category'}
+    else
+    return {id:this.bannerForm.value.category,type:'category'}
+    
+  }
+}
+
+getProductUsingCategory(){
+  var cat=this.getCategoryId()
+  console.log(cat)
+  if(cat!=null)
+  {
+    this.api.getReqAuth("admin/banner/category-products?id="+cat['id']+"&category_type="+cat['type']).subscribe(res=>
+      {
+        if(res)
+        {console.log('product res',res)
+          this. productList=res.result
+        }
+      });
+  }
+
+}
   imageFormats: Array<string> = ['jpeg','png','jpg'];
 
   FORM_ERROR = {
@@ -121,6 +172,7 @@ id;
 
 ngOnInit()
 {
+  this.counter()
   this.route.params.subscribe(param=>
     {
       if(param && param['id'])
@@ -218,8 +270,12 @@ productCompare(id:any,arr)
   //   this.bannerForm.patchValue({
   //   category:" ",
   //   sub_category:" ",
+
+
   // child_category:" ",
   //   });
+
+
 
     this.spinner.show();
     this.api.getReqAuthBrands("admin/product/brand-list").pipe().subscribe(res=>{
@@ -239,16 +295,52 @@ productCompare(id:any,arr)
   
   
   }
-  addBrandControl()
+  getChecked(id)
   {
+  var   flag=0;
+  if(this.brandData.length>0)
+  {
+    for(let d of this.brandData)
+    {
+      if(d['id']==id)
+      flag=1;
+    }
+    if(flag!=0)
+    return true;
+    else
+    return false;
+  }
+    
+  }
+
+  getProductChecked(id)
+  {
+    var   flag=0;
+    if(this.productData.length>0)
+    {
+    for(let d of this.productData)
+    {
+      if(d['product_id']==id)
+      flag=1;
+    }
+    if(flag!=0)
+    return true;
+    else
+    return false;
+
+  }
+}
+
+  // addBrandControl()
+  // {
    
-    const arr=this.brands.map(element=>{
-      return this.fb.control(false)
-    });
-    return this.fb.array(arr);
+  //   const arr=this.brands.map(element=>{
+  //     return this.fb.control(false)
+  //   });
+  //   return this.fb.array(arr);
 
   
-  }
+  // }
   get title(): FormControl {
     return this.bannerForm.get("title") as FormControl;
   }
@@ -576,10 +668,34 @@ success(res) {
 }
 }
 got=false;
+brandData=['']
+productData=['']
 successView(res){
   this.spinner.hide();
 
-    console.log(res)
+    console.log('detaisl',res)
+    this.brandData=res.result.brand_data
+    
+    
+    console.log('selected ',this.selectedValue)
+    if(this.brandData==undefined)
+    {
+    
+    this.brandData=['']
+    
+    }
+    else{
+      this.selectedValue=this.brandData
+      console.log('selected value',this.selectedValue)
+      // for(let v of this.brandData)
+      // {
+      // this.selectedValue.push(v['id'])
+      // console.log('yes')
+      // }
+    }
+    this.productData=res.result.product_data
+    this.selectedProduct=this.productData
+    // console.log(this.brandData)
   
   var data= res.result;
 
@@ -597,9 +713,8 @@ successView(res){
   this.bannerForm.get('sub_category').patchValue(res.result.sub_category);
 var aaa=this.getSubcategory()
 this.getChildList()
-if(this.got)
-
-  this.bannerForm.get('child_category').patchValue(res.result.child_category);
+// if(this.got)
+this.bannerForm.get('child_category').patchValue(res.result.child_category)
   }
 var mydate=res.result.banner_start_date+" "+res.result.banner_end_date
 this.bannerForm.get('date').patchValue({ startDate:{_d: res.result.banner_start_date}, endDate:{_d:res.result.banner_end_date }})

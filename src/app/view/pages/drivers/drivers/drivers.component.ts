@@ -1,10 +1,4 @@
-
-
-
-
-
-import { Component, OnInit, ViewChild, HostBinding } from "@angular/core";
-import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
+import { Component, OnInit } from '@angular/core';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { Router, ActivatedRoute, Route } from "@angular/router";
 import { Store, select } from '@ngrx/store';
@@ -16,11 +10,12 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-banners',
-  templateUrl: './banners.component.html',
-  styleUrls: ['./banners.component.scss']
+  selector: 'app-drivers',
+  templateUrl: './drivers.component.html',
+  styleUrls: ['./drivers.component.scss']
 })
-export class BannersComponent implements OnInit {
+export class DriversComponent implements OnInit {
+
   collection = [];
   // pager object
   pager: any = {};
@@ -68,28 +63,28 @@ export class BannersComponent implements OnInit {
   defaultValue() {
     this.selected = '';
   }
-  exportDataF() {
-    this.exportData = 1;
-    var start1 = '';
-    var end1 = '';
-    //  console.log(this.loginForm.value)
-     if(this.loginForm.value.range){
-       start1=this.loginForm.value.range.startDate._d;
-       var startDate=new Date(start1)
-        start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
-       end1=this.loginForm.value.range.endDate._d;
-       var endDate=new Date(end1)
-       end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
-      }
-     var url="admin/brand/list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=1";
-    this.api
-      .getReqAuth(url)
-      .subscribe(
-        res => this.successFile(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
-  }
+  // exportDataF() {
+  //   this.exportData = 1;
+  //   var start1 = '';
+  //   var end1 = '';
+  //   //  console.log(this.loginForm.value)
+  //    if(this.loginForm.value.range){
+  //      start1=this.loginForm.value.range.startDate._d;
+  //      var startDate=new Date(start1)
+  //       start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
+  //      end1=this.loginForm.value.range.endDate._d;
+  //      var endDate=new Date(end1)
+  //      end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
+  //     }
+  //    var url="admin/banner/banner-list?status="+this.loginForm.value.status+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&banner_type=1";
+  //   this.api
+  //     .getReqAuth(url)
+  //     .subscribe(
+  //       res => this.successFile(res),
+  //       err => this.error(err),
+  //       () => (this.loader = false)
+  //     );
+  // }
   
   successFile(csv){
     // var hiddenElement = document.createElement('a');
@@ -170,12 +165,11 @@ export class BannersComponent implements OnInit {
        var endDate=new Date(end1)
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
-      console.log('start',start1)
-     var url="admin/banner/banner-list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=0"+"&banner_type=2";
-    this.api
+      var url="admin/banner/banner-list?status="+this.loginForm.value.status+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&banner_type=1";
+      this.api
       .getReqAuth(url)
       .subscribe(
-        res =>this.success(res),
+        res => this.success(res),
         err => this.error(err),
         () => (this.loader = false)
       );
@@ -183,9 +177,7 @@ export class BannersComponent implements OnInit {
   success(res) {
     if (res.status == true) {
       this.spinner.hide();
-      
       this.collection = res.result.data;
-    console.log(this.collection,res)
       this.totalRec = res.result.globalCount;
       // this.page=this.page;
       //this.limit=this.limit;
@@ -242,15 +234,13 @@ export class BannersComponent implements OnInit {
     //var formData=new FormData();
     //   formData.append('id',this.deletedId)
     this.api
-      .putReqAuth("admin/banner/update-status", { id: this.deletedId,status:'trashed'}).subscribe(
+      .putReqAuth("admin/banner/update-status", { id: this.deletedId , status: 'trashed'}).subscribe(
         res => this.successdelete(res),
         err => this.error(err),
         () => (this.loader = false)
       );
   }
-  successdelete(res) {
-    this.ngOnInit();
-  }
+
   yesStatus() {
     if (this.statusData == 'active') {
       this.statusData = "inactive";
@@ -266,9 +256,36 @@ export class BannersComponent implements OnInit {
         () => (this.loader = false)
       );
   }
+  successMessage:string="";
+  errorMessage:string="";
   successStatus(res) {
     if (res.status == true) {
+      this.successMessage = res.message;
       this.ngOnInit();
+    } else {
+      this.errorMessage = res.message;
+   
     }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
   }
+  successdelete(res) {
+    if (res.status == true) {
+      this.successMessage = res.message;
+      this.page = 1;
+      this.ngOnInit();
+    } else {
+      this.errorMessage = res.message;
+    
+    }
+    setTimeout(() => {
+      this.errorMessage = "";
+      this.successMessage = "";
+    }, 3000);
+
+  }
+
 }

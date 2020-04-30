@@ -1,0 +1,88 @@
+<div class="animated fadeIn" style="margin-top:30px;" *ngIf="showPage">
+    <div class="row">
+      <div class="col-sm-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+  
+            <div *ngIf="this.id==null" class="breadc"><a class="active" [routerLink]="['/theme/simplebanners']">
+                Drivers</a> / <a class="breada">Add Driver</a></div>
+            <div *ngIf="this.id" class="breadc"> <a class="active" [routerLink]="['/theme/simplebanners']"> Banners</a> /
+              <a class="breada">Edit Banner</a></div>
+          </div>
+          <div class="card-body">
+  
+              <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
+              <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div>
+                <form>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label><b>Driver Name</b></label>
+                        <input type="text"  class="form-control" placeholder="Enter Driver Name">
+                    </div>
+
+
+                    <div class="col-sm-4">
+                        <label><b>Driver Email</b></label>
+                        <input type="text"  class="form-control" placeholder="Enter Driver Email">
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label><b>Driver license Number</b></label>
+                        <input type="text"  class="form-control" placeholder="Enter Driver License">
+                    </div>
+
+                
+
+                    <div class="col-sm-5">
+                        <label><b>Driver Contact Number</b></label>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <select class="form-control">
+                                    <option value="+974">+974</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-7">
+                        <input type="text"  class="form-control" placeholder="Enter Contact  Number">
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 float-right">
+                        <label><b>Plate Number</b></label>
+                        <input type="text"  class="form-control" placeholder="Enter Plate Number">
+                    </div>
+
+                   
+
+
+                    <div class="col-sm-3">
+                        <label><b>Vehicle Type </b></label><br/>
+                        <select class="form-control">
+                            <option value="">please select</option>
+                            <option value="1">2 Wheeler</option>
+                            <option value="2">4 Wheeler</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-6 loat-right">
+                        <label><b>Driver Address</b></label>
+                        <textarea class="form-control" placeholder="Enter Driver Address"> </textarea>
+                    </div>
+                   
+                </div><br/>
+
+
+            <button *ngIf="this.id==null" type="submit" class="btn btn-success" (click)="onSubmit()">Save</button>
+            <button type="button" *ngIf="this.id!=null" class="btn btn-success" (click)="update()">Save</button>
+                
+
+            </form>
+  
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  
+  
+  </div>

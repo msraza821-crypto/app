@@ -14,6 +14,12 @@ export const navItems: INavData[] = [
     icon: 'icon-user',
    
 },
+{
+  name: 'Drivers',
+  url: '/theme/drivers',
+  icon: 'icon-pencil',
+  
+},
   {
       name: 'Brands',
       url: '/theme/brands',
@@ -64,6 +70,8 @@ export const navItems: INavData[] = [
   url: '/theme/cms',
   icon: 'icon-pencil',
   
-}
-  
+},
+
+
+
 ];
