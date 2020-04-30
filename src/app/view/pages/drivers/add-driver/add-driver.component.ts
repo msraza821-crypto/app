@@ -15,19 +15,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class AddDriverComponent implements OnInit {
 
   closeResult = '';
-  bannerForm:FormGroup;
+  driverForm:FormGroup;
 selectedValue=[];
 CONFIG = CONFIG;
-isProduct=false;
-isBrand=false;
-showPage=false;
+
   brands=[];
   inlineCheckbox='checkbox'
-  loader = false;
-  discountType=""
-  page: number = 1;
-  limit=10;
-  totalRec=50;
+  
+  
 
 
   url1 = ''; url: string = '';
@@ -42,37 +37,36 @@ showPage=false;
     private router:Router
     
     ) {
-   this.spinner.show();
-    this.api.getReqAuthBrands("admin/product/brand-list").pipe().subscribe(res=>{
-      if(res)
-      {this.spinner.hide()
-        this.brands=res.result;
-        this.showPage=true;
-        console.log(this.brands)
+  //  this.spinner.show();
+  //   this.api.getReqAuthBrands("admin/product/brand-list").pipe().subscribe(res=>{
+  //     if(res)
+  //     {this.spinner.hide()
+  //       this.brands=res.result;
+      
+  //       console.log(this.brands)
       this.createForm()
-      this.getCategory()
-      
+     
     
-      }
+      // }
     
       
-    });
+    // });
 console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
 
   }
   createForm()
   {
-    this.bannerForm=this.fb.group({
-      title:['',[Validators.required,Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-      // minimum_value:['',[Validators.required,Validators.pattern(Regex.pricePattern)]],
-      // available_on:['',[Validators.required]],
-      // discount_type:['',[Validators.required]],
-      // discount_value:['',[Validators.required,Validators.pattern(Regex.pricePattern)]],
-      category:['',[Validators.required]],
-      sub_category:['',[Validators.required]],
-      // child_category:['',[Validators.required]],
-      // date:['',[Validators.required]],
-      display_order:['',[Validators.required]]
+    this.driverForm=this.fb.group({
+      name:['',[Validators.required,Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      email:['',[Validators.required,Validators.pattern(Regex.email)]],
+      license:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_MIN_LENGTH),Validators.minLength(CONFIG.MOBILE_LENGTH)]],
+      country_code:[''],
+      mobile:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_MIN_LENGTH),Validators.minLength(CONFIG.MOBILE_LENGTH)]],
+      plate_number:['',[Validators.required,Validators.maxLength(CONFIG.MIN_PLATE_NUMBER),Validators.minLength(CONFIG.MAX_PLAT_NUMBER)]],
+      vehicle_type:['',[Validators.required]],
+      address:['',[Validators.required]]
+      
+      
     
     });
   }
@@ -80,43 +74,48 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
   imageFormats: Array<string> = ['jpeg','png','jpg'];
 
   FORM_ERROR = {
-    title: {
-      required: ERROR_MESSAGES.BANNER_TITLE_REQUIRED,
+    name: {
+      required: ERROR_MESSAGES.DRIVER_NAME_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MAX_LENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
-    // minimum_value: {
-    //   required: ERROR_MESSAGES.MINIMUM_VALUE_REQUIRED,
-  
-    //   pattern: ERROR_MESSAGES.INVALID_INPUT,
-    // },
-    // available_on: {
-    //   required: ERROR_MESSAGES.AVAILABLE_ON_REQUIRED,
-     
-    // },
-    // discount_type: {
-    //   required: ERROR_MESSAGES.DISCOUNT_TYPE_REQUIRED,
-     
-    // },
-    // discount_value: {
-    //   required: ERROR_MESSAGES.DISCOUNT_VALUE_REQUIRED,
-    //   pattern: ERROR_MESSAGES.INVALID_INPUT,
-     
-    // },
-    category: {
-      required: ERROR_MESSAGES.CATEGORY_REQUIRED,
+    
+    email: {
+      required: ERROR_MESSAGES.EMAIL_REQUIRED,
+      pattern: ERROR_MESSAGES.INVALID_INPUT_EMAIL,
    
     },
-    sub_category: {
-      required: ERROR_MESSAGES.SUBCATEGORY_REQUIRED
+    mobile: {
+      required: ERROR_MESSAGES.MOBILE_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.MOBILE_LENGTH}`,
+  
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MOBILE_MIN_LENGTH}`
+
     },
-    display_order: {
-      required: ERROR_MESSAGES. DISPLAY_ORDER_REQUIRED
-    }
-    // date:{
-    //   required:ERROR_MESSAGES.INSPECTIONDATE_REQUIRED
-    // }
+    plate_number: {
+      required: ERROR_MESSAGES.PLATE_NUMBER_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.MAX_PLAT_NUMBER}`,
+  
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MIN_PLATE_NUMBER}`
+
+    },
+  vehicle_type:{
+    required:ERROR_MESSAGES.VEHICLE_TYPE_REQUIRED
+  },
+  address:{
+    required:ERROR_MESSAGES.PROPERTY_ADDRESS_REQUIRED,
+    maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.ADDRESS_LENGTH}`,
+  
+    minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.ADDRESS_LENGTH}`
+  },
+  license:{
+    required:ERROR_MESSAGES.LICENSE_REQUIRED,
+    maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.MOBILE_LENGTH}`,
+  
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MOBILE_MIN_LENGTH}`
+  }
+   
  };
 
 id;
@@ -124,30 +123,10 @@ id;
 selectedProduct=[]
 
 onFilterChange(eve: any,id) {
-this.productCompare(id)
+
 }
 
-productCompare(id:any)
-{
-  
-  for(let i=0;i<this.selectedProduct.length;i++)
-  {
-    if(id==this.selectedProduct[i])
-    {
-      const index = this.selectedProduct.indexOf(this.selectedProduct[i], 0);
-      if (index > -1) {
-        this.selectedProduct.splice(index, 1);
-        return;
-              }
 
-    }
-  }
-
-      this.selectedProduct.push(id)
-      console.log(this.selectedProduct)
-    
-
-  }
 
 ngOnInit()
 {
@@ -158,7 +137,7 @@ ngOnInit()
 
 this.id=param.id
 console.log(this.id)
-this.viewBanner()
+
       }
     })
    
@@ -170,162 +149,44 @@ this.viewBanner()
   disabled = false;
 
 
-  get title(): FormControl {
-    return this.bannerForm.get("title") as FormControl;
+  get name(): FormControl {
+    return this.driverForm.get("name") as FormControl;
    }
-  // get minimum_value(): FormControl {
-  //   return this.bannerForm.get("minimum_value") as FormControl;
-  // }
-  // get available_on(): FormControl {
-  //   return this.bannerForm.get("available_on") as FormControl;
-  // }
-  // get discount_type(): FormControl {
-  //   return this.bannerForm.get("discount_type") as FormControl;
-  // }
-  // get discount_value(): FormControl {
-  //   return this.bannerForm.get("discount_value") as FormControl;
-  // }
-  get category(): FormControl {
-    return this.bannerForm.get("category") as FormControl;
+ 
+  get email(): FormControl {
+    return this.driverForm.get("email") as FormControl;
   }
-  get sub_category(): FormControl {
-    return this.bannerForm.get("sub_category") as FormControl;
+  get mobile(): FormControl {
+    return this.driverForm.get("mobile") as FormControl;
   }
-  get child_category(): FormControl {
-    return this.bannerForm.get("child_category") as FormControl;
+  get country_code(): FormControl {
+    return this.driverForm.get("country_code") as FormControl;
   }
-  get date(): FormControl {
-    return this.bannerForm.get("date") as FormControl;
+  get license(): FormControl {
+    return this.driverForm.get("license") as FormControl;
   }
-  get brandArray()
+  get plate_number()
   {
-    return (this.bannerForm.get("brand")as FormArray).controls;
+    return this.driverForm.get("plate_number") as FormControl;
   }
-  get  display_order ():FormControl
+  get  address ():FormControl
   {
-    return this.bannerForm.get("display_order") as FormControl 
+    return this.driverForm.get("address") as FormControl 
+  }
+  get  vehicle_type ():FormControl
+  {
+    return this.driverForm.get("vehicle_type") as FormControl 
   }
 
 
-  getSelectedValue()
-  {
-    this.selectedValue=[];
-    this.brandArray.forEach((control,i)=>{
-      if(control.value)
-      {
-        this.selectedValue.push(this.brands[i]);
-      }
-    });
-    
-  }
-  categoryList;
-  getCategory(){
-    this.api
-    .getReqAuth("admin/banner/category-list?parent_id="+0)
-    .subscribe(
-      res =>{
-        console.log('categort',res)
-  this.categoryList=res.result
-  console.log('categorlist',this.categoryList)
-      },
-      err => this.error(err),
-      () => (this.loader = false)
-    );
-    }
-  subCategoryList;
- getSubcategory(){
-   
-    this.api.getReqAuth("admin/banner/category-list?parent_id="+this.bannerForm.value.category)
-    
-    .subscribe(
-      res => {
-        this.subCategoryList=res.result
-        console.log(this.subCategoryList)
-      },
-      err => this.error(err),
-      () => (this.loader = false)
-    );
-  }
+  
   onSubmit()
   {
-
-    // var start1 = '';
-    // var end1 = '';
-  
-    //  if(this.bannerForm.value.date){
-    //    start1=this.bannerForm.value.date.startDate._d;
-    //    var startDate=new Date(start1)
-    //     start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
-    //    end1=this.bannerForm.value.date.endDate._d;
-    //    var endDate=new Date(end1)
-    //    end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
-    //  }
-    // console.log(start1)
-    // console.log(end1)
-    if(this.bannerForm.valid)
-    {
-
-      this.spinner.show();
-      const formData = new FormData();
-    formData.append('title', this.bannerForm.value.title);
-    formData.append('banner_type','1');
-   formData.append('display_order',this.bannerForm.value.display_order)
-   formData.append('image', this.url1);
-  //   formData.append('available_on', this.bannerForm.value.available_on);
-  //   formData.append('discount_type', this.bannerForm.value.discount_type);
-  //   formData.append('discount_value', this.bannerForm.value.discount_type);
-  //   formData.append('minimum_value', this.bannerForm.value.minimum_value);
-    formData.append('category', this.bannerForm.value.category);
-    formData.append('sub_category', this.bannerForm.value.sub_category);
-  //   formData.append('brands',JSON.stringify(this.selectedValue) );
     
-  
-    // console.log('sss',formData)
-     this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
-      res =>{
-        this.spinner.hide()
-        console.log(res)
-      },
-      err => this.error(err),
-      () => (this.loader = false)
-
-
-    );
-    
-    }
-    else
-    this._util.markError(this.bannerForm);
-
-    }
-
-  keyPress(event: any) {
-    const pattern = /[0-9.]/;
-    const inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {    
-      
-        event.preventDefault();
-    }
-}
-productList=[];
-
-getProductList()
-{
-  var url="admin/product/list"
-  this.api
-    .getReqAuth(url)
-    .subscribe(
-      res =>{
-        console.log(res)
-        this.productList=res.result.data;
-        console.log('product',this.productList)
-      },
-
-      err => this.error(err),
-      () => (this.loader = false)
-    );
+    this._util.markError(this.driverForm)
 
 }
+
 
 namePress(event: any) {
   const pattern = /[0-9]/;
@@ -336,13 +197,15 @@ namePress(event: any) {
       event.preventDefault();
   }
 }
+discountType='';
 changeDiscountType(){
 console.log('from discount change')
-  if(this.bannerForm.value.discount_type=='1')
+  if(this.driverForm.value.discount_type=='1')
   this.discountType="Enter discount value..."
   else
   this.discountType="% of Off...."
 }
+errorMessage:string;
 onSelectFile(event) {
   this.keyValue = true;
   if (event.target.files && event.target.files[0]) {
@@ -361,153 +224,25 @@ onSelectFile(event) {
   }else{
     this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
  setTimeout(() => {
-      this.loader = false;
       this.keyValue = false;
       this.errorMessage="";
     }, 3000)
     return false;
   } 
   
-   
-    let reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]); // read file as data url
-    reader.onload = (event: any) => { // called once readAsDataURL is completed
-      this.url = event.result;
-    }
+}}
 
 
-    this.url1 = event.target.files[0];
-    console.log(this.url1)
+numberPress(event: any) {
+  const pattern = /[0-9]/;
+  const inputChar = String.fromCharCode(event.charCode);
 
-
-    setTimeout(() => {
-      this.loader = false;
-      this.keyValue = false;
-      this.errorMessage="";
-    }, 3000)
-    this.loader = true;
-
-  }
-}
-errorMessage
-
-viewBanner(){
-  this.spinner.show();
-  this.api
-  .getReqAuth("admin/brand/detail?id="+this.id)
-  .subscribe(
-    res => this.successView(res),
-    err => this.error(err),
-    () => (this.loader = false)
-  );
-}
-success(res) {
-  setTimeout(() => {
-    /** spinner ends after 5 seconds */
-    this.spinner.hide();
-  }, 1000);
-  if(res.status==true){
-    this.router.navigate(['theme/brands'])
-} else {
-  this._util.markError(this.bannerForm);
-}
-}
-successView(res){
-  if(res.status==true){
-  var data= res.result;
-  // this.bannerForm.get('title').patchValue('shabbir');
-  // this.bannerForm.get('minimum_value').patchValue(1223);
-  // this.bannerForm.get('available_on').patchValue('brand');
-
-  // this.bannerForm.get('discount_type').patchValue("flat");
-  // this.bannerForm.get('discount_value').patchValue(1223);
-  // this.bannerForm.get('minimum_value').patchValue(1223);
-  // this.bannerForm.get('minimum_value').patchValue(1223);
-  // this.bannerForm.get('minimum_value').patchValue(1223);
-
-
-  }
-}
-
-error(res){
-  setTimeout(() => {
-    /** spinner ends after 5 seconds */
-    this.spinner.hide();
-  }, 1000);
-  this._util.markError(res.message);
-}
-
-update()
-{
-  var start1 = '';
-  var end1 = '';
-
-   if(this.bannerForm.value.date){
-     start1=this.bannerForm.value.date.startDate._d;
-     var startDate=new Date(start1)
-      start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
-     end1=this.bannerForm.value.date.endDate._d;
-     var endDate=new Date(end1)
-     end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
-   }
-  console.log(start1)
-  console.log(end1)
-  // if(this.bannerForm.valid)
-  // {
-  console.log(this.bannerForm.value)
-  console.log(this.url1)
-  console.log('json',JSON.stringify(this.selectedValue))
-
-    this.spinner.show();
-  //   const formData = new FormData();
-  //   formData.append('title', this.bannerForm.value.title);
-  //   formData.append('banner_type',this.bannerForm.value.display_order);
-  //  formData.append('display_order','5')
-  // //  formData.append('image', this.url1);
-  // //   formData.append('available_on', this.bannerForm.value.available_on);
-  // //   formData.append('discount_type', this.bannerForm.value.discount_type);
-  // //   formData.append('discount_value', this.bannerForm.value.discount_type);
-  // //   formData.append('minimum_value', this.bannerForm.value.minimum_value);
-  // //   formData.append('category', this.bannerForm.value.category);
-  // //   formData.append('sub_category', this.bannerForm.value.sub_category);
-  // //   formData.append('brands',JSON.stringify(this.selectedValue) );
+  if (!pattern.test(inputChar)) {    
     
-  
-  //   // console.log('sss',formData)
-  //    this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
-  //     res =>{
-  //       console.log(res)
-  //     },
-  //     err => this.error(err),
-  //     () => (this.loader = false)
+      event.preventDefault();
+  }
 
 
-  //   );
-  this.api.getAllActivities({title:this.bannerForm.value.title,
-    banner_type:2,
-    display_order:7,
-    // image:this.url1,
-    available_on:this.bannerForm.value.available_on,
-    minimum_value:this.bannerForm.value.minimum_value,
-    discount_type:this.bannerForm.value.discount_type,
-    discount_value:this.bannerForm.value.discount_value,
-    category:this.bannerForm.value.category,
-    sub_category:this.bannerForm.value.sub_category,
-    // child_category:this.bannerForm.value.child_category,
-    brands:this.selectedValue,
-    banner_start_date:start1,
-    banner_end_date:end1
-
-
-
-
-
-  }).pipe().subscribe(res=>{
-console.log('succes',res)
-this.spinner.hide()
-})
-  
-  // this._util.markError(this.bannerForm)
 }
 
 }

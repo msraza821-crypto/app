@@ -130,9 +130,13 @@ export const ERROR_MESSAGES = {
      BRAND_REQUIRED:'Brand name is required',
      QUANTITY_REQUIRED:'Product quantity is required',
      DISPLAY_ORDER_REQUIRED:'Display order is required',
-     DISCOUNT_REQUIRED:'Discount amount is required'
+     DISCOUNT_REQUIRED:'Discount amount is required',
 
-
+     DRIVER_NAME_REQUIRED:'Please enter driver name',
+    MOBILE_REQUIRED:'Mobile number is required',
+    PLATE_NUMBER_REQUIRED:'Plate number is required',
+    VEHICLE_TYPE_REQUIRED:'Vehicle type is required',
+    LICENSE_REQUIRED:'License number  is required'
 
 };
 
