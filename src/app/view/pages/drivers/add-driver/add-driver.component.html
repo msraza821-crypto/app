@@ -1,4 +1,4 @@
-<div class="animated fadeIn" style="margin-top:30px;" *ngIf="showPage">
+<div class="animated fadeIn" style="margin-top:30px;" >
     <div class="row">
       <div class="col-sm-12 col-lg-12">
         <div class="card">
@@ -7,7 +7,7 @@
             <div *ngIf="this.id==null" class="breadc"><a class="active" [routerLink]="['/theme/simplebanners']">
                 Drivers</a> / <a class="breada">Add Driver</a></div>
             <div *ngIf="this.id" class="breadc"> <a class="active" [routerLink]="['/theme/simplebanners']"> Banners</a> /
-              <a class="breada">Edit Banner</a></div>
+              <a class="breada">Edit Driver</a></div>
           </div>
           <div class="card-body">
   
@@ -17,39 +17,45 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <label><b>Driver Name</b></label>
-                        <input type="text"  class="form-control" placeholder="Enter Driver Name">
+                        <input type="text"  class="form-control" (keypress)="namePress($event)" placeholder="Enter Driver Name" [formControl]="name">
+                        <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
                     </div>
 
 
                     <div class="col-sm-4">
                         <label><b>Driver Email</b></label>
-                        <input type="text"  class="form-control" placeholder="Enter Driver Email">
+                        <input type="text"  class="form-control" placeholder="Enter Driver Email" [formControl]="email">
+                        <span class="error text-danger">{{_util.errorMessage(email,FORM_ERROR?.email)}}</span>
                     </div>
 
                     <div class="col-sm-4">
                         <label><b>Driver license Number</b></label>
-                        <input type="text"  class="form-control" placeholder="Enter Driver License">
+                        <input type="text"  class="form-control" placeholder="Enter Driver License" [formControl]="license">
+                        <span class="error text-danger">{{_util.errorMessage(license,FORM_ERROR?.license)}}</span>
                     </div>
 
                 
 
                     <div class="col-sm-5">
-                        <label><b>Driver Contact Number</b></label>
+                        <label><b>Driver Mobile Number</b></label>
                         <div class="row">
                             <div class="col-sm-5">
-                                <select class="form-control">
-                                    <option value="+974">+974</option>
+                                <select class="form-control" [formControl]="country_code">
+                                    <!-- <option value="">please </option> -->
+                                    <option value="">+974</option>
                                 </select>
                             </div>
                             <div class="col-sm-7">
-                        <input type="text"  class="form-control" placeholder="Enter Contact  Number">
+                        <input type="text"  class="form-control" placeholder="Enter Mobile  Number" (keypress)="numberPress($event)" [formControl]="mobile">
+                        <span class="error text-danger">{{_util.errorMessage(mobile,FORM_ERROR?.mobile)}}</span>
                         </div>
                         </div>
                     </div>
 
                     <div class="col-sm-4 float-right">
                         <label><b>Plate Number</b></label>
-                        <input type="text"  class="form-control" placeholder="Enter Plate Number">
+                        <input type="text"  class="form-control" placeholder="Enter Plate Number" [formControl]="plate_number">
+                        <span class="error text-danger">{{_util.errorMessage(plate_number,FORM_ERROR?.plate_number)}}</span>
                     </div>
 
                    
@@ -57,16 +63,18 @@
 
                     <div class="col-sm-3">
                         <label><b>Vehicle Type </b></label><br/>
-                        <select class="form-control">
+                        <select class="form-control" [formControl]="vehicle_type">
                             <option value="">please select</option>
                             <option value="1">2 Wheeler</option>
                             <option value="2">4 Wheeler</option>
                         </select>
+                        <span class="error text-danger">{{_util.errorMessage(vehicle_type,FORM_ERROR?.vehicle_type)}}</span>
                     </div>
 
                     <div class="col-sm-6 loat-right">
                         <label><b>Driver Address</b></label>
-                        <textarea class="form-control" placeholder="Enter Driver Address"> </textarea>
+                        <textarea class="form-control"  style="height:100px" placeholder="Enter Driver Address" [formControl]="address"> </textarea>
+                        <span class="error text-danger">{{_util.errorMessage(address,FORM_ERROR?.address)}}</span>
                     </div>
                    
                 </div><br/>

@@ -611,6 +611,8 @@ onSelectFile(event) {
 
     const width = file.naturalWidth;
     const height = file.naturalHeight;
+    console.log('wiudth',file.size)
+    console.log('height',height)
 
     window.URL.revokeObjectURL( file.src );
   //  var checkimg = file.toLowerCase();
