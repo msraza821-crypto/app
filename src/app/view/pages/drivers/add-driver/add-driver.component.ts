@@ -360,6 +360,11 @@ onSelectFile(event) {
 
   }else{
     this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+ setTimeout(() => {
+      this.loader = false;
+      this.keyValue = false;
+      this.errorMessage="";
+    }, 3000)
     return false;
   } 
   

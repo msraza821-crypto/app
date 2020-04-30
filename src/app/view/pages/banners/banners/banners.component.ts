@@ -11,7 +11,7 @@ import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -47,6 +47,7 @@ export class BannersComponent implements OnInit {
     private spinner:NgxSpinnerService,
     private api: HttpService,
     private _fb: FormBuilder,
+     private _api:AppService,
     private store: Store<any>,
   ) {
   }
@@ -248,9 +249,7 @@ export class BannersComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-  successdelete(res) {
-    this.ngOnInit();
-  }
+
   yesStatus() {
     if (this.statusData == 'active') {
       this.statusData = "inactive";
@@ -268,7 +267,25 @@ export class BannersComponent implements OnInit {
   }
   successStatus(res) {
     if (res.status == true) {
+     
+      this._api.showNotification( 'success', res.message );
       this.ngOnInit();
+    } else {
+      this._api.showNotification( 'error', res.message );
+   
+    }   
+
+  }
+  successdelete(res) {
+    if (res.status == true) {
+      this._api.showNotification( 'success', res.message );
+      this.page = 1;
+      this.ngOnInit();
+    } else {
+      this._api.showNotification( 'error', res.message );
+    
     }
+
+
   }
 }

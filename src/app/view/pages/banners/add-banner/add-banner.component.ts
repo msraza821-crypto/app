@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl,FormGroup,FormArray,FormBuilder,Validators} from  "@angular/forms";
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -47,7 +47,8 @@ showPage=false;
     private api:HttpService,
     private spinner:NgxSpinnerService,
     private route:ActivatedRoute,
-    private router:Router
+    private router:Router,
+    private _api:AppService
     
     ) {
    
@@ -619,6 +620,11 @@ onSelectFile(event) {
 
   }else{
     this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+ setTimeout(() => {
+      this.loader = false;
+      this.keyValue = false;
+      this.errorMessage="";
+    }, 3000)
     return false;
   } 
   
@@ -656,17 +662,8 @@ viewBanner(){
     () => (this.loader = false)
   );
 }
-success(res) {
-  setTimeout(() => {
-    /** spinner ends after 5 seconds */
-    this.spinner.hide();
-  }, 1000);
-  if(res.status==true){
-    this.router.navigate(['theme/banners'])
-} else {
-  this._util.markError(this.bannerForm);
-}
-}
+
+
 got=false;
 brandData=['']
 productData=['']
@@ -724,12 +721,25 @@ this.bannerForm.get("status").patchValue(res.result.status)
   
 }
 
-error(res){
-  setTimeout(() => {
-    /** spinner ends after 5 seconds */
+success(res) {
+  setTimeout(() => {     
     this.spinner.hide();
   }, 1000);
-  this._util.markError(res.message);
+  if (res.status == true) {
+     this._api.showNotification( 'success', res.message );     
+      this.router.navigate(['theme/banners'])
+  } else {
+    this._util.markError(this.bannerForm);
+    this._api.showNotification( 'error', res.message );
+  }
+
+}
+error(res) {
+  setTimeout(() => {     
+    this.spinner.hide();
+  }, 1000);
+  this._api.showNotification( 'error', res.message );
+  
 }
 
 update()

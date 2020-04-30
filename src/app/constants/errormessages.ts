@@ -119,8 +119,8 @@ export const ERROR_MESSAGES = {
      MINIMUM_VALUE_REQUIRED:'Minimum value is required',
      AVAILABLE_ON_REQUIRED:'Available on is required',
     CATEGORY_REQUIRED:'Category is required',
-    SUBCATEGORY_REQUIRED:'Subcategory is required',
-    CHILD_CATEGORY_REQUIRED:'Child category is required',
+    SUBCATEGORY_REQUIRED:'Sub-Category is required',
+    CHILD_CATEGORY_REQUIRED:'Child-Category is required',
     DISCOUNT_TYPE_REQUIRED:'Discount type is required',
     DISCOUNT_VALUE_REQUIRED:'Discount value is required',
 

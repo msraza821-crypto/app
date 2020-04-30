@@ -65,7 +65,7 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
   createForm()
   {
     this.bannerForm=this.fb.group({
-      title:['',[Validators.required,Validators.pattern(Regex.spaces) ,Validators.maxLength(CONFIG.NAME_LENGTH_TITLE),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      title:['',[Validators.required,Validators.pattern(Regex.SPACESTARTEND) ,Validators.maxLength(CONFIG.NAME_LENGTH_TITLE),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
 
       category:['',[Validators.required]],
       sub_category:['',[Validators.required]],
@@ -338,6 +338,11 @@ onSelectFile(event) {
 
     } else {
       this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+      setTimeout(() => {
+        this.loader = false;
+        this.keyValue = false;
+        this.errorMessage = "";
+      }, 3000)
       return false;
     }
 
