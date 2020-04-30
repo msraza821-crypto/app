@@ -39,10 +39,10 @@
                     <div class="col-sm-5">
                         <label><b>Driver Mobile Number</b></label>
                         <div class="row">
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <select class="form-control" [formControl]="country_code">
                                     <!-- <option value="">please </option> -->
-                                    <option value="">+974</option>
+                                    <option value="'(+974)'">+974</option>
                                 </select>
                             </div>
                             <div class="col-sm-7">
@@ -65,8 +65,8 @@
                         <label><b>Vehicle Type </b></label><br/>
                         <select class="form-control" [formControl]="vehicle_type">
                             <option value="">please select</option>
-                            <option value="1">2 Wheeler</option>
-                            <option value="2">4 Wheeler</option>
+                            <option value="2 Wheeler">2 Wheeler</option>
+                            <option value="4 Wheeler">4 Wheeler</option>
                         </select>
                         <span class="error text-danger">{{_util.errorMessage(vehicle_type,FORM_ERROR?.vehicle_type)}}</span>
                     </div>

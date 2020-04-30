@@ -74,9 +74,11 @@ showPage=false;
   }
   counter()
 {
-  for(let v=1;v<=100;v++)
+  
+  for(let v=1;v<=20;v++)
   {
-    this.displayOrder[v]=v
+    
+    this.displayOrder[v-1]=v
   }
 
 }
@@ -259,8 +261,9 @@ productCompare(id:any,arr)
     {
       this.isProduct=true;
       this.isBrand=false;
+      this.productList=[];
       this.getCategory()
-      this.getProductList()
+      // this.getProductList()
     
       return;
     }
@@ -268,6 +271,7 @@ productCompare(id:any,arr)
     {
     this.isBrand=true;
     this.isProduct=false;
+    this.productList=[]
   //   this.bannerForm.patchValue({
   //   category:" ",
   //   sub_category:" ",
@@ -597,9 +601,9 @@ namePress(event: any) {
 changeDiscountType(){
 console.log('from discount change')
   if(this.bannerForm.value.discount_type=='1')
-  this.discountType="Enter discount value..."
+  this.discountType="Discount Value"
   else
-  this.discountType="% of Off...."
+  this.discountType="% O Of"
 }
 choosefile: string = "No file chosen...";
 onSelectFile(event) {
@@ -669,14 +673,16 @@ viewBanner(){
 got=false;
 brandData=['']
 productData=['']
+incomingBrands=[]
+
 successView(res){
   this.spinner.hide();
 
     console.log('detaisl',res)
     this.brandData=res.result.brand_data
+    console.log('brand dat',this.brandData)
     
-    
-    console.log('selected ',this.selectedValue)
+
     if(this.brandData==undefined)
     {
     
@@ -684,18 +690,41 @@ successView(res){
     
     }
     else{
-      this.selectedValue=this.brandData
-      console.log('selected value',this.selectedValue)
-      // for(let v of this.brandData)
-      // {
-      // this.selectedValue.push(v['id'])
-      // console.log('yes')
-      // }
+      
+      for(let v of this.brandData)
+      {
+    
+      this.selectedValue.push(v['id'])
+      }
+      this.getProductBrand();
+      
     }
-    this.productData=res.result.product_data
-    this.selectedProduct=this.productData
-    // console.log(this.brandData)
+   
+    // this.productList=res.result.product_data
+    this.productData=res.result.product_data;
   
+ 
+    if(this.productData==undefined)
+    {
+    
+    this.productData=['']
+    
+    }
+    else{
+      
+      for(let v of this.productData)
+      {
+    
+      this.selectedProduct.push(v['product_id'])
+      }
+      this.getProductBrand();
+      console.log('selected product',this.selectedProduct)
+      
+    }
+    
+  
+  
+  // console.log('seleceted value id', this.selectedValue)
   var data= res.result;
 
   this.bannerForm.get('title').patchValue(res.result.title);
@@ -714,11 +743,13 @@ var aaa=this.getSubcategory()
 this.getChildList()
 // if(this.got)
 this.bannerForm.get('child_category').patchValue(res.result.child_category)
+this.getProductUsingCategory()
   }
 var mydate=res.result.banner_start_date+" "+res.result.banner_end_date
 this.bannerForm.get('date').patchValue({ startDate:{_d: res.result.banner_start_date}, endDate:{_d:res.result.banner_end_date }})
 this.bannerForm.get('display_order').patchValue(res.result.display_order)
 this.url=res.result.image;
+this.choosefile=res.result.image
 this.bannerForm.get("status").patchValue(res.result.status)
   
 }

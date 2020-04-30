@@ -11,7 +11,7 @@
             <div class="col-md-6 float-left"> 
        
           <a [routerLink]="['/theme/drivers/addDriver']"> <button type="button" style="margin:0px 19px -2px 0px;color:white;"  class="btn btn-primary float-right ml-1">Add
-              Drivers</button></a>
+              Driver</button></a>
               </div>
              </div>
           <hr />
@@ -20,14 +20,14 @@
 
 
             <div class="col-md-3 float-left">
-               <input type="text" class="form-control" placeholder="search by driver name">
+               <input type="text" class="form-control" placeholder="Search by driver name">
               </div>
           
             <div class="col-md-2 float-left">
               <select id="inputState" class="form-control" [formControl]="status">
                 <option value="">All</option>
              
-                <option value="inactive">Inactive</option>   <option value="active">Active</option>
+                <option value="assign">Assigned</option>   <option value="free">Free</option>
               </select>
             </div>
             <div class="col-md-3 float-left">               
@@ -81,7 +81,7 @@
                                   <th scope="col">Mobile Number</th>
                                   <th scope="col"> Driver Status</th>
                                  
-                                  <th scope="col" style="min-width:200px">Actions</th>
+                                  <th scope="col" style="min-width:100px">Actions</th>
                                 </tr>
                               </thead>
                               <tbody *ngIf="collection.length>0">
@@ -93,16 +93,16 @@
                                   {{ ((limit * (page - 1)) + ie+1) }}
           
                               </td>
-                                  <td scope="row">{{i.title}}</td>
+                                  <td scope="row">{{i.name}}</td>
                                     <!-- <td scope="row">{{i.driver_start_date}}
                                   </td>
                                   <td>{{i.driver_end_date}}</td> -->
-                                  <td> {{i.created_at}}
+                                  <td> {{i.email}}
                                   </td>
-                                  <td> {{i.display_order}}
+                                  <td> {{i.contact_number}}
                                     </td>
                               
-                                <td  *ngIf="i.status=='active'" >Active
+                                <td  >free
                               </td>
                               <td  *ngIf="i.status=='inactive'" >Inactive
                                 </td>
@@ -110,7 +110,7 @@
                                   <td>
                                       <a [routerLink]="['/theme/drivers/view',{id :i?.id}]" title="View driver"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
                                     <a [routerLink]="['/theme/drivers/addDriver',{id :i?.id}]" title="Edit driver"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
-                                    <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Block driver"> <i style="font-size:24px" class="fa  fa-times-circle"></i>&nbsp;</a> 
+                                    <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Block driver"> <i style="font-size:24px" class="fa fa-ban"></i>&nbsp;</a> 
                                     <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='inactive'" title="Unblock driver">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
                                     <a (click)="openVerticallyCentered(poup,i)" title="Delete driver"> <i style="font-size:24px"
                                         class="fa fa-trash-o"></i></a>
@@ -136,58 +136,60 @@
                         </ngb-alert> -->
                   
                         <div class="card-body pb-0 ">
-                            <table class="table table-striped" style="overflow: auto;padding:20px">
-                              <thead>
-                                <tr>
-                                  <th scope="col">S No.</th>
-                                  <th scope="col">Driver Name</th>
-                                 
-                                  <th scope="col">Email</th>
-                                  <th scope="col">Mobile Number</th>
-                                  <th scope="col">Driver's Status</th>
-                                 
-                                  <th scope="col" style="min-width:200px">Actions</th>
-                                </tr>
-                              </thead>
-                              <tbody *ngIf="collection.length>0">
-                              <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
-                              itemsPerPage: limit,
-                              currentPage: page,
-                              totalItems: totalRec }; let ie = index">
-                              <td>
-                                  {{ ((limit * (page - 1)) + ie+1) }}
-          
-                              </td>
-                                  <td scope="row">{{i.title}}</td>
-                                    <!-- <td scope="row">{{i.driver_start_date}}
-                                  </td>
-                                  <td>{{i.driver_end_date}}</td> -->
-                                  <td> {{i.created_at}}
-                                  </td>
-                                  <td> {{i.display_order}}
-                                    </td>
-                              
-                                <td  *ngIf="i.status=='active'" >Active
-                              </td>
-                              <td  *ngIf="i.status=='inactive'" >Inactive
+
+                          <table class="table table-striped" style="overflow: auto;padding:20px">
+                            <thead>
+                              <tr>
+                                <th scope="col">S No.</th>
+                                <th scope="col">Driver Name</th>
+                                <!-- <th scope="col">Category Name</th>
+                                <th scope="col">Sub-Category Name</th> -->
+                                <th scope="col">Email</th>
+                                <th scope="col">Mobile Number</th>
+                                <th scope="col"> Driver Status</th>
+                               
+                                <th scope="col" style="min-width:200px">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngIf="collection.length>0">
+                            <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                            itemsPerPage: limit,
+                            currentPage: page,
+                            totalItems: totalRec }; let ie = index">
+                            <td>
+                                {{ ((limit * (page - 1)) + ie+1) }}
+        
+                            </td>
+                                <td scope="row">{{i.name}}</td>
+                                  <!-- <td scope="row">{{i.driver_start_date}}
                                 </td>
-                                 
-                                  <td>
-                                      <a [routerLink]="['/theme/simpledrivers/view',{id :i?.id}]" title="View driver"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
-                                    <a [routerLink]="['/theme/simpledrivers/add',{id :i?.id}]" title="Edit driver"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
-                                    <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Block driver"> <i style="font-size:24px;color:#33E3FF" class="fa fa-check-circle "></i>&nbsp;</a> 
-                                    <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='inactive'" title="Unblock driver">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
-                                    <a (click)="openVerticallyCentered(poup,i)" title="Delete driver"> <i style="font-size:24px"
-                                        class="fa fa-trash-o"></i></a>
+                                <td>{{i.driver_end_date}}</td> -->
+                                <td> {{i.email}}
+                                </td>
+                                <td> {{i.contact_number}}
                                   </td>
-                                </tr>
-                              </tbody>
-                              <tbody *ngIf="collection.length==0">     
-                                <tr class="text-center">
-                                  <td colspan="7">No records found</td>
-                                </tr>
-                              </tbody>
-                            </table>
+                            
+                              <td  >free
+                            </td>
+                            <td  *ngIf="i.status=='inactive'" >Inactive
+                              </td>
+                               
+                                <td>
+                                    <a [routerLink]="['/theme/drivers/view',{id :i?.id}]" title="View driver"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
+                                  <a [routerLink]="['/theme/drivers/addDriver',{id :i?.id}]" title="Edit driver"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
+                                  <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Block driver"> <i style="font-size:24px" class="fa  fa-times-circle"></i>&nbsp;</a> 
+                                  <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='inactive'" title="Unblock driver">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
+                                  <a (click)="openVerticallyCentered(poup,i)" title="Delete driver"> <i style="font-size:24px"
+                                      class="fa fa-trash-o"></i></a>
+                                </td>
+                              </tr>
+                            </tbody>
+                            <tbody *ngIf="collection.length==0">
+                              <tr class="text-center">
+                                <td colspan="7">No records found</td>
+                              </tr>
+                            </tbody>
+                          </table>
                             <pagination-controls *ngIf="collection.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
                               (pageChange)="page = $event"></pagination-controls>
                           </div>

@@ -152,6 +152,7 @@ export class DriversComponent implements OnInit {
 
     return result;
 }
+Mystatus='active'
   loadBanners() {
     this.spinner.show();
     var start1 = '';
@@ -165,7 +166,7 @@ export class DriversComponent implements OnInit {
        var endDate=new Date(end1)
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
-      var url="admin/banner/banner-list?status="+this.loginForm.value.status+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&banner_type=1";
+      var url="admin/driver/list?status="+this.Mystatus+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&banner_type=1";
       this.api
       .getReqAuth(url)
       .subscribe(
@@ -176,6 +177,7 @@ export class DriversComponent implements OnInit {
   }
   success(res) {
     if (res.status == true) {
+      console.log(res)
       this.spinner.hide();
       this.collection = res.result.data;
       this.totalRec = res.result.globalCount;

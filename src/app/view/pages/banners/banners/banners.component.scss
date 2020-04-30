@@ -146,3 +146,34 @@ margin-top:0;
 }
 
 }
+  .my-margin{
+    margin-right: 32px;
+}
+
+
+.card-header{
+  padding-right:0!important;
+}
+
+.mr-top{
+  margin-top:0;
+}
+@media screen and(max-width:500px)
+{
+    // .my-margin{
+    //     margin-right: 0;
+    // }
+   
+}
+
+@media screen and(max-width:800px)
+{
+  .mr-top{
+    margin-top:20px;
+  }
+ 
+}
+
+.card-header{
+  padding-right:14px !important;
+}

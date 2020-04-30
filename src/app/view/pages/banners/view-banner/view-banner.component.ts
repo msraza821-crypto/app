@@ -23,6 +23,9 @@ export class ViewBannerComponent implements OnInit {
   url1 = ''; url: string = '';
   message: string = '';
   flag: boolean = false;
+  limit=10;
+  page=1;
+  totalRec=10;
   constructor(
     private _fb: FormBuilder,
     private _util: CommonUtil,
@@ -44,7 +47,7 @@ export class ViewBannerComponent implements OnInit {
 id:string=null;
 
 avilableOn;
-
+productList=[]
 
   ngOnInit() {
    
@@ -95,6 +98,8 @@ data:any={};
     this.flag=true
     this.getdiscount(this.data.discount_type)
   this.getAvailableOn(this.data.available_on)
+  this.productList=res.result.product_data
+  console.log('product',this.productList)
     }
     setTimeout(() => {
       /** spinner ends after 5 seconds */

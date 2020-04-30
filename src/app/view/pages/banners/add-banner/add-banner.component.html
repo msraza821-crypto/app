@@ -18,13 +18,13 @@
 
               <div class="form-group col-md-3">
                 <b for="inputEmail4">Banner Title</b> <br />
-                <input type="text" class="form-control"
-                  placeholder="Banner Title" [formControl]="title">
+                <input type="text" class="form-control" (keypress)="namePress($event)"
+                  placeholder="Banner Title " [formControl]="title">
                 <span class="error text-danger">{{_util.errorMessage(title,FORM_ERROR?.title)}}</span>
               </div>
               <div class="form-group col-md-3 ">
                 <b>Minimum Value</b>
-                <input type="text" class="form-control" 
+                <input type="text" class="form-control" (keypress)="keyPress($event)"
                   placeholder="Minimum Value" [formControl]="minimum_value">
                 <span class="error text-danger">{{_util.errorMessage(minimum_value,FORM_ERROR?.minimum_value)}}</span>
               </div>
@@ -33,7 +33,7 @@
                 <b>Discount Type</b>
                 <select class="form-control" placeholder="" [formControl]="discount_type"
                   (change)="changeDiscountType()">
-                  <option value="">Please select</option>
+                  <option value="">Please Select</option>
                   <option value="1">Flat </option>
                   <option value="2">% of Off</option>
                 </select>
@@ -45,7 +45,7 @@
               <b>Discount Value</b>
               <div class="form-group ">
 
-                <input type="text" class="form-control" placeholder="{{discountType}}"
+                <input type="text" class="form-control" (keypress)="keyPress($event)" placeholder="{{discountType}}"
                   [formControl]="discount_value">
                 <span class="error text-danger">
                   {{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
@@ -55,7 +55,7 @@
           <div class="col-md-3 float-left">
             <b> Select Available On</b>
             <select class="form-control" [formControl]="available_on" (change)="changeProduct()">
-              <option value="">Please select</option>
+              <option value="">Please Select</option>
               <option value="1">Brand</option>
               <option value="2">Product</option>
 
@@ -70,13 +70,13 @@
               <div class="col-md-3 float-left "  style="margin-bottom: 15px;">
                 <b>Select Start & Expiry Date</b>
                 <input type="text" ngxDaterangepickerMd class="form-control" (choosedDate)="choosedDate($event)"
-                  [formControl]="date" [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}" placeholder="Please select" />
+                  [formControl]="date" [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}" placeholder="Please Select" />
                 <span class="error text-danger">{{_util.errorMessage(date,FORM_ERROR?.date)}}</span>
               </div>
               <div class="col-md-3 float-left" >
                 <b>Select Display Order</b>
                 <select class="form-control" [formControl]="display_order">
-                  <option value="">Please select</option>
+                  <option value="">Please Select</option>
                   <option *ngFor="let order of displayOrder" value="{{order}}">{{order}}</option>
                 </select>
                 <span class="error text-danger">{{_util.errorMessage(display_order,FORM_ERROR?.display_order)}}</span>
@@ -87,7 +87,7 @@
               <div class="col-md-3 float-left" *ngIf="id!=null">
                 <b>Select Status</b>
                 <select class="form-control" [formControl]="status">
-                  <option value="">Please select</option>
+                  <option value="">Please Select</option>
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
                   <option value="trashed">Delete</option>
@@ -99,7 +99,7 @@
                 <b>Select Brand</b>
                 <div class="">
                   <div ngbDropdown class="d-inline-block">
-                    <button class="btn btn-outline-primary" id="dropdownForm1" type="button" ngbDropdownToggle>Please select
+                    <button class="btn btn-outline-primary" id="dropdownForm1" type="button" ngbDropdownToggle>Please Select
                       </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownForm1">
   
@@ -229,11 +229,7 @@
             <div class="row">
               <div class="col-12">
                 <!-- <img style="height:100px;width:100px;" [src]="url ? url : 'assets/img/avatars/default.png'" /> -->
-<<<<<<< HEAD
-                <img style="height:100px;width:100px;" [src]="url ? url : 'assets/img/avatars/default.png'"  alt="Snow"/>
-=======
-                <img style="height:100px;width:100px;" [src]="url ? url : 'assets/img/avatars/no.png'" />
->>>>>>> d547019c1a612cdf2fc8147824a0f31919fd3b73
+                <img style="height:100px;width:100px;" [src]="url ? url : 'assets/img/avatars/no.png'"  alt="Snow"/>
               </div>
             </div>
             <br>
@@ -264,7 +260,7 @@
               </div> -->
 
                 
-              <div class="col-sm-12 col-lg-12 mr-top">
+              <div class="col-sm-12 col-lg-12 mr-top" >
                 <div class="card text-white ">
                   <div class="card-body pb-0 ">
                     <table class="table table-striped table-response">
@@ -297,13 +293,16 @@
                           <a style="margin-left:20px;position: relative;bottom:10px;" class="tip">i<span>Discount can not be applied as there is already exiting offer on it:i</span></a>
                         </tr>
                       </tbody>
+
                       <tbody *ngIf="productList.length==0">
                         <tr class="text-center">
-                          <td colspan="10">No records found</td>
+                          <td colspan="6">No records found</td>
                         </tr>
                       </tbody>
                     </table>
-              
+                    <!-- <pagination-controls *ngIf="productList.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
+                      (pageChange)="page = $event"></pagination-controls>
+     -->
 
                   </div>
                 </div>
@@ -313,8 +312,8 @@
 
             </div>
 
-            <button *ngIf="this.id==null" type="submit" class="btn btn-success mr-top">Save</button>
-            <button type="button" (click)="update()" *ngIf="this.id!=null" class="btn btn-success mr-top">Save</button>
+            <button *ngIf="this.id==null" type="submit" class="btn btn-success mr-top">Save.</button>
+            <button type="button" (click)="update()" *ngIf="this.id!=null" class="btn btn-success mr-top">Save.</button>
 
 
           </form>

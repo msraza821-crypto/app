@@ -37,14 +37,10 @@ CONFIG = CONFIG;
     private router:Router
     
     ) {
-  //  this.spinner.show();
-  //   this.api.getReqAuthBrands("admin/product/brand-list").pipe().subscribe(res=>{
-  //     if(res)
-  //     {this.spinner.hide()
-  //       this.brands=res.result;
-      
-  //       console.log(this.brands)
+ 
       this.createForm()
+
+      this.driverForm.get('country_code').patchValue('+974')
      
     
       // }
@@ -59,10 +55,10 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
     this.driverForm=this.fb.group({
       name:['',[Validators.required,Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
       email:['',[Validators.required,Validators.pattern(Regex.email)]],
-      license:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_MIN_LENGTH),Validators.minLength(CONFIG.MOBILE_LENGTH)]],
+      license:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
       country_code:[''],
-      mobile:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_MIN_LENGTH),Validators.minLength(CONFIG.MOBILE_LENGTH)]],
-      plate_number:['',[Validators.required,Validators.maxLength(CONFIG.MIN_PLATE_NUMBER),Validators.minLength(CONFIG.MAX_PLAT_NUMBER)]],
+      mobile:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
+      plate_number:['',[Validators.required,Validators.maxLength(CONFIG.MAX_PLAT_NUMBER),Validators.minLength(CONFIG.MIN_PLATE_NUMBER)]],
       vehicle_type:['',[Validators.required]],
       address:['',[Validators.required]]
       
@@ -137,6 +133,8 @@ ngOnInit()
 
 this.id=param.id
 console.log(this.id)
+this.myPatchValue()
+
 
       }
     })
@@ -179,11 +177,49 @@ console.log(this.id)
   }
 
 
+  myPatchValue()
+  {
+    this.driverForm.get('name').patchValue('shabbir')
+    this.driverForm.get('email').patchValue('shabbir@gmail.com')
+    this.driverForm.get('mobile').patchValue('27376324472389')
+
+    this.driverForm.get('license').patchValue('123123432')
+    this.driverForm.get('plate_number').patchValue('1233322')
+    this.driverForm.get('vehicle_type').patchValue('2 Wheeler')
+    this.driverForm.get('address').patchValue('noida')
+
+
+  }
+
   
   onSubmit()
   {
     
-    this._util.markError(this.driverForm)
+
+     
+    if(this.driverForm.valid)
+    {
+          
+
+  
+    
+  this.api.postReqAuth("admin/driver/add-driver",this.getFormData()
+
+    ).subscribe(
+    res =>{
+      console.log(res)
+    }
+
+
+  );
+
+
+    }
+     this._util.markError(this.driverForm);
+
+
+    
+      
 
 }
 
@@ -245,4 +281,60 @@ numberPress(event: any) {
 
 }
 
+
+
+getFormData()
+{
+
+    
+    if(this.driverForm.valid)
+    {
+
+
+      let data={name:this.driverForm.value.name,
+        email:this.driverForm.value.email,contact_number:this.driverForm.value.mobile,
+        licence_number:this.driverForm.value.license,vehicle_type:this.driverForm.value.vehicle_type,
+        address:this.driverForm.value.address,plate_number:this.driverForm.value.plate_number}
+    
+  return data
+
+    }
+     this._util.markError(this.driverForm);
+
+
+}
+
+
+update()
+{
+   
+  console.log('updatwe')
+  if(this.driverForm.valid)
+  {
+
+
+    let data={name:this.driverForm.value.name,
+      email:this.driverForm.value.email,contact_number:this.driverForm.value.mobile,
+      licence_number:this.driverForm.value.license,vehicle_type:this.driverForm.value.vehicle_type,
+      address:this.driverForm.value.address,plate_number:this.driverForm.value.plate_number,
+    id:this.id}
+  
+
+  
+  
+    this.api
+    .putReqAuth("admin/driver/edit-driver", data).subscribe(
+      res => {
+        console.log(res)
+      },
+      
+    );
+  
+
+  }
+  else
+  this._util.markError(this.driverForm)
+
+
+}
 }
