@@ -8,16 +8,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpService, AppService } from 'src/app/service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-
 import { NgxSpinnerService } from 'ngx-spinner';
 
-
 @Component({
-  selector: "app-faqs",
-  templateUrl: "./faqs.component.html",
-  styleUrls: ["./faqs.component.css"]
+  selector: "app-discount",
+  templateUrl: "./discount.component.html",
+  styleUrls: ["./discount.component.css"]
 })
-export class FaqsComponent implements OnInit {
+export class DiscountComponent implements OnInit {
   collection = [];
   // pager object
   pager: any = {};
@@ -41,32 +39,32 @@ export class FaqsComponent implements OnInit {
     private router: Router,
     private _route: ActivatedRoute,
     private modalService: NgbModal,
-    private spinner:NgxSpinnerService,
     private api: HttpService,
+    private spinner: NgxSpinnerService,
     private _fb: FormBuilder,
-    private store: Store<any>,
     private _api:AppService,
+    private store: Store<any>,
   ) {
   }
   start = "";
   end = "";
   ngOnInit(): void {
     this.createForm();
-    this.loadFaqs();
+    this.loadBrands();
 
   }
-  add3Dots(string, limit)
-  {
-    var dots = "...";
-    if(string.length > limit)
-    {
-      // you can also use substr instead of substring
-      string = string.substring(0,limit) + dots;
-    }
-  
-      return string;
-  }
+  filterSelected(selectedValue) {
+    console.log('selected value= ' + selectedValue)
+    this.limit = selectedValue;
+    this.loadBrands();
 
+  }
+  filterSelectedStatus(selectedValue) {
+    console.log('selected value= ' + selectedValue)
+    this.loginForm.get('status').patchValue(selectedValue)
+    this.loadBrands();
+
+  }
   createForm() {
     this.loginForm = this._fb.group({
       search: [""],
@@ -79,6 +77,39 @@ export class FaqsComponent implements OnInit {
   }
   exportDataF() {
     this.exportData = 1;
+    var start1 = '';
+    var end1 = '';
+    //  console.log(this.loginForm.value)
+    if (this.loginForm.value.range) {
+      start1 = this.loginForm.value.range.startDate._d;
+      var startDate = new Date(start1)
+      start1 = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
+      end1 = this.loginForm.value.range.endDate._d;
+      var endDate = new Date(end1)
+      end1 = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
+    }
+    var url = "admin/product/list?search=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&fromDate=" + start1 + "&toDate=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=1";
+    this.api.getReqAuthExport(url).subscribe(
+      res => this.downloadFile(res),
+      err => this.error(err), () => (this.loader = false)
+    );
+  }
+
+
+  downloadFile(data: File) {
+    const blob = new Blob([data], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    if (navigator.msSaveOrOpenBlob) {
+      navigator.msSaveBlob(blob, 'Category.csv');
+    } else {
+      let a = document.createElement('a');
+      a.href = url;
+      a.download = 'products.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+    window.URL.revokeObjectURL(url);
   }
   get search(): FormControl {
     return this.loginForm.get("search") as FormControl;
@@ -89,12 +120,20 @@ export class FaqsComponent implements OnInit {
   get range(): FormControl {
     return this.loginForm.get("range") as FormControl;
   }
-  loadFaqs() {
+  loadBrands() {
     var start1 = '';
     var end1 = '';
+    this.spinner.show();
     //  console.log(this.loginForm.value)
-  this.spinner.show();
-     var url="admin/faqs/list?page="+this.page+"&limit="+this.limit;
+    if (this.loginForm.value.range) {
+      start1 = this.loginForm.value.range.startDate._d;
+      var startDate = new Date(start1)
+      start1 = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
+      end1 = this.loginForm.value.range.endDate._d;
+      var endDate = new Date(end1)
+      end1 = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
+    }
+    var url = "admin/product/list?search=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&fromDate=" + start1 + "&toDate=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=" + this.exportData;
     this.api
       .getReqAuth(url)
       .subscribe(
@@ -102,6 +141,15 @@ export class FaqsComponent implements OnInit {
         err => this.error(err),
         () => (this.loader = false)
       );
+  }
+  add3Dots(string, limit) {
+    var dots = "...";
+    if (string.length > limit) {
+      // you can also use substr instead of substring
+      string = string.substring(0, limit) + dots;
+    }
+
+    return string;
   }
   success(res) {
     setTimeout(() => {
@@ -131,12 +179,14 @@ export class FaqsComponent implements OnInit {
   onScroll() {
     const currentDataLength = this.page * this.limit;
     console.log(currentDataLength, this.totalRec);
-    this.loadFaqs();
+    this.loadBrands();
   }
   //initializing p to one
   p: number = 1;
   deletedId: string;
   statusData: string;
+  successMessage: string;
+  errorMessage: string;
   pageChanged(event) {
     console.log("pageChanged")
   }
@@ -149,28 +199,31 @@ export class FaqsComponent implements OnInit {
     console.log(event)
   }
   reset() {
-    this.createForm();
+    // this.createForm();
+    this.loginForm.get('name').patchValue('');
+    this.loginForm.get('range').patchValue('');
     this.selected = {};
     this.exportData = 0;
     this.start = "";
     this.end = "";
+    this.loadBrands();
   }
   filter() {
     console.log(this.loginForm.value)
-    this.loadFaqs();
+    this.loadBrands();
   }
   yes() {
     this.modalService.dismissAll();
     //var formData=new FormData();
     //   formData.append('id',this.deletedId)
     this.api
-      .putReqAuth("admin/faqs/delete", { id: this.deletedId }).subscribe(
+      .putReqAuth("admin/product/update-status", { status: 'trashed', id: this.deletedId }).subscribe(
         res => this.successdelete(res),
         err => this.error(err),
         () => (this.loader = false)
       );
   }
-  
+
   yesStatus() {
     if (this.statusData == 'Active') {
       this.statusData = "Inactive";
@@ -179,15 +232,13 @@ export class FaqsComponent implements OnInit {
     }
     this.modalService.dismissAll();
     this.api
-      .putReqAuth("admin/faqs/status", { id: this.deletedId, status: this.statusData })
+      .putReqAuth("admin/product/update-status", { id: this.deletedId, status: this.statusData })
       .subscribe(
         res => this.successStatus(res),
         err => this.error(err),
         () => (this.loader = false)
       );
   }
-  successMessage: string;
-  errorMessage: string;
   successStatus(res) {
     if (res.status == true) {
       this._api.showNotification( 'success', res.message );
@@ -196,7 +247,7 @@ export class FaqsComponent implements OnInit {
       this._api.showNotification( 'error', res.message );
    
     }
-  
+   
 
   }
   successdelete(res) {
@@ -206,9 +257,9 @@ export class FaqsComponent implements OnInit {
       this.ngOnInit();
     } else {
       this._api.showNotification( 'error', res.message );
+    
     }
 
 
   }
-
 }

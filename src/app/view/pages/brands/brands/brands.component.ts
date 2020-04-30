@@ -6,7 +6,7 @@ import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -43,6 +43,7 @@ export class BrandsComponent implements OnInit {
     private api: HttpService,
     private _fb: FormBuilder,
     private store: Store<any>,
+    private _api:AppService
   ) {
   }
   start = "";
@@ -271,31 +272,25 @@ export class BrandsComponent implements OnInit {
 
   successStatus(res) {
     if (res.status == true) {
-      this.successMessage = res.message;
+     
+      this._api.showNotification( 'success', res.message );
       this.ngOnInit();
     } else {
-      this.errorMessage = res.message;
+      this._api.showNotification( 'error', res.message );
    
-    }
-    setTimeout(() => {
-      this.errorMessage = "";
-      this.successMessage = "";
-    }, 3000);
+    }   
 
   }
   successdelete(res) {
     if (res.status == true) {
-      this.successMessage = res.message;
+      this._api.showNotification( 'success', res.message );
       this.page = 1;
       this.ngOnInit();
     } else {
-      this.errorMessage = res.message;
+      this._api.showNotification( 'error', res.message );
     
     }
-    setTimeout(() => {
-      this.errorMessage = "";
-      this.successMessage = "";
-    }, 3000);
+
 
   }
 }

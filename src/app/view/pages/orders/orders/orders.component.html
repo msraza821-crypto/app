@@ -6,19 +6,18 @@
           
             
             <div class="row ">
-            <div class="breadc col-md-6 float-left"> <a class="breada">Brands</a></div>    
+            <div class="breadc col-md-6 float-left"> <a class="breada">Orders</a></div>    
             <div class="col-md-6 float-left"> 
         <a (click)="exportDataF()"> <button type="button" style="margin:0px 19px -2px 0px;color:white;" class="ml-3 btn bg-dark  white float-right ml-1" > Export to
             CSV</button></a>
-          <a [routerLink]="['/theme/brands/add']"> <button type="button" style="margin-right: -11px"  class="btn btn-primary float-right ml-1">Add
-              Brand</button></a>
+         
               </div>
              </div>
           <hr />
          
           <div class="col-sm-12 col-lg-12" style="margin-left: -17px;">
             <div class="col-md-2 float-left">
-              <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Brand Name">
+              <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Order Name">
             </div>
             <div class="col-md-2 float-left">
               <select id="inputState" class="form-control" [formControl]="status">
@@ -51,7 +50,8 @@
         </div>
         <div class="card-body">
           <div class="col-sm-12 col-lg-12">
-             
+              <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
+              <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div>
             <div class="card text-white ">
               <div class="pb-0">
                 <table class="table table-striped">

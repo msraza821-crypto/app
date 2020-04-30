@@ -17,6 +17,7 @@ const routes: Routes = [
       { path: 'settings',canLoad:[ActivateGuard],  loadChildren: '../pages/settings/settings.module#SettingsModule' },
       { path: 'users',canLoad:[ActivateGuard], loadChildren: '../pages/users/users.module#UsersModule' },
       { path: 'brands',canLoad:[ActivateGuard], loadChildren: '../pages/brands/brands.module#BrandsModule' },
+      { path: 'orders',canLoad:[ActivateGuard], loadChildren: '../pages/orders/orders.module#OrdersModule' },
       { path: 'categories',canLoad:[ActivateGuard],  loadChildren: '../pages/categories/categories.module#CategoriesModule' },
       { path: 'cms',canLoad:[ActivateGuard], loadChildren: '../pages/cms/cms.module#CmsModule' },
       { path: 'faqs',canLoad:[ActivateGuard],loadChildren: '../pages/faqs/faqs.module#FaqsModule' },
@@ -24,7 +25,9 @@ const routes: Routes = [
       { path: 'products',canLoad:[ActivateGuard], loadChildren: '../pages/products/products.module#ProductsModule' },
       { path: 'banners',canLoad:[ActivateGuard], loadChildren: '../pages/banners/banners.module#BannersModule' },
       { path: 'simplebanners',canLoad:[ActivateGuard], loadChildren: '../pages/simplebanners/simplebanners.module#SimplebannersModule'},
+      { path: 'discount',canLoad:[ActivateGuard], loadChildren: '../pages/discount/discount.module#DiscountModule'},
       { path: 'drivers',canLoad:[ActivateGuard], loadChildren: '../pages/drivers/drivers.module#DriversModule'},
+
 
     
 

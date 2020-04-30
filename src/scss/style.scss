@@ -7,6 +7,10 @@
 // If you want to add something do it here
 @import "custom";
 
+/* Add application styles & imports to this file! */
+@import "~angular-notifier/styles";
+
+
 
 .sidebar .nav-link.active {
     color: #fff;

@@ -9,11 +9,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { rangeValidator } from 'src/app/validators/range.validator';
 import { ColorEvent } from 'ngx-color';
 @Component({
-  selector: "app-add-product",
-  templateUrl: "./add-product.component.html",
-  styleUrls: ["./add-product.component.css"]
+  selector: "app-add-discount",
+  templateUrl: "./add-discount.component.html",
+  styleUrls: ["./add-discount.component.css"]
 })
-export class AddProductComponent implements OnInit {
+export class AddDiscountComponent implements OnInit {
 
 
   loader = false;

@@ -6,7 +6,7 @@ import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -43,6 +43,7 @@ export class CmsComponent implements OnInit {
     private _route: ActivatedRoute,
     private modalService: NgbModal,
     private api: HttpService,
+    private _api:AppService,
     private _fb: FormBuilder,private spinner:NgxSpinnerService,
     private store: Store<any>,
   ) {
@@ -109,6 +110,7 @@ export class CmsComponent implements OnInit {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
+ this._api.showNotification( 'error', err );
   }
   sort(key) {
     this.key = key;

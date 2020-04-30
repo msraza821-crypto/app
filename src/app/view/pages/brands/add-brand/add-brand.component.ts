@@ -4,8 +4,9 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: "app-add-brand",
   templateUrl: "./add-brand.component.html",
@@ -26,6 +27,7 @@ export class AddBrandComponent implements OnInit {
     private api: HttpService,
     private spinner: NgxSpinnerService,
     private _route: ActivatedRoute,
+    private _api:AppService,
     private router: Router) {
 
   }
@@ -75,6 +77,7 @@ export class AddBrandComponent implements OnInit {
   }
   id: string = null;
   ngOnInit() {
+  
     this._route.params.subscribe(param => {
       if (param && param["id"]) {
         this.id = param["id"];
@@ -166,7 +169,7 @@ export class AddBrandComponent implements OnInit {
       this.choosefile = str[str.length - 1];
     }
     setTimeout(() => {
-      /** spinner ends after 5 seconds */
+     
       this.spinner.hide();
     }, 1000);
 
@@ -224,33 +227,24 @@ export class AddBrandComponent implements OnInit {
   errorMessage: string;
   successMessage: string;
   success(res) {
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
+    setTimeout(() => {     
       this.spinner.hide();
     }, 1000);
     if (res.status == true) {
-       this.successMessage=res.message;
-      setTimeout(() => {
-        this.errorMessage = "";
-        this.successMessage = "";
+       this._api.showNotification( 'success', res.message );     
         this.router.navigate(['theme/brands'])
-      }, 3000);
     } else {
       this._util.markError(this.loginForm);
-      this.errorMessage = res.message;
-      setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.errorMessage = "";
-      }, 3000);
+      this._api.showNotification( 'error', res.message );
     }
 
   }
   error(res) {
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
+    setTimeout(() => {     
       this.spinner.hide();
     }, 1000);
-    this._util.markError(res.message);
+    this._api.showNotification( 'error', res.message );
+    
   }
 
 }

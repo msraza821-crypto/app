@@ -4,7 +4,7 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
@@ -29,6 +29,7 @@ export class ViewUserComponent implements OnInit {
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     private _route: ActivatedRoute,
+    private _api:AppService,
     private router: Router) {
   }
 
@@ -87,30 +88,24 @@ export class ViewUserComponent implements OnInit {
   successMessage:string = "";
   successStatus(res) {
     if (res.status == true) {
-      this.successMessage = res.message;
+      this._api.showNotification( 'success', res.message );
       this.viewUser();
     } else {
-      this.errorMessage = res.message;
+      this._api.showNotification( 'error', res.message );
    
     }
-    setTimeout(() => {
-      this.errorMessage = "";
-      this.successMessage = "";
-    }, 3000);
+ 
 
   }
   successdelete(res) {
     if (res.status == true) {
-      this.successMessage = res.message;
+      this._api.showNotification( 'success', res.message );
       this.router.navigate(['/theme/users'])
     } else {
-      this.errorMessage = res.message;
-    
+     
+      this._api.showNotification( 'error', res.message );
     }
-    setTimeout(() => {
-      this.errorMessage = "";
-      this.successMessage = "";
-    }, 3000);
+
 
   }
 
@@ -145,7 +140,7 @@ data:any={};
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
-    this._util.markError(res.message);
+    this._api.showNotification( 'error', res.message );
   }
 
 }

@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -39,6 +39,7 @@ export class CategoriesComponent implements OnInit {
     private modalService: NgbModal,
     private spinner:NgxSpinnerService,
     private store: Store<any>,
+    private _api:AppService
   ) {
   }
    add3Dots(string, limit)
@@ -102,6 +103,7 @@ export class CategoriesComponent implements OnInit {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
+    this._api.showNotification( 'error', err );
   }
   sort(key) {
     this.key = key;
@@ -184,31 +186,25 @@ export class CategoriesComponent implements OnInit {
   errorMessage: string;
   successStatus(res) {
     if (res.status == true) {
-      this.successMessage = res.message;
+      this._api.showNotification( 'success', res.message );
       this.ngOnInit();
     } else {
-      this.errorMessage = res.message;
+      this._api.showNotification( 'error', res.message );
    
     }
-    setTimeout(() => {
-      this.errorMessage = "";
-      this.successMessage = "";
-    }, 3000);
+   
 
   }
   successdelete(res) {
     if (res.status == true) {
-      this.successMessage = res.message;
+      this._api.showNotification( 'success', res.message );
       this.page = 1;
       this.ngOnInit();
     } else {
-      this.errorMessage = res.message;
+      this._api.showNotification( 'error', res.message );
     
     }
-    setTimeout(() => {
-      this.errorMessage = "";
-      this.successMessage = "";
-    }, 3000);
+
 
   }
 }

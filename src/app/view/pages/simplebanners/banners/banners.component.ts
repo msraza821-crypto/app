@@ -11,7 +11,7 @@ import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -47,6 +47,7 @@ export class BannersComponent implements OnInit {
     private spinner:NgxSpinnerService,
     private api: HttpService,
     private _fb: FormBuilder,
+    private _api:AppService,
     private store: Store<any>,
   ) {
   }
@@ -265,31 +266,25 @@ export class BannersComponent implements OnInit {
   errorMessage:string="";
   successStatus(res) {
     if (res.status == true) {
-      this.successMessage = res.message;
+      this._api.showNotification( 'success', res.message );
       this.ngOnInit();
     } else {
-      this.errorMessage = res.message;
+      this._api.showNotification( 'error', res.message );
    
     }
-    setTimeout(() => {
-      this.errorMessage = "";
-      this.successMessage = "";
-    }, 3000);
+   
 
   }
   successdelete(res) {
     if (res.status == true) {
-      this.successMessage = res.message;
+      this._api.showNotification( 'success', res.message );
       this.page = 1;
       this.ngOnInit();
     } else {
-      this.errorMessage = res.message;
+      this._api.showNotification( 'error', res.message );
     
     }
-    setTimeout(() => {
-      this.errorMessage = "";
-      this.successMessage = "";
-    }, 3000);
+   
 
   }
 }

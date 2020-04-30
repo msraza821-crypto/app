@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl,FormGroup,FormArray,FormBuilder,Validators} from  "@angular/forms";
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -40,7 +40,8 @@ showPage=false;
     private api:HttpService,
     private spinner:NgxSpinnerService,
     private route:ActivatedRoute,
-    private router:Router
+    private router:Router,
+    private _api:AppService
     
     ) {
    this.spinner.show();
@@ -263,20 +264,12 @@ this.viewBanner()
         this.spinner.hide();
       }, 1000);
       if (res.status == true) {
-        this.successMessage = res.message;
-        setTimeout(() => {
-          this.errorMessage = "";
-          this.successMessage = "";
+        this._api.showNotification( 'success', res.message );
           this.router.navigate(['theme/simplebanners'])
-        }, 3000);
+       
       } else {
         this._util.markError(this.bannerForm);
-        this.errorMessage = res.message;
-        setTimeout(() => {
-          /** spinner ends after 5 seconds */
-          this.errorMessage = "";
-        }, 3000);
-  
+        this._api.showNotification( 'error', res.message );
       }
   
     }
@@ -430,7 +423,8 @@ error(res){
     /** spinner ends after 5 seconds */
     this.spinner.hide();
   }, 1000);
-  this._util.markError(res.message);
+
+  this._api.showNotification( 'error', res.message );
 }
 
 update()

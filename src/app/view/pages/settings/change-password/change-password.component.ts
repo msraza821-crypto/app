@@ -4,7 +4,7 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { Router } from '@angular/router';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: "app-change-password",
@@ -25,6 +25,7 @@ export class ChangePasswordComponent implements OnInit {
     private api:HttpService,    
     private _util: CommonUtil,
     private spinner: NgxSpinnerService,
+    private _api:AppService,
     private router: Router) {
 
 
@@ -123,17 +124,11 @@ export class ChangePasswordComponent implements OnInit {
       this.spinner.hide();
     }, 1000);
     if (res.status == true) {
-      this.successMessage=res.message;
+      this._api.showNotification( 'success', res.message );
      this.createForm();
-      setTimeout(() => {
-        this.errorMessage = "";
-        this.successMessage="";
-      }, 5000);
+
     } else {
-      this.errorMessage = res.message;
-      setTimeout(() => {
-        this.errorMessage = "";
-      }, 5000);
+      this._api.showNotification( 'error', res.message );
     }
   }
   error(res: any) {
@@ -141,9 +136,6 @@ export class ChangePasswordComponent implements OnInit {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
-    this.errorMessage = res.message;
-    setTimeout(() => {
-      this.errorMessage = "";
-    }, 5000);
+    this._api.showNotification( 'error', res.message );
   }
 }
