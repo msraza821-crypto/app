@@ -146,7 +146,7 @@
                   <aside class="col-sm-12 border-right">
               <article class="gallery-wrap"> 
               <div class="img-big-wrap">
-                <div> <img  [src]="data.image?data.image:'assets/img/avatars/default.png'"></div>
+                <div> <img  [src]="data.image?data.image:'assets/img/avatars/no.png'"></div>
               </div> <!-- slider-Banner.// -->
               <div class="img-small-wrap">
                 <div class="item-gallery" *ngFor="let Banner_image of data.BannerMedia"> <img [src]="Banner_image.media_url"> </div>
@@ -203,11 +203,11 @@
                               </div>
                               <div class="col-md-6">
                                  <label class="float-left"> <b >Discount Type: </b></label>
-                                  <p>{{data.sub_category_name}}</p>
+                                  <p>{{discountType}}</p>
                                 </div>
                                 <div class="col-md-6">
                                    <label class="float-left"> <b >Dicount Value : </b></label>
-                                    <p>{{data.discount_value}}</p>
+                                    <p>{{data.discount_value}} <span *ngIf="data.discount_type==2">%</span></p>
                                   </div>
                                   <div class="col-md-6">
                                       <label class="float-left"> <b >Minimun Value : </b></label>
@@ -221,10 +221,7 @@
                                         <label class="float-left"> <b >Available On : </b></label>
                                          <p> {{avilableOn}}</p>
                                        </div>
-                                       <div class="col-md-6"  *ngIf="data.available_on==2" >
-                                          <label class="float-left"> <b > Available On : </b></label>
-                                           <p>{{data.Banner_size}}</p>
-                                         </div>
+                                       
                                          <div class="col-md-6"  *ngIf="data.available_on==2">
                                             <label class="float-left" > <b >Category </b></label>
                                              <p>{{data.category}}</p>

@@ -251,7 +251,7 @@ Mystatus='active'
     //var formData=new FormData();
     //   formData.append('id',this.deletedId)
     this.api
-      .putReqAuth("admin/banner/update-status", { id: this.deletedId , status: 'trashed'}).subscribe(
+      .putReqAuth("admin/driver/change-status", { id: this.deletedId , status: 'trashed'}).subscribe(
         res => this.successdelete(res),
         err => this.error(err),
         () => (this.loader = false)
@@ -266,7 +266,7 @@ Mystatus='active'
     }
     this.modalService.dismissAll();
     this.api
-      .putReqAuth("admin/banner/update-status", { id: this.deletedId, status: this.statusData })
+      .putReqAuth("admin/driver/change-status", { id: this.deletedId, status: this.statusData })
       .subscribe(
         res => this.successStatus(res),
         err => this.error(err),
