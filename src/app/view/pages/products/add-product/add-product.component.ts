@@ -436,7 +436,7 @@ export class AddProductComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-
+  formData:any=[];
   successView(res) {
     if (res.status == true) {
       var data = res.result;
@@ -456,6 +456,14 @@ export class AddProductComponent implements OnInit {
       //  this.loginForm.get
     }
     this.state=data['product_colour'];
+    if(this.id){
+    for (var i = 0; i < data.productMedia.length; i++) {
+      if(data.productMedia[i].media_url){
+        this.urlData.push(data.productMedia[i].media_url);
+      }
+    }
+  }
+    console.log(data.productMedia);
     if(data['discount_type']==2){
       this.placeHolderText="Discount Price";
     }else{

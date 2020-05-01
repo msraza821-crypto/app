@@ -290,7 +290,7 @@
                         (change)="onFilterChange($event,product.id)"  [checked]="getProductChecked(product.id)">
                         <!-- <a href="#" title="Discount can not be applied as there is already exiting offer on it:i"></a>
                           </td> -->
-                          <a style="margin-left:20px;position: relative;bottom:10px;" class="tip">i<span>Discount can not be applied as there is already exiting offer on it:i</span></a>
+                         <span title="Discount can not be applied as there is already exiting offer on it">i</span>
                         </tr>
                       </tbody>
 
@@ -312,8 +312,8 @@
 
             </div>
 
-            <button *ngIf="this.id==null" type="submit" class="btn btn-success mr-top">Save.</button>
-            <button type="button" (click)="update()" *ngIf="this.id!=null" class="btn btn-success mr-top">Save.</button>
+            <button *ngIf="this.id==null" type="submit" class="btn btn-success mr-top">Save</button>
+            <button type="button" (click)="update()" *ngIf="this.id!=null" class="btn btn-success mr-top">Save</button>
 
 
           </form>
