@@ -258,15 +258,22 @@ Mystatus='active'
       );
   }
 
-  yesStatus() {
-    if (this.statusData == 'active') {
-      this.statusData = "inactive";
-    } else {
-      this.statusData = "active";
-    }
+  yesActive() {
+   
     this.modalService.dismissAll();
     this.api
-      .putReqAuth("admin/driver/change-status", { id: this.deletedId, status: this.statusData })
+      .putReqAuth("admin/driver/change-status", { id: this.deletedId, status:'active' })
+      .subscribe(
+        res => this.successStatus(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
+  }
+  yesInactive() {
+   
+    this.modalService.dismissAll();
+    this.api
+      .putReqAuth("admin/driver/change-status", { id: this.deletedId, status:'inactive' })
       .subscribe(
         res => this.successStatus(res),
         err => this.error(err),
@@ -277,10 +284,11 @@ Mystatus='active'
   errorMessage:string="";
   successStatus(res) {
     if (res.status == true) {
-      this.successMessage = res.message;
+      this._api.showNotification( 'success', res.message );  
       this.ngOnInit();
     } else {
-      this.errorMessage = res.message;
+      this._api.showNotification( 'error', res.message );  
+      
    
     }
     setTimeout(() => {

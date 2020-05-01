@@ -175,7 +175,7 @@
                                 <td>
                                     <a [routerLink]="['/theme/drivers/view',{id :i?.id}]" title="View driver"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
                                   <a [routerLink]="['/theme/drivers/addDriver',{id :i?.id}]" title="Edit driver"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
-                                  <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Block driver"> <i style="font-size:24px" class="fa  fa-times-circle"></i>&nbsp;</a> 
+                                  <!-- <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Block driver"> <i style="font-size:24px" class="fa  fa-times-circle"></i>&nbsp;</a>  -->
                                   <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='inactive'" title="Unblock driver">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
                                   <a (click)="openVerticallyCentered(poup,i)" title="Delete driver"> <i style="font-size:24px"
                                       class="fa fa-trash-o"></i></a>
@@ -184,7 +184,7 @@
                             </tbody>
                             <tbody *ngIf="collection.length==0">
                               <tr class="text-center">
-                                <td colspan="7">No records found</td>
+                                <td colspan="7">No records found</td>s
                               </tr>
                             </tbody>
                           </table>
@@ -250,7 +250,7 @@
           <div class="row mt-3">
             <div class="col-md-12 text-center">
               <button type="button" class="ml-3 btn bg-dark white" (click)="modal.close('Close click')">No</button>
-              <button type="button" class="ml-3 btn bg-dark white" (click)="yesStatus()">Yes</button>
+              <button type="button" class="ml-3 btn bg-dark white" (click)=" yesActive()">Yes</button>
             </div>
           </div>
         </div>
@@ -274,7 +274,7 @@
             <div class="row mt-3">
               <div class="col-md-12 text-center">
                 <button type="button" class="ml-3 ml-3 btn bg-dark  white white" (click)="modal.close('Close click')">No</button>
-                <button type="button" class="ml-3 btn bg-dark white" (click)="yesStatus()">Yes</button>
+                <button type="button" class="ml-3 btn bg-dark white" (click)=" yesInactive()">Yes</button>
               </div>
             </div>
           </div>
