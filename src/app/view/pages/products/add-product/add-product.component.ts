@@ -21,7 +21,7 @@ export class AddProductComponent implements OnInit {
   loginForm: FormGroup;
   url1 = ''; url: string = '';
   message: string = '';
-  state:any;
+  state;
   keyValue: boolean = false;
   constructor(
     private _fb: FormBuilder,
@@ -29,13 +29,15 @@ export class AddProductComponent implements OnInit {
     private api: HttpService,
     private spinner: NgxSpinnerService,
     private _route: ActivatedRoute,
-    private _api:AppService,
+    private _api: AppService,
     private router: Router) {
   }
-  handleChange($event: ColorEvent) {
-    var hex=$event.color.hex;
-    this.state=hex;
-   this.loginForm.get('product_colour').patchValue(hex);
+  handleChange(event: ColorEvent) {
+    if (event.color.hex) {
+      var hex = event.color.hex;
+      this.state = hex;
+      this.loginForm.get('product_colour').patchValue(hex);
+    }
   }
   FORM_ERROR = {
     product_name_en: {
@@ -114,13 +116,24 @@ export class AddProductComponent implements OnInit {
 
     },
     discount_range: {
-      required: ERROR_MESSAGES.DISCOUNT_REQUIRED,
+      required: ERROR_MESSAGES.DISCOUNT_RANGE_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
 
   };
+  onKeydown(event) {
+    this.loginForm.get('discount_range').patchValue('');
+    this.loginForm.get('discount_value').patchValue('');
+    this.loginForm.get('discount_type').patchValue('');
+    this.loginForm.get('discount_value').setValidators([Validators.pattern(Regex.phoneNumbers)]);
+    this.loginForm.get('discount_value').updateValueAndValidity();
+    this.loginForm.get('discount_type').setValidators([]);
+    this.loginForm.get('discount_type').updateValueAndValidity();
+    this.loginForm.get('discount_range').setValidators([]);
+    this.loginForm.get('discount_range').updateValueAndValidity();
+  }
 
   createForm() {
     this.loginForm = this._fb.group({
@@ -130,16 +143,16 @@ export class AddProductComponent implements OnInit {
       product_description_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       product_size: ["", [Validators.required]],
       product_prize: ["", [Validators.required, rangeValidator(0, 10000)]],
-      product_colour: ["", [Validators.required, Validators.pattern(Regex.spaces)]],
+      product_colour: ["", [Validators.required]],
       brand_id: ["", [Validators.required]],
       quantity: ["", [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
       category_id: ["", [Validators.required]],
       subCategory: ["", [Validators.required]],
       childCategory: ["", [Validators.required]],
-      discount_type: ["", [Validators.required]],
-      discount_value: ["", [Validators.required, rangeValidator(0, 10000), Validators.pattern(Regex.phoneNumbers)]],
-      discount_range: ["", [Validators.required]],
-      statusKey:[""]
+      discount_type: [""],
+      discount_value: ["", [Validators.pattern(Regex.phoneNumbers)]],
+      discount_range: [""],
+      statusKey: [""]
     });
   }
   rtl(element) {
@@ -147,11 +160,23 @@ export class AddProductComponent implements OnInit {
       element.setSelectionRange(0, 0);
     }
   }
+  choosedDate(event) {
+    console.log(event)
+    if (event.startDate._d && event.endDate._d) {
+      this.loginForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 10000), Validators.pattern(Regex.phoneNumbers)]);
+      this.loginForm.get('discount_value').updateValueAndValidity();
+      this.loginForm.get('discount_type').setValidators([Validators.required]);
+      this.loginForm.get('discount_type').updateValueAndValidity();
+      this.loginForm.get('discount_range').setValidators([Validators.required]);
+      this.loginForm.get('discount_range').updateValueAndValidity();
+    }
+  }
   id: string = null;
   ngOnInit() {
     this.productSize();
     this.productSiz();
     this.productCategory();
+    this.state = "";
     this._route.params.subscribe(param => {
       if (param && param["id"]) {
         this.id = param["id"];
@@ -161,13 +186,13 @@ export class AddProductComponent implements OnInit {
     this._route.params.subscribe(param => {
       if (param && param["product_id"]) {
         this.product_id = param["product_id"];
-        this.id="";
+        this.id = "";
         this.viewBrand1();
       }
     })
     this.createForm();
   }
-  product_id:any;
+  product_id: any;
 
 
   productSiz() {
@@ -436,7 +461,7 @@ export class AddProductComponent implements OnInit {
         () => (this.loader = false)
       );
   }
-  formData:any=[];
+  formData: any = [];
   successView(res) {
     if (res.status == true) {
       var data = res.result;
@@ -451,25 +476,25 @@ export class AddProductComponent implements OnInit {
 
       this.loginForm.get('subCategory').patchValue(data['sub_category']);
       this.loginForm.get('childCategory').patchValue(data['child_category']);
-      this.loginForm.get('discount_range').patchValue({ startDate:{_d: data['discount_start_date']}, endDate:{_d: data['discount_end_date'] }})
+      this.loginForm.get('discount_range').patchValue({ startDate: { _d: data['discount_start_date'] }, endDate: { _d: data['discount_end_date'] } })
       this.loginForm.get('statusKey').patchValue(data['status'])
       //  this.loginForm.get
     }
-    this.state=data['product_colour'];
-    if(this.id){
-    for (var i = 0; i < data.productMedia.length; i++) {
-      if(data.productMedia[i].media_url){
-        this.urlData.push(data.productMedia[i].media_url);
+    this.state = data['product_colour'];
+    if (this.id) {
+      for (var i = 0; i < data.productMedia.length; i++) {
+        if (data.productMedia[i].media_url) {
+          this.urlData.push(data.productMedia[i].media_url);
+        }
       }
     }
-  }
     console.log(data.productMedia);
-    if(data['discount_type']==2){
-      this.placeHolderText="Discount Price";
-    }else{
-      this.placeHolderText="Percentage Discount";
+    if (data['discount_type'] == 2) {
+      this.placeHolderText = "Discount Price";
+    } else {
+      this.placeHolderText = "Percentage Discount";
     }
-   
+
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
@@ -486,13 +511,33 @@ export class AddProductComponent implements OnInit {
     if (event.target.value == 2) {
       this.loginForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 100)]);
       this.loginForm.get('discount_value').updateValueAndValidity();
+      this.loginForm.get('discount_type').setValidators([Validators.required]);
+      this.loginForm.get('discount_type').updateValueAndValidity();
+      this.loginForm.get('discount_range').setValidators([Validators.required]);
+      this.loginForm.get('discount_range').updateValueAndValidity();
+
       this.placeHolderText = "Percentage Discount";
       this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
-    } else {
+    } else if (event.target.value == 1) {
       this.loginForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 10000)]);
       this.loginForm.get('discount_value').updateValueAndValidity();
+      this.loginForm.get('discount_type').setValidators([Validators.required]);
+      this.loginForm.get('discount_type').updateValueAndValidity();
+      this.loginForm.get('discount_range').setValidators([Validators.required]);
+      this.loginForm.get('discount_range').updateValueAndValidity();
       this.placeHolderText = "Discount Price";
       this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE;
+    } else {
+      this.placeHolderText = "Discount Price";
+      this.loginForm.get('discount_range').patchValue('');
+      this.loginForm.get('discount_value').patchValue('');
+      this.loginForm.get('discount_type').patchValue('');
+      this.loginForm.get('discount_value').setValidators([Validators.pattern(Regex.phoneNumbers)]);
+      this.loginForm.get('discount_value').updateValueAndValidity();
+      this.loginForm.get('discount_type').setValidators([]);
+      this.loginForm.get('discount_type').updateValueAndValidity();
+      this.loginForm.get('discount_range').setValidators([]);
+      this.loginForm.get('discount_range').updateValueAndValidity();
     }
 
   }
@@ -533,7 +578,7 @@ export class AddProductComponent implements OnInit {
       formData.append('discount_value', this.loginForm.value.discount_value);
       formData.append('discount_start_date', start1);
       formData.append('discount_end_date', end1);
-      formData.append('status',  this.loginForm.value.statusKey);
+      formData.append('status', this.loginForm.value.statusKey);
 
       formData.append('product_image', this.url1);
       for (var x = 0; x < this.urlForm.length; x++) {
@@ -607,8 +652,8 @@ export class AddProductComponent implements OnInit {
     }
   }
   successMessage: string;
-  changeComplete(event){
-console.log(event)
+  changeComplete(event) {
+    console.log(event)
   }
   success(res) {
     setTimeout(() => {
@@ -616,12 +661,12 @@ console.log(event)
       this.spinner.hide();
     }, 1000);
     if (res.status == true) {
-      this._api.showNotification( 'success', res.message );
-        this.router.navigate(['theme/products'])
-  
+      this._api.showNotification('success', res.message);
+      this.router.navigate(['theme/products'])
+
     } else {
       this._util.markError(this.loginForm);
-      this._api.showNotification( 'error', res.message );
+      this._api.showNotification('error', res.message);
     }
 
   }
@@ -631,7 +676,7 @@ console.log(event)
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
-    this._api.showNotification( 'error', res.message );
+    this._api.showNotification('error', res.message);
   }
 
 }

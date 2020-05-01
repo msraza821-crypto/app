@@ -146,7 +146,8 @@ export const ERROR_MESSAGES = {
     D_TYPE:'Discount type is required',
     D_PRICE:'Discount price is required',
     TYPE_ASSIGN:'Assignment is required',
-    RANGE_PERCENTAGE:"Enter vaild percentage range 0 to 100"
+    RANGE_PERCENTAGE:"Enter vaild percentage range 0 to 100",
+    DISCOUNT_RANGE_REQUIRED:'Please select valid date range'
 
 
 
