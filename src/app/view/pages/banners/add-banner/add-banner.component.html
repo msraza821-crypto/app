@@ -84,13 +84,13 @@
              
 
 
-              <div class="col-md-3 float-left" *ngIf="id!=null">
+              <div class="col-md-3 float-left" >
                 <b>Select Status</b>
                 <select class="form-control" [formControl]="status">
                   <option value="">Please Select</option>
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
-                  <option value="trashed">Delete</option>
+                  <!-- <option value="trashed">Delete</option> -->
                 </select>
                 <span class="error text-danger">{{_util.errorMessage(display_order,FORM_ERROR?.display_order)}}</span>
               </div>

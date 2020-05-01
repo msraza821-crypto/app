@@ -473,7 +473,7 @@ getFormData()
   {
     if(this.bannerForm.value.title!=''&& this.bannerForm.value.date!=''&&
     this.bannerForm.value.display_order!='' && this.bannerForm.value.minimum_value!='' && this.bannerForm.value.discount_type!=''
-    &&this.bannerForm.value.minimum_value!='')
+    &&this.bannerForm.value.minimum_value!=''&& this.selectedValue.length!=0)
       {
         let mydate=this.getCurrentDate()
     
@@ -497,7 +497,7 @@ getFormData()
         formData.append('products',JSON.stringify(this.selectedProduct))
         formData.append('banner_start_date',start1)
         formData.append('banner_end_date',end1)
-        if(this.id!=null)
+      
         formData.append('status',this.bannerForm.value.status)
       
         
@@ -516,6 +516,11 @@ getFormData()
       return formData
     
       }
+      else{
+        if(this.selectedValue.length==0)
+        this._api.showNotification( 'error', "Please Select Atleast One Brand" );
+      this._util.markError(this.bannerForm)
+    }
     }
     if(this.bannerForm.valid)
     {
@@ -542,7 +547,7 @@ getFormData()
     formData.append('banner_start_date',start1)
     formData.append('banner_end_date',end1)
     formData.append('child_category',this.bannerForm.value.child_category)
-    if(this.id!=null)
+    
     formData.append('status',this.bannerForm.value.status)
   
     
@@ -564,8 +569,10 @@ getFormData()
 
     onSubmit()
   {
-    if(this.bannerForm.valid){
+    
     var formData=this.getFormData()
+    console.log('length',this.getFormData.length)
+    if(formData!=null){
       this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
         res =>this.success(res),
         err => this.error(err),
@@ -574,9 +581,7 @@ getFormData()
 
       );
     
-      }else{
-        this._util.markError(this.bannerForm);
-      }
+    }
     
 
     }
@@ -789,7 +794,7 @@ getFormDataForEdit()
   {
     if(this.bannerForm.value.title!=''&& this.bannerForm.value.date!=''&&
     this.bannerForm.value.display_order!='' && this.bannerForm.value.minimum_value!='' && this.bannerForm.value.discount_type!=''
-    &&this.bannerForm.value.minimum_value!='')
+    &&this.bannerForm.value.minimum_value!=''&&this.selectedValue.length!=0)
       {
         let mydate=this.getCurrentDate()
     
@@ -833,6 +838,12 @@ getFormDataForEdit()
       return formData
     
       }
+      else{
+        if(this.selectedValue.length==0)
+        this._api.showNotification( 'error', "Please Select Atleast One Brand" );
+      this._util.markError(this.bannerForm)
+      return 
+    }
     }
     if(this.bannerForm.valid)
     {
@@ -876,10 +887,10 @@ getFormDataForEdit()
 
 update()
 {
-if(this.bannerForm.valid){
   var formData=this.getFormDataForEdit()
   
-  
+  if(formData!=null)
+  {
   this.api
   .putReqAuth("admin/banner/edit-banner", formData).subscribe(
     res => {
@@ -891,6 +902,7 @@ if(this.bannerForm.valid){
 }else{
   this._util.markError(this.bannerForm);
 }
+
 
 }
 }
