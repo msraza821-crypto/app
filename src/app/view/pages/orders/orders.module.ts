@@ -6,12 +6,14 @@ import { OrdersComponent } from './orders/orders.component';
 import { SharedModule } from '../shared/shared.module';
 import { LoaderButtonComponent } from '../shared/loader-button/loader-button.component';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
-import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
+import { NgxPaginationModule } from 'ngx-pagination';
+import { OrderViewComponent } from './orders/order-view/order-view.component'; // <-- import the module
 const pageRoutes: Routes = [
 
   {
     path: '', canActivate: [], data: { title: 'Orders' },
     children: [{ path: '', canActivate: [], data:{title:''},component: OrdersComponent },
+    { path:'view',canActivate:[],data:{title: "View"}, component:OrderViewComponent}
   ]
   }
 ];
@@ -28,7 +30,7 @@ const pageRoutes: Routes = [
     RouterModule.forChild(pageRoutes),
 
   ],
-  declarations: [OrdersComponent],
+  declarations: [OrdersComponent, OrderViewComponent],
   entryComponents: []
 })
 export class OrdersModule { }

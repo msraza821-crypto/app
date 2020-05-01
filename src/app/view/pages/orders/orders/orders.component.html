@@ -23,7 +23,11 @@
               <select id="inputState" class="form-control" [formControl]="status">
                 <option value="">All</option>
              
-                <option value="inactive">Inactive</option>   <option value="active">Active</option>
+                <option value="pending">Pending</option> 
+                  <option value="approved">Approved</option>
+                  <option value="approved">Delivered</option>
+                  <option value="approved">Rejected</option>
+                  <option value="approved">Cancelled</option>
               </select>
             </div>
             <div class="col-md-2 float-left">               
@@ -58,12 +62,12 @@
                   <thead>
                     <tr>
                         <th scope="col">S. No.</th>
-                      <th scope="col">Name(En)</th>
-                      <th scope="col">Name(Ar)</th>
+                      <th scope="col">User Details</th>
+                      <th scope="col">Order Rate</th>
                       <!-- <th scope="col">Description(En)</th>
                       <th scope="col">Description(Ar)</th> -->
-                      <th scope="col">Created at</th>
-                      <th scope="col">Status</th>
+                      <th scope="col">Delivered</th>
+                      <th scope="col">Order Id</th>
                      
                       <th scope="col">Actions</th>
                     </tr>
@@ -96,12 +100,12 @@
                     </td>
                      
                       <td>
-                          <a [routerLink]="['/theme/brands/view',{id :i?.id}]" title="View Brand"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
-                        <a [routerLink]="['/theme/brands/add',{id :i?.id}]" title="Edit Brand"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
-                        <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'" title="Block Brand"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
-                        <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
-                        <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px"
-                            class="fa fa-trash-o"></i></a>
+                          <a [routerLink]="['/theme/orders/view',{id :i?.id}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
+                        <a  title="Accept Order" class="btn btn-secondary">Accept</a>&nbsp;                      
+                        <a (click)="openVerticallyCentered(poup2,i)" title="Reject Order" class="btn btn-danger">Reject</a> 
+                        <!-- <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
+                        <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px" -->
+                            <!-- class="fa fa-trash-o"></i></a> -->
                       </td>
                     </tr>
                   </tbody>
@@ -180,11 +184,19 @@
   <ng-template #poup2 let-modal>
       <!----- Header  ------>
       <section id="modal-header">
-        <h5 class="p-3 primary-color-bg bg-dark text-center">Inactive Brand</h5>
+        <h5 class="p-3 primary-color-bg bg-dark text-center">Reject Order</h5>
         <div class="">
           <div class="row pt-4">
             <div class="col-md-12 frgtpass-head">
-              <p class="text-center"> Are you sure you want to inactive this brand ? </p>
+              <p class="text-center"> Are you sure you want to reject this order ? </p>
+              
+              <select class="form-control" style="width:50%; margin:0 25% 0 25%">
+                
+                <option value="t">Please Select Reason to Reject</option>
+                <option value=""> Reason1</option>
+              </select>
+            
+              
             </div>
           </div>
         </div>

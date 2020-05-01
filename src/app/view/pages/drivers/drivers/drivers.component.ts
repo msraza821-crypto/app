@@ -45,11 +45,13 @@ export class DriversComponent implements OnInit {
     private store: Store<any>,
     private _api:AppService
   ) {
+
+    this.createForm();
   }
   start = "";
   end = "";
   ngOnInit(): void {
-    this.createForm();
+    
     this.loadBanners();
 
   }
@@ -60,21 +62,9 @@ export class DriversComponent implements OnInit {
       status: [""],
       range: [""]
     });
+    this.loginForm.get('status').patchValue('active')
   }
-  activeStatus(){
-
-      this.statusData = "active";
-  
-    this.loadBanners()
-  }
-
-
-  inactiveStatus(){
-
-    this.statusData = "inactive";
-
-  this.loadBanners()
-}
+ 
   defaultValue() {
     this.selected = '';
   }
@@ -181,7 +171,7 @@ Mystatus='active'
        var endDate=new Date(end1)
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
-      var url="admin/driver/list?status="+this.statusData+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&search_string="+this.loginForm.value.search;
+      var url="admin/driver/list?status="+this.loginForm.value.status+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&search_string="+this.loginForm.value.search;
       this.api
       .getReqAuth(url)
       .subscribe(
@@ -299,7 +289,7 @@ Mystatus='active'
   }
   successdelete(res) {
     if (res.status == true) {
-      this.successMessage = res.message;
+      this._api.showNotification( 'error', res.message );
       this.page = 1;
       this.ngOnInit();
     } else {
