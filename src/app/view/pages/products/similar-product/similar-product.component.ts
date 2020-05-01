@@ -115,10 +115,12 @@ export class SimilarProductComponent implements OnInit {
     },
     
   };
-  handleChange($event: ColorEvent) {
-    var hex=$event.color.hex;
+  handleChange(event: ColorEvent) {
+    if(event.color.hex){
+    var hex=event.color.hex;
     this.state=hex;
    this.loginForm.get('product_colour').patchValue(hex);
+    }
   }
 
   createForm() {

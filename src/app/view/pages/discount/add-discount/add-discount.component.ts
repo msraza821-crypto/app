@@ -33,8 +33,8 @@ export class AddDiscountComponent implements OnInit {
     private _api: AppService,
     private router: Router) {
   }
-  handleChange($event: ColorEvent) {
-    var hex = $event.color.hex;
+  handleChange(event: ColorEvent) {
+    var hex = event.color.hex;
     this.state = hex;
     this.loginForm.get('product_colour').patchValue(hex);
   }
