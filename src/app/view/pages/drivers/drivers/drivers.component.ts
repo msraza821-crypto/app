@@ -117,56 +117,56 @@ export class DriversComponent implements OnInit {
   get range(): FormControl {
     return this.loginForm.get("range") as FormControl;
   }
-  download_csv() {
-    var data = [
-      ['Foo', 'programmer'],
-      ['Bar', 'bus driver'],
-      ['Moo', 'Reindeer Hunter']
-   ];
-    var csv = 'Name,Title\n';
-    data.forEach(function(row) {
-            csv += row.join(',');
-            csv += "\n";
-    });
+  // download_csv() {
+  //   var data = [
+  //     ['Foo', 'programmer'],
+  //     ['Bar', 'bus driver'],
+  //     ['Moo', 'Reindeer Hunter']
+  //  ];
+  //   var csv = 'Name,Title\n';
+  //   data.forEach(function(row) {
+  //           csv += row.join(',');
+  //           csv += "\n";
+  //   });
   
-    console.log(csv);
-    var hiddenElement = document.createElement('a');
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-    hiddenElement.target = '_blank';
-    hiddenElement.download = 'people.csv';
-    hiddenElement.click();
-  }
+  //   console.log(csv);
+  //   var hiddenElement = document.createElement('a');
+  //   hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+  //   hiddenElement.target = '_blank';
+  //   hiddenElement.download = 'people.csv';
+  //   hiddenElement.click();
+  // }
 
-  convertArrayOfObjectsToCSV(args) {
-    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+//   convertArrayOfObjectsToCSV(args) {
+//     var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
-    data = args.data || null;
-    if (data == null || !data.length) {
-        return null;
-    }
+//     data = args.data || null;
+//     if (data == null || !data.length) {
+//         return null;
+//     }
 
-    columnDelimiter = args.columnDelimiter || ',';
-    lineDelimiter = args.lineDelimiter || '\n';
+//     columnDelimiter = args.columnDelimiter || ',';
+//     lineDelimiter = args.lineDelimiter || '\n';
 
-    keys = Object.keys(data[0]);
+//     keys = Object.keys(data[0]);
 
-    result = '';
-    result += keys.join(columnDelimiter);
-    result += lineDelimiter;
+//     result = '';
+//     result += keys.join(columnDelimiter);
+//     result += lineDelimiter;
 
-    data.forEach(function(item) {
-        ctr = 0;
-        keys.forEach(function(key) {
-            if (ctr > 0) result += columnDelimiter;
+//     data.forEach(function(item) {
+//         ctr = 0;
+//         keys.forEach(function(key) {
+//             if (ctr > 0) result += columnDelimiter;
 
-            result += item[key];
-            ctr++;
-        });
-        result += lineDelimiter;
-    });
+//             result += item[key];
+//             ctr++;
+//         });
+//         result += lineDelimiter;
+//     });
 
-    return result;
-}
+//     return result;
+// }
 Mystatus='active'
   loadBanners() {
     this.spinner.show();
@@ -181,7 +181,7 @@ Mystatus='active'
        var endDate=new Date(end1)
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
-      var url="admin/driver/list?status="+this.statusData+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&banner_type=1";
+      var url="admin/driver/list?status="+this.statusData+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&search_string="+this.loginForm.value.search;
       this.api
       .getReqAuth(url)
       .subscribe(
@@ -196,8 +196,8 @@ Mystatus='active'
       this.spinner.hide();
       this.collection = res.result.data;
       this.totalRec = res.result.globalCount;
-      // this.page=this.page;
-      //this.limit=this.limit;
+      this.page=this.page;
+      this.limit=this.limit;
     }
 
   }
