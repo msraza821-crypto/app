@@ -123,10 +123,11 @@ onFilterChange(eve: any,id) {
 
 }
 
-countryCode='(+974)'
+countryCode='+974'
 
 ngOnInit()
 {
+
   
   console.log(this.countryCode)
   this.route.params.subscribe(param=>

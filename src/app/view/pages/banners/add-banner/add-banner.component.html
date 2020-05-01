@@ -132,7 +132,7 @@
               
                 <div class="col-md-3 float-left"  *ngIf="isProduct">
                   <b>Select Category</b>
-                  <select class="form-control" [formControl]="category" (change)="getSubcategory()" (change)="getProductUsingCategory()">
+                  <select class="form-control" (click)="getSubcategory" [formControl]="category" (change)="getSubcategory()" (change)="getProductUsingCategory()">
                     <option *ngFor="let cat of categoryList" value="{{cat.id}}"> {{cat.name}} </option>
   
   
