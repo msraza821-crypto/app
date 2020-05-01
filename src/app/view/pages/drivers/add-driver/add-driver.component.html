@@ -67,14 +67,14 @@
                         <span class="error text-danger">{{_util.errorMessage(plate_number,FORM_ERROR?.plate_number)}}</span>
                     </div>
 
-                   
+                 
 
 
                  
 
                     <div class="col-sm-5 mr-top1">
                         <label><b>Driver Address</b></label>
-                        <textarea class="form-control"  style="height:100px" placeholder="Enter Driver Address" [formControl]="address"> </textarea>
+                        <textarea class="form-control"  style="min-height:100px" placeholder="Enter Driver Address" [formControl]="address"> </textarea>
                         <span class="error text-danger">{{_util.errorMessage(address,FORM_ERROR?.address)}}</span>
                     </div>
                    
