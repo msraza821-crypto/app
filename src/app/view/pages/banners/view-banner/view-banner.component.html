@@ -1,4 +1,4 @@
-<div class="animated fadeIn" style="margin-top:30px;" *ngIf="flag">
+<!-- <div class="animated fadeIn" style="margin-top:30px;" *ngIf="flag">
     <div class="row">
       <div class="col-sm-12 col-lg-12">
         <div class="card">
@@ -101,6 +101,7 @@
     </div>
   </div>
 
+ -->
 
 
 
@@ -115,75 +116,6 @@
 
 
 
-<!-- 
-
-
-
-  <div class="animated fadeIn" style="margin-top:30px;">
-    <div class="row">
-      <div class="col-sm-12 col-lg-12">
-        <div class="card">
-          <div class="card-header">
-      
-              <div   class="breadc"><a class="active" [routerLink]="['/theme/banners']">Promotional  Banners</a> / <a class="breada">View Banners</a></div> 
-  
-          </div>
-          <div class="card-body">
-  
-  
-            <div class="row ">
-              <form>
-                  <div class="row ">
-                     
-                <div class="form-group col-md-6">
-                  <b for="inputEmail4">Banner Title:</b> <br/>
-                  {{data.title}}
-                </div>
-                
-                <div class="form-group col-md-6">
-                  <b for="inputState">Status:</b><br/>
-                    {{data.status}}
-                </div>
-                
-                <div class="form-group col-md-6">
-                  <b for="inputPassword4"> From Date:</b><br/>
-                  {{data.banner_start_date}}
-                </div>
-                  <div class="form-group col-md-6">
-                      <label>    <b for="inputPassword4">Description(Arabic):</b></label><br/>
-                    {{data.description_ar}}
-              </div>
-                <div class="form-group col-md-12">
-                    <label> <b for="exampleFormControlFile1">Brand Image:</b></label><br/>
-                  <img (click)="openVerticallyCentered(poupimage,i)" style="height:200px;width:200px;"  [src]="data.brand_image" />
-                </div>
-              
-                  
-                <div class="form-group col-md-12" *ngIf="data.status=='Active'" >
-                    <label> <b for="inputState">Status:</b></label><br/>
-                  Active
-                 
-              </div>
-              <div class="form-group col-md-12" *ngIf="data.status=='Inactive'" >
-                  <label>  <b for="inputState">Status:</b></label><br/>
-                  Inactive
-                 
-              </div>
-              </div>
-              <br/>
-              <button [routerLink]="['/theme/banners']"  type="button" class="btn btn-primary" >Back</button>
-             
-  
-              </form>
-  
-            </div>
-          </div>
-        </div>
-  
-      </div>
-    </div>
-  </div> -->
-  
   
   <ng-template #poupimage let-modal>
       <!----- Header  ------>
@@ -196,15 +128,191 @@
 
 
 
-<!-- 
 
 
-  
-  <ng-template #poupimage let-modal>
-      <!----- Header  ------>
-      <!-- <section >
-      
-      
-        <img class="modal-content" id="img01" [src]=url  style="width:100%;height:auto">
-      </section>
-    </ng-template> -->
+
+
+
+    <div class="animated fadeIn" style="margin-top:30px;">
+      <div class="row">
+        <div class="col-sm-12 col-lg-12">
+          <div class="card">
+            <div class="card-header">
+                <div  class="breadc"><a class="active" [routerLink]="['/theme/banners']"> Promotional Banners</a> / <a class="breada">Detail Banner</a></div> 
+               
+            </div>
+            <div class="card-body">
+                <div class="row">
+                  <aside class="col-sm-12 border-right">
+              <article class="gallery-wrap"> 
+              <div class="img-big-wrap">
+                <div> <img  [src]="data.image?data.image:'assets/img/avatars/no.png'"></div>
+              </div> <!-- slider-Banner.// -->
+              <div class="img-small-wrap">
+                <div class="item-gallery" *ngFor="let Banner_image of data.BannerMedia"> <img [src]="Banner_image.media_url"> </div>
+                
+              </div> <!-- slider-nav.// -->
+              </article> <!-- gallery-wrap .end// -->
+                  </aside>
+                  <div class="card new-card" style="margin-top: 20px;">
+                      <div class="card-header">
+                          <div  class="breadc"><a class="breada"> Banner Detail</a></div>                      
+                      </div>
+                      <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                             <label class="float-left"> <b > Banner Title: </b></label>
+                              <p>{{data.title}}</p>
+                            </div>
+                            <div class="col-md-6">
+                               <label class="float-left"> <b >Banner Status: </b></label>
+                                <p>{{data.status}}</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- <div class="card new-card">
+                      <div class="card-header">
+                          <div  class="breadc"><a class="breada"> Banner Detail(Arabic)</a></div>                      
+                      </div>
+                      <div class="card-body">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <label class="float-left"> <b > Banner Name : </b></label>
+                                   <p>{{data.Banner_name_ar}}</p>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <label class="float-left"> <b >Banner Description : </b></label>
+                                     <p>{{data.Banner_description_ar}}</p>
+                                   </div>
+                          </div>
+                      </div></div> -->
+                      <div class="card " style="width:100%;">
+                      <div class="card-header">
+                          <div  class="breadc"><a class="breada"> Other Details</a></div>                      
+                      </div>
+                      <div class="card-body">
+                          <div class="row">
+                              <div class="col-md-6">
+                             <label class="float-left"> <b >From Date : </b></label>
+                              <p>{{data.banner_start_date}}</p>
+                            </div>
+                            <div class="col-md-6">
+                               <label class="float-left"> <b >Expiry Date: </b></label>
+                                <p>{{data.banner_end_date}}</p>
+                              </div>
+                              <div class="col-md-6">
+                                 <label class="float-left"> <b >Discount Type: </b></label>
+                                  <p>{{discountType}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                   <label class="float-left"> <b >Dicount Value : </b></label>
+                                    <p>{{data.discount_value}} <span *ngIf="data.discount_type==2">%</span></p>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <label class="float-left"> <b >Minimun Value : </b></label>
+                                       <p>{{data.minimum_value}}</p>
+                                     </div>
+                                     <div class="col-md-6" *ngIf="data.available_on==2">
+                                        <label class="float-left"> <b >Available On : </b></label>
+                                         <p> {{avilableOn}}</p>
+                                       </div>
+                                       <div class="col-md-6" *ngIf="data.available_on==1">
+                                        <label class="float-left"> <b >Available On : </b></label>
+                                         <p> {{avilableOn}}</p>
+                                       </div>
+                                       
+                                         <div class="col-md-6"  *ngIf="data.available_on==2">
+                                            <label class="float-left" > <b >Category </b></label>
+                                             <p>{{data.category}}</p>
+                                             <!-- <color-hue-picker [color]="data.product_colour" style="cursor: none;"></color-hue-picker> -->
+                                           </div>
+                                           <div class="col-md-6">
+                                              <label class="float-left"  *ngIf="data.available_on==2"> <b >Sub-Category : </b></label>
+                                               <p>{{data.sub_category}}</p>
+                                             </div>
+                                             <div class="col-md-6" >
+                                                <label class="float-left"    *ngIf="data.available_on==2"> <b >Child-Category : </b></label>
+                                                 <p>{{data.child_category}}</p>
+                                               </div>
+                                               <!-- <div class="col-md-6">
+                                                  <label class="float-left"> <b >Discount type : </b></label>
+                                                   <p *ngIf="data.discount_type==1">Percentage</p>
+                                                   <p *ngIf="data.discount_type==2">Fixed</p>
+                                                 </div> -->
+
+                                </div>
+                              </div></div>
+
+
+
+
+
+                              <div class="card new-card">
+                                <div class="card-header">
+                                    <div  class="breadc"><a class="breada"> Product Details</a></div>                      
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                      <div class="col-sm-12 col-lg-12 mr-top" >
+                                        <div class="card text-white ">
+                                          <div class="card-body pb-0 ">
+                                            <table class="table table-striped table-response">
+                                              <thead>
+                                                <tr >
+                                                  <th scope="col">S.No.</th>
+                                                  <th scope="col">Product ID</th>
+                                                  <th scope="col">Product Name</th>
+                                                  <th scope="col">Status</th>
+                                                  
+                                                
+                        
+                        
+                            
+                                                </tr>
+                                              </thead>
+                                              <tbody  *ngIf="productList.length>0">
+                                                <tr *ngFor="let product of   productList|paginate: { id: 'listing_pagination',
+                                                itemsPerPage: limit,
+                                                currentPage: page,
+                                                totalItems: totalRec }; let ie = index">
+                                                <td>  {{ ((limit * (page - 1)) + ie+1) }}</td>
+                                                <td>{{product.id}}</td>
+                                                <td>{{product.product_name_en}}</td>
+                                                <!-- <td>{{product.brand_name_en}}</td> -->
+                                               <td>{{product.status}}</td>
+                                                  
+                                                </tr>
+                                              </tbody>
+                        
+                                              <tbody *ngIf="productList.length==0">
+                                                <tr class="text-center">
+                                                  <td colspan="6">No records found</td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                            <!-- <pagination-controls *ngIf="productList.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
+                                              (pageChange)="page = $event"></pagination-controls>
+                             -->
+                        
+                                          </div>
+                                          
+                                        </div>
+                        
+                        
+                                      </div>
+                                      
+                                    </div>
+                                    <button [routerLink]="['/theme/banners']"  style="margin-top: 20px;" type="button" class="btn btn-primary" >Back</button>
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            
+                </div> <!-- row.// -->
+                
+              </div> <!-- card.// -->
+              
+         

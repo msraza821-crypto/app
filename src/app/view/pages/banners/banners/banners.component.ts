@@ -82,7 +82,7 @@ export class BannersComponent implements OnInit {
        var endDate=new Date(end1)
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
-     var url="admin/brand/list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=1";
+     var url="admin/brand/list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=1";
     this.api
       .getReqAuth(url)
       .subscribe(
@@ -172,7 +172,7 @@ export class BannersComponent implements OnInit {
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
       console.log('start',start1)
-     var url="admin/banner/banner-list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=0"+"&banner_type=2";
+     var url="admin/banner/banner-list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=0"+"&banner_type=2";
     this.api
       .getReqAuth(url)
       .subscribe(

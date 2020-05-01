@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl,FormGroup,FormArray,FormBuilder,Validators} from  "@angular/forms";
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-import { HttpService } from 'src/app/service';
+import { HttpService,AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -28,23 +28,20 @@ CONFIG = CONFIG;
   url1 = ''; url: string = '';
   message: string = '';
   keyValue: boolean = false;
+  loader=false;
 
   constructor(private fb:FormBuilder,
     private _util: CommonUtil,
     private api:HttpService,
     private spinner:NgxSpinnerService,
     private route:ActivatedRoute,
-    private router:Router
-    
+    private router:Router,
+    private _api:AppService
     ) {
-  //  this.spinner.show();
-  //   this.api.getReqAuthBrands("admin/product/brand-list").pipe().subscribe(res=>{
-  //     if(res)
-  //     {this.spinner.hide()
-  //       this.brands=res.result;
-      
-  //       console.log(this.brands)
+ 
       this.createForm()
+
+      // this.driverForm.get('country_code').patchValue('+974')
      
     
       // }
@@ -59,10 +56,10 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
     this.driverForm=this.fb.group({
       name:['',[Validators.required,Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
       email:['',[Validators.required,Validators.pattern(Regex.email)]],
-      license:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_MIN_LENGTH),Validators.minLength(CONFIG.MOBILE_LENGTH)]],
+      license:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
       country_code:[''],
-      mobile:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_MIN_LENGTH),Validators.minLength(CONFIG.MOBILE_LENGTH)]],
-      plate_number:['',[Validators.required,Validators.maxLength(CONFIG.MIN_PLATE_NUMBER),Validators.minLength(CONFIG.MAX_PLAT_NUMBER)]],
+      mobile:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
+      plate_number:['',[Validators.required,Validators.maxLength(CONFIG.MAX_PLAT_NUMBER),Validators.minLength(CONFIG.MIN_PLATE_NUMBER)]],
       vehicle_type:['',[Validators.required]],
       address:['',[Validators.required]]
       
@@ -126,10 +123,12 @@ onFilterChange(eve: any,id) {
 
 }
 
-
+countryCode='(+974)'
 
 ngOnInit()
 {
+  
+  console.log(this.countryCode)
   this.route.params.subscribe(param=>
     {
       if(param && param['id'])
@@ -137,9 +136,12 @@ ngOnInit()
 
 this.id=param.id
 console.log(this.id)
+this.loadDriverDetails()
+
 
       }
     })
+    
    
 }
 
@@ -179,11 +181,66 @@ console.log(this.id)
   }
 
 
+  loadDriverDetails()
+
+  {
+    this.spinner.show();
+  // console.log('vieew')
+  this.api
+  .getReqAuth("admin/driver/detail?id="+this.id)
+  .subscribe(
+    res => this.successView(res),
+    err => this.error(err),
+    () => (this.loader = false)
+  );
+    
+
+  }
+
+  successView(res){
+    this.spinner.hide();
+    console.log(res)
+    this.driverForm.get('name').patchValue(res.result.name)
+    this.driverForm.get('email').patchValue(res.result.email)
+    this.driverForm.get('mobile').patchValue(res.result.contact_number)
+
+    this.driverForm.get('license').patchValue(res.result.license_number)
+    this.driverForm.get('plate_number').patchValue(res.result.plate_number)
+    this.driverForm.get('vehicle_type').patchValue(res.result.vehicle_type)
+    this.driverForm.get('address').patchValue(res.result.address)
+  }
+
   
   onSubmit()
   {
     
-    this._util.markError(this.driverForm)
+console.log('submit')
+     
+    if(this.driverForm.valid)
+    {
+          
+this.spinner.show()
+  
+    
+  this.api.postReqAuth("admin/driver/add-driver",this.getFormData()
+
+    ).subscribe(
+    res =>this.success(res),
+    err=>this.error(err),
+    ()=>(this.loader=false)
+
+    
+
+
+  );
+
+
+    }
+     this._util.markError(this.driverForm);
+
+
+    
+      
 
 }
 
@@ -245,4 +302,86 @@ numberPress(event: any) {
 
 }
 
+
+
+getFormData()
+{
+
+    
+    if(this.driverForm.valid)
+    {
+
+
+      let data={name:this.driverForm.value.name,
+        email:this.driverForm.value.email,contact_number:this.driverForm.value.mobile,
+        licence_number:this.driverForm.value.license,vehicle_type:this.driverForm.value.vehicle_type,
+        address:this.driverForm.value.address,plate_number:this.driverForm.value.plate_number}
+    
+  return data
+
+    }
+     this._util.markError(this.driverForm);
+
+
+}
+
+
+update()
+{
+   
+  console.log('updatwe')
+  if(this.driverForm.valid)
+  {
+
+
+    let data={name:this.driverForm.value.name,
+      email:this.driverForm.value.email,contact_number:this.driverForm.value.mobile,
+      licence_number:this.driverForm.value.license,vehicle_type:this.driverForm.value.vehicle_type,
+      address:this.driverForm.value.address,plate_number:this.driverForm.value.plate_number,
+    id:this.id}
+  
+
+  
+  
+    this.api
+    .putReqAuth("admin/driver/edit-driver", data).subscribe(
+      res =>this.success(res),
+      err=>this.error(err),
+       () => (this.loader = false)
+
+      
+    );
+  
+
+  }
+  else
+  this._util.markError(this.driverForm)
+
+
+}
+
+
+success(res) {
+  console.log(res)
+  setTimeout(() => {     
+    this.spinner.hide();
+  }, 1000);
+  if (res.status == true) {
+     this._api.showNotification( 'success', res.message );     
+      this.router.navigate(['theme/drivers'])
+  } else {
+    this._util.markError(this.driverForm);
+    this._api.showNotification( 'error', res.message );
+  }
+
+}
+
+error(res) {
+  setTimeout(() => {     
+    this.spinner.hide();
+  }, 1000);
+  this._api.showNotification( 'error', res.message );
+  console.log(res)
+  
+}
 }

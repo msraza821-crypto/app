@@ -74,9 +74,11 @@ showPage=false;
   }
   counter()
 {
-  for(let v=1;v<=100;v++)
+  
+  for(let v=1;v<=20;v++)
   {
-    this.displayOrder[v]=v
+    
+    this.displayOrder[v-1]=v
   }
 
 }
@@ -259,8 +261,9 @@ productCompare(id:any,arr)
     {
       this.isProduct=true;
       this.isBrand=false;
+      this.productList=[];
       this.getCategory()
-      this.getProductList()
+      // this.getProductList()
     
       return;
     }
@@ -268,6 +271,7 @@ productCompare(id:any,arr)
     {
     this.isBrand=true;
     this.isProduct=false;
+    this.productList=[]
   //   this.bannerForm.patchValue({
   //   category:" ",
   //   sub_category:" ",
@@ -554,6 +558,10 @@ getFormData()
 }
 
 
+
+
+
+
     onSubmit()
   {
 
@@ -597,9 +605,9 @@ namePress(event: any) {
 changeDiscountType(){
 console.log('from discount change')
   if(this.bannerForm.value.discount_type=='1')
-  this.discountType="Enter discount value..."
+  this.discountType="Discount Value"
   else
-  this.discountType="% of Off...."
+  this.discountType="% O Of"
 }
 choosefile: string = "No file chosen...";
 onSelectFile(event) {
@@ -655,7 +663,7 @@ errorMessage
 
 viewBanner(){
   this.spinner.show();
-  console.log('vieew')
+  // console.log('vieew')
   this.api
   .getReqAuth("admin/banner/banner-detail?id="+this.id)
   .subscribe(
@@ -669,14 +677,16 @@ viewBanner(){
 got=false;
 brandData=['']
 productData=['']
+incomingBrands=[]
+
 successView(res){
   this.spinner.hide();
 
     console.log('detaisl',res)
     this.brandData=res.result.brand_data
+    console.log('brand dat',this.brandData)
     
-    
-    console.log('selected ',this.selectedValue)
+
     if(this.brandData==undefined)
     {
     
@@ -684,18 +694,41 @@ successView(res){
     
     }
     else{
-      this.selectedValue=this.brandData
-      console.log('selected value',this.selectedValue)
-      // for(let v of this.brandData)
-      // {
-      // this.selectedValue.push(v['id'])
-      // console.log('yes')
-      // }
+      
+      for(let v of this.brandData)
+      {
+    
+      this.selectedValue.push(v['id'])
+      }
+      this.getProductBrand();
+      
     }
-    this.productData=res.result.product_data
-    this.selectedProduct=this.productData
-    // console.log(this.brandData)
+   
+    // this.productList=res.result.product_data
+    this.productData=res.result.product_data;
   
+ 
+    if(this.productData==undefined)
+    {
+    
+    this.productData=['']
+    
+    }
+    else{
+      
+      for(let v of this.productData)
+      {
+    
+      this.selectedProduct.push(v['product_id'])
+      }
+      this.getProductBrand();
+      console.log('selected product',this.selectedProduct)
+      
+    }
+    
+  
+  
+  // console.log('seleceted value id', this.selectedValue)
   var data= res.result;
 
   this.bannerForm.get('title').patchValue(res.result.title);
@@ -714,11 +747,13 @@ var aaa=this.getSubcategory()
 this.getChildList()
 // if(this.got)
 this.bannerForm.get('child_category').patchValue(res.result.child_category)
+this.getProductUsingCategory()
   }
 var mydate=res.result.banner_start_date+" "+res.result.banner_end_date
 this.bannerForm.get('date').patchValue({ startDate:{_d: res.result.banner_start_date}, endDate:{_d:res.result.banner_end_date }})
 this.bannerForm.get('display_order').patchValue(res.result.display_order)
 this.url=res.result.image;
+this.choosefile=res.result.image
 this.bannerForm.get("status").patchValue(res.result.status)
   
 }
@@ -744,10 +779,106 @@ error(res) {
   
 }
 
+
+
+
+
+getFormDataForEdit()
+{
+
+  if(this.bannerForm.value.available_on=='1')
+  {
+    if(this.bannerForm.value.title!=''&& this.bannerForm.value.date!=''&&
+    this.bannerForm.value.display_order!='' && this.bannerForm.value.minimum_value!='' && this.bannerForm.value.discount_type!=''
+    &&this.bannerForm.value.minimum_value!='')
+      {
+        let mydate=this.getCurrentDate()
+    
+        let start1=mydate['start']
+         let end1=mydate['end']
+    
+    
+        this.spinner.show();
+        const formData = new FormData();
+        formData.append('title', this.bannerForm.value.title);
+        formData.append('banner_type','2');
+        formData.append('display_order',this.bannerForm.value.display_order)
+        formData.append('image', this.url1);
+       formData.append('available_on', this.bannerForm.value.available_on);
+       formData.append('discount_type', this.bannerForm.value.discount_type);
+       formData.append('discount_value', this.bannerForm.value.discount_type);
+        formData.append('minimum_value', this.bannerForm.value.minimum_value);
+        // formData.append('category', this.bannerForm.value.category);
+        // formData.append('sub_category', this.bannerForm.value.sub_category);
+        formData.append('brands',JSON.stringify(this.selectedValue) );
+        formData.append('products',JSON.stringify(this.selectedProduct))
+        formData.append('banner_start_date',start1)
+        formData.append('banner_end_date',end1)
+        formData.append("id",this.id)
+        if(this.id!=null)
+        formData.append('status',this.bannerForm.value.status)
+      
+        
+
+      
+      //  this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
+      //   res =>{
+      //     console.log('success',res)
+      //     this.spinner.hide()
+      //   },
+      //   err => this.error(err),
+      //   () => (this.loader = false)
+
+
+      // );
+      return formData
+    
+      }
+    }
+    if(this.bannerForm.valid)
+    {
+          let mydate=this.getCurrentDate()
+    
+    let start1=mydate['start']
+     let end1=mydate['end']
+
+
+    this.spinner.show();
+    const formData = new FormData();
+    formData.append('title', this.bannerForm.value.title);
+    formData.append('banner_type','2');
+    formData.append('display_order',this.bannerForm.value.display_order)
+    formData.append('image', this.url1);
+   formData.append('available_on', this.bannerForm.value.available_on);
+   formData.append('discount_type', this.bannerForm.value.discount_type);
+   formData.append('discount_value', this.bannerForm.value.discount_type);
+    formData.append('minimum_value', this.bannerForm.value.minimum_value);
+    formData.append('category', this.bannerForm.value.category);
+    formData.append('sub_category', this.bannerForm.value.sub_category);
+    formData.append('brands',JSON.stringify(this.selectedValue) );
+    formData.append('products',JSON.stringify(this.selectedProduct))
+    formData.append('banner_start_date',start1)
+    formData.append('banner_end_date',end1)
+    formData.append('child_category',this.bannerForm.value.child_category)
+    if(this.id!=null)
+    formData.append('status',this.bannerForm.value.status)
+  formData.append('id', this.id)
+    
+  
+    
+ 
+      return formData
+
+    }
+     this._util.markError(this.bannerForm);
+
+
+}
+
 update()
 {
 
-  var formData=this.getFormData()
+  var formData=this.getFormDataForEdit()
   
   
   this.api

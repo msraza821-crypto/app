@@ -5,7 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpService } from 'src/app/service';
+import { HttpService ,AppService} from 'src/app/service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -43,6 +43,7 @@ export class DriversComponent implements OnInit {
     private api: HttpService,
     private _fb: FormBuilder,
     private store: Store<any>,
+    private _api:AppService
   ) {
   }
   start = "";
@@ -60,6 +61,20 @@ export class DriversComponent implements OnInit {
       range: [""]
     });
   }
+  activeStatus(){
+
+      this.statusData = "active";
+  
+    this.loadBanners()
+  }
+
+
+  inactiveStatus(){
+
+    this.statusData = "inactive";
+
+  this.loadBanners()
+}
   defaultValue() {
     this.selected = '';
   }
@@ -102,56 +117,57 @@ export class DriversComponent implements OnInit {
   get range(): FormControl {
     return this.loginForm.get("range") as FormControl;
   }
-  download_csv() {
-    var data = [
-      ['Foo', 'programmer'],
-      ['Bar', 'bus driver'],
-      ['Moo', 'Reindeer Hunter']
-   ];
-    var csv = 'Name,Title\n';
-    data.forEach(function(row) {
-            csv += row.join(',');
-            csv += "\n";
-    });
+  // download_csv() {
+  //   var data = [
+  //     ['Foo', 'programmer'],
+  //     ['Bar', 'bus driver'],
+  //     ['Moo', 'Reindeer Hunter']
+  //  ];
+  //   var csv = 'Name,Title\n';
+  //   data.forEach(function(row) {
+  //           csv += row.join(',');
+  //           csv += "\n";
+  //   });
   
-    console.log(csv);
-    var hiddenElement = document.createElement('a');
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-    hiddenElement.target = '_blank';
-    hiddenElement.download = 'people.csv';
-    hiddenElement.click();
-  }
+  //   console.log(csv);
+  //   var hiddenElement = document.createElement('a');
+  //   hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+  //   hiddenElement.target = '_blank';
+  //   hiddenElement.download = 'people.csv';
+  //   hiddenElement.click();
+  // }
 
-  convertArrayOfObjectsToCSV(args) {
-    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+//   convertArrayOfObjectsToCSV(args) {
+//     var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
-    data = args.data || null;
-    if (data == null || !data.length) {
-        return null;
-    }
+//     data = args.data || null;
+//     if (data == null || !data.length) {
+//         return null;
+//     }
 
-    columnDelimiter = args.columnDelimiter || ',';
-    lineDelimiter = args.lineDelimiter || '\n';
+//     columnDelimiter = args.columnDelimiter || ',';
+//     lineDelimiter = args.lineDelimiter || '\n';
 
-    keys = Object.keys(data[0]);
+//     keys = Object.keys(data[0]);
 
-    result = '';
-    result += keys.join(columnDelimiter);
-    result += lineDelimiter;
+//     result = '';
+//     result += keys.join(columnDelimiter);
+//     result += lineDelimiter;
 
-    data.forEach(function(item) {
-        ctr = 0;
-        keys.forEach(function(key) {
-            if (ctr > 0) result += columnDelimiter;
+//     data.forEach(function(item) {
+//         ctr = 0;
+//         keys.forEach(function(key) {
+//             if (ctr > 0) result += columnDelimiter;
 
-            result += item[key];
-            ctr++;
-        });
-        result += lineDelimiter;
-    });
+//             result += item[key];
+//             ctr++;
+//         });
+//         result += lineDelimiter;
+//     });
 
-    return result;
-}
+//     return result;
+// }
+Mystatus='active'
   loadBanners() {
     this.spinner.show();
     var start1 = '';
@@ -165,7 +181,7 @@ export class DriversComponent implements OnInit {
        var endDate=new Date(end1)
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
-      var url="admin/banner/banner-list?status="+this.loginForm.value.status+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&banner_type=1";
+      var url="admin/driver/list?status="+this.statusData+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&search_string="+this.loginForm.value.search;
       this.api
       .getReqAuth(url)
       .subscribe(
@@ -176,11 +192,12 @@ export class DriversComponent implements OnInit {
   }
   success(res) {
     if (res.status == true) {
+      console.log(res)
       this.spinner.hide();
       this.collection = res.result.data;
       this.totalRec = res.result.globalCount;
-      // this.page=this.page;
-      //this.limit=this.limit;
+      this.page=this.page;
+      this.limit=this.limit;
     }
 
   }
@@ -205,7 +222,7 @@ export class DriversComponent implements OnInit {
   //initializing p to one
   p: number = 1;
   deletedId: string;
-  statusData: string;
+  statusData: string="active";
   pageChanged(event) {
     console.log("pageChanged")
   }
@@ -234,7 +251,7 @@ export class DriversComponent implements OnInit {
     //var formData=new FormData();
     //   formData.append('id',this.deletedId)
     this.api
-      .putReqAuth("admin/banner/update-status", { id: this.deletedId , status: 'trashed'}).subscribe(
+      .putReqAuth("admin/driver/change-status", { id: this.deletedId , status: 'trashed'}).subscribe(
         res => this.successdelete(res),
         err => this.error(err),
         () => (this.loader = false)
@@ -249,7 +266,7 @@ export class DriversComponent implements OnInit {
     }
     this.modalService.dismissAll();
     this.api
-      .putReqAuth("admin/banner/update-status", { id: this.deletedId, status: this.statusData })
+      .putReqAuth("admin/driver/change-status", { id: this.deletedId, status: this.statusData })
       .subscribe(
         res => this.successStatus(res),
         err => this.error(err),
