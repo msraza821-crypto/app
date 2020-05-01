@@ -16,20 +16,20 @@
           <form [formGroup]="bannerForm" (ngSubmit)="onSubmit()">
             <div class="row ">
 
-              <div class="form-group col-md-3">
+              <div class="form-group col-md-2">
                 <b for="inputEmail4">Banner Title</b> <br />
                 <input type="text" class="form-control" (keypress)="namePress($event)"
                   placeholder="Banner Title " [formControl]="title">
                 <span class="error text-danger">{{_util.errorMessage(title,FORM_ERROR?.title)}}</span>
               </div>
-              <div class="form-group col-md-3 ">
+              <div class="form-group col-md-2 ">
                 <b>Minimum Value</b>
                 <input type="text" class="form-control" (keypress)="keyPress($event)"
                   placeholder="Minimum Value" [formControl]="minimum_value">
                 <span class="error text-danger">{{_util.errorMessage(minimum_value,FORM_ERROR?.minimum_value)}}</span>
               </div>
 
-              <div class="col-md-3 float-left">
+              <div class="col-md-2 float-left">
                 <b>Discount Type</b>
                 <select class="form-control" placeholder="" [formControl]="discount_type"
                   (change)="changeDiscountType()">
@@ -41,7 +41,7 @@
               
             </div>
 
-            <div class="col-md-3 float-left">
+            <div class="col-md-2 float-left">
               <b>Discount Value</b>
               <div class="form-group ">
 
@@ -52,8 +52,8 @@
               </div>
             
           </div>
-          <div class="col-md-3 float-left">
-            <b> Select Available On</b>
+          <div class="col-md-2 float-left">
+            <b>  Available On</b>
             <select class="form-control" [formControl]="available_on" (change)="changeProduct()">
               <option value="">Please Select</option>
               <option value="1">Brand</option>
@@ -67,14 +67,9 @@
 
        
               
-              <div class="col-md-3 float-left "  style="margin-bottom: 15px;">
-                <b>Select Start & Expiry Date</b>
-                <input type="text" ngxDaterangepickerMd class="form-control" (choosedDate)="choosedDate($event)"
-                  [formControl]="date" [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}" placeholder="Please Select" />
-                <span class="error text-danger">{{_util.errorMessage(date,FORM_ERROR?.date)}}</span>
-              </div>
-              <div class="col-md-3 float-left" >
-                <b>Select Display Order</b>
+              
+              <div class="col-md-2 float-left" >
+                <b>Display Order</b>
                 <select class="form-control" [formControl]="display_order">
                   <option value="">Please Select</option>
                   <option *ngFor="let order of displayOrder" value="{{order}}">{{order}}</option>
@@ -82,21 +77,27 @@
                 <span class="error text-danger">{{_util.errorMessage(display_order,FORM_ERROR?.display_order)}}</span>
               </div>
              
+              <div class="col-md-2 float-left "  style="margin-bottom: 15px;">
+                <b>Start & Expiry Date</b>
+                <input type="text" ngxDaterangepickerMd class="form-control" (choosedDate)="choosedDate($event)"
+                  [formControl]="date" [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}" placeholder="Please Select" />
+                <span class="error text-danger">{{_util.errorMessage(date,FORM_ERROR?.date)}}</span>
+              </div>
 
 
-              <div class="col-md-3 float-left" *ngIf="id!=null">
-                <b>Select Status</b>
+              <div class="col-md-2 float-left" >
+                <b>Status</b>
                 <select class="form-control" [formControl]="status">
                   <option value="">Please Select</option>
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
-                  <option value="trashed">Delete</option>
+                  <!-- <option value="trashed">Delete</option> -->
                 </select>
                 <span class="error text-danger">{{_util.errorMessage(display_order,FORM_ERROR?.display_order)}}</span>
               </div>
 
-              <div class=" col-md-3" *ngIf="isBrand">
-                <b>Select Brand</b>
+              <div class=" col-md-2" *ngIf="isBrand">
+                <b> Brand</b>
                 <div class="">
                   <div ngbDropdown class="d-inline-block">
                     <button class="btn btn-outline-primary" id="dropdownForm1" type="button" ngbDropdownToggle>Please Select
@@ -130,8 +131,8 @@
 
 
               
-                <div class="col-md-3 float-left"  *ngIf="isProduct">
-                  <b>Select Category</b>
+                <div class="col-md-2 float-left"  *ngIf="isProduct">
+                  <b>Category</b>
                   <select class="form-control" (click)="getSubcategory" [formControl]="category" (change)="getSubcategory()" (change)="getProductUsingCategory()">
                     <option *ngFor="let cat of categoryList" value="{{cat.id}}"> {{cat.name}} </option>
   
@@ -140,8 +141,8 @@
                   <span class="error text-danger"> {{_util.errorMessage(category,FORM_ERROR?.category)}}</span>
   
                 </div>
-                <div class="col-md-3 float-left"  *ngIf="isProduct">
-                  <b>Select Sub Category</b>
+                <div class="col-md-2 float-left"  *ngIf="isProduct">
+                  <b>Sub-Category</b>
                   <select class="form-control" [formControl]="sub_category" (change)="getChildList()" (change)="getProductUsingCategory()">
                     <option *ngFor="let sab of subCategoryList" value="{{sab.id}}">{{sab.name}}</option>
   
@@ -153,8 +154,8 @@
   
   
   
-                <div class="col-md-3 float-left "  *ngIf="isProduct">
-                  <b>Select Child</b>
+                <div class="col-md-2 float-left "  *ngIf="isProduct">
+                  <b>Child-Category</b>
                   <select class="form-control" [formControl]="child_category" (change)="getProductUsingCategory()">
                     <option  *ngFor="let child of childList" value="{{child.id}}">{{child.name}}</option>
                    
@@ -235,7 +236,7 @@
             <br>
 
             <div class="row"  >
-              <!-- <div class="col-md-3 float-left">
+              <!-- <div class="col-md-2 float-left">
                 <select class="form-control" [formControl]="display_order">
                   <option value="">Select Display Order</option>
                   <option value="50">5</option>
@@ -249,7 +250,7 @@
                 <span class="error text-danger">{{_util.errorMessage(date,FORM_ERROR?.date)}}</span>
               </div> -->
 
-              <!-- <div class="col-md-3 float-left" *ngIf="id!=null">
+              <!-- <div class="col-md-2 float-left" *ngIf="id!=null">
                 <select class="form-control" [formControl]="status">
                   <option value="">Select Status</option>
                   <option value="active">Active</option>
@@ -290,7 +291,7 @@
                         (change)="onFilterChange($event,product.id)"  [checked]="getProductChecked(product.id)">
                         <!-- <a href="#" title="Discount can not be applied as there is already exiting offer on it:i"></a>
                           </td> -->
-                         <span title="Discount can not be applied as there is already exiting offer on it">i</span>
+                         <!-- <span title="Discount can not be applied as there is already exiting offer on it">i</span> -->
                         </tr>
                       </tbody>
 

@@ -7,14 +7,19 @@
     <div class="row">
       <div class="col-sm-12 col-lg-12">
         <div class="card">
-          <div class="card-header">
+          <div class="card-header" style="padding-right:0px">
               <div  class="breadc"><a class="active" [routerLink]="['/theme/orders']"> Orders</a> / <a class="breada">Detail Order</a></div> 
+
+              <div class="col-md-6 float-right" style="padding-right: 5px;">
+                  <button  (click)="openVerticallyCentered(poup2, data)" class="float-right btn btn-danger ml-1">Reject</button>
+                  <button class="float-right btn btn-secondary ml-1">Accept</button>
+              </div>
              
           </div>
           <div class="card-body">
               <div class="row">
                
-                <div class="card new-card">
+                <div class="card new-card" >
                     <div class="card-header">
                         <div  class="breadc"><a class="breada"> Order Detail</a></div>                      
                     </div>
@@ -35,7 +40,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card new-card">
+                <div class="card new-card" style="margin-left:2%">
                     <div class="card-header">
                         <div  class="breadc"><a class="breada"> Shipping Details</a></div>                      
                     </div>
@@ -69,7 +74,16 @@
                                       <th scope="col">S.No.</th>
                                       <th scope="col">Product ID</th>
                                       <th scope="col">Product Name</th>
+                                      <th scope="col">Price</th>
+                                      <th scope="col">Color</th>
+                                      <th scope="col">Size</th>
+                                      <th scope="col">Quantity</th>
+                                      
                                       <th scope="col">Status</th>
+                                      <th scope="col">Brand</th>
+                                      
+                                      <th scope="col">Action</th>
+                                   
                                       
                                     
             
@@ -77,9 +91,25 @@
                 
                                     </tr>
                                   </thead>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>1234</td>
+                                    <td>IPhone</td>
+                                    <td>100000</td>
+                                    <td>Black</td>
+                                    <td>M</td>
+                                    <td>2</td>
+                                    <td>Active</td>
+                                    <td>Apple</td>
+                                    <td><a><i class="fa fa-eye"></i></a></td>
+                                </tr>
+
+
+                                  <tbody>
+                                      
+                                  </tbody>
                                 
-            
-                                 
+                                </table>
                                 <!-- <pagination-controls *ngIf="productList.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
                                   (pageChange)="page = $event"></pagination-controls>
                  -->
@@ -93,23 +123,39 @@
 
 
 
-                            <div class="card new-card">
+                            <div class="card new-card" style="width:100%">
                               <div class="card-header">
-                                  <div  class="breadc"><a class="breada"> Product Details</a></div>                      
+                                  <div  class="breadc"><a class="breada"> Price Details</a></div>                      
                               </div>
                               <div class="card-body">
                                   <div class="row">
                                     <div class="col-sm-12 col-lg-12 mr-top" >
-                                      <div class="card text-white ">
-                                       
-                                        
-                                      </div>
+                                     
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="float-left"> <b >Total : </b></label>
+                                                 <p>3445</p>
+                                               </div>
+                                               <div class="col-md-6">
+                                                  <label class="float-left"> <b > Shipping Charges : </b></label>
+                                                   <p>121</p>
+                                                 </div>
+                                                 <div class="col-md-6">
+                                                    <label class="float-left"> <b > Discount : </b></label>
+                                                     <p>233</p>
+                                                   </div>
+
+                                                   <div class="col-md-6">
+                                                    <label class="float-left"> <b > Grand Total : </b></label>
+                                                     <p>232</p>
+                                                   </div>
+                                        </div>
                       
                       
                                     </div>
                                     
                                   </div>
-                                  <button [routerLink]="['/theme/banners']"  style="margin-top: 20px;" type="button" class="btn btn-primary" >Back</button>
+                                  <button [routerLink]="['/theme/orders']"  style="margin-top: 20px;" type="button" class="btn btn-primary" >Back</button>
                               </div>
                           </div>
                           </div>
@@ -122,3 +168,36 @@
             </div> <!-- card.// -->
             
        
+
+            <ng-template #poup2 let-modal>
+                <!----- Header  ------>
+                <section id="modal-header">
+                  <h5 class="p-3 primary-color-bg bg-dark text-center">Reject Order</h5>
+                  <div class="">
+                    <div class="row pt-4">
+                      <div class="col-md-12 frgtpass-head">
+                        <p class="text-center"> Are you sure you want to reject this order ? </p>
+                        
+                        <!-- <select class="form-control" style="width:50%; margin:0 25% 0 25%">
+                          
+                          <option value="t">Please Select Reason to Reject</option>
+                          <option value=""> Reason1</option>
+                        </select> -->
+                      
+                        
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <!-------------->
+                <section>
+                  <div class=" frgtpass-btns mb-3">
+                    <div class="row mt-3">
+                      <div class="col-md-12 text-center">
+                        <button type="button" class="ml-3 ml-3 btn bg-dark  white white" (click)="modal.close('Close click')">No</button>
+                        <button type="button" class="ml-3 btn bg-dark white" (click)="yesStatus()">Yes</button>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </ng-template>

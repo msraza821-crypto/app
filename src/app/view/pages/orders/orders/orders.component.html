@@ -20,14 +20,14 @@
               <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Order Name">
             </div>
             <div class="col-md-2 float-left">
-              <select id="inputState" class="form-control" [formControl]="status">
+              <select id="inputState" class="form-control" [formControl]="status" (change)="chnageStatus()">
                 <option value="">All</option>
              
                 <option value="pending">Pending</option> 
                   <option value="approved">Approved</option>
-                  <option value="approved">Delivered</option>
-                  <option value="approved">Rejected</option>
-                  <option value="approved">Cancelled</option>
+                  <option value="delivered">Delivered</option>
+                  <option value="rejected">Rejected</option>
+                  <option value="cancelled">Cancelled</option>
               </select>
             </div>
             <div class="col-md-2 float-left">               
@@ -54,19 +54,19 @@
         </div>
         <div class="card-body">
           <div class="col-sm-12 col-lg-12">
-              <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
-              <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div>
+              <!-- <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
+              <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div> -->
             <div class="card text-white ">
-              <div class="pb-0">
-                <table class="table table-striped">
+              <div class="pb-0"> 
+                <table class="table table-striped"  *ngIf="myStatus=='pending'">
                   <thead>
                     <tr>
                         <th scope="col">S. No.</th>
                       <th scope="col">User Details</th>
-                      <th scope="col">Order Rate</th>
+                      <th scope="col">Order Date</th>
                       <!-- <th scope="col">Description(En)</th>
                       <th scope="col">Description(Ar)</th> -->
-                      <th scope="col">Delivered</th>
+                      <!-- <th scope="col">Delivered</th> -->
                       <th scope="col">Order Id</th>
                      
                       <th scope="col">Actions</th>
@@ -94,14 +94,243 @@
                       </td> -->
                       <td> {{i.created_at}}
                     </td>
-                    <td  *ngIf="i.status=='Active'" >Active
+                    <!-- <td  *ngIf="i.status=='Active'" >Active
                   </td>
                   <td  *ngIf="i.status=='Inactive'" >Inactive
-                    </td>
+                    </td> -->
                      
                       <td>
                           <a [routerLink]="['/theme/orders/view',{id :i?.id}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
                         <a  title="Accept Order" class="btn btn-secondary">Accept</a>&nbsp;                      
+                        <a (click)="openVerticallyCentered(poup2,i)" title="Reject Order" class="btn btn-danger">Reject</a> 
+                        <!-- <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
+                        <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px" -->
+                            <!-- class="fa fa-trash-o"></i></a> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="collection.length==0">
+                    <tr class="text-center">
+                      <td colspan="6">No records found</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+
+                <table class="table table-striped" *ngIf="myStatus=='approved'"  >
+                  <thead>
+                    <tr>
+                        <th scope="col">S. No.</th>
+                      <th scope="col">User Details</th>
+                      <th scope="col">Order Date</th>
+                      <!-- <th scope="col">Description(En)</th>
+                      <th scope="col">Description(Ar)</th> -->
+                      <!-- <th scope="col">Delivered</th> -->
+                      <th scope="col">Order Id</th>
+                     
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="collection.length>0">
+                    <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                    itemsPerPage: limit,
+                    currentPage: page,
+                    totalItems: totalRec }; let ie = index">
+                    <td>
+                        {{ ((limit * (page - 1)) + ie+1) }}
+
+                    </td>
+                      <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
+                        <td>{{i.name_ar}}
+                      </td>
+                      <!-- <td [title]={i.description} style=" display: inline-block;
+                    width: 180px;
+                    white-space: nowrap;
+                    overflow: hidden !important;
+                    text-overflow: ellipsis;
+                    "> {{i.description}}</td>
+                      <td [title]="i.description_ar"> {{i.description_ar}}
+                      </td> -->
+                      <td> {{i.created_at}}
+                    </td>
+                   
+                     
+                      <td>
+                          <a [routerLink]="['/theme/orders/view',{id :i?.id}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
+                        <!-- <a  title="Assign Driver" ></a>&nbsp;                       -->
+                        <a (click)="openVerticallyCentered(poup2,i)" title="Assign Driver" class="btn btn-primary" style="color:white;margin-left:10px">Assign Driver</a> 
+                        <!-- <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
+                        <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px" -->
+                            <!-- class="fa fa-trash-o"></i></a> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="collection.length==0">
+                    <tr class="text-center">
+                      <td colspan="6">No records found</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+                <table class="table table-striped"  *ngIf="myStatus=='delivered'" >
+                  <thead>
+                    <tr>
+                        <th scope="col">S. No.</th>
+                      <th scope="col">User Details</th>
+                      <th scope="col">Order Date</th>
+                      <!-- <th scope="col">Description(En)</th>
+                      <th scope="col">Description(Ar)</th> -->
+                      <!-- <th scope="col">Delivered</th> -->
+                      <th scope="col">Order Id</th>
+                     
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="collection.length>0">
+                    <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                    itemsPerPage: limit,
+                    currentPage: page,
+                    totalItems: totalRec }; let ie = index">
+                    <td>
+                        {{ ((limit * (page - 1)) + ie+1) }}
+
+                    </td>
+                      <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
+                        <td>{{i.name_ar}}
+                      </td>
+                      <!-- <td [title]={i.description} style=" display: inline-block;
+                    width: 180px;
+                    white-space: nowrap;
+                    overflow: hidden !important;
+                    text-overflow: ellipsis;
+                    "> {{i.description}}</td>
+                      <td [title]="i.description_ar"> {{i.description_ar}}
+                      </td> -->
+                      <td> {{i.created_at}}
+                    </td>
+                   
+                     
+                      <td>
+                          <a [routerLink]="['/theme/orders/view',{id :i?.id}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
+                        <!-- <a  title="Assign Driver" ></a>&nbsp;                       -->
+                        <!-- <a (click)="openVerticallyCentered(poup2,i)" title="Reject Order" class="btn btn-danger">Reject</a>  -->
+                        <!-- <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
+                        <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px" -->
+                            <!-- class="fa fa-trash-o"></i></a> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="collection.length==0">
+                    <tr class="text-center">
+                      <td colspan="6">No records found</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+
+                <table class="table table-striped"  *ngIf="myStatus=='rejected'" >
+                  <thead>
+                    <tr>
+                        <th scope="col">S. No.</th>
+                      <th scope="col">User Details</th>
+                      <th scope="col">Order Date</th>
+                      <!-- <th scope="col">Description(En)</th>
+                      <th scope="col">Description(Ar)</th> -->
+                      <!-- <th scope="col">Delivered</th> -->
+                      <th scope="col">Order Id</th>
+                     
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="collection.length>0">
+                    <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                    itemsPerPage: limit,
+                    currentPage: page,
+                    totalItems: totalRec }; let ie = index">
+                    <td>
+                        {{ ((limit * (page - 1)) + ie+1) }}
+
+                    </td>
+                      <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
+                        <td>{{i.name_ar}}
+                      </td>
+                      <!-- <td [title]={i.description} style=" display: inline-block;
+                    width: 180px;
+                    white-space: nowrap;
+                    overflow: hidden !important;
+                    text-overflow: ellipsis;
+                    "> {{i.description}}</td>
+                      <td [title]="i.description_ar"> {{i.description_ar}}
+                      </td> -->
+                      <td> {{i.created_at}}
+                    </td>
+                   
+                     
+                      <td>
+                          <a [routerLink]="['/theme/orders/view',{id :i?.id}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
+                        <a  title="Assign Driver" ></a>&nbsp;                      
+                        <a (click)="openVerticallyCentered(poup2,i)" title="Reject Order" class="btn btn-danger">Reject</a> 
+                        <!-- <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
+                        <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px" -->
+                            <!-- class="fa fa-trash-o"></i></a> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="collection.length==0">
+                    <tr class="text-center">
+                      <td colspan="6">No records found</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+
+
+
+                <table class="table table-striped" *ngIf="myStatus=='cancelled'" >
+                  <thead>
+                    <tr>
+                        <th scope="col">S. No.</th>
+                      <th scope="col">User Details</th>
+                      <th scope="col">Order Date</th>
+                      <!-- <th scope="col">Description(En)</th>
+                      <th scope="col">Description(Ar)</th> -->
+                      <!-- <th scope="col">Delivered</th> -->
+                      <th scope="col">Order Id</th>
+                     
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="collection.length>0">
+                    <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                    itemsPerPage: limit,
+                    currentPage: page,
+                    totalItems: totalRec }; let ie = index">
+                    <td>
+                        {{ ((limit * (page - 1)) + ie+1) }}
+
+                    </td>
+                      <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
+                        <td>{{i.name_ar}}
+                      </td>
+                      <!-- <td [title]={i.description} style=" display: inline-block;
+                    width: 180px;
+                    white-space: nowrap;
+                    overflow: hidden !important;
+                    text-overflow: ellipsis;
+                    "> {{i.description}}</td>
+                      <td [title]="i.description_ar"> {{i.description_ar}}
+                      </td> -->
+                      <td> {{i.created_at}}
+                    </td>
+                   
+                     
+                      <td>
+                          <a [routerLink]="['/theme/orders/view',{id :i?.id}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
+                        <a  title="Assign Driver" ></a>&nbsp;                      
                         <a (click)="openVerticallyCentered(poup2,i)" title="Reject Order" class="btn btn-danger">Reject</a> 
                         <!-- <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
                         <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px" -->
