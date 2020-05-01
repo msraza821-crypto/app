@@ -209,6 +209,15 @@ export class OrdersComponent implements OnInit {
     this.loadBrands();
 
   }
+
+  myStatus="pending"
+  chnageStatus()
+  {
+
+    this.myStatus=this.loginForm.value.status
+console.log(this.myStatus)  
+
+  }
   onScroll() {
     const currentDataLength = this.page * this.limit;
     console.log(currentDataLength, this.totalRec);

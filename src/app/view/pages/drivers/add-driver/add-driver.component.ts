@@ -123,7 +123,7 @@ onFilterChange(eve: any,id) {
 
 }
 
-countryCode='+974'
+countryCode='(+974)'
 
 ngOnInit()
 {
@@ -314,7 +314,7 @@ getFormData()
 
 
       let data={name:this.driverForm.value.name,
-        email:this.driverForm.value.email,contact_number:this.driverForm.value.mobile,
+        email:this.driverForm.value.email,contact_number:this.countryCode+this.driverForm.value.mobile,
         licence_number:this.driverForm.value.license,vehicle_type:this.driverForm.value.vehicle_type,
         address:this.driverForm.value.address,plate_number:this.driverForm.value.plate_number}
     
