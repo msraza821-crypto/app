@@ -558,6 +558,10 @@ getFormData()
 }
 
 
+
+
+
+
     onSubmit()
   {
 
@@ -659,7 +663,7 @@ errorMessage
 
 viewBanner(){
   this.spinner.show();
-  console.log('vieew')
+  // console.log('vieew')
   this.api
   .getReqAuth("admin/banner/banner-detail?id="+this.id)
   .subscribe(
@@ -775,10 +779,106 @@ error(res) {
   
 }
 
+
+
+
+
+getFormDataForEdit()
+{
+
+  if(this.bannerForm.value.available_on=='1')
+  {
+    if(this.bannerForm.value.title!=''&& this.bannerForm.value.date!=''&&
+    this.bannerForm.value.display_order!='' && this.bannerForm.value.minimum_value!='' && this.bannerForm.value.discount_type!=''
+    &&this.bannerForm.value.minimum_value!='')
+      {
+        let mydate=this.getCurrentDate()
+    
+        let start1=mydate['start']
+         let end1=mydate['end']
+    
+    
+        this.spinner.show();
+        const formData = new FormData();
+        formData.append('title', this.bannerForm.value.title);
+        formData.append('banner_type','2');
+        formData.append('display_order',this.bannerForm.value.display_order)
+        formData.append('image', this.url1);
+       formData.append('available_on', this.bannerForm.value.available_on);
+       formData.append('discount_type', this.bannerForm.value.discount_type);
+       formData.append('discount_value', this.bannerForm.value.discount_type);
+        formData.append('minimum_value', this.bannerForm.value.minimum_value);
+        // formData.append('category', this.bannerForm.value.category);
+        // formData.append('sub_category', this.bannerForm.value.sub_category);
+        formData.append('brands',JSON.stringify(this.selectedValue) );
+        formData.append('products',JSON.stringify(this.selectedProduct))
+        formData.append('banner_start_date',start1)
+        formData.append('banner_end_date',end1)
+        formData.append("id",this.id)
+        if(this.id!=null)
+        formData.append('status',this.bannerForm.value.status)
+      
+        
+
+      
+      //  this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
+      //   res =>{
+      //     console.log('success',res)
+      //     this.spinner.hide()
+      //   },
+      //   err => this.error(err),
+      //   () => (this.loader = false)
+
+
+      // );
+      return formData
+    
+      }
+    }
+    if(this.bannerForm.valid)
+    {
+          let mydate=this.getCurrentDate()
+    
+    let start1=mydate['start']
+     let end1=mydate['end']
+
+
+    this.spinner.show();
+    const formData = new FormData();
+    formData.append('title', this.bannerForm.value.title);
+    formData.append('banner_type','2');
+    formData.append('display_order',this.bannerForm.value.display_order)
+    formData.append('image', this.url1);
+   formData.append('available_on', this.bannerForm.value.available_on);
+   formData.append('discount_type', this.bannerForm.value.discount_type);
+   formData.append('discount_value', this.bannerForm.value.discount_type);
+    formData.append('minimum_value', this.bannerForm.value.minimum_value);
+    formData.append('category', this.bannerForm.value.category);
+    formData.append('sub_category', this.bannerForm.value.sub_category);
+    formData.append('brands',JSON.stringify(this.selectedValue) );
+    formData.append('products',JSON.stringify(this.selectedProduct))
+    formData.append('banner_start_date',start1)
+    formData.append('banner_end_date',end1)
+    formData.append('child_category',this.bannerForm.value.child_category)
+    if(this.id!=null)
+    formData.append('status',this.bannerForm.value.status)
+  formData.append('id', this.id)
+    
+  
+    
+ 
+      return formData
+
+    }
+     this._util.markError(this.bannerForm);
+
+
+}
+
 update()
 {
 
-  var formData=this.getFormData()
+  var formData=this.getFormDataForEdit()
   
   
   this.api
