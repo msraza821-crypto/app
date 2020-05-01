@@ -83,7 +83,7 @@ export const ERROR_MESSAGES = {
     REJECT_REQUEST:'Are you sure you want to reject this request?',
     FAQ_QUESTION:'',
     ACCEPT_REQUEST:'Are you sure you want to accept this request?',
-    RANGE:"Enter range between 0 to 10000",
+    RANGE:"Enter vaild range 0 to 10000",
     RENTAMOUNT_REQUIRED:'Rent amount is required',
     USER_TYPE:'Tenant Type is required',
     RULESTYPE:'Rules and regulations is required',
@@ -116,13 +116,13 @@ export const ERROR_MESSAGES = {
      
      ACCEPT_REQUEST_NEW:'Do you want to approve this tenant to rent your property?',
      BANNER_TITLE_REQUIRED:'Banner title is required',
-     MINIMUM_VALUE_REQUIRED:'Minimum value is required',
+     MINIMUM_VALUE_REQUIRED:'Minimum order price is required',
      AVAILABLE_ON_REQUIRED:'Available on is required',
     CATEGORY_REQUIRED:'Category is required',
     SUBCATEGORY_REQUIRED:'Sub-Category is required',
     CHILD_CATEGORY_REQUIRED:'Child-Category is required',
     DISCOUNT_TYPE_REQUIRED:'Discount type is required',
-    DISCOUNT_VALUE_REQUIRED:'Discount value is required',
+    DISCOUNT_VALUE_REQUIRED:'Discount price is required',
 
      PRODUCT_SIZE_REQUIRED:'Product size is rquired',
      PRODUCT_PRIZE_REQUIRED:'Product Price is required',
@@ -136,7 +136,19 @@ export const ERROR_MESSAGES = {
     MOBILE_REQUIRED:'Mobile number is required',
     PLATE_NUMBER_REQUIRED:'Plate number is required',
     VEHICLE_TYPE_REQUIRED:'Vehicle type is required',
-    LICENSE_REQUIRED:'License number  is required'
+    LICENSE_REQUIRED:'License number  is required',
+    D_TITLE:'Discount title is required',
+    D_DESC:'Discount description is required',
+    D_PROMOCODE:'Discount promo code is required',
+    D_PROMOVALUE:'Discount promo price is required',
+    D_RANGE:'Discount Date Range is required',
+    D_MINORDER:'Min. order price is required',
+    D_TYPE:'Discount type is required',
+    D_PRICE:'Discount price is required',
+    TYPE_ASSIGN:'Assignment is required',
+    RANGE_PERCENTAGE:"Enter vaild percentage range 0 to 100"
+
+
 
 };
 

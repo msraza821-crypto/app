@@ -88,7 +88,7 @@ export class DiscountComponent implements OnInit {
       var endDate = new Date(end1)
       end1 = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
     }
-    var url = "admin/product/list?search=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&fromDate=" + start1 + "&toDate=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=1";
+    var url = "admin/discount/list?search=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&fromDate=" + start1 + "&toDate=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=1";
     this.api.getReqAuthExport(url).subscribe(
       res => this.downloadFile(res),
       err => this.error(err), () => (this.loader = false)
@@ -133,7 +133,7 @@ export class DiscountComponent implements OnInit {
       var endDate = new Date(end1)
       end1 = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
     }
-    var url = "admin/product/list?search=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&fromDate=" + start1 + "&toDate=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=" + this.exportData;
+    var url = "admin/discount/list?search=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&fromDate=" + start1 + "&toDate=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=" + this.exportData;
     this.api
       .getReqAuth(url)
       .subscribe(
@@ -142,6 +142,7 @@ export class DiscountComponent implements OnInit {
         () => (this.loader = false)
       );
   }
+  
   add3Dots(string, limit) {
     var dots = "...";
     if (string.length > limit) {
@@ -217,7 +218,7 @@ export class DiscountComponent implements OnInit {
     //var formData=new FormData();
     //   formData.append('id',this.deletedId)
     this.api
-      .putReqAuth("admin/product/update-status", { status: 'trashed', id: this.deletedId }).subscribe(
+      .putReqAuth("admin/discount/change-status", { status: 'trashed', id: this.deletedId }).subscribe(
         res => this.successdelete(res),
         err => this.error(err),
         () => (this.loader = false)
@@ -225,14 +226,14 @@ export class DiscountComponent implements OnInit {
   }
 
   yesStatus() {
-    if (this.statusData == 'Active') {
-      this.statusData = "Inactive";
+    if (this.statusData == 'active') {
+      this.statusData = "inactive";
     } else {
-      this.statusData = "Active";
+      this.statusData = "active";
     }
     this.modalService.dismissAll();
     this.api
-      .putReqAuth("admin/product/update-status", { id: this.deletedId, status: this.statusData })
+      .putReqAuth("admin/discount/change-status", { id: this.deletedId, status: this.statusData })
       .subscribe(
         res => this.successStatus(res),
         err => this.error(err),

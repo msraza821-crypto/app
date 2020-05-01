@@ -30,42 +30,10 @@ export class DetailDiscountComponent implements OnInit {
     private _route:ActivatedRoute,
     private router: Router) {
   }
-  categories: any = [];
-  subcategories: any = [];
-  childcategories: any = [];
-  successCategorySub(res) {
-    if (res.status) {
-      this.subcategories = res.result;
-    }
-  }
-  successCategoryChild(res) {
-    if (res.status) {
-      this.childcategories = res.result;
-    }
-  }
-  sub_cate(event) {
-    const value = event;
-    this.api
-      .getReqAuth("admin/product/category-list?parent_id=" + value).subscribe(
-        res => this.successCategorySub(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
-  }
-  child_cate(event) {
-    const value = event;
-    this.api
-      .getReqAuth("admin/product/category-list?parent_id=" + value).subscribe(
-        res => this.successCategoryChild(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
-  }
+
+
 id:string=null;
   ngOnInit() {
-    this.productSize();
-    this.productSiz();
-    this.productCategory();
     this._route.params.subscribe(param => {
       if (param && param["id"]) {
         this.id=param["id"];
@@ -73,58 +41,11 @@ id:string=null;
       }
       })
   
-  }
-  productSiz() {
-    this.api
-      .getReqAuth("admin/product/product-size").subscribe(
-        res => this.successSiz(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
-  }
-  sizes: any = [];
-  successSiz(res: any) {
-    if (res.status) {
-      // console.log(res)
-      this.sizes = res.result;
-    }
-  }
-
-  productCategory() {
-    this.api
-      .getReqAuth("admin/product/category-list?parent_id=0").subscribe(
-        res => this.successCategory(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
-  }
-  successCategory(res) {
-    if (res.status) {
-      // console.log(res)
-      this.categories = res.result;
-    }
-  }
-
-
-  productSize() {
-    this.api
-      .getReqAuth("admin/product/brand-list").subscribe(
-        res => this.successBrand(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
-  }
-  brands: any = [];
-  successBrand(res: any) {
-    if (res.status) {
-      // console.log(res)
-      this.brands = res.result;
-    }
-  }
+  } 
   viewBrand(){
     this.spinner.show();
     this.api
-    .getReqAuth("admin/product/product-detail?id="+this.id)
+    .getReqAuth("admin/discount/detail?id="+this.id)
     .subscribe(
       res => this.successView(res),
       err => this.error(err),
@@ -135,20 +56,15 @@ data:any={};
   successView(res){
     if(res.status==true){
     this.data= res.result;
-  
     }
     setTimeout(() => {
-      /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
-   
-  //  this.addProperty.get('beds').patchValue(property['bed']);
 
   }
   
   error(res){
     setTimeout(() => {
-      /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
     this._util.markError(res.message);

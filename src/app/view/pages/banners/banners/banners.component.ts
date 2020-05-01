@@ -276,6 +276,26 @@ export class BannersComponent implements OnInit {
     }   
 
   }
+
+  openVerticallyCenteredPopup(popup, data) {
+    this.api
+    .getReqAuth("admin/banner/active-order?banner_type=2").subscribe(
+      res => this.successPopup(res,popup, data),
+      err => this.error(err),
+      () => (this.loader = false)
+    );
+   
+  }
+  successPopup(res,popup,data){
+    if(res.status==true){
+       if(res.result.length>5){
+       this._api.showNotification('error','Please inactive other banner ')
+       }else{
+        this.openVerticallyCentered(popup,data);
+       }
+    }
+   
+  }
   successdelete(res) {
     if (res.status == true) {
       this._api.showNotification( 'success', res.message );

@@ -97,7 +97,7 @@
                             <a [routerLink]="['/theme/banners/view',{id :i?.id}]" title="View Brand"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
                           <a [routerLink]="['/theme/banners/add',{id :i?.id}]" title="Edit Brand"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
                           <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Block Banner"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
-                          <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='inactive'" title="Unblock Banner">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
+                          <a (click)="openVerticallyCenteredPopup(poup1,i)" *ngIf="i.status=='inactive'" title="Unblock Banner">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
                           <a (click)="openVerticallyCentered(poup,i)" title="Delete Banner"> <i style="font-size:24px"
                               class="fa fa-trash-o"></i></a>
                         </td>

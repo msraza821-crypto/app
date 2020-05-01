@@ -158,8 +158,17 @@ export class AddProductComponent implements OnInit {
         this.viewBrand();
       }
     })
+    this._route.params.subscribe(param => {
+      if (param && param["product_id"]) {
+        this.product_id = param["product_id"];
+        this.id="";
+        this.viewBrand1();
+      }
+    })
     this.createForm();
   }
+  product_id:any;
+
 
   productSiz() {
     this.api
@@ -417,6 +426,16 @@ export class AddProductComponent implements OnInit {
         () => (this.loader = false)
       );
   }
+  viewBrand1() {
+    this.spinner.show();
+    this.api
+      .getReqAuth("admin/product/product-detail?id=" + this.product_id)
+      .subscribe(
+        res => this.successView(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
+  }
 
   successView(res) {
     if (res.status == true) {
@@ -437,12 +456,36 @@ export class AddProductComponent implements OnInit {
       //  this.loginForm.get
     }
     this.state=data['product_colour'];
+    if(data['discount_type']==2){
+      this.placeHolderText="Discount Price";
+    }else{
+      this.placeHolderText="Percentage Discount";
+    }
+   
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
 
     //  this.addProperty.get('beds').patchValue(property['bed']);
+
+  }
+  placeHolderText = "Discount Price";
+  changeType(event) {
+
+
+    console.log(event.target.value);
+    if (event.target.value == 2) {
+      this.loginForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 100)]);
+      this.loginForm.get('discount_value').updateValueAndValidity();
+      this.placeHolderText = "Percentage Discount";
+      this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
+    } else {
+      this.loginForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 10000)]);
+      this.loginForm.get('discount_value').updateValueAndValidity();
+      this.placeHolderText = "Discount Price";
+      this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE;
+    }
 
   }
   update() {
