@@ -564,10 +564,7 @@ getFormData()
 
     onSubmit()
   {
-
-
-
-  
+    if(this.bannerForm.valid){
     var formData=this.getFormData()
       this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
         res =>this.success(res),
@@ -577,7 +574,9 @@ getFormData()
 
       );
     
-
+      }else{
+        this._util.markError(this.bannerForm);
+      }
     
 
     }
@@ -607,7 +606,7 @@ console.log('from discount change')
   if(this.bannerForm.value.discount_type=='1')
   this.discountType="Discount Value"
   else
-  this.discountType="% O Of"
+  this.discountType="% Of"
 }
 choosefile: string = "No file chosen...";
 onSelectFile(event) {
@@ -877,7 +876,7 @@ getFormDataForEdit()
 
 update()
 {
-
+if(this.bannerForm.valid){
   var formData=this.getFormDataForEdit()
   
   
@@ -889,6 +888,9 @@ update()
     err => this.error(err),
     () => (this.loader = false)
   );
+}else{
+  this._util.markError(this.bannerForm);
+}
 
 }
 }

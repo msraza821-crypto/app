@@ -8,7 +8,7 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { ViewComponent } from './view/view.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { AddBannerComponent } from './add-banner/add-banner.component';
+import { AddBannersComponent } from './add-banners/add-banners.component'; 
 
 
 
@@ -19,7 +19,7 @@ const pageRoutes: Routes = [
     children: [{ path: '', canActivate: [], data:{title:'Banners'},component: BannersComponent },
     { path: 'view', canActivate: [], data:{title:'View'},component: ViewComponent },
     {
-      path:'add',canActivate:[],data:{title:'Banner'},component:AddBannerComponent    }
+      path:'add',canActivate:[],data:{title:'Banner'},component:AddBannersComponent    }
            
   
   ]
@@ -27,7 +27,7 @@ const pageRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [BannersComponent, ViewComponent, AddBannerComponent],
+  declarations: [BannersComponent, ViewComponent, AddBannersComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(pageRoutes),

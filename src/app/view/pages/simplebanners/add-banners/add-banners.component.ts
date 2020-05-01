@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl,FormGroup,FormArray,FormBuilder,Validators} from  "@angular/forms";
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
 
 
 
 @Component({
-  selector: 'app-add-banner',
-  templateUrl: './add-banner.component.html',
-  styleUrls: ['./add-banner.component.scss']
+  selector: 'app-add-banners',
+  templateUrl: './add-banners.component.html',
+  styleUrls: ['./add-banners.component.scss']
 })
-export class AddBannerComponent implements OnInit {
+export class AddBannersComponent implements OnInit {
 
   closeResult = '';
   bannerForm:FormGroup;
@@ -40,7 +40,8 @@ showPage=false;
     private api:HttpService,
     private spinner:NgxSpinnerService,
     private route:ActivatedRoute,
-    private router:Router
+    private router:Router,
+    private _api:AppService
     
     ) {
    this.spinner.show();
@@ -72,7 +73,7 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
       category:['',[Validators.required]],
       sub_category:['',[Validators.required]],
       // child_category:['',[Validators.required]],
-      // date:['',[Validators.required]],
+       status:['',[Validators.required]],
       display_order:['',[Validators.required]]
     
     });
@@ -87,24 +88,11 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
-    // minimum_value: {
-    //   required: ERROR_MESSAGES.MINIMUM_VALUE_REQUIRED,
-  
-    //   pattern: ERROR_MESSAGES.INVALID_INPUT,
-    // },
-    // available_on: {
-    //   required: ERROR_MESSAGES.AVAILABLE_ON_REQUIRED,
+    status: {
+      required: ERROR_MESSAGES.STATUS_REQUIRED,
+      
      
-    // },
-    // discount_type: {
-    //   required: ERROR_MESSAGES.DISCOUNT_TYPE_REQUIRED,
-     
-    // },
-    // discount_value: {
-    //   required: ERROR_MESSAGES.DISCOUNT_VALUE_REQUIRED,
-    //   pattern: ERROR_MESSAGES.INVALID_INPUT,
-     
-    // },
+    },
     category: {
       required: ERROR_MESSAGES.CATEGORY_REQUIRED,
    
@@ -115,9 +103,6 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
     display_order: {
       required: ERROR_MESSAGES. DISPLAY_ORDER_REQUIRED
     }
-    // date:{
-    //   required:ERROR_MESSAGES.INSPECTIONDATE_REQUIRED
-    // }
  };
 
 id;
@@ -195,8 +180,8 @@ this.viewBanner()
   get child_category(): FormControl {
     return this.bannerForm.get("child_category") as FormControl;
   }
-  get date(): FormControl {
-    return this.bannerForm.get("date") as FormControl;
+  get status(): FormControl {
+    return this.bannerForm.get("status") as FormControl;
   }
   get brandArray()
   {
@@ -222,7 +207,7 @@ this.viewBanner()
   categoryList;
   getCategory(){
     this.api
-    .getReqAuth("admin/banner/category-list?parent_id="+0)
+    .getReqAuth("admin/banner/category-list?parent_id=0")
     .subscribe(
       res =>{
         console.log('categort',res)
@@ -278,15 +263,12 @@ this.viewBanner()
   //   formData.append('minimum_value', this.bannerForm.value.minimum_value);
     formData.append('category', this.bannerForm.value.category);
     formData.append('sub_category', this.bannerForm.value.sub_category);
-  //   formData.append('brands',JSON.stringify(this.selectedValue) );
+ formData.append('status',this.bannerForm.value.status );
     
   
     // console.log('sss',formData)
      this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
-      res =>{
-        this.spinner.hide()
-        console.log(res)
-      },
+      res => this.success(res),
       err => this.error(err),
       () => (this.loader = false)
 
@@ -299,6 +281,8 @@ this.viewBanner()
 
     }
 
+ 
+    
   keyPress(event: any) {
     const pattern = /[0-9.]/;
     const inputChar = String.fromCharCode(event.charCode);
@@ -337,6 +321,7 @@ namePress(event: any) {
       event.preventDefault();
   }
 }
+
 changeDiscountType(){
 console.log('from discount change')
   if(this.bannerForm.value.discount_type=='1')
@@ -344,31 +329,38 @@ console.log('from discount change')
   else
   this.discountType="% of Off...."
 }
+
+
+counter(i: number) {
+  return new Array(i);
+}
+choosefile: string = "No file chosen...";
 onSelectFile(event) {
   this.keyValue = true;
   if (event.target.files && event.target.files[0]) {
     var mimeType = event.target.files[0].type;
     var file = event.target.files[0];
-
+    this.choosefile=event.target.files[0].name;
 
     const width = file.naturalWidth;
     const height = file.naturalHeight;
 
-    window.URL.revokeObjectURL( file.src );
-  //  var checkimg = file.toLowerCase();
+    window.URL.revokeObjectURL(file.src);
+    //  var checkimg = file.toLowerCase();
     const type = file.type.split('/');
-  if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+    if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
 
-  }else{
-    this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
-    return false;
-  } 
-  
-   
+    } else {
+      this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+      return false;
+    }
+
+
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]); // read file as data url
     reader.onload = (event: any) => { // called once readAsDataURL is completed
-      this.url = event.result;
+     // this.url = event.result;
+      this.url = event.target.result;
     }
 
 
@@ -379,7 +371,7 @@ onSelectFile(event) {
     setTimeout(() => {
       this.loader = false;
       this.keyValue = false;
-      this.errorMessage="";
+      this.errorMessage = "";
     }, 3000)
     this.loader = true;
 
@@ -390,119 +382,105 @@ errorMessage
 viewBanner(){
   this.spinner.show();
   this.api
-  .getReqAuth("admin/brand/detail?id="+this.id)
+  .getReqAuth("admin/banner/banner-detail?id="+this.id)
   .subscribe(
     res => this.successView(res),
     err => this.error(err),
     () => (this.loader = false)
   );
 }
-success(res) {
-  setTimeout(() => {
-    /** spinner ends after 5 seconds */
-    this.spinner.hide();
-  }, 1000);
-  if(res.status==true){
-    this.router.navigate(['theme/brands'])
-} else {
-  this._util.markError(this.bannerForm);
-}
+productCate(){
+  this.api
+  .getReqAuth("admin/banner/category-list?parent_id=0")
+  .subscribe(
+    res =>{
+      console.log('categort',res)
+this.categoryList=res.result
+console.log('categorlist',this.categoryList)
+    },
+    err => this.error(err),
+    () => (this.loader = false)
+  );
+  }
+
+  productSubCate(id){
+ 
+  this.api.getReqAuth("admin/banner/category-list?parent_id="+id)
+  
+  .subscribe(
+    res => {
+      this.subCategoryList=res.result
+      console.log(this.subCategoryList)
+    },
+    err => this.error(err),
+    () => (this.loader = false)
+  );
 }
 successView(res){
   if(res.status==true){
   var data= res.result;
-  // this.bannerForm.get('title').patchValue('shabbir');
-  // this.bannerForm.get('minimum_value').patchValue(1223);
-  // this.bannerForm.get('available_on').patchValue('brand');
+  this.productCate();
+  this.productSubCate(data['category']);
 
-  // this.bannerForm.get('discount_type').patchValue("flat");
-  // this.bannerForm.get('discount_value').patchValue(1223);
-  // this.bannerForm.get('minimum_value').patchValue(1223);
-  // this.bannerForm.get('minimum_value').patchValue(1223);
-  // this.bannerForm.get('minimum_value').patchValue(1223);
+  Object.keys(this.bannerForm.controls).forEach((control) => {
 
+    this.bannerForm.get(control).patchValue(data[control]);
 
+  });
+
+this.url=data['image'];
+var str = this.url.split('/');
+this.choosefile = str[str.length - 1];
   }
 }
 
-error(res){
-  setTimeout(() => {
-    /** spinner ends after 5 seconds */
-    this.spinner.hide();
-  }, 1000);
-  this._util.markError(res.message);
-}
 
-update()
-{
-  var start1 = '';
-  var end1 = '';
-
-   if(this.bannerForm.value.date){
-     start1=this.bannerForm.value.date.startDate._d;
-     var startDate=new Date(start1)
-      start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
-     end1=this.bannerForm.value.date.endDate._d;
-     var endDate=new Date(end1)
-     end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
-   }
-  console.log(start1)
-  console.log(end1)
-  // if(this.bannerForm.valid)
-  // {
-  console.log(this.bannerForm.value)
-  console.log(this.url1)
-  console.log('json',JSON.stringify(this.selectedValue))
+update(){
+  if(this.bannerForm.valid)
+  {
 
     this.spinner.show();
-  //   const formData = new FormData();
-  //   formData.append('title', this.bannerForm.value.title);
-  //   formData.append('banner_type',this.bannerForm.value.display_order);
-  //  formData.append('display_order','5')
-  // //  formData.append('image', this.url1);
-  // //   formData.append('available_on', this.bannerForm.value.available_on);
-  // //   formData.append('discount_type', this.bannerForm.value.discount_type);
-  // //   formData.append('discount_value', this.bannerForm.value.discount_type);
-  // //   formData.append('minimum_value', this.bannerForm.value.minimum_value);
-  // //   formData.append('category', this.bannerForm.value.category);
-  // //   formData.append('sub_category', this.bannerForm.value.sub_category);
-  // //   formData.append('brands',JSON.stringify(this.selectedValue) );
-    
+    const formData = new FormData();
+formData.append('title', this.bannerForm.value.title);
+formData.append('id',this.id);
+formData.append('banner_type','1');
+formData.append('display_order',this.bannerForm.value.display_order)
+formData.append('image', this.url1);
+formData.append('category', this.bannerForm.value.category);
+formData.append('sub_category', this.bannerForm.value.sub_category);
+formData.append('status',this.bannerForm.value.status );
+this.api.putReqAuth("admin/banner/edit-banner",formData).subscribe(
+  res => this.success(res),
+  err => this.error(err),
+  () => (this.loader = false)
+
+
+);
+
+}
+else
+this._util.markError(this.bannerForm);
+
+}
+
+success(res) {
+  setTimeout(() => {     
+    this.spinner.hide();
+  }, 1000);
+  if (res.status == true) {
+     this._api.showNotification( 'success', res.message );     
+      this.router.navigate(['theme/simplebanners'])
+  } else {
+    this._util.markError(this.bannerForm);
+    this._api.showNotification( 'error', res.message );
+  }
+
+}
+error(res) {
+  setTimeout(() => {     
+    this.spinner.hide();
+  }, 1000);
+  this._api.showNotification( 'error', res.message );
   
-  //   // console.log('sss',formData)
-  //    this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
-  //     res =>{
-  //       console.log(res)
-  //     },
-  //     err => this.error(err),
-  //     () => (this.loader = false)
-
-
-  //   );
-  this.api.getAllActivities({title:this.bannerForm.value.title,
-    banner_type:2,
-    display_order:7,
-    // image:this.url1,
-    available_on:this.bannerForm.value.available_on,
-    minimum_value:this.bannerForm.value.minimum_value,
-    discount_type:this.bannerForm.value.discount_type,
-    discount_value:this.bannerForm.value.discount_value,
-    category:this.bannerForm.value.category,
-    sub_category:this.bannerForm.value.sub_category,
-    // child_category:this.bannerForm.value.child_category,
-    brands:this.selectedValue,
-    banner_start_date:start1,
-    banner_end_date:end1
-
-
-
-
-
-  }).pipe().subscribe(res=>{
-console.log('succes',res)
-this.spinner.hide()
-})
-  
-  // this._util.markError(this.bannerForm)
 }
 }

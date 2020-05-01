@@ -72,7 +72,7 @@ export class SimilarProductComponent implements OnInit {
     product_colour: {
       required: ERROR_MESSAGES.PRODUCT_COLOUR_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
+
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     brand_id: {
@@ -129,7 +129,7 @@ export class SimilarProductComponent implements OnInit {
      product_description_ar: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
      product_size: ["", [Validators.required]],
      product_prize: ["", [Validators.required,rangeValidator(0, 10000)]],
-     product_colour: ["", [Validators.required, Validators.pattern(Regex.spacesDatas)]],
+     product_colour: ["", [Validators.required]],
      brand_id: ["", [Validators.required]],
      quantity: ["", [Validators.required,Validators.pattern(Regex.phoneNumber),rangeValidator(0, 10000)]],
      category_id: [{value:"", disabled: true}, [Validators.required]],
@@ -413,6 +413,7 @@ for (var x = 0; x < ins; x++) {
       );
   }
   state:any;
+  
   successView(res){
     if(res.status==true){
     var data= res.result;
@@ -427,10 +428,15 @@ for (var x = 0; x < ins; x++) {
 
     this.loginForm.get('subCategory').patchValue(data['sub_category']);
     this.loginForm.get('childCategory').patchValue(data['child_category']);
-    this.loginForm.get('discount_range').patchValue({ startDate: data['discount_start_date'], endDate: data['discount_end_date'] })
+    this.loginForm.get('discount_range').patchValue({ startDate:{_d: data['discount_start_date']}, endDate:{_d: data['discount_end_date'] }})
   //  this.loginForm.get
     }
-    this.state=data['product_colour']
+    this.state=data['product_colour'];
+    for (var i = 0; i < data.productMedia.length; i++) {
+      if(data.productMedia[i].media_url){
+        this.urlData.push(data.productMedia[i].media_url);
+      }
+    }
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
