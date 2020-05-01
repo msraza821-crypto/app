@@ -88,7 +88,7 @@ export class DiscountComponent implements OnInit {
       var endDate = new Date(end1)
       end1 = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
     }
-    var url = "admin/discount/list?search=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&fromDate=" + start1 + "&toDate=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=1";
+    var url = "admin/discount/list?search_string=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&start_date=" + start1 + "&end_date=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=1";
     this.api.getReqAuthExport(url).subscribe(
       res => this.downloadFile(res),
       err => this.error(err), () => (this.loader = false)
@@ -133,7 +133,7 @@ export class DiscountComponent implements OnInit {
       var endDate = new Date(end1)
       end1 = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
     }
-    var url = "admin/discount/list?search=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&fromDate=" + start1 + "&toDate=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=" + this.exportData;
+    var url = "admin/discount/list?search_string=" + this.loginForm.value.search + "&status=" + this.loginForm.value.status + "&start_date=" + start1 + "&end_date=" + end1 + "&page=" + this.page + "&limit=" + this.limit + "&isExport=" + this.exportData;
     this.api
       .getReqAuth(url)
       .subscribe(
@@ -200,9 +200,7 @@ export class DiscountComponent implements OnInit {
     console.log(event)
   }
   reset() {
-    // this.createForm();
-    this.loginForm.get('name').patchValue('');
-    this.loginForm.get('range').patchValue('');
+    this.createForm();   
     this.selected = {};
     this.exportData = 0;
     this.start = "";

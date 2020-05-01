@@ -111,10 +111,10 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label for="inputEmail4">Product Price</label>
-                    <input type="text" [formControl]="product_prize" [minlength]="CONFIG?.MINORDER" [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" placeholder="Product Price">
+                    <input type="text" [formControl]="product_price" [minlength]="CONFIG?.MINORDER" [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" placeholder="Product Price">
     
                 
-                    <span class="error text-danger">{{_util.errorMessage(product_prize,FORM_ERROR?.product_prize)}}</span>
+                    <span class="error text-danger">{{_util.errorMessage(product_price,FORM_ERROR?.product_price)}}</span>
                   </div>
                   <div class="form-group col-md-3">
                       <label for="inputEmail4">Product Color</label>

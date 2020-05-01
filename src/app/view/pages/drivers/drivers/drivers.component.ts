@@ -59,12 +59,17 @@ export class DriversComponent implements OnInit {
   createForm() {
     this.loginForm = this._fb.group({
       search: [""],
-      status: [""],
+      status: ["active"],
       range: [""]
     });
-    this.loginForm.get('status').patchValue('active')
+
   }
- 
+  filterSelectedStatus(selectedValue) {
+    console.log('selected value= ' + selectedValue)
+    this.loginForm.get('status').patchValue(selectedValue)
+    this.loadBanners();
+
+  }
   defaultValue() {
     this.selected = '';
   }

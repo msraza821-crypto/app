@@ -59,9 +59,7 @@ agm-map {
 .file-upload .file-select.file-select-disabled:hover .file-select-button{background:#dce4ec;color:#666666;padding:0 10px;display:inline-block;height:40px;line-height:40px;}
 .file-upload .file-select.file-select-disabled:hover .file-select-name{line-height:40px;display:inline-block;padding:0 10px;}
 
-  .breada{
-    font-size: 16px;
-  }
+ 
 header {
     position: absolute;
     top: 0;
