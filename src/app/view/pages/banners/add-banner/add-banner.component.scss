@@ -108,13 +108,39 @@ mr-top1{
     // padding: 0 0;
     // margin: 0.125rem 0 0;
     // font-size: 0.875rem;
-    // color: #23282c;
+    // // color: #23282c;
     // text-align: left;
-    // list-style: none;
+    // line-height: 1.5;
+    // color: #5c6873;
     // background-color: #fff;
     // background-clip: padding-box;
-    // border: 1px solid #c8ced3;
-    // border-radius: 0.25rem;
-    width: 50px!important;
-    padding:0;
+    // border: 1px solid #e4e7ea;
+    // // width: 50px!important;
+    // // padding:0;
 }
+
+.d-inline-block {
+    display: inline-block !important;
+    width: 100%!important;
+}
+
+
+.dropdown-menu[_ngcontent-jde-c4] {
+    width: 100%!important;
+    padding: 0;
+}
+
+.dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+    position:absolute;
+    right:10px;
+    top:15px;
+}
+

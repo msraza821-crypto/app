@@ -122,7 +122,7 @@ export const ERROR_MESSAGES = {
     SUBCATEGORY_REQUIRED:'Sub-Category is required',
     CHILD_CATEGORY_REQUIRED:'Child-Category is required',
     DISCOUNT_TYPE_REQUIRED:'Discount type is required',
-    DISCOUNT_VALUE_REQUIRED:'Discount price is required',
+    DISCOUNT_VALUE_REQUIRED:'Discount is required',
 
      PRODUCT_SIZE_REQUIRED:'Product size is rquired',
      PRODUCT_PRIZE_REQUIRED:'Product Price is required',

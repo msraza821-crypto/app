@@ -19,17 +19,17 @@
           <div class="col-sm-12 col-lg-12" style="margin-left: -17px;">
 
 
-            <div class="col-md-3 float-left">
+            <div class="col-md-2 float-left">
                <input type="text" class="form-control" placeholder="Search by driver name" [formControl]='search'>
               </div>
           
            
-            <div class="col-md-3 float-left">               
+            <div class="col-md-2 float-left">               
               <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
               [formControl]="range"
                 placeholder="Filter Date"  />
             </div>
-            <div class="col-md-6 float-left" style="margin:0px -14px 10px 0px">
+            <div class="col-md-8 float-left" style="margin:0px -14px 10px 0px">
              
               <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1"   style="margin-right: -29px;">Reset</button></a>
               <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>

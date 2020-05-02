@@ -70,6 +70,7 @@
                         <th scope="col">From Date</th>
                         <th scope="col">Expiry Date</th>
                         <th scope="col">Created At</th>
+                        <th scope="col">Created At</th>
                         <th scope="col">Status</th>
                        
                         <th scope="col" style="min-width:100px">Actions</th>
@@ -82,22 +83,23 @@
                       totalItems: totalRec };let ie=index">
                       <td>  {{ ((limit * (page - 1)) + ie+1) }}</td>
                         <td scope="row">{{i.title}}</td>
-                          <td scope="row">{{i.banner_start_date | date:'longDate'}}
+                          <td scope="row">{{i.banner_start_date | slice:0:10}}
                         </td>
-                        <td> {{i.banner_end_date|date:'longDate'}}</td>
+                        <td> {{i.banner_end_date|slice:0:10}}</td>
                         
-                        <td> {{i.created_at | date:'medium'}}
+                        <td> {{i.created_at }}
                       </td>
+                      <td>{{i.display_order}}</td>
                       <td  *ngIf="i.status=='active'" >Active
                     </td>
                     <td  *ngIf="i.status=='inactive'" >Inactive
                       </td>
                        
                         <td >
-                            <a [routerLink]="['/theme/banners/view',{id :i?.id}]" title="View Brand"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
-                          <a [routerLink]="['/theme/banners/add',{id :i?.id}]" title="Edit Brand"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
-                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Block Banner"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
-                          <a (click)="openVerticallyCenteredPopup(poup1,i)" *ngIf="i.status=='inactive'" title="Unblock Banner">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
+                            <a [routerLink]="['/theme/banners/view',{id :i?.id}]" title="View Banner"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
+                          <a [routerLink]="['/theme/banners/add',{id :i?.id}]" title="Edit Banner"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
+                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Inactive Banner"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
+                          <a (click)="openVerticallyCenteredPopup(poup1,i)" *ngIf="i.status=='inactive'" title="Activate Banner">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
                           <a (click)="openVerticallyCentered(poup,i)" title="Delete Banner"> <i style="font-size:24px"
                               class="fa fa-trash-o"></i></a>
                         </td>
@@ -171,7 +173,7 @@
     <ng-template #poup2 let-modal>
         <!----- Header  ------>
         <section id="modal-header">
-          <h5 class="p-3 primary-color-bg bg-dark text-center">Inactive  Banner</h5>
+          <h5 class="p-3 primary-color-bg bg-dark text-center">Inactivate  Banner</h5>
           <div class="">
             <div class="row pt-4">
               <div class="col-md-12 frgtpass-head">

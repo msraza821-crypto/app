@@ -55,7 +55,7 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
   {
     this.driverForm=this.fb.group({
       name:['',[Validators.required,Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-      email:['',[Validators.pattern(Regex.email)]],
+      email:['',[Validators.required,Validators.pattern(Regex.email)]],
       license:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
       country_code:[''],
       mobile:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
