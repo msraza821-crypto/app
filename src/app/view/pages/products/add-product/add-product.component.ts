@@ -70,7 +70,7 @@ export class AddProductComponent implements OnInit {
 
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
-    product_prize: {
+    product_price: {
       required: ERROR_MESSAGES.PRODUCT_PRIZE_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NUMBER_LENGTH}`,
       pattern: ERROR_MESSAGES.NUMBER_REQUIRED,
@@ -142,7 +142,7 @@ export class AddProductComponent implements OnInit {
       product_name_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_MAX)]],
       product_description_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       product_size: ["", [Validators.required]],
-      product_prize: ["", [Validators.required, rangeValidator(0, 10000)]],
+      product_price: ["", [Validators.required, rangeValidator(0, 10000)]],
       product_colour: ["", [Validators.required]],
       brand_id: ["", [Validators.required]],
       quantity: ["", [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
@@ -311,8 +311,8 @@ export class AddProductComponent implements OnInit {
     return this.loginForm.get("discount_value") as FormControl;
   }
 
-  get product_prize(): FormControl {
-    return this.loginForm.get("product_prize") as FormControl;
+  get product_price(): FormControl {
+    return this.loginForm.get("product_price") as FormControl;
   }
   get product_colour(): FormControl {
     return this.loginForm.get("product_colour") as FormControl;
@@ -565,9 +565,10 @@ export class AddProductComponent implements OnInit {
       formData.append('product_description_en', this.loginForm.value.product_description_en);
       formData.append('product_name_ar', this.loginForm.value.product_name_ar);
       formData.append('product_description_ar', this.loginForm.value.product_description_ar);
-
+      formData.append('attribute_description_ar', this.loginForm.value.product_description_en);
+      formData.append('attribute_description_en', this.loginForm.value.product_description_ar);
       formData.append('product_size', this.loginForm.value.product_size);
-      formData.append('product_prize', this.loginForm.value.product_prize);
+      formData.append('product_price', this.loginForm.value.product_price);
       formData.append('product_colour', this.loginForm.value.product_colour);
       formData.append('brand_id', this.loginForm.value.brand_id);
       formData.append('quantity', this.loginForm.value.quantity);
@@ -620,9 +621,10 @@ export class AddProductComponent implements OnInit {
       formData.append('product_description_en', this.loginForm.value.product_description_en);
       formData.append('product_name_ar', this.loginForm.value.product_name_ar);
       formData.append('product_description_ar', this.loginForm.value.product_description_ar);
-
+      formData.append('attribute_description_ar', this.loginForm.value.product_description_en);
+      formData.append('attribute_description_en', this.loginForm.value.product_description_ar);
       formData.append('product_size', this.loginForm.value.product_size);
-      formData.append('product_prize', this.loginForm.value.product_prize);
+      formData.append('product_price', this.loginForm.value.product_price);
       formData.append('product_colour', this.loginForm.value.product_colour);
       formData.append('brand_id', this.loginForm.value.brand_id);
       formData.append('quantity', this.loginForm.value.quantity);
