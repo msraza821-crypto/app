@@ -55,13 +55,13 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
   {
     this.driverForm=this.fb.group({
       name:['',[Validators.required,Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-      email:['',[Validators.required,Validators.pattern(Regex.email)]],
+      email:['',[Validators.pattern(Regex.email)]],
       license:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
       country_code:[''],
       mobile:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
       plate_number:['',[Validators.required,Validators.maxLength(CONFIG.MAX_PLAT_NUMBER),Validators.minLength(CONFIG.MIN_PLATE_NUMBER)]],
       vehicle_type:['',[Validators.required]],
-      address:['',[Validators.required]]
+      address:['',[Validators.required,Validators.maxLength(CONFIG.ADDRESS_MAX_LENGTH)]]
       
       
     
@@ -102,9 +102,9 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
   },
   address:{
     required:ERROR_MESSAGES.PROPERTY_ADDRESS_REQUIRED,
-    maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.ADDRESS_LENGTH}`,
+    maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.ADDRESS_MAX_LENGTH}`,
   
-    minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.ADDRESS_LENGTH}`
+    minlength: `${ERROR_MESSAGES.MIN_LENGTH} 10`
   },
   license:{
     required:ERROR_MESSAGES.LICENSE_REQUIRED,
@@ -203,7 +203,8 @@ this.loadDriverDetails()
     console.log(res)
     this.driverForm.get('name').patchValue(res.result.name)
     this.driverForm.get('email').patchValue(res.result.email)
-    this.driverForm.get('mobile').patchValue(res.result.contact_number)
+    var mobile=res.result.contact_number.slice(3)
+    this.driverForm.get('mobile').patchValue(res.result.contact_number.slice(6))
 
     this.driverForm.get('license').patchValue(res.result.license_number)
     this.driverForm.get('plate_number').patchValue(res.result.plate_number)

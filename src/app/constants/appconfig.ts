@@ -40,5 +40,6 @@ export const CONFIG = {
     MINCODE:5,
     MAXCODE:15,
     MINORDER:1,
-    MAXORDER:5
+    MAXORDER:5,
+    ADDRESS_MAX_LENGTH:120
 };

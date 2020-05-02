@@ -150,6 +150,7 @@ getProductUsingCategory(){
     discount_value: {
       required: ERROR_MESSAGES.DISCOUNT_VALUE_REQUIRED,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
+      range: ERROR_MESSAGES.RANGE
      
     },
     category: {
@@ -606,13 +607,29 @@ namePress(event: any) {
       event.preventDefault();
   }
 }
+
+
+numberPress(event: any) {
+  const pattern = /[0-9]/;
+  const inputChar = String.fromCharCode(event.charCode);
+
+  if (this.bannerForm.value.discount_value>=10) {    
+    
+      event.preventDefault();
+  }
+}
+
+
+
 changeDiscountType(){
 console.log('from discount change')
   if(this.bannerForm.value.discount_type=='1')
   this.discountType="Discount Value"
   else
-  this.discountType="% Of"
+  this.discountType="% Of OFF"
 }
+
+
 choosefile: string = "No file chosen...";
 onSelectFile(event) {
   this.keyValue = true;
@@ -621,32 +638,25 @@ onSelectFile(event) {
     var file = event.target.files[0];
     this.choosefile=event.target.files[0].name;
 
-
     const width = file.naturalWidth;
     const height = file.naturalHeight;
-    console.log('wiudth',file.size)
-    console.log('height',height)
 
-    window.URL.revokeObjectURL( file.src );
-  //  var checkimg = file.toLowerCase();
+    window.URL.revokeObjectURL(file.src);
+    //  var checkimg = file.toLowerCase();
     const type = file.type.split('/');
-  if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+    if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
 
-  }else{
-    this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
- setTimeout(() => {
-      this.loader = false;
-      this.keyValue = false;
-      this.errorMessage="";
-    }, 3000)
-    return false;
-  } 
-  
-   
+    } else {
+      this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+      return false;
+    }
+
+
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]); // read file as data url
     reader.onload = (event: any) => { // called once readAsDataURL is completed
-      this.url = event.result;
+     // this.url = event.result;
+      this.url = event.target.result;
     }
 
 
@@ -657,7 +667,7 @@ onSelectFile(event) {
     setTimeout(() => {
       this.loader = false;
       this.keyValue = false;
-      this.errorMessage="";
+      this.errorMessage = "";
     }, 3000)
     this.loader = true;
 
@@ -756,8 +766,10 @@ this.getProductUsingCategory()
 var mydate=res.result.banner_start_date+" "+res.result.banner_end_date
 this.bannerForm.get('date').patchValue({ startDate:{_d: res.result.banner_start_date}, endDate:{_d:res.result.banner_end_date }})
 this.bannerForm.get('display_order').patchValue(res.result.display_order)
-this.url=res.result.image;
-this.choosefile=res.result.image
+
+this.url=data['image'];
+var str = this.url.split('/');
+this.choosefile = str[str.length - 1];
 this.bannerForm.get("status").patchValue(res.result.status)
   
 }

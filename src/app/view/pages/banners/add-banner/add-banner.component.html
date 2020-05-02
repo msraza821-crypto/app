@@ -23,7 +23,7 @@
                 <span class="error text-danger">{{_util.errorMessage(title,FORM_ERROR?.title)}}</span>
               </div>
               <div class="form-group col-md-2 ">
-                <b>Minimum Value</b>
+                <b>Min Order Value</b>
                 <input type="text" class="form-control" (keypress)="keyPress($event)"
                   placeholder="Minimum Value" [formControl]="minimum_value">
                 <span class="error text-danger">{{_util.errorMessage(minimum_value,FORM_ERROR?.minimum_value)}}</span>
@@ -35,23 +35,37 @@
                   (change)="changeDiscountType()">
                   <option value="">Please Select</option>
                   <option value="1">Flat </option>
-                  <option value="2">% of Off</option>
+                  <option value="2">Percentage</option>
                 </select>
+              
                 <span class="error text-danger"> {{_util.errorMessage(discount_type,FORM_ERROR?.discount_type)}}</span>
               
             </div>
-
-            <div class="col-md-2 float-left">
+            
+            <div class="col-md-2 float-left" *ngIf="bannerForm.value.discount_type==1">
               <b>Discount Value</b>
               <div class="form-group ">
 
-                <input type="text" class="form-control" (keypress)="keyPress($event)" placeholder="{{discountType}}"
+                <input type="text" class="form-control"    (keypress)="keyPress($event)"  placeholder="{{discountType}}"
                   [formControl]="discount_value">
                 <span class="error text-danger">
                   {{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
               </div>
             
           </div>
+
+          <div class="col-md-2 float-left"  *ngIf="bannerForm.value.discount_type==2">
+            <b>Discount Percentage(%)</b>
+            <div class="form-group ">
+
+              <input type="text" class="form-control" (keypress)="numberPress($event)" (keypress)="keyPress($event)" placeholder="{{discountType}}"
+                [formControl]="discount_value" maxlength="3" min="0" max="100"> 
+              <span class="error text-danger">
+                {{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
+            </div>
+          
+        </div>
+
           <div class="col-md-2 float-left">
             <b>  Available On</b>
             <select class="form-control" [formControl]="available_on" (change)="changeProduct()">

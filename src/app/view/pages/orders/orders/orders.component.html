@@ -58,7 +58,7 @@
               <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div> -->
             <div class="card text-white ">
               <div class="pb-0"> 
-                <table class="table table-striped"  *ngIf="myStatus=='pending'">
+                <table class="table table-striped"  >
                   <thead>
                     <tr>
                         <th scope="col">S. No.</th>
@@ -72,7 +72,7 @@
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
-                  <tbody *ngIf="collection.length>0">
+                  <tbody   *ngIf="myStatus=='pending'" *ngIf="collection.length>0">
                     <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                     itemsPerPage: limit,
                     currentPage: page,
