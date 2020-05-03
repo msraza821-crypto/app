@@ -9,6 +9,8 @@ import { LoaderButtonComponent } from '../shared/loader-button/loader-button.com
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 import { ColorHueModule } from 'ngx-color/hue';
+import { OnlyNumberDirective } from 'src/app/directive/only-number.directive';
+
 const pageRoutes: Routes = [
 
   { path: '', canActivate: [],  data: { title: 'Products' },children:[{path:'',component: DiscountComponent ,data:{title:''}},
@@ -23,12 +25,11 @@ const pageRoutes: Routes = [
 @NgModule({
   imports: [
     NgxPaginationModule,NgxDaterangepickerMd,
-    CommonModule, SharedModule,ColorHueModule, 
-
+    CommonModule, SharedModule,ColorHueModule,
     RouterModule.forChild(pageRoutes),
     
   ],
-  declarations: [DiscountComponent,AddDiscountComponent,DetailDiscountComponent],
+  declarations: [DiscountComponent,AddDiscountComponent,DetailDiscountComponent,OnlyNumberDirective],
   entryComponents: []
 })
 export class DiscountModule { }

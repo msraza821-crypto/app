@@ -49,6 +49,7 @@ import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ColorSketchModule } from 'ngx-color/sketch';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
+import { OnlyNumberDirective } from './directive/only-number.directive';
 const customNotifierOptions: NotifierOptions = {
   position: {
 		horizontal: {

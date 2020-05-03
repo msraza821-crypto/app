@@ -67,6 +67,7 @@ export class AddCategoryComponent implements OnInit {
        namear: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_NAME),Validators.minLength(CONFIG.MAX_B)]],
        descriptionar: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]], 
       statusKey: ["", [Validators.required]]
+    ,is_banner:[this.isRemberMeChecked]
     });
   }
   ngOnInit() {
@@ -93,8 +94,11 @@ export class AddCategoryComponent implements OnInit {
   get statusKey(): FormControl {
     return this.loginForm.get("statusKey") as FormControl;
   }
-
-
+  get is_banner(): FormControl {
+    return this.loginForm.get("is_banner") as FormControl;
+  }
+  
+  isRemberMeChecked:boolean = false;
   imageFormats: Array<string> = ['jpeg','png','jpg'];
   choosefile: string = "No file chosen...";
   onSelectFile(event) {
@@ -160,6 +164,8 @@ export class AddCategoryComponent implements OnInit {
   error(res){
     this._api.showNotification( 'error', res.message );
   }
+  trueValue:number=1
+  falseValue:number=0
   submit() {
     console.log(this.loginForm.value)
     if (this.loginForm.valid) {
@@ -173,6 +179,11 @@ export class AddCategoryComponent implements OnInit {
       formData.append('name_ar', this.loginForm.value.namear.trim());
       formData.append('description_ar', this.loginForm.value.descriptionar.trim());
       formData.append('status', this.loginForm.value.statusKey);
+      if(this.loginForm.value.is_banner==true){
+        formData.append('is_banner', '1');
+      }else{
+        formData.append('is_banner','0');
+      }
       console.log(formData)
       this.api
       .postReqAuth2("admin/category/add",formData).subscribe(
@@ -206,6 +217,11 @@ export class AddCategoryComponent implements OnInit {
       formData.append('name_ar', this.loginForm.value.namear.trim());
       formData.append('description_ar', this.loginForm.value.descriptionar.trim());
       formData.append('status', this.loginForm.value.statusKey);
+      if(this.loginForm.value.is_banner==true){
+        formData.append('is_banner', '1');
+      }else{
+        formData.append('is_banner','0');
+      }
       console.log(formData)
       this.api
       .putReqAuth("admin/category/edit",formData).subscribe(
@@ -245,6 +261,11 @@ id:string=null;
     this.url=data.category_image;
     var str = this.url.split('/');
     this.choosefile = str[str.length - 1];
+    if(data.is_banner==1){
+      this.loginForm.get('is_banner').patchValue(true);
+    }else{
+      this.loginForm.get('is_banner').patchValue(false);
+    }
     }
   }
   //  this.addProperty.get('beds').patchValue(property['bed']);

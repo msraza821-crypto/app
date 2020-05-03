@@ -61,7 +61,7 @@ export class AddSubcategoryComponent implements OnInit {
       required: ERROR_MESSAGES.STATUS_REQUIRED
     }
   };
-
+  isRemberMeChecked:boolean=false;
   createForm() {
     this.loginForm = this._fb.group({
       name_pe: [this.data.name],
@@ -69,8 +69,8 @@ export class AddSubcategoryComponent implements OnInit {
       name: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_NAME),Validators.minLength(CONFIG.MAX_B)]],
       descriptionen: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]],
        namear: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_NAME),Validators.minLength(CONFIG.MAX_B)]],
-       descriptionar: ["", [Validators.required,Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]],
-    
+       descriptionar: ["", [Validators.required,Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]]
+       ,is_banner:[this.isRemberMeChecked],
       statusKey: ["", [Validators.required]]
     });
   }
@@ -109,7 +109,9 @@ export class AddSubcategoryComponent implements OnInit {
   get statusKey(): FormControl {
     return this.loginForm.get("statusKey") as FormControl;
   }
-
+  get is_banner(): FormControl {
+    return this.loginForm.get("is_banner") as FormControl;
+  }
 
   imageFormats: Array<string> = ['jpeg','png','jpg'];
   choosefile: string = "No file chosen...";
@@ -197,6 +199,11 @@ export class AddSubcategoryComponent implements OnInit {
       formData.append('description_ar', this.loginForm.value.descriptionar.trim());
       formData.append('status', this.loginForm.value.statusKey);
       formData.append('parent_id', this.data.id);
+      if(this.loginForm.value.is_banner==true){
+        formData.append('is_banner', '1');
+      }else{
+        formData.append('is_banner','1');
+      }
       console.log(formData)
       this.api
       .postReqAuth2("admin/category/add",formData).subscribe(
@@ -232,6 +239,11 @@ export class AddSubcategoryComponent implements OnInit {
       formData.append('name_ar', this.loginForm.value.namear);
       formData.append('description_ar', this.loginForm.value.descriptionar);
       formData.append('status', this.loginForm.value.statusKey);
+      if(this.loginForm.value.is_banner==true){
+        formData.append('is_banner', '1');
+      }else{
+        formData.append('is_banner','1');
+      }
       console.log(formData)
       this.api
       .putReqAuth("admin/category/edit",formData).subscribe(
@@ -289,6 +301,11 @@ viewSubCate(){
     this.url=data.category_image;
     var str = this.url.split('/');
     this.choosefile = str[str.length - 1];
+    if(data.is_banner==1){
+      this.loginForm.get('is_banner').patchValue(true);
+    }else{
+      this.loginForm.get('is_banner').patchValue(false);
+    }
     }
   }
   //  this.addProperty.get('beds').patchValue(property['bed']);
