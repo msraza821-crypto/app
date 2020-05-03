@@ -58,7 +58,7 @@
             <b>Discount Percentage(%)</b>
             <div class="form-group ">
 
-              <input type="text" class="form-control" (keypress)="numberPress($event)" (keypress)="keyPress($event)" placeholder="{{discountType}}"
+              <input type="text" class="form-control"  appOnlyNumber  placeholder="{{discountType}}"
                 [formControl]="discount_value" maxlength="3" min="0" max="100"> 
               <span class="error text-danger">
                 {{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
@@ -101,7 +101,7 @@
 
               <div class="col-md-2 float-left" >
                 <b>Status</b>
-                <select class="form-control" [formControl]="status">
+                <select class="form-control" [formControl]="status">suod ng <s></s>
                   <option value="">Please Select</option>
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
@@ -114,7 +114,7 @@
                 <b> Brand<span style="color:red">*</span></b><br/>
               
                   <div ngbDropdown class="" style="width:100%">
-                    <button class="btn btn-outline-primary" id="dropdownForm1" type="button"  ngbDropdownToggle style="width:100%;padding-left:10px;padding-right:0;text-align: left;color:#5c6873">Please Select
+                    <button class="btn btn-outline-primary form-control" id="dropdownForm1" type="button"  ngbDropdownToggle style="width:100%;padding-left:10px;padding-right:0;text-align: left;color:#5c6873">Please Select
                       </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownForm1" style="width:100% !important">
   

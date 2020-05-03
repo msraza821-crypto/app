@@ -6,6 +6,7 @@ import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
 import { rangeValidator } from 'src/app/validators/range.validator';
+import { OnlyNumberDirective }  from './../../../../directive/only-number.directive'
 
 
 
@@ -59,7 +60,7 @@ showPage=false;
   createForm()
   {
     this.bannerForm=this.fb.group({
-      title:['',[Validators.required,Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      title:['',[Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
       minimum_value:['',[Validators.required, rangeValidator(0, 10000),Validators.pattern(Regex.pricePattern)]],
       available_on:['',[Validators.required]],
       discount_type:['',[Validators.required]],
