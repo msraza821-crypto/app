@@ -70,7 +70,7 @@
                     </div>
                    <div class="form-group col-md-3">
                         <label for="inputEmail4">Discount Price</label>
-                        <input type="text" [formControl]="promo_discount" [minlength]="CONFIG?.MINORDER" [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
+                        <input type="number" [formControl]="promo_discount" (keypress) = "changeNumber($event)"  appOnlyNumber [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
         
                     
                         <span class="error text-danger">{{_util.errorMessage(promo_discount,FORM_ERROR?.promo_discount)}}</span>

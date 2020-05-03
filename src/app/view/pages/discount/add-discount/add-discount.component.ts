@@ -15,7 +15,8 @@ import { ColorEvent } from 'ngx-color';
 })
 export class AddDiscountComponent implements OnInit {
 
-
+min:Number=0;
+max:Number=10000;
   loader = false;
   CONFIG = CONFIG;
   placeHolderText: string = "Discount Price";
@@ -96,7 +97,7 @@ export class AddDiscountComponent implements OnInit {
       promo_type: ["", [Validators.required]],
       promocode: ["", [Validators.required, Validators.minLength(CONFIG.MINCODE), Validators.maxLength(CONFIG.MAXCODE)]],
       min_order_value: ["", [Validators.required, rangeValidator(0, 10000), Validators.pattern(Regex.phoneNumbers)]],
-      promo_discount: ["", [Validators.required, rangeValidator(0, 10000), Validators.pattern(Regex.phoneNumbers)]],
+      promo_discount: ["", [Validators.required, rangeValidator(0, 10000),Validators.min(0),Validators.max(10000), Validators.pattern(Regex.phoneNumbers)]],
       discount_range: ["", [Validators.required]],
       statusKey: ["", [Validators.required]],
       assignment: ["", [Validators.required]],
@@ -276,11 +277,36 @@ export class AddDiscountComponent implements OnInit {
       this._util.markError(this.loginForm);
     }
   }
+
+  isNumber(event) {
+
+    var str = event.target.value;
+    if (str>this.max) {
+        return false;
+    }
+    return true;
+}
+changeNumber(e){
+  var str = e.target.value;
+  var input = e.target;
+    var value = Number(input.value);
+    var key = Number(e.key);
+    if (Number.isInteger(key)) {
+      value = Number("" + value + key);
+      if (value > this.max) {
+        return false;
+      }
+      this.loginForm.get('promo_discount').patchValue(str)
+    }
+
+}
   changeType(event) {
 
-
+    this.loginForm.get('promo_discount').patchValue('');
     console.log(event.target.value);
     if (event.target.value == 2) {
+      this.min=0;
+      this.max=100;
       this.loginForm.get('promo_discount').setValidators([Validators.required, rangeValidator(0, 100)]);
       this.loginForm.get('promo_discount').updateValueAndValidity();
       this.placeHolderText = "Percentage Discount";
@@ -290,6 +316,8 @@ export class AddDiscountComponent implements OnInit {
       this.loginForm.get('promo_discount').updateValueAndValidity();
       this.placeHolderText = "Discount Price";
       this.FORM_ERROR.promo_discount.range = ERROR_MESSAGES.RANGE;
+      this.min=0;
+      this.max=10000;
     }
 
   }

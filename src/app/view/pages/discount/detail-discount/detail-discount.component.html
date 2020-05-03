@@ -24,9 +24,14 @@
                               <label class="float-left"> <b > Promo Value: </b></label>
                                <p>{{data.promo_discount}}</p>
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6" *ngIf="data.promo_type==1">
                                 <label class="float-left"> <b >Promo Type : </b></label>
-                                 <p>{{data.promo_type}}</p>
+                                 <p>Percentage</p>
+                               </div>
+
+                               <div class="col-md-6" *ngIf="data.promo_type==2">
+                                <label class="float-left"> <b >Promo Type : </b></label>
+                                 <p>Flat</p>
                                </div>
                      
          

@@ -49,7 +49,7 @@
           </div>
           <div class="card-body">
             <div class="col-sm-12 col-lg-12">
-=
+
               <div class="card text-white ">
                 <div class="card-body pb-0 ">
                   <table class="table table-striped" style="overflow: auto;padding:20px">
@@ -92,8 +92,8 @@
                         <td>
                             <a [routerLink]="['/theme/simplebanners/view',{id :i?.id}]" title="View Banner"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
                           <a [routerLink]="['/theme/simplebanners/add',{id :i?.id}]" title="Edit Banner"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
-                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Block Banner"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
-                          <a (click)="openVerticallyCenteredPopup(poup1,i)" *ngIf="i.status=='inactive'" title="Unblock Banner">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
+                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Active Banner"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
+                          <a (click)="openVerticallyCenteredPopup(poup1,i)" *ngIf="i.status=='inactive'" title="Inactive Banner">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
                           <a (click)="openVerticallyCentered(poup,i)" title="Delete Banner"> <i style="font-size:24px"
                               class="fa fa-trash-o"></i></a>
                         </td>

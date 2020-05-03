@@ -78,6 +78,10 @@
               </select>
             
             <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+            <br>
+            <br>
+            <input type="checkbox" [formControl]="is_banner" id="remember_me"  class="largerCheckbox" name="_remember_me" checked/>
+            <label for="remember_me">&nbsp;Show as Banner</label>
           </div>
           </div>
 
