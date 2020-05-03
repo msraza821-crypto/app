@@ -50,7 +50,10 @@ export class DriversComponent implements OnInit {
   }
   start = "";
   end = "";
+
+  hell="hello"
   ngOnInit(): void {
+    console.log('hello',this.hell.slice(1, 3))
     
     this.loadBanners();
 

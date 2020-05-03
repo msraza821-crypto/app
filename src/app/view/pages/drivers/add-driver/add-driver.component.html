@@ -16,26 +16,26 @@
                 <form>
                 <div class="row">
                     <div class="col-sm-3">
-                        <label><b>Driver Name</b></label>
-                        <input type="text"  class="form-control" (keypress)="namePress($event)" placeholder="Enter Driver Name" [formControl]="name">
+                        <label><b>Driver Name<span style="color:red">*</span></b></label> 
+                        <input type="text"  class="form-control" (keypress)="namePress($event)" placeholder="Enter Driver Name" [formControl]="name" maxlength="50">
                         <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
                     </div>
 
 
                     <div class="col-sm-3">
-                        <label><b>Driver Email</b></label>
-                        <input type="text"  class="form-control" placeholder="Enter Driver Email" [formControl]="email">
+                        <label><b>Driver Email<span style="color:red">*</span></b></label>
+                        <input type="text"  class="form-control" placeholder="Enter Driver Email" [formControl]="email" >
                         <span class="error text-danger">{{_util.errorMessage(email,FORM_ERROR?.email)}}</span>
                     </div>
 
                     <div class="col-sm-3">
-                        <label><b>Driver license Number</b></label>
-                        <input type="text"  class="form-control" placeholder="Enter Driver License" [formControl]="license">
+                        <label><b>Driver license Number<span style="color:red">*</span></b></label>
+                        <input type="text"  class="form-control" placeholder="Enter Driver License" [formControl]="license" maxlength="15">
                         <span class="error text-danger">{{_util.errorMessage(license,FORM_ERROR?.license)}}</span>
                     </div>
 
                     <div class="col-sm-3 ">
-                        <label><b>Vehicle Type </b></label><br/>
+                        <label><b>Vehicle Type<span style="color:red">*</span></b></label><br/>
                         <select class="form-control" [formControl]="vehicle_type">
                             <option value="">please select</option>
                             <option value="2 Wheeler">2 Wheeler</option>
@@ -46,24 +46,24 @@
                 
 
                     <div class="col-sm-4 mr-top1">
-                        <label><b>Driver Mobile Number</b></label>
+                        <label><b>Driver Mobile Number<span style="color:red">*</span></b></label>
                         <div class="row">
-                            <div class="col-sm-4">
-                                <select class="form-control" [formControl]="country_code">
+                            <div class="col-sm-3">
+                                <select class="form-control" [formControl]="country_code" [disabled]="true">
                                     <!-- <option value="">please </option> -->
                                     <option value="">+974</option>
                                 </select>
                             </div>
-                            <div class="col-sm-8">
-                        <input type="text"  class="form-control" placeholder="Enter Mobile  Number" (keypress)="numberPress($event)" [formControl]="mobile">
+                            <div class="col-sm-9" style="padding-left:0px;">
+                        <input type="text"  class="form-control" placeholder="Enter Mobile  Number" (keypress)="numberPress($event)" [formControl]="mobile" maxlength="15">
                         <span class="error text-danger">{{_util.errorMessage(mobile,FORM_ERROR?.mobile)}}</span>
                         </div>
                         </div>
                     </div>
 
                     <div class="col-sm-3 float-right mr-top1">
-                        <label><b>Plate Number</b></label>
-                        <input type="text"  class="form-control" placeholder="Enter Plate Number" [formControl]="plate_number">
+                        <label><b>Plate Number<span style="color:red">*</span></b></label>
+                        <input type="text"  class="form-control" placeholder="Enter Plate Number" [formControl]="plate_number"   maxlength="10">
                         <span class="error text-danger">{{_util.errorMessage(plate_number,FORM_ERROR?.plate_number)}}</span>
                     </div>
 
@@ -73,8 +73,8 @@
                  
 
                     <div class="col-sm-5 mr-top1">
-                        <label><b>Driver Address</b></label>
-                        <textarea class="form-control"  style="min-height:100px" placeholder="Enter Driver Address" [formControl]="address"> </textarea>
+                        <label><b>Driver Address<span style="color:red">*</span></b></label>
+                        <textarea class="form-control"  style="min-height:100px" placeholder="Enter Driver Address" [formControl]="address"  maxlength="120"> </textarea>
                         <span class="error text-danger">{{_util.errorMessage(address,FORM_ERROR?.address)}}</span>
                     </div>
                    
