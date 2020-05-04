@@ -37,7 +37,7 @@
                     <div class="col-sm-3 ">
                         <label><b>Vehicle Type<span style="color:red">*</span></b></label><br/>
                         <select class="form-control" [formControl]="vehicle_type">
-                            <option value="">please select</option>
+                            <option value="">Please Select</option>
                             <option value="2 Wheeler">2 Wheeler</option>
                             <option value="4 Wheeler">4 Wheeler</option>
                         </select>
@@ -55,7 +55,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-9" style="padding-left:0px;">
-                        <input type="text"  class="form-control" placeholder="Enter Mobile  Number" (keypress)="numberPress($event)" [formControl]="mobile" maxlength="15">
+                        <input type="text"  class="form-control" placeholder="Enter Mobile  Number" (keypress)="numberPress($event)" [formControl]="mobile" [maxlength]='CONFIG.MOBILE_LENGTH'>
                         <span class="error text-danger">{{_util.errorMessage(mobile,FORM_ERROR?.mobile)}}</span>
                         </div>
                         </div>
@@ -63,7 +63,7 @@
 
                     <div class="col-sm-3 float-right mr-top1">
                         <label><b>Plate Number<span style="color:red">*</span></b></label>
-                        <input type="text"  class="form-control" placeholder="Enter Plate Number" [formControl]="plate_number"   maxlength="10">
+                        <input type="text"  class="form-control" placeholder="Enter Plate Number" [formControl]="plate_number"    [maxlength]='CONFIG.MOBILE_MIN_LENGTH'>
                         <span class="error text-danger">{{_util.errorMessage(plate_number,FORM_ERROR?.plate_number)}}</span>
                     </div>
 
@@ -74,7 +74,7 @@
 
                     <div class="col-sm-5 mr-top1">
                         <label><b>Driver Address<span style="color:red">*</span></b></label>
-                        <textarea class="form-control"  style="min-height:100px" placeholder="Enter Driver Address" [formControl]="address"  maxlength="120"> </textarea>
+                        <textarea class="form-control"  style="min-height:100px" placeholder="Enter Driver Address" [formControl]="address"  [maxlength]='CONFIG.ADDRESS_MAX_LENGTH'> </textarea>
                         <span class="error text-danger">{{_util.errorMessage(address,FORM_ERROR?.address)}}</span>
                     </div>
                    

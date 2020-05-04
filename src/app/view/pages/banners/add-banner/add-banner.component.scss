@@ -144,3 +144,20 @@ mr-top1{
     top:15px;
 }
 
+.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
+    color: #fff;
+    background-color: white;
+    border-color: #20a8d8;
+}
+
+
+.btn-outline-primary:not(:disabled):not(.disabled):hover, .btn-outline-primary:not(:disabled):not(.disabled).hover, .show > .btn-outline-primary.dropdown-toggle {
+    color: #fff;
+    background-color: white;
+    border-color: #20a8d8;
+}
+
+.btn-outline-primary {
+    color: #20a8d8;
+    border: 1px solid #e4e7ea;
+}

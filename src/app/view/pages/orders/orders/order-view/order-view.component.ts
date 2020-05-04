@@ -64,8 +64,8 @@ productList=[]
   openVerticallyCentered(poup, data) {
     this.modalService.open(poup, { centered: true });
 
-    this.url=this.data.image;
-   this.api.getReqAuth
+  //   this.url=this.data.image;
+  //  this.api.getReqAuth
   }
 
 discountType;
@@ -79,6 +79,7 @@ getdiscount(dis)
   this.discountType="% Of OFF"
 
 }
+
   viewBanner(){
     this.spinner.show();
     console.log('vieew')

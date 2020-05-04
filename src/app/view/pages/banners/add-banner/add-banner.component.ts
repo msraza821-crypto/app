@@ -6,10 +6,7 @@ import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
 import { rangeValidator } from 'src/app/validators/range.validator';
-
-
-
-
+import { OnlyNumberDirective }  from './../../../../directive/only-number.directive';
 @Component({
   selector: 'app-add-banner',
   templateUrl: './add-banner.component.html',
@@ -30,19 +27,17 @@ showPage=false;
   discountType="";
   selectedProduct=[];
 
-
   url1 = ''; url: string = '';
   message: string = '';
   keyValue: boolean = false;
 
   displayOrder=[]
-
-
   page: number = 1;
   limit=10;
   totalRec=50;
 
-
+min:Number=0;
+max:Number=10000;
   constructor(private fb:FormBuilder,
     private _util: CommonUtil,
     private api:HttpService,
@@ -59,11 +54,11 @@ showPage=false;
   createForm()
   {
     this.bannerForm=this.fb.group({
-      title:['',[Validators.required,Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      title:['',[Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
       minimum_value:['',[Validators.required, rangeValidator(0, 10000),Validators.pattern(Regex.pricePattern)]],
       available_on:['',[Validators.required]],
       discount_type:['',[Validators.required]],
-      discount_value:['',[Validators.required,rangeValidator(0, 10000),Validators.pattern(Regex.pricePattern)]],
+      discount_value:["", [Validators.required, rangeValidator(0, 10000),Validators.min(0),Validators.max(10000), Validators.pattern(Regex.phoneNumbers)]],
       category:['',[Validators.required]],
       sub_category:['',[Validators.required]],
       child_category:['',[Validators.required]],
@@ -151,8 +146,10 @@ getProductUsingCategory(){
     },
     discount_value: {
       required: ERROR_MESSAGES.DISCOUNT_VALUE_REQUIRED,
-      pattern: ERROR_MESSAGES.INVALID_INPUT,
-      range: ERROR_MESSAGES.RANGE,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NUMBER_LENGTH}`,
+      pattern: ERROR_MESSAGES.NUMBER_REQUIRED,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+      range: ERROR_MESSAGES.RANGE
     
      
     },
@@ -276,15 +273,6 @@ productCompare(id:any,arr)
     this.isBrand=true;
     this.isProduct=false;
     this.productList=[]
-  //   this.bannerForm.patchValue({
-  //   category:" ",
-  //   sub_category:" ",
-
-
-  // child_category:" ",
-  //   });
-
-
 
     this.spinner.show();
     this.api.getReqAuthBrands("admin/product/brand-list").pipe().subscribe(res=>{
@@ -340,16 +328,7 @@ productCompare(id:any,arr)
   }
 }
 
-  // addBrandControl()
-  // {
-   
-  //   const arr=this.brands.map(element=>{
-  //     return this.fb.control(false)
-  //   });
-  //   return this.fb.array(arr);
 
-  
-  // }
   get title(): FormControl {
     return this.bannerForm.get("title") as FormControl;
   }
@@ -390,17 +369,7 @@ productCompare(id:any,arr)
     return this.bannerForm.get("status") as FormControl 
   }
 
-  // getSelectedValue()
-  // {
-  //   this.selectedValue=[];
-  //   this.brandArray.forEach((control,i)=>{
-  //     if(control.value)
-  //     {
-  //       this.selectedValue.push(this.brands[i]);
-  //     }
-  //   });
-    
-  // }
+
 
   productList=[];
   getProductList()
@@ -475,9 +444,9 @@ getFormData()
 
   if(this.bannerForm.value.available_on=='1')
   {
-    if(this.bannerForm.value.title!=''&& this.bannerForm.value.date!=''&&
+    if(this.bannerForm.value.title!=''&&this.bannerForm.value.title.length>=2&& this.bannerForm.value.date!=''&&
     this.bannerForm.value.display_order!='' && this.bannerForm.value.minimum_value!='' && this.bannerForm.value.discount_type!=''
-    &&this.bannerForm.value.minimum_value!=''&& this.selectedValue.length!=0)
+    &&this.bannerForm.value.minimum_value!=''&& this.selectedValue.length!=0&&this.bannerForm.value.minimum_value<=10000)
       {
         let mydate=this.getCurrentDate()
     
@@ -495,28 +464,18 @@ getFormData()
        formData.append('discount_type', this.bannerForm.value.discount_type);
        formData.append('discount_value', this.bannerForm.value.discount_type);
         formData.append('minimum_value', this.bannerForm.value.minimum_value);
-        // formData.append('category', this.bannerForm.value.category);
-        // formData.append('sub_category', this.bannerForm.value.sub_category);
         formData.append('brands',JSON.stringify(this.selectedValue) );
         formData.append('products',JSON.stringify(this.selectedProduct))
         formData.append('banner_start_date',start1)
         formData.append('banner_end_date',end1)
-      
         formData.append('status',this.bannerForm.value.status)
+        if(this.id!=null)
+        formData.append('id',this.id)
       
         
 
       
-      //  this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
-      //   res =>{
-      //     console.log('success',res)
-      //     this.spinner.hide()
-      //   },
-      //   err => this.error(err),
-      //   () => (this.loader = false)
-
-
-      // );
+     
       return formData
     
       }
@@ -553,6 +512,8 @@ getFormData()
     formData.append('child_category',this.bannerForm.value.child_category)
     
     formData.append('status',this.bannerForm.value.status)
+    if(this.id!=null)
+    formData.append('id',this.id)
   
     
   
@@ -612,17 +573,45 @@ namePress(event: any) {
 }
 
 
-numberPress(event: any) {
-  const pattern = /[0-9]/;
-  const inputChar = String.fromCharCode(event.charCode);
+placeHolderText='';
+changeType(event) {
 
-  if (this.bannerForm.value.discount_value>=10) {    
-    
-      event.preventDefault();
+  this.bannerForm.get('discount_value').patchValue('');
+  console.log(event.target.value);
+  if (event.target.value == 2) {
+    this.min=0;
+    this.max=100;
+    this.bannerForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 100)]);
+    this.bannerForm.get('discount_value').updateValueAndValidity();
+    this.placeHolderText = "Percentage Discount";
+    this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
+  } else {
+    this.bannerForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 10000)]);
+    this.bannerForm.get('discount_value').updateValueAndValidity();
+    this.placeHolderText = "Discount Price";
+    this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE;
+    this.min=0;
+    this.max=10000;
   }
+
 }
 
 
+
+changeNumber(e){
+  var str = e.target.value;
+  var input = e.target;
+    var value = Number(input.value);
+    var key = Number(e.key);
+    if (Number.isInteger(key)) {
+      value = Number("" + value + key);
+      if (value > this.max) {
+        return false;
+      }
+      this.bannerForm.get('discount_value').patchValue(str)
+    }
+
+}
 
 changeDiscountType(){
 console.log('from discount change')
@@ -802,107 +791,10 @@ error(res) {
 
 
 
-getFormDataForEdit()
-{
-
-  if(this.bannerForm.value.available_on=='1')
-  {
-    if(this.bannerForm.value.title!=''&& this.bannerForm.value.date!=''&&
-    this.bannerForm.value.display_order!='' && this.bannerForm.value.minimum_value!='' && this.bannerForm.value.discount_type!=''
-    &&this.bannerForm.value.minimum_value!=''&&this.selectedValue.length!=0)
-      {
-        let mydate=this.getCurrentDate()
-    
-        let start1=mydate['start']
-         let end1=mydate['end']
-    
-    
-        this.spinner.show();
-        const formData = new FormData();
-        formData.append('title', this.bannerForm.value.title);
-        formData.append('banner_type','2');
-        formData.append('display_order',this.bannerForm.value.display_order)
-        formData.append('image', this.url1);
-       formData.append('available_on', this.bannerForm.value.available_on);
-       formData.append('discount_type', this.bannerForm.value.discount_type);
-       formData.append('discount_value', this.bannerForm.value.discount_type);
-        formData.append('minimum_value', this.bannerForm.value.minimum_value);
-        // formData.append('category', this.bannerForm.value.category);
-        // formData.append('sub_category', this.bannerForm.value.sub_category);
-        formData.append('brands',JSON.stringify(this.selectedValue) );
-        formData.append('products',JSON.stringify(this.selectedProduct))
-        formData.append('banner_start_date',start1)
-        formData.append('banner_end_date',end1)
-        formData.append("id",this.id)
-        if(this.id!=null)
-        formData.append('status',this.bannerForm.value.status)
-      
-        
-
-      
-      //  this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
-      //   res =>{
-      //     console.log('success',res)
-      //     this.spinner.hide()
-      //   },
-      //   err => this.error(err),
-      //   () => (this.loader = false)
-
-
-      // );
-      return formData
-    
-      }
-      else{
-        if(this.selectedValue.length==0)
-        this._api.showNotification( 'error', "Please Select Atleast One Brand" );
-      this._util.markError(this.bannerForm)
-      return 
-    }
-    }
-    if(this.bannerForm.valid)
-    {
-          let mydate=this.getCurrentDate()
-    
-    let start1=mydate['start']
-     let end1=mydate['end']
-
-
-    this.spinner.show();
-    const formData = new FormData();
-    formData.append('title', this.bannerForm.value.title);
-    formData.append('banner_type','2');
-    formData.append('display_order',this.bannerForm.value.display_order)
-    formData.append('image', this.url1);
-   formData.append('available_on', this.bannerForm.value.available_on);
-   formData.append('discount_type', this.bannerForm.value.discount_type);
-   formData.append('discount_value', this.bannerForm.value.discount_type);
-    formData.append('minimum_value', this.bannerForm.value.minimum_value);
-    formData.append('category', this.bannerForm.value.category);
-    formData.append('sub_category', this.bannerForm.value.sub_category);
-    formData.append('brands',JSON.stringify(this.selectedValue) );
-    formData.append('products',JSON.stringify(this.selectedProduct))
-    formData.append('banner_start_date',start1)
-    formData.append('banner_end_date',end1)
-    formData.append('child_category',this.bannerForm.value.child_category)
-    if(this.id!=null)
-    formData.append('status',this.bannerForm.value.status)
-  formData.append('id', this.id)
-    
-  
-    
- 
-      return formData
-
-    }
-     this._util.markError(this.bannerForm);
-
-
-}
 
 update()
 {
-  var formData=this.getFormDataForEdit()
+  var formData=this.getFormData()
   
   if(formData!=null)
   {

@@ -18,7 +18,7 @@
 
               <div class="form-group col-md-2">
                 <b for="inputEmail4">Banner Title<span style="color:red">*</span></b> <br />
-                <input type="text" class="form-control" (keypress)="namePress($event)"
+                <input type="text" class="form-control"
                   placeholder="Banner Title " [formControl]="title">
                 <span class="error text-danger">{{_util.errorMessage(title,FORM_ERROR?.title)}}</span>
               </div>
@@ -32,7 +32,7 @@
               <div class="col-md-2 float-left">
                 <b>Discount Type<span style="color:red">*</span></b>
                 <select class="form-control" placeholder="" [formControl]="discount_type"
-                  (change)="changeDiscountType()">
+                  (change)="changeType($event)">
                   <option value="">Please Select</option>
                   <option value="1">Flat </option>
                   <option value="2">Percentage</option>
@@ -42,26 +42,26 @@
               
             </div>
             
-            <div class="col-md-2 float-left" *ngIf="bannerForm.value.discount_type==1">
+            <!-- <div class="col-md-2 float-left" *ngIf="bannerForm.value.discount_type==1">
               <b>Discount Value<span style="color:red">*</span></b>
               <div class="form-group ">
 
-                <input type="text" class="form-control"    (keypress)="keyPress($event)"  placeholder="{{discountType}}"
-                  [formControl]="discount_value">
+                <input type="text" class="form-control"  [formControl]="discount_value"  (keypress)="keyPress($event)"  placeholder="{{discountType}}"
+                  >
                 <span class="error text-danger">
                   {{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
               </div>
             
-          </div>
-
-          <div class="col-md-2 float-left"  *ngIf="bannerForm.value.discount_type==2">
-            <b>Discount Percentage(%)</b>
+          </div> -->
+  
+          <div class="col-md-2 float-left" *ngIf="bannerForm.value.discount_type!=''">
+            <b  *ngIf="bannerForm.value.discount_type==1">Discount Value<span style="color:red">*</span></b>
+            <b  *ngIf="bannerForm.value.discount_type==2">Discount Percentage<span style="color:red">*</span></b>
             <div class="form-group ">
 
-              <input type="text" class="form-control" (keypress)="numberPress($event)" (keypress)="keyPress($event)" placeholder="{{discountType}}"
-                [formControl]="discount_value" maxlength="3" min="0" max="100"> 
-              <span class="error text-danger">
-                {{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
+              <input type="number" class="form-control"   placeholder="{{placeHolderText}}"
+                [formControl]="discount_value" (keypress) = "changeNumber($event)"  appOnlyNumber [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER"> 
+              <span class="error text-danger"> {{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
             </div>
           
         </div>
@@ -101,7 +101,7 @@
 
               <div class="col-md-2 float-left" >
                 <b>Status</b>
-                <select class="form-control" [formControl]="status">
+                <select class="form-control" [formControl]="status">suod ng <s></s>
                   <option value="">Please Select</option>
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
@@ -114,7 +114,7 @@
                 <b> Brand<span style="color:red">*</span></b><br/>
               
                   <div ngbDropdown class="" style="width:100%">
-                    <button class="btn btn-outline-primary" id="dropdownForm1" type="button"  ngbDropdownToggle style="width:100%;padding-left:10px;padding-right:0;text-align: left;color:#5c6873">Please Select
+                    <button class="btn btn-outline-primary form-control" id="dropdownForm1" type="button"  ngbDropdownToggle style="width:100%;padding-left:10px;padding-right:0;text-align: left;color:#5c6873">Please Select
                       </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownForm1" style="width:100% !important">
   

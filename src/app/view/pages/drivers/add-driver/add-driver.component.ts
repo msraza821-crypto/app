@@ -5,6 +5,7 @@ import { CommonUtil } from 'src/app/util';
 import { HttpService,AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
+import { OnlyNumberDirective }  from './../../../../directive/only-number.directive';
 
 
 @Component({
@@ -54,14 +55,14 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
   createForm()
   {
     this.driverForm=this.fb.group({
-      name:['',[Validators.required,Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-      email:['',[Validators.required,Validators.pattern(Regex.email)]],
-      license:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
+      name:['',[Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      email:['',[Validators.required,Validators.pattern(Regex.spaces),Validators.pattern(Regex.email)]],
+      license:['',[Validators.required, Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
       country_code:[''],
       mobile:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
-      plate_number:['',[Validators.required,Validators.maxLength(CONFIG.MAX_PLAT_NUMBER),Validators.minLength(CONFIG.MIN_PLATE_NUMBER)]],
+      plate_number:['',[Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.MAX_PLAT_NUMBER),Validators.minLength(CONFIG.MIN_PLATE_NUMBER)]],
       vehicle_type:['',[Validators.required]],
-      address:['',[Validators.required,Validators.maxLength(CONFIG.ADDRESS_MAX_LENGTH)]]
+      address:['',[Validators.pattern(Regex.spaces),Validators.required, Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.ADDRESS_MAX_LENGTH)]]
       
       
     
@@ -81,20 +82,23 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
     email: {
       required: ERROR_MESSAGES.EMAIL_REQUIRED,
       pattern: ERROR_MESSAGES.INVALID_INPUT_EMAIL,
+      
    
     },
     mobile: {
       required: ERROR_MESSAGES.MOBILE_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.MOBILE_LENGTH}`,
   
-      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MOBILE_MIN_LENGTH}`
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MOBILE_MIN_LENGTH}`,
+      pattern: ERROR_MESSAGES.INVALID_INPUT
 
     },
     plate_number: {
       required: ERROR_MESSAGES.PLATE_NUMBER_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.MAX_PLAT_NUMBER}`,
   
-      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MIN_PLATE_NUMBER}`
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MIN_PLATE_NUMBER}`,
+      pattern: ERROR_MESSAGES.INVALID_INPUT
 
     },
   vehicle_type:{
@@ -104,13 +108,15 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
     required:ERROR_MESSAGES.PROPERTY_ADDRESS_REQUIRED,
     maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.ADDRESS_MAX_LENGTH}`,
   
-    minlength: `${ERROR_MESSAGES.MIN_LENGTH} 10`
+    // minlength: `${ERROR_MESSAGES.MIN_LENGTH} ${this.CONFIG.MOBILE_LENGTH}`,
+    pattern: ERROR_MESSAGES.INVALID_INPUT
   },
   license:{
     required:ERROR_MESSAGES.LICENSE_REQUIRED,
     maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.MOBILE_LENGTH}`,
   
-      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MOBILE_MIN_LENGTH}`
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MOBILE_MIN_LENGTH}`,
+      pattern: ERROR_MESSAGES.INVALID_INPUT
   }
    
  };
