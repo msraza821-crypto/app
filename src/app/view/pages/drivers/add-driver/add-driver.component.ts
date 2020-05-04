@@ -5,6 +5,7 @@ import { CommonUtil } from 'src/app/util';
 import { HttpService,AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
+import { OnlyNumberDirective }  from './../../../../directive/only-number.directive';
 
 
 @Component({
@@ -61,7 +62,7 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
       mobile:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
       plate_number:['',[Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.MAX_PLAT_NUMBER),Validators.minLength(CONFIG.MIN_PLATE_NUMBER)]],
       vehicle_type:['',[Validators.required]],
-      address:['',[Validators.required, Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.ADDRESS_MAX_LENGTH)]]
+      address:['',[Validators.pattern(Regex.spaces),Validators.required, Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.ADDRESS_MAX_LENGTH)]]
       
       
     
@@ -88,7 +89,8 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
       required: ERROR_MESSAGES.MOBILE_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.MOBILE_LENGTH}`,
   
-      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MOBILE_MIN_LENGTH}`
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MOBILE_MIN_LENGTH}`,
+      pattern: ERROR_MESSAGES.INVALID_INPUT
 
     },
     plate_number: {

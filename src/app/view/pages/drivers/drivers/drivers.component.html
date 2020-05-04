@@ -106,8 +106,8 @@
                                   <td>
                                       <a [routerLink]="['/theme/drivers/view',{id :i?.id}]" title="View driver"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
                                     <a [routerLink]="['/theme/drivers/addDriver',{id :i?.id}]" title="Edit driver"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
-                                    <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Block driver"> <i style="font-size:24px" class="fa fa-ban"></i>&nbsp;</a> 
-                                    <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='inactive'" title="Unblock driver">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
+                                    <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Inactivate driver"> <i style="font-size:24px" class="fa fa-ban"></i>&nbsp;</a> 
+                                    <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='inactive'" title="Activate  driver">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
                                     <a (click)="openVerticallyCentered(poup,i)" title="Delete driver"> <i style="font-size:24px"
                                         class="fa fa-trash-o"></i></a>
                                   </td>
