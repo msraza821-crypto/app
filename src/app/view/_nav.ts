@@ -14,12 +14,7 @@ export const navItems: INavData[] = [
     icon: 'icon-user',
    
 },
-{
-  name: 'Drivers',
-  url: '/theme/drivers',
-  icon: 'icon-pencil',
-  
-},
+
   {
       name: 'Brands',
       url: '/theme/brands',
@@ -45,11 +40,17 @@ export const navItems: INavData[] = [
   
 },
 {
-  name: 'Orders',  
+  name: 'Orders',   
   url: '/theme/orders',
   icon: 'icon-minus',
   
+},{
+  name: 'Drivers',
+  url: '/theme/drivers',
+  icon: 'icon-pencil',
+  
 },
+
 {
   name: 'Promotions',
   url: '/theme/banners',

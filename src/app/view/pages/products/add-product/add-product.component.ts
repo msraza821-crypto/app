@@ -504,6 +504,7 @@ export class AddProductComponent implements OnInit {
 
   }
   placeHolderText = "Discount Price";
+  dPrice:string='(QAR)';
   changeType(event) {
 
 
@@ -515,6 +516,7 @@ export class AddProductComponent implements OnInit {
       this.loginForm.get('discount_type').updateValueAndValidity();
       this.loginForm.get('discount_range').setValidators([Validators.required]);
       this.loginForm.get('discount_range').updateValueAndValidity();
+      this.dPrice="(%)";
 
       this.placeHolderText = "Percentage Discount";
       this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
@@ -527,6 +529,7 @@ export class AddProductComponent implements OnInit {
       this.loginForm.get('discount_range').updateValueAndValidity();
       this.placeHolderText = "Discount Price";
       this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE;
+      this.dPrice="(QAR)";
     } else {
       this.placeHolderText = "Discount Price";
       this.loginForm.get('discount_range').patchValue('');
@@ -538,6 +541,7 @@ export class AddProductComponent implements OnInit {
       this.loginForm.get('discount_type').updateValueAndValidity();
       this.loginForm.get('discount_range').setValidators([]);
       this.loginForm.get('discount_range').updateValueAndValidity();
+      this.dPrice="(QAR)";
     }
 
   }

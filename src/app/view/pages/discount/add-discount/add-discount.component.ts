@@ -300,6 +300,7 @@ changeNumber(e){
     }
 
 }
+dPrice:string="(QAR)";
   changeType(event) {
 
     this.loginForm.get('promo_discount').patchValue('');
@@ -309,12 +310,14 @@ changeNumber(e){
       this.max=100;
       this.loginForm.get('promo_discount').setValidators([Validators.required, rangeValidator(0, 100)]);
       this.loginForm.get('promo_discount').updateValueAndValidity();
+      this.dPrice='(%)';
       this.placeHolderText = "Percentage Discount";
       this.FORM_ERROR.promo_discount.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
     } else {
       this.loginForm.get('promo_discount').setValidators([Validators.required, rangeValidator(0, 10000)]);
       this.loginForm.get('promo_discount').updateValueAndValidity();
       this.placeHolderText = "Discount Price";
+      this.dPrice='(QAR)';
       this.FORM_ERROR.promo_discount.range = ERROR_MESSAGES.RANGE;
       this.min=0;
       this.max=10000;
