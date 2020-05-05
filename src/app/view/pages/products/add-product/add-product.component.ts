@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 
 import { Router, ActivatedRoute } from '@angular/router';
@@ -34,6 +34,7 @@ export class AddProductComponent implements OnInit {
   }
   handleChange(event: ColorEvent) {
     if (event.color.hex) {
+      console.log(event.color)
       var hex = event.color.hex;
       this.state = hex;
       this.loginForm.get('product_colour').patchValue(hex);
@@ -42,31 +43,43 @@ export class AddProductComponent implements OnInit {
   FORM_ERROR = {
     product_name_en: {
       required: ERROR_MESSAGES.NAME_ENGLISH_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_NAME}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_MAX}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     product_description_en: {
       required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_DESCRIPTION}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     product_name_ar: {
       required: ERROR_MESSAGES.NAME_ARABIC_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_NAME}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_MAX}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     product_description_ar: {
       required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_DESCRIPTION}`,
+      pattern: ERROR_MESSAGES.INVALID_INPUT,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+    },
+    attribute_description_en: {
+      required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_DESCRIPTION}`,
+      pattern: ERROR_MESSAGES.INVALID_INPUT,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+    },
+    attribute_description_ar: {
+      required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_DESCRIPTION}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     product_size: {
       required: ERROR_MESSAGES.PRODUCT_SIZE_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_DESCRIPTION}`,
 
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
@@ -79,7 +92,7 @@ export class AddProductComponent implements OnInit {
     },
     product_colour: {
       required: ERROR_MESSAGES.PRODUCT_COLOUR_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_DESCRIPTION}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
@@ -117,7 +130,7 @@ export class AddProductComponent implements OnInit {
     },
     discount_range: {
       required: ERROR_MESSAGES.DISCOUNT_RANGE_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_DESCRIPTION}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
@@ -134,7 +147,10 @@ export class AddProductComponent implements OnInit {
     this.loginForm.get('discount_range').setValidators([]);
     this.loginForm.get('discount_range').updateValueAndValidity();
   }
-
+  Reset() {
+    this.loginForm.get('product_colour').patchValue('');
+    this.state = '#ff0000';
+  }
   createForm() {
     this.loginForm = this._fb.group({
       product_name_en: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_MAX)]],
@@ -142,8 +158,10 @@ export class AddProductComponent implements OnInit {
       product_name_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_MAX)]],
       product_description_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       product_size: ["", [Validators.required]],
+      attribute_description_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+      attribute_description_en: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       product_price: ["", [Validators.required, rangeValidator(0, 10000)]],
-      product_colour: ["", [Validators.required]],
+      product_colour: ["#ff0000", [Validators.required]],
       brand_id: ["", [Validators.required]],
       quantity: ["", [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
       category_id: ["", [Validators.required]],
@@ -177,12 +195,12 @@ export class AddProductComponent implements OnInit {
     this.productSiz();
     this.productCategory();
     this.state = "";
-    this._route.params.subscribe(param => {
-      if (param && param["id"]) {
-        this.id = param["id"];
-        this.viewBrand();
-      }
-    })
+    // this._route.params.subscribe(param => {
+    //   if (param && param["id"]) {
+    //     this.id = param["id"];
+    //     this.viewBrand();
+    //   }
+    // })
     this._route.params.subscribe(param => {
       if (param && param["product_id"]) {
         this.product_id = param["product_id"];
@@ -337,6 +355,12 @@ export class AddProductComponent implements OnInit {
   get product_name_ar(): FormControl {
     return this.loginForm.get("product_name_ar") as FormControl;
   }
+  get attribute_description_en(): FormControl {
+    return this.loginForm.get("attribute_description_en") as FormControl;
+  }
+  get attribute_description_ar(): FormControl {
+    return this.loginForm.get("attribute_description_ar") as FormControl;
+  }
   get product_description_ar(): FormControl {
     return this.loginForm.get("product_description_ar") as FormControl;
   }
@@ -352,6 +376,11 @@ export class AddProductComponent implements OnInit {
   urlForm: any = [];
   choosefileData: any = [];
   choosefileDatas: string = "No file chosen";
+  toggleVideo(event: any) {
+    this.videoplayer.nativeElement.play();
+  }
+  @ViewChild("videoPlayer", { static: false }) videoplayer: ElementRef;
+  isPlay: boolean = false;
   onSelectFileMultiple(event) {
     this.keyValue = true;
     if (event.target.files.length > 0) {
@@ -372,6 +401,7 @@ export class AddProductComponent implements OnInit {
 
         } else {
           this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+          this._api.showNotification('error', this.errorMessage);
           return false;
         }
 
@@ -384,7 +414,7 @@ export class AddProductComponent implements OnInit {
         }
 
 
-        this.urlForm.push(event.target.files[0]);
+        this.urlForm.push(event.target.files[x]);
         console.log(this.url1)
 
 
@@ -416,6 +446,7 @@ export class AddProductComponent implements OnInit {
 
       } else {
         this.errorMessage = "Please use proper format of video like webm,mp4 or ogv only.";
+        this._api.showNotification('error', this.errorMessage);
         return false;
       }
 
@@ -425,8 +456,9 @@ export class AddProductComponent implements OnInit {
       reader.onload = (event: any) => { // called once readAsDataURL is completed
         // this.url = event.result;
         this.url = event.target.result;
+        
       }
-
+   //   this.urlData.push(event.target.result);
 
       this.url1 = event.target.files[0];
       console.log(this.url1)
@@ -504,19 +536,38 @@ export class AddProductComponent implements OnInit {
 
   }
   placeHolderText = "Discount Price";
-  dPrice:string='(QAR)';
+  dPrice: string = '(QAR)';
+
+  min: Number = 0;
+  max: Number = 10000;
+  changeNumber(e) {
+    var str = e.target.value;
+    var input = e.target;
+    var value = Number(input.value);
+    var key = Number(e.key);
+    if (Number.isInteger(key)) {
+      value = Number("" + value + key);
+      if (value > this.max) {
+        return false;
+      }
+      this.loginForm.get('discount_value').patchValue(str)
+    }
+
+  }
   changeType(event) {
 
-
+    this.loginForm.get('discount_value').patchValue('');
     console.log(event.target.value);
     if (event.target.value == 2) {
+      this.min = 0;
+      this.max = 100;
       this.loginForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 100)]);
       this.loginForm.get('discount_value').updateValueAndValidity();
       this.loginForm.get('discount_type').setValidators([Validators.required]);
       this.loginForm.get('discount_type').updateValueAndValidity();
       this.loginForm.get('discount_range').setValidators([Validators.required]);
       this.loginForm.get('discount_range').updateValueAndValidity();
-      this.dPrice="(%)";
+      this.dPrice = "(%)";
 
       this.placeHolderText = "Percentage Discount";
       this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
@@ -529,9 +580,13 @@ export class AddProductComponent implements OnInit {
       this.loginForm.get('discount_range').updateValueAndValidity();
       this.placeHolderText = "Discount Price";
       this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE;
-      this.dPrice="(QAR)";
+      this.dPrice = "(QAR)";
+      this.min = 0;
+      this.max = 10000;
     } else {
       this.placeHolderText = "Discount Price";
+      this.min = 0;
+      this.max = 10000;
       this.loginForm.get('discount_range').patchValue('');
       this.loginForm.get('discount_value').patchValue('');
       this.loginForm.get('discount_type').patchValue('');
@@ -541,7 +596,7 @@ export class AddProductComponent implements OnInit {
       this.loginForm.get('discount_type').updateValueAndValidity();
       this.loginForm.get('discount_range').setValidators([]);
       this.loginForm.get('discount_range').updateValueAndValidity();
-      this.dPrice="(QAR)";
+      this.dPrice = "(QAR)";
     }
 
   }
@@ -569,8 +624,8 @@ export class AddProductComponent implements OnInit {
       formData.append('product_description_en', this.loginForm.value.product_description_en);
       formData.append('product_name_ar', this.loginForm.value.product_name_ar);
       formData.append('product_description_ar', this.loginForm.value.product_description_ar);
-      formData.append('attribute_description_ar', this.loginForm.value.product_description_en);
-      formData.append('attribute_description_en', this.loginForm.value.product_description_ar);
+      formData.append('attribute_description_ar', this.loginForm.value.attribute_description_ar);
+      formData.append('attribute_description_en', this.loginForm.value.attribute_description_en);
       formData.append('product_size', this.loginForm.value.product_size);
       formData.append('product_price', this.loginForm.value.product_price);
       formData.append('product_colour', this.loginForm.value.product_colour);
@@ -585,9 +640,8 @@ export class AddProductComponent implements OnInit {
       formData.append('discount_end_date', end1);
       formData.append('status', this.loginForm.value.statusKey);
 
-      formData.append('product_image', this.url1);
       for (var x = 0; x < this.urlForm.length; x++) {
-        formData.append('products_images', this.urlForm[x]);
+        formData.append('products_images[]', this.urlForm[x]);
       }
 
 
@@ -605,6 +659,7 @@ export class AddProductComponent implements OnInit {
   }
   submit() {
     console.log(this.loginForm.value)
+    console.log(this.loginForm)
     if (this.loginForm.valid) {
       var start1 = "";
       var end1 = "";
@@ -625,8 +680,8 @@ export class AddProductComponent implements OnInit {
       formData.append('product_description_en', this.loginForm.value.product_description_en);
       formData.append('product_name_ar', this.loginForm.value.product_name_ar);
       formData.append('product_description_ar', this.loginForm.value.product_description_ar);
-      formData.append('attribute_description_ar', this.loginForm.value.product_description_en);
-      formData.append('attribute_description_en', this.loginForm.value.product_description_ar);
+      formData.append('attribute_description_ar', this.loginForm.value.attribute_description_ar);
+      formData.append('attribute_description_en', this.loginForm.value.attribute_description_en);
       formData.append('product_size', this.loginForm.value.product_size);
       formData.append('product_price', this.loginForm.value.product_price);
       formData.append('product_colour', this.loginForm.value.product_colour);
@@ -637,15 +692,15 @@ export class AddProductComponent implements OnInit {
       formData.append('child_category', this.loginForm.value.childCategory);
       formData.append('discount_type', this.loginForm.value.discount_type);
       formData.append('discount_value', this.loginForm.value.discount_value);
-      formData.append('discount_start_date', start1);
-      formData.append('discount_end_date', end1);
-      formData.append('product_video', this.url1);
+      formData.append('discount_start_date', (start1)?start1:null);
+      formData.append('discount_end_date', (end1)?end1:null);
+
 
       var ins = this.urlForm.length;
       for (var x = 0; x < ins; x++) {
-        formData.append('product_images', this.urlForm[x]);
+        formData.append('product_images', this.urlForm[x],this.urlForm[x].name);
       }
-
+      formData.append('product_images',this.url1);
       console.log(formData)
       this.api
         .postReqAuth("admin/product/add-product", formData).subscribe(

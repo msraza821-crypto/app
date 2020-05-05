@@ -8,17 +8,7 @@
         </div>
         <div class="card-body">
             <div class="row">
-              <aside class="col-sm-12 border-right">
-          <article class="gallery-wrap"> 
-          <div class="img-big-wrap">
-            <div> <img  [src]="data.productMedia && data.productMedia[0]?data.productMedia[0].media_url:'assets/img/avatars/default.png'"></div>
-          </div> <!-- slider-product.// -->
-          <div class="img-small-wrap">
-            <div class="item-gallery" *ngFor="let product_image of data.productMedia"> <img [src]="product_image.media_url"> </div>
-            
-          </div> <!-- slider-nav.// -->
-          </article> <!-- gallery-wrap .end// -->
-              </aside>
+                
               <div class="card new-card">
                   <div class="card-header">
                       <div  class="breadc"><a class="breada"> Product Detail(English)</a></div>                      
@@ -52,7 +42,7 @@
                                </div>
                       </div>
                   </div></div>
-                  <div class="card ">
+                  <div class="card new-carder">
                   <div class="card-header">
                       <div  class="breadc"><a class="breada"> Other Details</a></div>                      
                   </div>
@@ -74,23 +64,7 @@
                                <label class="float-left"> <b >Child-Category Name : </b></label>
                                 <p>{{data.child_category_name}}</p>
                               </div>
-                              <div class="col-md-6">
-                                  <label class="float-left"> <b >Product Quantity : </b></label>
-                                   <p>{{data.quantity}}</p>
-                                 </div>
-                                 <div class="col-md-6">
-                                    <label class="float-left"> <b >Product Price : </b></label>
-                                     <p>QAR {{data.product_prize}}</p>
-                                   </div>
-                                   <div class="col-md-6">
-                                      <label class="float-left"> <b >Product Size : </b></label>
-                                       <p>{{data.product_size}}</p>
-                                     </div>
-                                     <div class="col-md-6">
-                                        <label class="float-left"> <b >Product Colour : </b></label>
-                                         <p>{{data.product_colour}}</p>
-                                         <color-hue-picker [color]="data.product_colour" style="cursor: none;"></color-hue-picker>
-                                       </div>
+                             
                                        <div class="col-md-6">
                                           <label class="float-left"> <b >Discount Start Date : </b></label>
                                            <p>{{data.discount_start_date}}</p>
@@ -110,6 +84,54 @@
                                                </div>
                             </div>
                           </div></div>
+
+                          <div class="card new-card" *ngFor="let i of data.product_attributes; let ie = index"  >
+                            <div class="card-header">
+                                <div  class="breadc"><a class="breada"> Attribute {{ie+1}}</a></div>                      
+                            </div>
+                            <div class="card-body">
+                                <div class="row" >
+                                    <aside class="col-sm-12 border-right">
+ <article class="gallery-wrap"> 
+           
+          <div class="img-small-wrap">
+            <div class="item-gallery" *ngFor="let product_image of i.product_media;"> <img [src]="product_image.media_url"> </div>
+            
+          </div> 
+          </article> 
+              </aside> 
+
+                          <div class="col-md-6">
+                            <label class="float-left"> <b >Product Quantity : </b></label>
+                             <p>{{i.quantity}}</p>
+                           </div>
+                           <div class="col-md-6">
+                              <label class="float-left"> <b >Product Price(QAR) : </b></label>
+                               <p>{{i.product_price}}</p>
+                             </div>
+                           
+                                 <div class="col-md-6">
+                                    <label class="float-left"> <b >Attribute Description(English) : </b></label>
+                                     <p>{{i.attribute_description_en}}</p>
+                                   </div>
+                                   <div class="col-md-6">
+                                      <label class="float-left"> <b >Attribute Description(Arabic) : </b></label>
+                                       <p>{{i.attribute_description_ar}}</p>
+                                     
+                                     </div>
+                                     <div class="col-md-6">
+                                        <label class="float-left"> <b >Product Size : </b></label>
+                                         <p>{{i.product_size}}</p>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <label class="float-left"> <b >Product Colour : </b></label>
+                                           <p>{{i.product_colour}}</p>
+                                           <color-hue-picker [color]="i.product_colour" style="cursor: none;"></color-hue-picker>
+                                         </div>
+                                </div>
+                              </div></div>
+
+
                         </div>
                         </div>
                         </div>

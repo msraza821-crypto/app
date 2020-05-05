@@ -16,6 +16,13 @@ agm-map {
     font-size:18px;
     
   }
+  .reset-class{
+    bottom: 42px;
+    position: relative;
+    left: -32px;
+    font-size: 17px;
+
+  }
   .breada{
     font-size: 16px;
   }
