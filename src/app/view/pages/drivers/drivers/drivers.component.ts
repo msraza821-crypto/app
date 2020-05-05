@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpService ,AppService} from 'src/app/service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 
 @Component({
   selector: 'app-drivers',
@@ -21,7 +22,7 @@ export class DriversComponent implements OnInit {
   pager: any = {};
   loginForm: FormGroup;
   data: any = {};
-  // paged items
+  CONFIG=CONFIG;
   pagedItems: any[];
   code: any = "";
   key: string = 'name'; //set default

@@ -55,14 +55,14 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
   createForm()
   {
     this.driverForm=this.fb.group({
-      name:['',[Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-      email:['',[Validators.required,Validators.pattern(Regex.spaces),Validators.pattern(Regex.email)]],
-      license:['',[Validators.required, Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
+      name:['',[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      email:['',[Validators.required,Validators.pattern(Regex.email)]],
+      license:['',[Validators.required, Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
       country_code:[''],
       mobile:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
-      plate_number:['',[Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.MAX_PLAT_NUMBER),Validators.minLength(CONFIG.MIN_PLATE_NUMBER)]],
+      plate_number:['',[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.MAX_PLAT_NUMBER),Validators.minLength(CONFIG.MIN_PLATE_NUMBER)]],
       vehicle_type:['',[Validators.required]],
-      address:['',[Validators.pattern(Regex.spaces),Validators.required, Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.ADDRESS_MAX_LENGTH)]]
+      address:['',[Validators.pattern(Regex.spacesDatas),Validators.required, Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.ADDRESS_MAX_LENGTH)]]
       
       
     

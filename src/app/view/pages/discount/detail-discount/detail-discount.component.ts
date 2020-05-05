@@ -56,6 +56,7 @@ data:any={};
   successView(res){
     if(res.status==true){
     this.data= res.result;
+    console.log(res)
     }
     setTimeout(() => {
       this.spinner.hide();

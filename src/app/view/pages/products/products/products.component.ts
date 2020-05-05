@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpService, AppService } from 'src/app/service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 
 @Component({
   selector: "app-products",
@@ -17,7 +18,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ProductsComponent implements OnInit {
   collection = [];
-  // pager object
+  CONFIG=CONFIG;
   pager: any = {};
   loginForm: FormGroup;
   data: any = {};

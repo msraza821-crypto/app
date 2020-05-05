@@ -17,7 +17,7 @@
             
           <!-- <a (click)="exportDataF()"> <button type="button" style="margin:0px 19px -2px 0px;color:white;" class="ml-3 btn bg-dark  white float-right ml-1" > Export to
             CSV</button></a> -->
-           <a [routerLink]="['/theme/banners/add']"> <button type="button" style="margin:0px 19px -2px 0px;color:white;"    class="btn btn-primary float-right my-margin">Add
+           <a [routerLink]="['/theme/banners/add']"> <button type="button" style="margin:0px 19px -2px 0px;color:white;"    class="btn btn-primary float-right my-margin">Add Promotional 
               Banner</button></a> 
               
                
@@ -28,15 +28,15 @@
               <!-- <div class="col-md-2 float-left">
                 <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Banner title">
               </div> -->
-              <div class="col-md-2 float-left">
+              <div class="col-md-1  float-left" style="min-width: 125px;">
                 <select id="inputState" class="form-control" [formControl]="status">
                   <option value="">All</option>
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
                 </select>
               </div>
-              <div class="col-md-2 float-left">               
-                <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
+              <div class="col-md-1 float-left">               
+                <input type="text" ngxDaterangepickerMd  style="min-width:190px;" class="form-control" (choosedDate)="choosedDate($event)"   [maxlength]="CONFIG?.DATE_MAX_LENGTH" [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
                 [formControl]="range"
                   placeholder="Filter Date"  />
                 
@@ -61,19 +61,19 @@
           <div class="card-body">
             <div class="col-sm-12 col-lg-12">
               <div class="card text-white ">
-                <div class="card-body pb-0 ">
+                <div class="pb-0 ">
                   <table class="table table-striped" style="overflow: auto;padding:20px">
                     <thead>
                       <tr>
-                        <th scope="col">S No.</th>
+                        <th scope="col">S.No.</th>
                         <th scope="col">Title</th>
                         <th scope="col">From Date</th>
                         <th scope="col">Expiry Date</th>
-                        <th scope="col">Created At</th>
-                        <th scope="col">Created At</th>
+                      
+                        <th scope="col" >Display Order</th>
                         <th scope="col">Status</th>
                        
-                        <th scope="col" style="min-width:100px">Actions</th>
+                        <th scope="col" >Actions</th>
                       </tr>
                     </thead>
                     <tbody *ngIf="collection.length>0">
@@ -83,13 +83,12 @@
                       totalItems: totalRec };let ie=index">
                       <td>  {{ ((limit * (page - 1)) + ie+1) }}</td>
                         <td scope="row">{{i.title}}</td>
-                          <td scope="row">{{i.banner_start_date | slice:0:10}}
+                          <td scope="row">{{i.banner_start_date |  date: 'dd-MM-yyyy'}}
                         </td>
-                        <td> {{i.banner_end_date|slice:0:10}}</td>
+                        <td> {{i.banner_end_date |  date: 'dd-MM-yyyy'}}</td>
                         
-                        <td> {{i.created_at }}
-                      </td>
-                      <td>{{i.display_order}}</td>
+                      
+                      <td style="padding-left:50px;">{{i.display_order}}</td>
                       <td  *ngIf="i.status=='active'" >Active
                     </td>
                     <td  *ngIf="i.status=='inactive'" >Inactive
@@ -153,7 +152,7 @@
         <div class="">
           <div class="row pt-4">
             <div class="col-md-12 frgtpass-head">
-              <p class="text-center"> Are you sure you want to Active this banner? </p>
+              <p class="text-center"> Are you sure you want to Activate  this banner? </p>
             </div>
           </div>
         </div>
@@ -177,7 +176,7 @@
           <div class="">
             <div class="row pt-4">
               <div class="col-md-12 frgtpass-head">
-                <p class="text-center"> Are you sure you want to inactive this banner ? </p>
+                <p class="text-center"> Are you sure you want to Inactivate this banner ? </p>
               </div>
             </div>
           </div>

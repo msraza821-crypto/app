@@ -12,3 +12,16 @@
     background-color: #20a8d8;
     width: 500px!important;
 }
+
+
+.md-drppicker.shown {
+    transform: scale(1);
+    transition: .1s ease-in-out;
+    transform-origin: 0 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    top: 0;
+}

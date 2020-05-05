@@ -17,16 +17,16 @@
             <div class="row ">
 
               <div class="form-group col-md-4">
-                  <label for="inputEmail4"><b for="inputEmail4">Banner Title</b></label> <br />
-                <input type="text" class="form-control"  [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.NAME_LENGTH_TITLE"
-                  placeholder="Banner Title" [formControl]="title">
+                  <label for="inputEmail4"><b>Title <span class="star">*</span></b></label> <br />
+                <input type="text" class="form-control"  [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.TITLE_LENGTH"
+                  placeholder="Enter banner title" [formControl]="title">
                 <span class="error text-danger">{{_util.errorMessage(title,FORM_ERROR?.title)}}</span>
               </div>
              
               <div class="col-md-2 float-left">
-                  <label for="inputEmail4"><b for="inputEmail4">Select Category</b></label> <br />
+                  <label for="inputEmail4"><b>Category <span class="star">*</span></b></label> <br />
                   <select class="form-control" [formControl]="category" (change)="getSubcategory()">
-                      <option value="">Please Select</option>
+                      <option value="">Select category</option>
                     <option *ngFor="let cat of categoryList" value="{{cat.id}}"> {{cat.name}} </option>
   
   
@@ -35,9 +35,9 @@
   
                 </div>
                 <div class="col-md-2 float-left">
-                    <label for="inputEmail4"><b for="inputEmail4">Select Sub-Category</b></label> <br />
+                    <label for="inputEmail4"><b>Sub-category <span class="star">*</span></b></label> <br />
                   <select class="form-control" [formControl]="sub_category">
-                      <option value="">Please Select</option>
+                      <option value=""> Select Sub-category</option>
                     <option *ngFor="let sab of subCategoryList" value="{{sab.id}}">{{sab.name}}</option>
   
   
@@ -48,9 +48,9 @@
   
                 </div>
                 <div class="form-group col-md-2" >
-                    <label for="inputEmail4"><b for="inputEmail4">Status</b></label> <br />
+                    <label for="inputEmail4"><b>Status <span class="star">*</span></b></label> <br />
                     <select id="inputState" [formControl]="status" class="form-control">
-                        <option value="">Please Select</option>
+                        <option value=""> Select status</option>
                       <option value="active">Active</option>
                       <option value="inactive">Inactive</option>
                     </select>
@@ -58,9 +58,9 @@
                   <span class="error text-danger">{{_util.errorMessage(status,FORM_ERROR?.status)}}</span>
                 </div>
                 <div class="form-group col-md-2 ">
-                    <label for="inputEmail4"><b for="inputEmail4">Display order</b></label> <br />
+                    <label for="inputEmail4"><b>Display order <span class="star">*</span></b></label> <br />
                   <select class="form-control" [formControl]="display_order">
-                      <option value="">Please Select</option>
+                      <option value="">Select display order</option>
                     <option *ngFor='let in of counter(20) ;let i = index' [value]=i+1>{{i+1}}</option>
                    
                   </select>
@@ -71,7 +71,7 @@
 
             <div class="row">
                 <div class="col-12">
-                    <label for="inputEmail4"><b for="inputEmail4">Banner Image</b></label> <br />
+                    <label for="inputEmail4"><b>Banner Image </b></label> <br />
 
                   <div class="file-upload">
                     <div class="file-select">
@@ -97,8 +97,8 @@
 
 
 
-            <button *ngIf="this.id==null" type="submit" class="btn btn-success" (click)="onSubmit()">Save</button>
-            <button type="button" *ngIf="this.id!=null" class="btn btn-success" (click)="update()">Save</button>
+            <button *ngIf="this.id==null" type="submit" class="btn btn-primary" (click)="onSubmit()">Save</button>
+            <button type="button" *ngIf="this.id!=null" class="btn btn-primary" (click)="update()">Save</button>
 
 
           </form>

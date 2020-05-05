@@ -65,7 +65,7 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
   createForm()
   {
     this.bannerForm=this.fb.group({
-      title:['',[Validators.required,Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      title:['',[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
       // minimum_value:['',[Validators.required,Validators.pattern(Regex.pricePattern)]],
       // available_on:['',[Validators.required]],
       // discount_type:['',[Validators.required]],
@@ -83,7 +83,7 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
 
   FORM_ERROR = {
     title: {
-      required: ERROR_MESSAGES.BANNER_TITLE_REQUIRED,
+      required: ERROR_MESSAGES.TITLE_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MAX_LENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
@@ -322,13 +322,13 @@ namePress(event: any) {
   }
 }
 
-changeDiscountType(){
-console.log('from discount change')
-  if(this.bannerForm.value.discount_type=='1')
-  this.discountType="Enter discount value..."
-  else
-  this.discountType="% of Off...."
-}
+// changeDiscountType(){
+// console.log('from discount change')
+//   if(this.bannerForm.value.discount_type=='1')
+//   this.discountType="Enter discount value..."
+//   else
+//   this.discountType="% of Off...."
+// }
 
 
 counter(i: number) {

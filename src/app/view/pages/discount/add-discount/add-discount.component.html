@@ -16,17 +16,17 @@
                 <div class="row ">
                    
               <div class="form-group col-md-6">
-                <label for="inputEmail4">Discount Name</label>
-                <input type="text" [formControl]="title" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.B_NAME" class="form-control" id="inputEmail4" placeholder="Discount Name">
+                <label for="inputEmail4"><b>Title <span class="star">*</span></b></label>
+                <input type="text" [formControl]="title" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.B_NAME" class="form-control" id="inputEmail4" placeholder="Enter Title">
 
             
                 <span class="error text-danger">{{_util.errorMessage(title,FORM_ERROR?.title)}}</span>
               </div>
               
               <div class="form-group col-md-6">
-                <label for="inputPassword4">Discount Description</label>
+                <label for="inputPassword4"><b>Description  <span class="star">*</span></b></label>
                 <textarea type="text" [formControl]="description" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_LENGTH" class="form-control" id="inputPassword4"
-                  placeholder="Discount Description"></textarea>
+                  placeholder="Enter Description"></textarea>
               
                   <span class="error text-danger">{{_util.errorMessage(description,FORM_ERROR?.description)}}</span>
               </div>
@@ -34,8 +34,8 @@
     
     
             <div class="form-group col-md-3">
-                <label for="inputEmail4">Discount Promo Code</label>
-                <input type="text" [formControl]="promocode" class="form-control" id="inputEmail4" placeholder="Discount Promo Code" [minlength]="CONFIG?.MINCODE" [maxlength]="CONFIG?.MAXCODE">
+                <label for="inputEmail4"><b>Promo Code  <span class="star">*</span></b></label>
+                <input type="text" [formControl]="promocode" class="form-control" id="inputEmail4" placeholder="Enter Promo Code" [minlength]="CONFIG?.MINCODE" [maxlength]="CONFIG?.MAXCODE">
 
             
                 <span class="error text-danger">{{_util.errorMessage(promocode,FORM_ERROR?.promocode)}}</span>
@@ -43,42 +43,43 @@
             
                
                   <div class="form-group col-md-3">
-                      <label for="inputEmail4">Discount Min Order Value</label>
-                      <input type="text" [formControl]="min_order_value" class="form-control" id="inputEmail4" placeholder="Discount Min Order Value" [minlength]="CONFIG?.MINORDER" [maxlength]="CONFIG?.MAXORDER">
+                      <label for="inputEmail4"><b>Min. Order Value <span class="star">*</span></b></label>
+                      <input type="text" [formControl]="min_order_value" class="form-control" id="inputEmail4" appOnlyNumber placeholder="Enter Min. Order Value" [minlength]="CONFIG?.MINORDER" [maxlength]="CONFIG?.MAXORDER">
               
                       <span class="error text-danger">{{_util.errorMessage(min_order_value,FORM_ERROR?.min_order_value)}}</span>
                     </div>
                
                 <hr>
                    <div class="form-group col-md-4">
-                      <label for="inputState">Discount range date</label>
-                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range" class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
+                      <label for="inputState"><b>Date Range <span class="star">*</span></b></label>
+                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range" class="form-control" (choosedDate)="choosedDate($event)" [maxlength]="CONFIG?.DATE_MAX_LENGTH"  [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
                   
-                    placeholder="Discount Date Range"  />
+                    placeholder="Select Date"  />
                     <span class="error text-danger">{{_util.errorMessage(discount_range,FORM_ERROR?.discount_range)}}</span>
                     </div>
                    <div class="form-group col-md-2">
-                        <label for="inputState">Discount Type</label>
+                        <label for="inputState"><b>Discount Type <span class="star">*</span></b></label>
                         <select id="inputState" [formControl]="promo_type" class="form-control" (change) = "changeType($event)">
-                          <option value="">Please Select</option>
-                          <option value="2">Percentage</option>
+                          <option value="">Select Type</option>
                           <option value="1">Flat</option>
+                          <option value="2">Percentage</option>
+                         
                           
                         </select>
                     
                       <span class="error text-danger">{{_util.errorMessage(promo_type,FORM_ERROR?.promo_type)}}</span>
                     </div>
                    <div class="form-group col-md-3">
-                        <label for="inputEmail4">Discount Price{{dPrice}}</label>
+                        <label for="inputEmail4"><b>Discounted Price{{dPrice}} <span class="star">*</span></b></label>
                         <input type="number" [formControl]="promo_discount" (keypress) = "changeNumber($event)"  appOnlyNumber [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
         
                     
                         <span class="error text-danger">{{_util.errorMessage(promo_discount,FORM_ERROR?.promo_discount)}}</span>
                       </div>
                       <div class="form-group col-md-3" >
-                          <label for="inputState">Status</label>
+                          <label for="inputState"><b>Status <span class="star">*</span></b></label>
                           <select id="inputState" [formControl]="statusKey" class="form-control">
-                            <option value="">Please Select</option>
+                            <option value=""> Select Status</option>
                             <option value="active">Active</option>
                             <option value="inactive">Inactive</option>
                           </select>
@@ -86,9 +87,9 @@
                         <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
                       </div>
                       <div class="form-group col-md-3" >
-                        <label for="inputState">Assignment</label>
+                        <label for="inputState"><b>Assignment <span class="star">*</span></b></label>
                         <select id="inputState" [formControl]="assignment" class="form-control">
-                          <option value="">Please Select</option>
+                          <option value="">Select Users</option>
                           <option value="1">All Users</option>
                          
                         </select>

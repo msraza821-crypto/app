@@ -18,14 +18,14 @@
               <div class="row ">
                  
             <div class="form-group col-md-6">
-              <label for="inputEmail4">Name(English)</label>
+              <label for="inputEmail4"><b>Name(English) <span class="star" >*</span></b></label>
               <input type="text" [formControl]="name" class="form-control"  (onchange)="trimFunction(event)"[minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" id="inputEmail4" placeholder="Name">
 
               <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
             </div>
             
             <div class="form-group col-md-6">
-              <label for="inputPassword4">Description(English)</label>
+              <label for="inputPassword4"> <b>Description(English) <span class="star">*</span></b></label>
               <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4" [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_DES"
                 placeholder="Description"></textarea>
                
@@ -33,20 +33,20 @@
             </div>
             
             <div class="form-group col-md-6">
-                <label for="inputEmail4">Name(Arabic)</label>
+                <label for="inputEmail4"> <b>Name(Arabic) <span class="star">*</span></b></label>
                 <input type="text" [formControl]="namear" class="form-control"  [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" id="inputEmail4"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="اسم">
             
               <span class="error text-danger">{{_util.errorMessage(namear,FORM_ERROR?.namear)}}</span>
             </div>
               <div class="form-group col-md-6">
-                <label for="inputPassword4">Description(Arabic)</label>
+                <label for="inputPassword4"> <b>Description(Arabic) <span class="star">*</span></b></label>
                 <textarea type="text" [formControl]="descriptionar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4" [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_DES"
                   placeholder="وصف"></textarea>
 
             <span class="error text-danger">{{_util.errorMessage(descriptionar,FORM_ERROR?.descriptionar)}}</span>
           </div>
             <div class="form-group col-md-12">
-              <label for="exampleFormControlFile1">Image</label>
+              <label for="exampleFormControlFile1"> <b>Image</b></label>
               <div class="file-upload">
                                         <div class="file-select">
                                           <div class="file-select-button" id="fileName">Choose File</div>
@@ -58,7 +58,7 @@
             <img style="height:100px;width:100px;" [src]="url ? url : 'assets/img/avatars/default.png'" />
           </div> 
             <div class="form-group col-md-2">
-              <label for="inputState">Status</label>
+              <label for="inputState"><b>Status <span class="star">*</span></b></label>
               <select id="inputState" [formControl]="statusKey" class="form-control">
                 <option value="">Please Select</option>
                 <option value="inactive">Inactive</option>   <option value="active">Active</option>
@@ -68,7 +68,7 @@
             <br>
             <br>
             <input type="checkbox" [formControl]="is_banner" id="remember_me"  class="largerCheckbox" name="_remember_me" checked/>
-            <label for="remember_me">&nbsp;Show as Banner</label>
+            <label for="remember_me">&nbsp; <b>Show as Banner</b></label>
           </div>
           <div class=" form-group col-md-2">             
            

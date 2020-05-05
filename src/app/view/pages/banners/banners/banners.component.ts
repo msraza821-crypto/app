@@ -9,6 +9,7 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { Router, ActivatedRoute, Route } from "@angular/router";
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpService, AppService } from 'src/app/service';
@@ -26,7 +27,7 @@ export class BannersComponent implements OnInit {
   pager: any = {};
   loginForm: FormGroup;
   data: any = {};
-  // paged items
+  CONFIG=CONFIG;
   pagedItems: any[];
   code: any = "";
   key: string = 'name'; //set default

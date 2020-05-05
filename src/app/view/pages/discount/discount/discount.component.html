@@ -17,16 +17,16 @@
             <hr />
             <div class="col-sm-12 col-lg-12"  style="margin-left: -17px;">
               <div class="col-md-2 float-left">
-                <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Discount Name">
+                <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by  Title">
               </div>
             
-              <div class="col-md-2 float-left">
+              <div class="col-md-1 float-left">
                  
-                <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
+                <input type="text" ngxDaterangepickerMd  class="form-control" style="min-width:190px;" (choosedDate)="choosedDate($event)" [maxlength]="CONFIG?.DATE_MAX_LENGTH"  [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
                 [formControl]="range"
                   placeholder="Filter Date"  />
               </div>
-              <div class="col-md-8 float-left">
+              <div class="col-md-4 float-right">
                 
                 <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1"  style="margin-right: -29px;">Reset</button></a>
                 <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>
@@ -37,20 +37,21 @@
           </div>
          
         <div class="card-body">
-            <div class="col-sm-1 col-lg-1 float-left"> 
-                <select class="form-control" (change)="filterSelected($event.target.value)">
+            <div class="col-sm-1 col-lg-1 float-left" > 
+                <select class="form-control  " (change)="filterSelected($event.target.value)">
                   <option value="10">10</option>
                   <option value="50">50</option>
                   <option value="100">100</option>
                 </select>
               </div>
-              <div class="col-sm-1 col-lg-1 float-left"> 
-                  <select class="form-control" [formControl]="status" (change)="filterSelectedStatus($event.target.value)">
+              <div class="col-sm-1 col-lg-1 float-left" style="min-width:125px"> 
+                  <select class="form-control " [formControl]="status"     (change)="filterSelectedStatus($event.target.value)">
                       <option value="">All</option>
                       <option value="Active">Active</option>
                       <option value="Inactive">Inactive</option>
                   </select>
                 </div>
+          
         </div>
         <div class="card-body">
           <div class="col-sm-12 col-lg-12">
@@ -68,7 +69,7 @@
                       <th scope="col">To Date</th>                   
                       <th scope="col">Discount Type</th>
                       <th scope="col">Status</th>
-                      <th scope="col">Created at</th>
+                      <th scope="col">Created At</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
@@ -89,10 +90,10 @@
                       <td>{{i.promocode}}
                       </td>
                       <td>
-                        {{i.start_date}}
+                        {{i.start_date| date: 'dd-MM-yyyy' }}
                         </td>
                     
-                    <td>{{i.end_date}}
+                    <td>{{i.end_date| date: 'dd-MM-yyyy'}}
                       
                   </td>
                   <td  *ngIf="i.promo_type==1">Flat
@@ -103,7 +104,7 @@
                     <td style=" text-transform: capitalize;">{{i.status}}
                       
                       </td>
-                      <td> {{i.created_at}}
+                      <td> {{i.created_at| date: 'dd-MM-yyyy'}}
                         </td>
                 
                       <td>
@@ -143,7 +144,7 @@
     <div class="">
       <div class="row pt-4">
         <div class="col-md-12 frgtpass-head">
-          <p class="text-center"> Are you sure you want to delete this discount offer ? </p>
+          <p class="text-center"> Are you sure you want to Delete this discount offer ? </p>
         </div>
       </div>
     </div>
@@ -167,7 +168,7 @@
       <div class="">
         <div class="row pt-4">
           <div class="col-md-12 frgtpass-head">
-            <p class="text-center"> Are you sure you want to deactive this discount offer ? </p>
+            <p class="text-center"> Are you sure you want to Deactivate this discount offer ? </p>
           </div>
         </div>
       </div>
@@ -191,7 +192,7 @@
         <div class="">
           <div class="row pt-4">
             <div class="col-md-12 frgtpass-head">
-              <p class="text-center"> Are you sure you want to active this discount offer ? </p>
+              <p class="text-center"> Are you sure you want to Activate this discount offer ? </p>
             </div>
           </div>
         </div>
