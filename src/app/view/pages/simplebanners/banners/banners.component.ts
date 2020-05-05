@@ -14,6 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpService, AppService } from 'src/app/service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 
 @Component({
   selector: 'app-banners',
@@ -39,6 +40,7 @@ export class BannersComponent implements OnInit {
   limit: number = 10;
   exportData: number = 0;
   id: number;
+  CONFIG=CONFIG;
   selected: any = {};
   constructor(
     private router: Router,
@@ -187,6 +189,7 @@ export class BannersComponent implements OnInit {
       this.totalRec = res.result.globalCount;
       // this.page=this.page;
       //this.limit=this.limit;
+      console.log(res)
     }
 
   }

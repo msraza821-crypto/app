@@ -21,13 +21,13 @@
                 <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Product Name">
               </div>
             
-              <div class="col-md-2 float-left">
+              <div class="col-md-1 float-left">
                  
-                <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
+                <input type="text" ngxDaterangepickerMd  style="min-width:190px"   [maxlength]="CONFIG?.DATE_MAX_LENGTH" class="form-control"  (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
                 [formControl]="range"
                   placeholder="Filter Date"  />
               </div>
-              <div class="col-md-8 float-left">
+              <div class="col-md-8 float-right">
                 
                 <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1"  style="margin-right: -29px;">Reset</button></a>
                 <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>
@@ -45,7 +45,7 @@
                   <option value="100">100</option>
                 </select>
               </div>
-              <div class="col-sm-1 col-lg-1 float-left"> 
+              <div class="col-sm-1 col-lg-1 float-left" style="min-width: 125px;"> 
                   <select class="form-control" [formControl]="status" (change)="filterSelectedStatus($event.target.value)">
                       <option value="">All</option>
                       <option value="Active">Active</option>

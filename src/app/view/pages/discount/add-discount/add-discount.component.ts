@@ -20,7 +20,7 @@ min:Number=0;
 max:Number=10000;
   loader = false;
   CONFIG = CONFIG;
-  placeHolderText: string = "Discount Price";
+  placeHolderText: string = "Enter Discounted Price";
   loginForm: FormGroup;
   url1 = ''; url: string = '';
   message: string = '';
@@ -93,7 +93,7 @@ max:Number=10000;
 
   createForm() {
     this.loginForm = this._fb.group({
-      title: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.B_NAME)]],
+      title: ["", [Validators.required, Validators.pattern(Regex.spacesDatas), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.B_NAME)]],
       description: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.DESCRIPTION_LENGTH)]],
       promo_type: ["", [Validators.required]],
       promocode: ["", [Validators.required, Validators.minLength(CONFIG.MINCODE), Validators.maxLength(CONFIG.MAXCODE)]],
@@ -207,6 +207,15 @@ max:Number=10000;
     if (this.loginForm.valid) {
       var start1 = "";
       var end1 = "";
+      if(this.loginForm.value.promo_type==1)
+      {
+        if(this.loginForm.value.min_order_value<=this.loginForm.value.promo_discount)
+        {
+          this._api.showNotification('error', " Discounted Price Can't Be Greater  Than Min. Order Value!")
+          this._util.markError(this.loginForm)
+          return
+        }
+      }
 
       this.spinner.show();
       if (this.loginForm.value.discount_range) {
@@ -246,6 +255,15 @@ max:Number=10000;
   submit() {
     console.log(this.loginForm.value)
     if (this.loginForm.valid) {
+      if(this.loginForm.value.promo_type==1)
+      {
+        if(this.loginForm.value.min_order_value<=this.loginForm.value.promo_discount)
+        {
+          this._api.showNotification('error', " Discounted Price Can't Be Greater  Than Min. Order Value!")
+          this._util.markError(this.loginForm)
+          return
+        }
+      }
       var start1 = "";
       var end1 = "";
 
@@ -315,12 +333,12 @@ dPrice:string="(QAR)";
       this.loginForm.get('promo_discount').setValidators([Validators.required, rangeValidator(0, 100)]);
       this.loginForm.get('promo_discount').updateValueAndValidity();
       this.dPrice='(%)';
-      this.placeHolderText = "Percentage Discount";
+      this.placeHolderText = "Enter Discounted Percentage";
       this.FORM_ERROR.promo_discount.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
     } else {
       this.loginForm.get('promo_discount').setValidators([Validators.required, rangeValidator(0, 10000)]);
       this.loginForm.get('promo_discount').updateValueAndValidity();
-      this.placeHolderText = "Discount Price";
+      this.placeHolderText = "Enter Discounted Price";
       this.dPrice='(QAR)';
       this.FORM_ERROR.promo_discount.range = ERROR_MESSAGES.RANGE;
       this.min=0;

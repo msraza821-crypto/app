@@ -54,8 +54,8 @@ max:Number=10000;
   createForm()
   {
     this.bannerForm=this.fb.group({
-      title:['',[Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-      minimum_value:['',[Validators.required, rangeValidator(0, 10000),Validators.pattern(Regex.pricePattern)]],
+      title:['',[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
+      // minimum_value:['',[Validators.required, rangeValidator(0, 10000),Validators.pattern(Regex.pricePattern)]],
       available_on:['',[Validators.required]],
       discount_type:['',[Validators.required]],
       discount_value:["", [Validators.required, rangeValidator(0, 10000),Validators.min(0),Validators.max(10000), Validators.pattern(Regex.phoneNumbers)]],
@@ -64,7 +64,7 @@ max:Number=10000;
       child_category:['',[Validators.required]],
       date:['',[Validators.required]],
       display_order:['',[Validators.required]],
-      status:''
+      status:['',Validators.required]
     //  brand:this.addBrandControl()
     });
   }
@@ -125,7 +125,7 @@ getProductUsingCategory(){
 
   FORM_ERROR = {
     title: {
-      required: ERROR_MESSAGES.BANNER_TITLE_REQUIRED,
+      required: ERROR_MESSAGES.TITLE_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NAME_MAX_LENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
@@ -169,6 +169,9 @@ getProductUsingCategory(){
 
     display_order: {
       required: ERROR_MESSAGES. DISPLAY_ORDER_REQUIRED
+    },
+    status: {
+      required: ERROR_MESSAGES. STATUS_REQUIRED
     }
  };
 
@@ -444,11 +447,12 @@ getFormData()
 
   if(this.bannerForm.value.available_on=='1')
   {
-    if(this.bannerForm.value.title!=''&&this.bannerForm.value.title.length>=2&& this.bannerForm.value.date!=''&&
+    if(this.bannerForm.value.title.length>=2&& this.bannerForm.value.date!=''&&
     this.bannerForm.value.display_order!='' && this.bannerForm.value.minimum_value!='' && this.bannerForm.value.discount_type!=''
-    &&this.bannerForm.value.minimum_value!=''&& this.selectedValue.length!=0&&this.bannerForm.value.minimum_value<=10000)
+    &&this.bannerForm.value.minimum_value!=''&& this.selectedValue.length!=0&& this.selectedProduct.length!=0&&this.bannerForm.value.status!='')
       {
         let mydate=this.getCurrentDate()
+        console.log("from brands")
     
         let start1=mydate['start']
          let end1=mydate['end']
@@ -463,7 +467,7 @@ getFormData()
        formData.append('available_on', this.bannerForm.value.available_on);
        formData.append('discount_type', this.bannerForm.value.discount_type);
        formData.append('discount_value', this.bannerForm.value.discount_type);
-        formData.append('minimum_value', this.bannerForm.value.minimum_value);
+        // formData.append('minimum_value', this.bannerForm.value.minimum_value);
         formData.append('brands',JSON.stringify(this.selectedValue) );
         formData.append('products',JSON.stringify(this.selectedProduct))
         formData.append('banner_start_date',start1)
@@ -479,13 +483,17 @@ getFormData()
       return formData
     
       }
-      else{
+      else{ 
         if(this.selectedValue.length==0)
         this._api.showNotification( 'error', "Please Select Atleast One Brand" );
+        if(this.selectedProduct.length==0)
+        this._api.showNotification( 'error', "Please Select Atleast One Product" );
       this._util.markError(this.bannerForm)
+
     }
     }
-    if(this.bannerForm.valid)
+    else{
+    if(this.bannerForm.valid && this.selectedProduct.length!=0)
     {
           let mydate=this.getCurrentDate()
     
@@ -502,7 +510,7 @@ getFormData()
    formData.append('available_on', this.bannerForm.value.available_on);
    formData.append('discount_type', this.bannerForm.value.discount_type);
    formData.append('discount_value', this.bannerForm.value.discount_type);
-    formData.append('minimum_value', this.bannerForm.value.minimum_value);
+    // formData.append('minimum_value', this.bannerForm.value.minimum_value);
     formData.append('category', this.bannerForm.value.category);
     formData.append('sub_category', this.bannerForm.value.sub_category);
     formData.append('brands',JSON.stringify(this.selectedValue) );
@@ -521,10 +529,17 @@ getFormData()
  
       return formData
 
+
     }
+    else
+    {
+     
+     if(this.selectedProduct.length==0)
+     this._api.showNotification( 'error', "Please Select Atleast One Product!" );
      this._util.markError(this.bannerForm);
 
-
+    }
+  }
 }
 
 
@@ -534,8 +549,24 @@ getFormData()
 
     onSubmit()
   {
+    // if(this.bannerForm.value.discount_type==1)
+    // {
+    //   if(this.bannerForm.value.minimum_value<this.bannerForm.value.discount_value)
+    //   {
+    //     this._api.showNotification('error',"Discounted Value Can't Be Greater than Min. Order Value!" )
+    //     this._util.markError(this.bannerForm)
+    //     return
+    //   }
+    //   if(this.bannerForm.value.minimum_value==this.bannerForm.value.discount_value)
+    //   {
+    //     this._api.showNotification('error',"Discounted Value Can't Be Equal To Min. Order Value!" )
+    //     this._util.markError(this.bannerForm)
+    //     return
+    //   }
+    // }
     
     var formData=this.getFormData()
+    console.log("after FormData")
     console.log('length',this.getFormData.length)
     if(formData!=null){
       this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
@@ -573,7 +604,7 @@ namePress(event: any) {
 }
 
 
-placeHolderText='';
+placeHolderText='Enter discounted price';
 changeType(event) {
 
   this.bannerForm.get('discount_value').patchValue('');
@@ -583,12 +614,12 @@ changeType(event) {
     this.max=100;
     this.bannerForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 100)]);
     this.bannerForm.get('discount_value').updateValueAndValidity();
-    this.placeHolderText = "Percentage Discount";
+    this.placeHolderText = "Enter discounted percentage";
     this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
   } else {
     this.bannerForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 10000)]);
     this.bannerForm.get('discount_value').updateValueAndValidity();
-    this.placeHolderText = "Discount Price";
+    this.placeHolderText = "Enter discounted price";
     this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE;
     this.min=0;
     this.max=10000;
@@ -794,6 +825,25 @@ error(res) {
 
 update()
 {
+
+ //if(this.bannerForm.value.discount_type==1)
+  // {
+  //   if(this.bannerForm.value.minimum_value<this.bannerForm.value.discount_value)
+  //   {
+  //     this._api.showNotification('error',"Discounted Value Can't Be Greater than Min. Order Value!" )
+  //     this._util.markError(this.bannerForm)
+  //     return
+  //   }
+  //   if(this.bannerForm.value.minimum_value==this.bannerForm.value.discount_value)
+  //   {
+  //     this._api.showNotification('error',"Discounted Value Can't Be Equal To Min. Order Value!" )
+  //     this._util.markError(this.bannerForm)
+  //     return
+  //   }
+  // }
+  
+
+
   var formData=this.getFormData()
   
   if(formData!=null)

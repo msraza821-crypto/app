@@ -1,60 +1,182 @@
-<div class="animated fadeIn" style="margin-top:30px;">
+<!-- <div class="animated fadeIn" style="margin-top:30px;">
   <div class="row">
     <div class="col-sm-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-            <div  class="breadc"><a class="active" [routerLink]="['/theme/discount']"> Discount</a> / <a class="breada">View Offer</a></div> 
+            <div  class="breadc"><a class="active" [routerLink]="['/theme/discount']"> Discount</a> / <a class="breada">View Discount</a></div> 
            
         </div>
         <div class="card-body">
-                        <div class="col-md-6">
-                         <label class="float-left"> <b > Discount Name : </b></label>
+          <form>
+          <div class="row">
+                        <div class=" form-group col-md-4">
+                         <label class="float-left"> <b > Title: </b></label><br>
                           <p>{{data.title}}</p>
                         </div>
-                        <div class="col-md-6">
-                           <label class="float-left"> <b >Discount Description : </b></label>
-                            <p>{{data.description}}</p>
+                        <div class="col-md-4">
+                           <label class="float-left"> <b >Description : </b></label><br />
+                            {{data.description}}
                           </div>
-                          <div class="col-md-6">
-                              <label class="float-left"> <b > Promo Code: </b></label>
+                          <div class="col-md-4">
+                              <label class="float-left"> <b > Promo Code: </b></label><br />
                                <p>{{data.promocode}}</p>
                              </div>
   
-                          <div class="col-md-6">
-                              <label class="float-left"> <b > Promo Value: </b></label>
+                          <div class="col-md-4">
+                              <label class="float-left"> <b >Min. Order Value: </b></label><br />
                                <p>{{data.promo_discount}}</p>
                              </div>
-                             <div class="col-md-6" *ngIf="data.promo_type==1">
-                                <label class="float-left"> <b >Promo Type : </b></label>
+                             <div class="col-md-4" *ngIf="data.promo_type==1">
+                                <label class="float-left"> <b >Discount Type : </b></label><br />
                                  <p>Percentage</p>
                                </div>
 
-                               <div class="col-md-6" *ngIf="data.promo_type==2">
-                                <label class="float-left"> <b >Promo Type : </b></label>
+                               <div class="col-md-4" *ngIf="data.promo_type==2">
+                                <label class="float-left"> <b >Discount Type : </b></label><br />
                                  <p>Flat</p>
                                </div>
                      
          
        
-                          <div class="col-md-6">
-                         <label class="float-left"> <b >Min. Order Value : </b></label>
+                          <div class="col-md-4">
+                         <label class="float-left"> <b >Min. Order Value : </b></label><br />
                           <p>{{data.min_order_value}}</p>
                         </div>
-                        <div class="col-md-6">
-                           <label class="float-left"> <b >Added date : </b></label>
+                        <div class="col-md-4">
+                           <label class="float-left"> <b >Added date : </b></label><br />
                             <p>{{data.created_at}}</p>
                           </div>
-                          <div class="col-md-6">
-                             <label class="float-left"> <b >Valid till : </b></label>
+                          <div class="col-md-4">
+                             <label class="float-left"> <b >Valid till : </b></label><br />
                               <p>{{data.start_date}} to {{data.end_date}}</p>
                             </div>
-                            <div class="col-md-6">
-                               <label class="float-left"> <b >User Used : </b></label>
+                            <div class="col-md-4">
+                               <label class="float-left"> <b > Total Users : </b></label><br />
                                 <p>All users</p>
                               </div>
                              
-                            </div>
+                            
+                            
+                            
+                            
+                          </div>
+                       </form>  </div>
                           </div></div>
                         </div>
                       
-                     
+                     </div> -->
+
+
+
+
+
+                     <div class="animated fadeIn" style="margin-top:30px;">
+                      <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                          <div class="card">
+                            <div class="card-header">
+                        
+                                <div   class="breadc"><a class="active" [routerLink]="['/theme/discounts']"> Discounts</a> / <a class="breada">View Discount</a></div> 
+                    
+                            </div>
+                            <div class="card-body">
+                    
+                    
+                              <div class="row ">
+                                <form>
+                                    <div class="row ">
+                                       
+                                  <div class="form-group col-md-4">
+                                    <label><b for="inputEmail4">Title(En)</b></label><br/>
+                                    <p>{{data.title}}</p>
+                                  </div>
+                                  
+                                  <div class="form-group col-md-4">
+                                      <label>  <b for="inputPassword4">Title(Ar)</b></label><br/>
+                                  abac
+                                  </div>
+                                  
+                                  <div class="form-group col-md-4">
+                                      <label>    <b for="inputEmail4">PromoCode</b></label><br/>
+                                      <p>{{data.promocode}}</p>
+                            
+                                  </div>
+                                  
+                                  <div class="form-group col-md-4"  *ngIf="data.promo_type==1">
+                                    <label>    <b for="inputEmail4">Discount Type</b></label><br/>
+                                    <p>Flat</p>
+                          
+                                </div>
+                                
+                                <div class="form-group col-md-4"  *ngIf="data.promo_type==2">
+                                  <label>    <b for="inputEmail4">Discount Type</b></label><br/>
+                                  <p>Percentage</p>
+                        
+                              </div>
+                              
+                              <div class="form-group col-md-4">
+                                <label>    <b for="inputEmail4">Discount Value</b></label><br/>
+                                <p>{{data.promo_discount}}</p>
+                      
+                            </div>
+                            <div class="form-group col-md-4">
+                              <label>    <b for="inputEmail4">Minimum  Order Value</b></label><br/>
+                              <p>{{data.min_order_value}}</p>
+                    
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label>    <b for="inputEmail4">Validity Date From</b></label><br/>
+                            <p>{{data.start_date}}</p>
+                  
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label>    <b for="inputEmail4">Validity Date To</b></label><br/>
+                          <p>{{data.end_date}}</p>
+                
+                      </div>
+                   
+                    <div class="form-group col-md-4">
+                      <label>    <b for="inputEmail4">Total Users </b></label><br/>
+                      <p>5</p>
+            
+                  </div>
+                
+
+                <div class="form-group col-md-4">
+                  <label>    <b for="inputEmail4">Status </b></label><br/>
+                  <p>{{data.status}}</p>
+        
+              </div>
+
+              <div class="form-group col-md-4">
+                <label>    <b for="inputEmail4">Description(En)</b></label><br/>
+                <p>{{data.description}}</p>
+      
+            </div>
+
+            <div class="form-group col-md-4">
+              <label>    <b for="inputEmail4">Description(Ar) </b></label><br/>
+              <p>Offer offer</p>
+    
+          </div>
+
+
+
+
+                                
+                                 
+                              
+                                </div>
+                                <br/>
+                                <button [routerLink]="['/theme/brands']"  type="button" class="btn btn-primary" >Back</button>
+                               
+                    
+                                </form>
+                    
+                              </div>
+                            </div>
+                          </div>
+                    
+                        </div>
+                      </div>
+                    </div>

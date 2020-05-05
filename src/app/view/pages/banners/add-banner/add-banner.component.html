@@ -5,9 +5,9 @@
         <div class="card-header">
 
           <div *ngIf="this.id==null" class="breadc"><a class="active" [routerLink]="['/theme/banners']"> Promotional
-              Banners</a> / <a class="breada">Add Banner</a></div>
+              Banners</a> / <a class="breada">Add Promotional Banner</a></div>
           <div *ngIf="this.id" class="breadc"> <a class="active" [routerLink]="['/theme/banners']">Promotional Banners</a> / <a
-              class="breada">Edit Banner</a></div>
+              class="breada">Edit Promotional Banner</a></div>
         </div>
         <div class="card-body">
 
@@ -17,23 +17,23 @@
             <div class="row ">
 
               <div class="form-group col-md-2">
-                <b for="inputEmail4">Banner Title<span style="color:red">*</span></b> <br />
+                <label for="inputEmail4"><b>Title <span class="star">*</span></b></label> <br />
                 <input type="text" class="form-control"
-                  placeholder="Banner Title " [formControl]="title">
+                  placeholder="Enter  banner title " [formControl]="title" [maxlength]="CONFIG?.TITLE_LENGTH">
                 <span class="error text-danger">{{_util.errorMessage(title,FORM_ERROR?.title)}}</span>
               </div>
-              <div class="form-group col-md-2 ">
-                <b>Min Order Value<span style="color:red">*</span></b>
+              <!-- <div class="form-group col-md-2 ">
+                <label><b>Min. Order Value <span class="star">*</span></b></label>
                 <input type="text" class="form-control" (keypress)="keyPress($event)"
-                  placeholder="Minimum Value" [formControl]="minimum_value" maxlength="5">
+                  placeholder="Enter min. order  value" [formControl]="minimum_value" maxlength="5">
                 <span class="error text-danger">{{_util.errorMessage(minimum_value,FORM_ERROR?.minimum_value)}}</span>
-              </div>
+              </div> -->
 
               <div class="col-md-2 float-left">
-                <b>Discount Type<span style="color:red">*</span></b>
+                <label><b>Discount Type <span class="star">*</span></b></label>
                 <select class="form-control" placeholder="" [formControl]="discount_type"
                   (change)="changeType($event)">
-                  <option value="">Please Select</option>
+                  <option value="">Select discount type</option>
                   <option value="1">Flat </option>
                   <option value="2">Percentage</option>
                 </select>
@@ -43,7 +43,7 @@
             </div>
             
             <!-- <div class="col-md-2 float-left" *ngIf="bannerForm.value.discount_type==1">
-              <b>Discount Value<span style="color:red">*</span></b>
+              <b>Discount Value<span class="star">*</span></b>
               <div class="form-group ">
 
                 <input type="text" class="form-control"  [formControl]="discount_value"  (keypress)="keyPress($event)"  placeholder="{{discountType}}"
@@ -54,9 +54,10 @@
             
           </div> -->
   
-          <div class="col-md-2 float-left" *ngIf="bannerForm.value.discount_type!=''">
-            <b  *ngIf="bannerForm.value.discount_type==1">Discount Value<span style="color:red">*</span></b>
-            <b  *ngIf="bannerForm.value.discount_type==2">Discount Percentage<span style="color:red">*</span></b>
+          <div class="col-md-2 float-left" >
+            <label *ngIf="bannerForm.value.discount_type==1"><b>Discounted Value<span class="star">*</span></b></label>
+            <label *ngIf="bannerForm.value.discount_type==2"><b>Discounted Percentage<span class="star">*</span></b></label>
+            <label *ngIf="bannerForm.value.discount_type==''"><b>Discounted Value<span class="star">*</span></b></label>
             <div class="form-group ">
 
               <input type="number" class="form-control"   placeholder="{{placeHolderText}}"
@@ -67,9 +68,9 @@
         </div>
 
           <div class="col-md-2 float-left">
-            <b>  Available On<span style="color:red">*</span></b>
+            <label><b>  Available On <span class="star">*</span></b></label>
             <select class="form-control" [formControl]="available_on" (change)="changeProduct()">
-              <option value="">Please Select</option>
+              <option value="">Select availability</option>
               <option value="1">Brand</option>
               <option value="2">Product</option>
 
@@ -83,38 +84,41 @@
               
               
               <div class="col-md-2 float-left" >
-                <b>Display Order<span style="color:red">*</span></b>
+                <label><b>Display Order <span class="star">*</span></b></label>
                 <select class="form-control" [formControl]="display_order">
-                  <option value="">Please Select</option>
+                  <option value="">Select display order</option>
                   <option *ngFor="let order of displayOrder" value="{{order}}">{{order}}</option>
                 </select>
                 <span class="error text-danger">{{_util.errorMessage(display_order,FORM_ERROR?.display_order)}}</span>
               </div>
-             
-              <div class="col-md-2 float-left "  style="margin-bottom: 15px;">
-                <b>Start & Expiry Date<span style="color:red">*</span></b>
-                <input type="text" ngxDaterangepickerMd class="form-control" (choosedDate)="choosedDate($event)"
-                  [formControl]="date" [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}" placeholder="Please Select" />
-                <span class="error text-danger">{{_util.errorMessage(date,FORM_ERROR?.date)}}</span>
-              </div>
+            
 
 
               <div class="col-md-2 float-left" >
-                <b>Status</b>
-                <select class="form-control" [formControl]="status">suod ng <s></s>
-                  <option value="">Please Select</option>
+                <label><b>Status <span class="star">*</span></b></label>
+                <select class="form-control" [formControl]="status">
+                  <option value="">Select status</option>
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
                   <!-- <option value="trashed">Delete</option> -->
                 </select>
-                <span class="error text-danger">{{_util.errorMessage(display_order,FORM_ERROR?.display_order)}}</span>
+                <span class="error text-danger">{{_util.errorMessage(status,FORM_ERROR?.status)}}</span>
+              </div>
+
+
+               
+              <div class="col-md-2 float-left "  style="margin-bottom: 15px;">
+                <label><b>Start & Expiry Date <span class="star">*</span></b></label>
+                <input type="text" style="min-width:190px" ngxDaterangepickerMd class="form-control"  [maxlength]="CONFIG?.DATE_MAX_LENGTH"  (choosedDate)="choosedDate($event)"
+                  [formControl]="date" [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}" placeholder="Select date " />
+                <span class="error text-danger">{{_util.errorMessage(date,FORM_ERROR?.date)}}</span>
               </div>
 
               <div class=" col-md-2" *ngIf="isBrand">
-                <b> Brand<span style="color:red">*</span></b><br/>
+                <label> <b>Brand <span class="star">*</span></b></label><br/>
               
                   <div ngbDropdown class="" style="width:100%">
-                    <button class="btn btn-outline-primary form-control" id="dropdownForm1" type="button"  ngbDropdownToggle style="width:100%;padding-left:10px;padding-right:0;text-align: left;color:#5c6873">Please Select
+                    <button class="btn btn-outline-primary form-control" id="dropdownForm1" type="button"  ngbDropdownToggle style="width:100%;padding-left:10px;padding-right:0;text-align: left;color:#5c6873">Select Brand
                       </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownForm1" style="width:100% !important">
   
@@ -146,8 +150,9 @@
 
               
                 <div class="col-md-2 float-left"  *ngIf="isProduct">
-                  <b>Category <span style="color:red">*</span></b>
+                  <label><b>Category <span class="star">*</span></b></label>
                   <select class="form-control" (click)="getSubcategory" [formControl]="category" (change)="getSubcategory()" (change)="getProductUsingCategory()">
+                    <option value="">Select category</option>
                     <option *ngFor="let cat of categoryList" value="{{cat.id}}"> {{cat.name}} </option>
   
   
@@ -156,8 +161,9 @@
   
                 </div>
                 <div class="col-md-2 float-left"  *ngIf="isProduct">
-                  <b>Sub-Category<span style="color:red">*</span></b>
+                  <label><b>Sub-Category <span class="star">*</span></b></label>
                   <select class="form-control" [formControl]="sub_category" (change)="getChildList()" (change)="getProductUsingCategory()">
+                    <option value="">Select Sub-category</option>
                     <option *ngFor="let sab of subCategoryList" value="{{sab.id}}">{{sab.name}}</option>
   
   
@@ -169,8 +175,9 @@
   
   
                 <div class="col-md-2 float-left "  *ngIf="isProduct">
-                  <b>Child-Category<span style="color:red">*</span></b>
+                  <label><b>Child-Category <span class="star">*</span></b></label>
                   <select class="form-control" [formControl]="child_category" (change)="getProductUsingCategory()">
+                    <option value="">Select Child-category</option>
                     <option  *ngFor="let child of childList" value="{{child.id}}">{{child.name}}</option>
                    
   
@@ -277,7 +284,7 @@
                 
               <div class="col-sm-12 col-lg-12 mr-top" >
                 <div class="card text-white ">
-                  <div class="card-body pb-0 ">
+                  <div class=" pb-0 ">
                     <table class="table table-striped table-response">
                       <thead>
                         <tr >
@@ -327,8 +334,8 @@
 
             </div>
 
-            <button *ngIf="this.id==null" type="submit" class="btn btn-success mr-top">Save</button>
-            <button type="button" (click)="update()" *ngIf="this.id!=null" class="btn btn-success mr-top">Save</button>
+            <button *ngIf="this.id==null" type="submit" class="btn btn-primary mr-top">Save</button>
+            <button type="button" (click)="update()" *ngIf="this.id!=null" class="btn btn-primary mr-top">Save</button>
 
 
           </form>

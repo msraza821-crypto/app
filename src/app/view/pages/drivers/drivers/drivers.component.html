@@ -8,9 +8,9 @@
             
             <div class="row ">
             <div class="breadc col-md-6 float-left"> <a class="breada">Drivers</a></div>    
-            <div class="col-md-6 float-left"> 
+            <div class="col-md-6 float-left" > 
        
-          <a [routerLink]="['/theme/drivers/addDriver']"> <button type="button" style="margin:0px 19px -2px 0px;color:white;"  class="btn btn-primary float-right ml-1">Add
+          <a [routerLink]="['/theme/drivers/addDriver']"> <button type="button" style="margin:0px 6px -2px 0px;color:white;"  class="btn btn-primary float-right ml-1">Add
               Driver</button></a>
               </div>
              </div>
@@ -20,18 +20,18 @@
 
 
             <div class="col-md-2 float-left">
-               <input type="text" class="form-control" placeholder="Search by driver name" [formControl]='search'>
+               <input type="text" class="form-control" style="min-width:125px;" placeholder="Search by  Name" [formControl]='search'>
               </div>
           
            
-            <div class="col-md-2 float-left">               
-              <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
+            <div class="col-md-1 float-left" >               
+              <input type="text" ngxDaterangepickerMd [maxlength]="CONFIG?.DATE_MAX_LENGTH" style="min-width:190px;" class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
               [formControl]="range"
                 placeholder="Filter Date"  />
             </div>
-            <div class="col-md-8 float-left" style="margin:0px -14px 10px 0px">
+            <div class="col-md-4 float-right" style="margin:0px -14px 10px 0px">
              
-              <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1"   style="margin-right: -29px;">Reset</button></a>
+              <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1"   style="margin-right: -26px;">Reset</button></a>
               <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>
             </div>
           </div>
@@ -45,14 +45,15 @@
                   </select>
                 </div>
                 <div class="col-md-1 float-left">
-                  <select id="inputState" class="form-control" [formControl]="status" (change)="filterSelectedStatus($event.target.value)">
+                  <select id="inputState" class="form-control" style="min-width:125px" [formControl]="status" (change)="filterSelectedStatus($event.target.value)">
                 
                    
-                    <option value="active">Active</option>   <option value="inactive">Inactive</option>
+                    <option value="active">Active</option>  
+                     <option value="inactive">Inactive</option>
                   </select>
                 </div>
           </div>
-          <div class="card-body">
+          <div class="card-body" style="padding-left:30px;padding-right:30px;">
             <!-- <div class="col-sm-12 col-lg-12">
                 <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
                 <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div> -->
@@ -64,19 +65,19 @@
                           This tab content DOM will de destroyed when not active
                         </ngb-alert> -->
                   
-                        <div class="card-body pb-0 ">
+                        <div class=" pb-0 ">
                             <table class="table table-striped" style="overflow: auto;padding:20px">
                               <thead>
                                 <tr>
-                                  <th scope="col">S No.</th>
+                                  <th scope="col">S.No.</th>
                                   <th scope="col">Driver Name</th>
                                   <!-- <th scope="col">Category Name</th>
                                   <th scope="col">Sub-Category Name</th> -->
                                   <th scope="col">Email</th>
                                   <th scope="col">Mobile Number</th>
-                                  <th scope="col"> Driver Status</th>
+                                  <th scope="col" class="myth" > Driver Status</th>
                                  
-                                  <th scope="col" style="min-width:100px">Actions</th>
+                                  <th scope="col" >Actions</th>
                                 </tr>
                               </thead>
                               <tbody *ngIf="collection.length>0">
