@@ -60,7 +60,7 @@ max:Number=10000;
   {
     this.bannerForm=this.fb.group({
       title:['',[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-      // minimum_value:['',[Validators.required, rangeValidator(0, 10000),Validators.pattern(Regex.pricePattern)]],
+      minimum_value:['',[Validators.required, rangeValidator(0, 10000),Validators.pattern(Regex.pricePattern)]],
       available_on:['',[Validators.required]],
       discount_type:['',[Validators.required]],
       discount_value:["", [Validators.required, rangeValidator(0, 10000),Validators.min(0),Validators.max(10000), Validators.pattern(Regex.phoneNumbers)]],
@@ -561,7 +561,7 @@ getFormData()
        formData.append('available_on', this.bannerForm.value.available_on);
        formData.append('discount_type', this.bannerForm.value.discount_type);
        formData.append('discount_value', this.bannerForm.value.discount_type);
-        // formData.append('minimum_value', this.bannerForm.value.minimum_value);
+        formData.append('minimum_value', this.bannerForm.value.minimum_value);
         formData.append('brands',JSON.stringify(this.selectedValue) );
         formData.append('products',JSON.stringify(this.selectedProduct))
         formData.append('banner_start_date',start1)
@@ -604,7 +604,7 @@ getFormData()
    formData.append('available_on', this.bannerForm.value.available_on);
    formData.append('discount_type', this.bannerForm.value.discount_type);
    formData.append('discount_value', this.bannerForm.value.discount_type);
-    // formData.append('minimum_value', this.bannerForm.value.minimum_value);
+    formData.append('minimum_value', this.bannerForm.value.minimum_value);
     formData.append('category', this.bannerForm.value.category);
     formData.append('sub_category', this.bannerForm.value.sub_category);
     formData.append('brands',JSON.stringify(this.selectedValue) );

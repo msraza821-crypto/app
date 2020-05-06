@@ -22,12 +22,12 @@
                   placeholder="Enter  banner title " [formControl]="title" [maxlength]="CONFIG?.TITLE_LENGTH">
                 <span class="error text-danger">{{_util.errorMessage(title,FORM_ERROR?.title)}}</span>
               </div>
-              <!-- <div class="form-group col-md-2 ">
+              <div class="form-group col-md-2 ">
                 <label><b>Min. Order Value <span class="star">*</span></b></label>
                 <input type="text" class="form-control" (keypress)="keyPress($event)"
                   placeholder="Enter min. order  value" [formControl]="minimum_value" maxlength="5">
                 <span class="error text-danger">{{_util.errorMessage(minimum_value,FORM_ERROR?.minimum_value)}}</span>
-              </div> -->
+              </div>
 
               <div class="col-md-2 float-left">
                 <label><b>Discount Type <span class="star">*</span></b></label>
