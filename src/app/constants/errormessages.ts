@@ -124,7 +124,7 @@ export const ERROR_MESSAGES = {
     DISCOUNT_TYPE_REQUIRED:'Discount type is required',
     DISCOUNT_VALUE_REQUIRED:'Discounted price is required',
 
-     PRODUCT_SIZE_REQUIRED:'Product size is rquired',
+     PRODUCT_SIZE_REQUIRED:'Product size is required',
      PRODUCT_PRIZE_REQUIRED:'Product Price is required',
      PRODUCT_COLOUR_REQUIRED:'Product colour is required',
      BRAND_REQUIRED:'Brand name is required',
