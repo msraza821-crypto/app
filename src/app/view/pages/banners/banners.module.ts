@@ -9,7 +9,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ViewBannerComponent } from './view-banner/view-banner.component';
 import { AddBannerComponent } from './add-banner/add-banner.component'; 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { SelectDropDownModule } from 'ngx-select-dropdown'
 const pageRoutes: Routes = [
 
   {
@@ -28,7 +28,7 @@ const pageRoutes: Routes = [
     CommonModule,
     RouterModule.forChild(pageRoutes),
     SharedModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,SelectDropDownModule,
     FormsModule,
     NgxPaginationModule,
     NgxDaterangepickerMd,

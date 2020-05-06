@@ -8,6 +8,8 @@ import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { rangeValidator } from 'src/app/validators/range.validator';
 import { ColorEvent } from 'ngx-color';
+
+import * as moment from 'moment';
 @Component({
   selector: "app-add-product",
   templateUrl: "./add-product.component.html",
@@ -508,7 +510,7 @@ export class AddProductComponent implements OnInit {
 
       this.loginForm.get('subCategory').patchValue(data['sub_category']);
       this.loginForm.get('childCategory').patchValue(data['child_category']);
-      this.loginForm.get('discount_range').patchValue({ startDate: { _d: data['discount_start_date'] }, endDate: { _d: data['discount_end_date'] } })
+      this.loginForm.get('discount_range').patchValue({ startDate: moment(data['discount_start_date'] ), endDate: moment( data['discount_end_date'] ) })
       this.loginForm.get('statusKey').patchValue(data['status'])
       //  this.loginForm.get
     }

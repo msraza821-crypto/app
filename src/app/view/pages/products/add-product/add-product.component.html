@@ -125,14 +125,14 @@
                              
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="inputPassword4">Attribute Description(English)</label>
+                      <label for="inputPassword4">Attribute Description(English)<span style="color:red">*</span></label>
                       <textarea type="text" [formControl]="attribute_description_en" class="form-control" id="inputPassword4"
                         placeholder="Attribute Description"></textarea>
                     
                         <span class="error text-danger">{{_util.errorMessage(attribute_description_en,FORM_ERROR?.attribute_description_en)}}</span>
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="inputPassword4">Attribute Description(Arabic)</label>
+                      <label for="inputPassword4">Attribute Description(Arabic)<span style="color:red">*</span></label>
                       <textarea type="text" [formControl]="attribute_description_ar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
                       placeholder="وصف السمة"></textarea>
                      
