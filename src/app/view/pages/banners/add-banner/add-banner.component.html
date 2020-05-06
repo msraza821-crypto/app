@@ -104,7 +104,10 @@
                 </select>
                 <span class="error text-danger">{{_util.errorMessage(status,FORM_ERROR?.status)}}</span>
               </div>
-              <div class="col-md-2 float-left "  style="margin-bottom: 15px;">  <ngx-select-dropdown (change)="selectionChanged($event)" [multiple]="true" [(ngModel)]="dataModel" [config]="config" [options]="brands"></ngx-select-dropdown>
+              
+              <div class=" col-md-2" *ngIf="isBrand">
+                <label> <b>Brand <span class="star">*</span></b></label><br/>
+                 <ngx-select-dropdown (change)="selectionChanged($event)" [multiple]="true" [(ngModel)]="dataModel" [config]="config" [options]="brands" ></ngx-select-dropdown>
               </div>
 
               <div class="col-md-2 float-left "  style="margin-bottom: 15px;">
@@ -114,7 +117,7 @@
                 <span class="error text-danger">{{_util.errorMessage(date,FORM_ERROR?.date)}}</span>
               </div>
 
-              <div class=" col-md-2" *ngIf="isBrand">
+              <!-- <div class=" col-md-2" *ngIf="isBrand">
                 <label> <b>Brand <span class="star">*</span></b></label><br/>
               
                   <div ngbDropdown class="" style="width:100%">
@@ -144,7 +147,7 @@
                     </div>
                   </div>
               
-              </div>
+              </div> -->
 
 
 

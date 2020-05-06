@@ -8,7 +8,7 @@
             <div class="row ">
             <div class="breadc col-md-6 float-left"> <a class="breada">Brands</a></div>    
             <div class="col-md-6 float-left"> 
-        <a (click)="exportDataF()"> <button type="button" style="margin:0px 19px -2px 0px;color:white;" class="ml-3 btn bg-dark  white float-right ml-1" > Export to
+        <a (click)="exportDataF()"> <button type="button" style="margin:0px 14px -2px 0px;color:white;" class="ml-3 btn bg-dark  white float-right ml-1" > Export to
             CSV</button></a>
           <a [routerLink]="['/theme/brands/add']"> <button type="button" style="margin-right: -11px"  class="btn btn-primary float-right ml-1">Add
               Brand</button></a>
@@ -20,21 +20,21 @@
             <div class="col-md-2 float-left">
               <input type="text" [formControl]="search" class="form-control" id="inputEmail4" placeholder="Search by Brand Name">
             </div>
-            <div class="col-md-2 float-left">
+            <div class="col-md-1 float-left" style="min-width:125px">
               <select id="inputState" class="form-control" [formControl]="status">
                 <option value="">All</option>
              
                 <option value="inactive">Inactive</option>   <option value="active">Active</option>
               </select>
             </div>
-            <div class="col-md-2 float-left">               
-              <input type="text" ngxDaterangepickerMd  class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
+            <div class="col-md-1 float-left">               
+              <input type="text" ngxDaterangepickerMd style="min-width:190px" [maxlength]="CONFIG?.DATE_MAX_LENGTH" class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
               [formControl]="range"
                 placeholder="Filter Date"  />
             </div>
-            <div class="col-md-6 float-left" style="margin:0px -14px 10px 0px">
+            <div class="col-md-4 float-right" style="margin:0px -14px 10px 0px">
              
-              <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1"   style="margin-right: -29px;">Reset</button></a>
+              <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1"   style="margin-right: -21px;">Reset</button></a>
               <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>
             </div>
           </div>
