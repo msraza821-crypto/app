@@ -10,10 +10,14 @@ import { LoaderButtonComponent } from '../shared/loader-button/loader-button.com
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 import { ColorHueModule } from 'ngx-color/hue';
+import { ColorSketchModule } from 'ngx-color/sketch';
+import { OnlyNumberDirective } from 'src/app/directive/only-number.directive';
+import { EditProductComponent } from './edit-product/edit-product.component';
 const pageRoutes: Routes = [
 
   { path: '', canActivate: [],  data: { title: 'Products' },children:[{path:'',component: ProductsComponent ,data:{title:''}},
-  { path: 'add', canActivate: [], data: { title: 'Add Product' }, component: AddProductComponent },
+  { path: 'add', canActivate: [], data: { title: 'Add Product' }, component: AddProductComponent },{
+  path: 'edit', canActivate: [], data: { title: 'Edit Product' }, component: EditProductComponent },
   { path: 'detail-product', canActivate: [], data: { title: 'Detail Product' }, component: DetailProductComponent },
   { path: 'similar-product', canActivate: [], data: { title: 'Similar Product' }, component: SimilarProductComponent }]}
 ];
@@ -25,12 +29,12 @@ const pageRoutes: Routes = [
 @NgModule({
   imports: [
     NgxPaginationModule,NgxDaterangepickerMd,
-    CommonModule, SharedModule,ColorHueModule, 
+    CommonModule, SharedModule,ColorHueModule, ColorSketchModule,
 
     RouterModule.forChild(pageRoutes),
     
   ],
-  declarations: [ProductsComponent,AddProductComponent,SimilarProductComponent,DetailProductComponent],
+  declarations: [ProductsComponent,AddProductComponent,SimilarProductComponent,DetailProductComponent,EditProductComponent],
   entryComponents: []
 })
 export class ProductsModule { }

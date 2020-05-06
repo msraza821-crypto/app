@@ -13,7 +13,11 @@ import { OnlyNumberDirective }  from './../../../../directive/only-number.direct
   styleUrls: ['./add-banner.component.scss']
 })
 export class AddBannerComponent implements OnInit {
+  
 
+  // or
+  
+  config:any;
   closeResult = '';
   bannerForm:FormGroup;
 selectedValue=[];
@@ -21,6 +25,7 @@ CONFIG = CONFIG;
 isProduct=false;
 isBrand=false;
 showPage=false;
+
   brands=[];
   inlineCheckbox='checkbox'
   loader = false;
@@ -49,7 +54,7 @@ max:Number=10000;
     ) {
    
       this.createForm()
-
+      
   }
   createForm()
   {
@@ -176,7 +181,57 @@ getProductUsingCategory(){
  };
 
 id;
-
+options = [
+  {
+    '_id': '5a66d6c31d5e4e36c7711b7a',
+    'index': 0,
+    'balance': '$2,806.37',
+    'picture': 'http://placehold.it/32x32',
+    'name': 'Burns Dalton'
+  },
+  {
+    '_id': '5a66d6c3657e60c6073a2d22',
+    'index': 1,
+    'balance': '$2,984.98',
+    'picture': 'http://placehold.it/32x32',
+    'name': 'Mcintyre Lawson'
+  },
+  {
+    '_id': '5a66d6c376be165a5a7fae33',
+    'index': 2,
+    'balance': '$2,794.16',
+    'picture': 'http://placehold.it/32x32',
+    'name': 'Amie Franklin'
+  },
+  {
+    '_id': '5a66d6c3f7854b6b4d96333b',
+    'index': 3,
+    'balance': '$2,537.14',
+    'picture': 'http://placehold.it/32x32',
+    'name': 'Jocelyn Horton'
+  },
+  {
+    '_id': '5a66d6c31f967d4f3e9d84e9',
+    'index': 4,
+    'balance': '$2,141.42',
+    'picture': 'http://placehold.it/32x32',
+    'name': 'Fischer Erickson'
+  },
+  {
+    '_id': '5a66d6c34cfa8cddefb31602',
+    'index': 5,
+    'balance': '$1,398.60',
+    'picture': 'http://placehold.it/32x32',
+    'name': 'Medina Underwood'
+  },
+  {
+    '_id': '5a66d6c3d727c450794226de',
+    'index': 6,
+    'balance': '$3,915.65',
+    'picture': 'http://placehold.it/32x32',
+    'name': 'Goldie Barber'
+  }
+];
 ngOnInit()
 {
   this.counter()
@@ -191,14 +246,17 @@ this.viewBanner()
       }
     })
    
+   
 }
-
+selectionChanged(event){
+console.log(event)
+}
 
 
 brandChange(event,id)
 {
-  this.selectedValue=this.productCompare(id,this.selectedValue)
-  console.log(this.selectedValue)
+  this.selectedProduct=this.productCompare(id,this.selectedValue)
+  console.log(this.selectedProduct)
 }
 
 getBrandList()
@@ -284,7 +342,21 @@ productCompare(id:any,arr)
         this.spinner.hide()
         this.brands=res.result;
        
+     this.config = {
+      displayKey:"name", //if objects array passed which key to be displayed defaults to description
+      search:true, //true/false for the search functionlity defaults to false,
+
+     placeholder:'Select' ,// text to be displayed when no item is selected defaults to Select,
+        customComparator: ()=>{}, // a custom function using which user wants to sort the items. default is undefined and Array.sort() will be used in that case,
+        limitTo: this.brands.length, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
+        moreText: 'more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
+        noResultsFound: 'No results found!', // text to be displayed when no items are found while searching
+        searchPlaceholder:'Search', // label thats displayed in search input,
+        searchOnKey: 'name', // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
+        clearOnSelection: false, // clears search criteria when an option is selected if set to true, default is false
+        inputDirection: 'ltr', // the direction of the search input can be rtl or ltr(default)
     
+    }
       
     
       }

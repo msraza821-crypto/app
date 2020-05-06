@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,13 +8,13 @@ import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { rangeValidator } from 'src/app/validators/range.validator';
 import { ColorEvent } from 'ngx-color';
+import * as moment from 'moment';
 @Component({
   selector: "app-similar-product",
   templateUrl: "./similar-product.component.html",
   styleUrls: ["./similar-product.component.css"]
 })
 export class SimilarProductComponent implements OnInit {
-
 
   loader = false;
   CONFIG = CONFIG;
@@ -33,26 +33,38 @@ export class SimilarProductComponent implements OnInit {
   }
   FORM_ERROR = {
     product_name_en: {
-      required: ERROR_MESSAGES.NAME_ENGLISH_REQUIRED, 
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_NAME}`,
+      required: ERROR_MESSAGES.NAME_ENGLISH_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_MAX}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     product_description_en: {
       required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_DESCRIPTION}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     product_name_ar: {
-      required: ERROR_MESSAGES.NAME_ARABIC_REQUIRED, 
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_NAME}`,
+      required: ERROR_MESSAGES.NAME_ARABIC_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_MAX}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     product_description_ar: {
       required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
-      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_DESCRIPTION}`,
+      pattern: ERROR_MESSAGES.INVALID_INPUT,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+    },
+    attribute_description_en: {
+      required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_DESCRIPTION}`,
+      pattern: ERROR_MESSAGES.INVALID_INPUT,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+    },
+    attribute_description_ar: {
+      required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_DESCRIPTION}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
@@ -62,7 +74,7 @@ export class SimilarProductComponent implements OnInit {
 
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
-    product_prize: {
+    product_price: {
       required: ERROR_MESSAGES.PRODUCT_PRIZE_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.NUMBER_LENGTH}`,
       pattern: ERROR_MESSAGES.NUMBER_REQUIRED,
@@ -125,21 +137,23 @@ export class SimilarProductComponent implements OnInit {
 
   createForm() {
     this.loginForm = this._fb.group({
-      product_name_en: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
-      product_description_en: ["",[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
-     product_name_ar: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
-     product_description_ar: ["", [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+      product_name_en:  [{value:"", disabled: true}, [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
+      product_description_en:  [{value:"", disabled: true},[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+     product_name_ar:  [{value:"", disabled: true}, [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
+     product_description_ar: [{value:"", disabled: true}, [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
      product_size: ["", [Validators.required]],
-     product_prize: ["", [Validators.required,rangeValidator(0, 10000)]],
+     product_price: ["", [Validators.required,rangeValidator(0, 10000)]],
      product_colour: ["", [Validators.required]],
-     brand_id: ["", [Validators.required]],
+     brand_id:  [{value:"", disabled: true}, [Validators.required]],
      quantity: ["", [Validators.required,Validators.pattern(Regex.phoneNumber),rangeValidator(0, 10000)]],
      category_id: [{value:"", disabled: true}, [Validators.required]],
      subCategory: [{value:"", disabled: true}, [Validators.required]],
      childCategory: [{value:"", disabled: true}, [Validators.required]],     
-     discount_type: ["", [Validators.required]],
-     discount_value: ["", [Validators.required,rangeValidator(0, 10000),Validators.pattern(Regex.phoneNumbers)]],
-     discount_range:["",[Validators.required]]
+     discount_type:  [{value:"", disabled: true}, [Validators.required]],
+     discount_value:  [{value:"", disabled: true}, [Validators.required,rangeValidator(0, 10000),Validators.pattern(Regex.phoneNumbers)]],
+     discount_range: [{value:"", disabled: true},[Validators.required]],  attribute_description_ar: ["bluew", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+     attribute_description_en: ["bluew", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+  
     });
   }
   rtl(element) {
@@ -150,6 +164,7 @@ export class SimilarProductComponent implements OnInit {
 id:string=null;
   ngOnInit() {
     this.productSize();
+    this.state = "";
     this.productSiz();
     this.productCategory();
     this._route.params.subscribe(param => {
@@ -258,9 +273,14 @@ successCategoryChild(res){
   get discount_value(): FormControl {
     return this.loginForm.get("discount_value") as FormControl;
   }
-
-  get product_prize(): FormControl {
-    return this.loginForm.get("product_prize") as FormControl;
+  get attribute_description_en(): FormControl {
+    return this.loginForm.get("attribute_description_en") as FormControl;
+  }
+  get attribute_description_ar(): FormControl {
+    return this.loginForm.get("attribute_description_ar") as FormControl;
+  }
+  get product_price(): FormControl {
+    return this.loginForm.get("product_price") as FormControl;
   }
   get product_colour(): FormControl {
     return this.loginForm.get("product_colour") as FormControl;
@@ -329,7 +349,7 @@ for (var x = 0; x < ins; x++) {
       }
 
 
-      this.urlForm.push(event.target.files[0]);
+      this.urlForm.push(event.target.files[x]);
       console.log(this.url1)
 
 
@@ -386,6 +406,10 @@ for (var x = 0; x < ins; x++) {
 
     }
   }
+  Reset() {
+    this.loginForm.get('product_colour').patchValue('');
+    this.state = '#ff0000';
+  }
   viewBrand(){
     this.spinner.show();
     this.api
@@ -414,8 +438,12 @@ for (var x = 0; x < ins; x++) {
         () => (this.loader = false)
       );
   }
-  state:any;
-  
+  state;
+  toggleVideo(event: any) {
+    this.videoplayer.nativeElement.play();
+  }
+  @ViewChild("videoPlayer", { static: false }) videoplayer: ElementRef;
+  isPlay: boolean = false;
   successView(res){
     if(res.status==true){
     var data= res.result;
@@ -430,15 +458,19 @@ for (var x = 0; x < ins; x++) {
 
     this.loginForm.get('subCategory').patchValue(data['sub_category']);
     this.loginForm.get('childCategory').patchValue(data['child_category']);
-    this.loginForm.get('discount_range').patchValue({ startDate:{_d: data['discount_start_date']}, endDate:{_d: data['discount_end_date'] }})
+    var start1=moment(data['discount_start_date']);
+    var end1=moment(data['discount_end_date']);
+    
+  this.loginForm.get('discount_range').patchValue({ startDate: start1, endDate:end1 });
   //  this.loginForm.get
     }
-    this.state=data['product_colour'];
-    for (var i = 0; i < data.productMedia.length; i++) {
-      if(data.productMedia[i].media_url){
-        this.urlData.push(data.productMedia[i].media_url);
-      }
-    }
+   // this.state=data['product_colour'];
+    // for (var i = 0; i < data.productMedia.length; i++) {
+    //   if(data.productMedia[i].media_url){
+    //     this.urlData.push(data.productMedia[i].media_url);
+    //   }
+    // }
+    
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
@@ -472,7 +504,7 @@ var end1="";
       formData.append('product_description_ar',this.loginForm.value.product_description_ar);
 
       formData.append('product_size',this.loginForm.value.product_size);
-      formData.append('product_prize',this.loginForm.value.product_prize);
+      formData.append('product_price',this.loginForm.value.product_price);
       formData.append('product_colour',this.loginForm.value.product_colour);
       formData.append('brand_id',this.loginForm.value.brand_id);
       formData.append('quantity', this.loginForm.value.quantity);
@@ -486,7 +518,7 @@ var end1="";
 
       formData.append('product_image',this.url1);
       for (var x = 0; x < this.urlForm.length; x++) {
-        formData.append('products_images[]',this.urlForm[x]);
+        formData.append('products_images',this.urlForm[x]);
       }
       
 
@@ -505,44 +537,22 @@ var end1="";
   submit() {
     console.log(this.loginForm.value)
     if (this.loginForm.valid) {
-var start1="";
-var end1="";
-
-      this.spinner.show();
-      if(this.loginForm.value.discount_range){
-      
-        start1=this.loginForm.value.discount_range.startDate._d;
-       
-        var startDate=new Date(start1)
-         start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
-        end1=this.loginForm.value.discount_range.endDate._d;
-        var endDate=new Date(end1)
-        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
-       }
+      this.spinner.show();     
       const formData = new FormData();
-      formData.append('parent_id',this.id);
-      formData.append('product_name_en',this.loginForm.value.product_name_en);
-      formData.append('product_description_en',this.loginForm.value.product_description_en);
-      formData.append('product_name_ar',this.loginForm.value.product_name_ar);
-      formData.append('product_description_ar',this.loginForm.value.product_description_ar);
-
+      formData.append('product_id',this.id);
+      formData.append('attribute_description_ar', this.loginForm.value.attribute_description_ar);
+      formData.append('attribute_description_en', this.loginForm.value.attribute_description_en); 
       formData.append('product_size',this.loginForm.value.product_size);
-      formData.append('product_prize',this.loginForm.value.product_prize);
-      formData.append('product_colour',this.loginForm.value.product_colour);
-      formData.append('brand_id',this.loginForm.value.brand_id);
-      formData.append('quantity', this.loginForm.value.quantity);
-      formData.append('category',this.loginForm.value.category_id);
-      formData.append('sub_category',this.loginForm.value.subCategory);
-      formData.append('child_category',this.loginForm.value.childCategory);
-      formData.append('discount_type',this.loginForm.value.discount_type);
-      formData.append('discount_value',this.loginForm.value.discount_value);
-      formData.append('discount_start_date',start1);
-      formData.append('discount_end_date',end1);
-      formData.append('product_image',this.url1);
-
+      formData.append('product_price',this.loginForm.value.product_price);
+      formData.append('product_colour',this.loginForm.value.product_colour);     
+      formData.append('quantity', this.loginForm.value.quantity);      
+      var ins = this.urlForm.length;
+      for (var x = 0; x < ins; x++) {
+        formData.append('product_images', this.urlForm[x],this.urlForm[x].name);
+      }
       console.log(formData)
       this.api
-      .postReqAuth("admin/product/add-product",formData).subscribe(
+      .postReqAuth("admin/product/add-similar-product",formData).subscribe(
         res => this.success(res),
         err => this.error(err),
         () => (this.loader = false)

@@ -64,10 +64,7 @@
                         <th scope="col">S.No</th>
                       <th scope="col">Name(English)</th>
                       <th scope="col">Name(Arabic)</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Category</th>                   
-                      <th scope="col">Quantity</th>
-                      <th scope="col">Brand</th>
+                     <th scope="col">Brand</th>
                       <th scope="col">Status</th>
                       <th scope="col">Created at</th>
                       <th scope="col">Actions</th>
@@ -86,18 +83,14 @@
                       </td>
                       <td scope="row" style=" text-transform: capitalize;">{{this.add3Dots(i.product_name_ar,20)}}
                         </td>
-                      <td>{{i.product_price}}
-                      </td>
-                      <td>
-                      
-                        </td>
                     
-                    <td>{{i.quantity}}
-                      
-                  </td>
+                    
+                    
+                   
                   <td>{{i.brand_name_en}}
                       
                     </td>
+                   
                     <td>{{i.status}}
                       
                       </td>
@@ -105,13 +98,13 @@
                         </td>
                 
                       <td>
-                          <a [routerLink]="['/theme/products/detail-product',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                   
-                          <!-- <a [routerLink]="['/theme/products/similar-product',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-plus"></i></a>&nbsp;  
-                          <a [routerLink]="['/theme/products/add',{product_id :i?.id}]"> <i style="font-size:24px" class="fa fa-arrows"></i></a>&nbsp;                  -->
-                        <a [routerLink]="['/theme/products/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
-                        <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px" class="fa fa-ban"></i>&nbsp;   </a>
-                        <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i>&nbsp;   </a>           
-                        <a (click)="openVerticallyCentered(poup,i)"> <i style="font-size:24px"
+                          <a title="View Product" [routerLink]="['/theme/products/detail-product',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                   
+                          <a title="Similar Product" [routerLink]="['/theme/products/similar-product',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-plus"></i></a>&nbsp;  
+                          <a title="Duplicate Product" [routerLink]="['/theme/products/add',{product_id :i?.id}]"> <i style="font-size:24px" class="fa fa-copy"></i></a>&nbsp;                  
+                        <a title="Edit Product" [routerLink]="['/theme/products/edit',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
+                        <a  title="Active Product"(click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px" class="fa fa-ban"></i>&nbsp;   </a>
+                        <a  title="Inactive Product" (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i>&nbsp;   </a>           
+                        <a title="Delete Product" (click)="openVerticallyCentered(poup,i)"> <i style="font-size:24px"
                             class="fa fa-trash-o"></i></a>
 
                       </td>

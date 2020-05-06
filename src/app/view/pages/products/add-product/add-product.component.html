@@ -110,7 +110,7 @@
                   <span class="error text-danger">{{_util.errorMessage(product_size,FORM_ERROR?.product_size)}}</span>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="inputEmail4">Product Price <span style="color:red">*</span></label>
+                    <label for="inputEmail4">Product Price(QAR) <span style="color:red">*</span></label>
                     <input type="text" [formControl]="product_price" [minlength]="CONFIG?.MINORDER" [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" placeholder="Product Price">
     
                 
@@ -118,12 +118,26 @@
                   </div>
                   <div class="form-group col-md-3">
                       <label for="inputEmail4">Product Color <span style="color:red">*</span></label>
-                      <input type="text" [formControl]="product_colour" class="form-control" id="inputEmail4" placeholder="Product Color"><br/>
-     <color-hue-picker [color]="state" (onChange)="handleChange($event)"></color-hue-picker>
-                  
-                      <span class="error text-danger">{{_util.errorMessage(product_colour,FORM_ERROR?.product_colour)}}</span>
+                      <input type="text" [formControl]="product_colour" readonly class="form-control" id="inputEmail4" placeholder="Product Color">
+                      <span class="error text-danger">{{_util.errorMessage(product_colour,FORM_ERROR?.product_colour)}}</span><br/>
+     <color-hue-picker [color]="state" (onChange)="handleChange($event)"></color-hue-picker><br/>
+     <b class="float-right reset-class" (click)="Reset()"><i class="fa fa-refresh" aria-hidden="true"></i></b>  
+                             
                     </div>
-               
+                    <div class="form-group col-md-6">
+                      <label for="inputPassword4">Attribute Description(English)<span style="color:red">*</span></label>
+                      <textarea type="text" [formControl]="attribute_description_en" class="form-control" id="inputPassword4"
+                        placeholder="Attribute Description"></textarea>
+                    
+                        <span class="error text-danger">{{_util.errorMessage(attribute_description_en,FORM_ERROR?.attribute_description_en)}}</span>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="inputPassword4">Attribute Description(Arabic)<span style="color:red">*</span></label>
+                      <textarea type="text" [formControl]="attribute_description_ar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
+                      placeholder="وصف السمة"></textarea>
+                     
+                  <span class="error text-danger">{{_util.errorMessage(attribute_description_ar,FORM_ERROR?.attribute_description_ar)}}</span>
+                </div>
                 <hr>
                    <div class="form-group col-md-4">
                       <label for="inputState">Discount range date</label>
@@ -145,7 +159,7 @@
                     </div>
                    <div class="form-group col-md-3">
                         <label for="inputEmail4">Discount Price{{dPrice}}</label>
-                        <input type="text" [formControl]="discount_value" [minlength]="CONFIG?.MINORDER" [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
+                        <input type="text" [formControl]="discount_value"  (keypress) = "changeNumber($event)" appOnlyNumber [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
         
                     
                         <span class="error text-danger">{{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
@@ -172,7 +186,13 @@
                                         </div>
                                       </div>
                                       <br/>
-                                      <img style="height:100px;width:100px;" [src]="url ? url : 'assets/img/avatars/no-video-png-2.png'" />
+                                      <img style="height:100px;width:100px;" *ngIf="!url" src="assets/img/avatars/no-video-png-2.png" />
+                                    <div class="video" *ngIf="url">
+                                        <video controls (click)="toggleVideo()" #videoPlayer style="width:400px;">
+                                          <source [src]="url" type="video/mp4" />
+                                          Browser not supported
+                                        </video>
+                                      </div>
                         </div>
                        
                         <div class="form-group col-md-12">

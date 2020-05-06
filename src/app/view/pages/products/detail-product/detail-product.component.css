@@ -24,6 +24,9 @@ agm-map {
   .new-card{
       width: 49%;margin-left: 10px;
   }
+  .new-carder{
+    width: 99%;margin-left: 10px;
+  }
   .gallery-wrap .img-big-wrap img {
     height: 450px;
     width: auto;

@@ -43,6 +43,7 @@ export class DetailProductComponent implements OnInit {
       this.childcategories = res.result;
     }
   }
+  
   sub_cate(event) {
     const value = event;
     this.api

@@ -8,6 +8,7 @@ import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { rangeValidator } from 'src/app/validators/range.validator';
 import { ColorEvent } from 'ngx-color';
+import * as moment from 'moment';
 @Component({
   selector: "app-add-discount",
   templateUrl: "./add-discount.component.html",
@@ -181,7 +182,10 @@ max:Number=10000;
         this.loginForm.get(control).patchValue(data[control]);
 
       });
-      this.loginForm.get('discount_range').patchValue({ startDate: { _d: data['start_date'] }, endDate: { _d: data['end_date'] } })
+      var start1=moment(data['start_date']);
+      var end1=moment(data['end_date']);
+      
+    this.loginForm.get('discount_range').patchValue({ startDate: start1, endDate:end1 });
       this.loginForm.get('statusKey').patchValue(data['status'])
       if(data['promo_type']==2){
         this.placeHolderText="Percentage Discount";

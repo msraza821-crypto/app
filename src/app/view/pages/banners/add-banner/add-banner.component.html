@@ -104,9 +104,9 @@
                 </select>
                 <span class="error text-danger">{{_util.errorMessage(status,FORM_ERROR?.status)}}</span>
               </div>
+              <div class="col-md-2 float-left "  style="margin-bottom: 15px;">  <ngx-select-dropdown (change)="selectionChanged($event)" [multiple]="true" [(ngModel)]="dataModel" [config]="config" [options]="brands"></ngx-select-dropdown>
+              </div>
 
-
-               
               <div class="col-md-2 float-left "  style="margin-bottom: 15px;">
                 <label><b>Start & Expiry Date <span class="star">*</span></b></label>
                 <input type="text" style="min-width:190px" ngxDaterangepickerMd class="form-control"  [maxlength]="CONFIG?.DATE_MAX_LENGTH"  (choosedDate)="choosedDate($event)"
