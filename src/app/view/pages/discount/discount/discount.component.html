@@ -62,8 +62,10 @@
                   <thead>
                     <tr>
                         <th scope="col">S.No</th>
-                      <th scope="col">Title</th>
-                      <th scope="col">Description</th>
+                      <th scope="col">Title(En)</th>
+                      <th scope="col">Title(Ar)</th>
+                      <th scope="col">Description(En)</th>
+                      <th scope="col">Description(Ar)</th>
                       <th scope="col">Promocode</th>
                       <th scope="col">From Date</th>
                       <th scope="col">To Date</th>                   
@@ -85,7 +87,13 @@
                       <td scope="row" style=" text-transform: capitalize;" 
                       [title]="i.title">{{this.add3Dots(i.title,20)}}
                       </td>
+                    
+                    <td scope="row" style=" text-transform: capitalize;" 
+                    [title]="i.title">{{this.add3Dots(i.title_ar,20)}}
+                    </td>
                       <td scope="row" [title]="i.description" style=" text-transform: capitalize;">{{this.add3Dots(i.description,20)}}
+                        </td>
+                        <td scope="row" [title]="i.description" style=" text-transform: capitalize;">{{this.add3Dots(i.description_ar,20)}}
                         </td>
                       <td>{{i.promocode}}
                       </td>
@@ -108,8 +116,8 @@
                         </td>
                 
                       <td>
-                          <a [routerLink]="['/theme/discount/detail-discount',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                   
-                        <a [routerLink]="['/theme/discount/add',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
+                          <a [routerLink]="['/theme/discount/detail-discount',{id :i?.id}]" title="View Discount"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                   
+                        <a [routerLink]="['/theme/discount/add',{id :i?.id}]" title="Edit Discount"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
                         <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='active'"> <i title="Active Discount" style="font-size:24px" class="fa fa-ban"></i>&nbsp;   </a>
                         <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='inactive'">   <i title="Inactive Discount" style="font-size:24px;color:red;" class="fa fa-ban"></i>&nbsp;   </a>           
                         <a (click)="openVerticallyCentered(poup,i)"> <i style="font-size:24px" title="Delete Banner"

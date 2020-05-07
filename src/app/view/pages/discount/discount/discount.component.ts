@@ -162,6 +162,7 @@ export class DiscountComponent implements OnInit {
     if (res.status == true) {
       this.collection = res.result.data;
       this.totalRec = res.result.globelCount;
+      console.log(res)
       // this.page=this.page;
       //this.limit=this.limit;
     }

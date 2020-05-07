@@ -68,6 +68,7 @@ export class BannersComponent implements OnInit {
       range: [""]
     });
   }
+  
   defaultValue() {
     this.selected = '';
   }
@@ -182,14 +183,17 @@ export class BannersComponent implements OnInit {
         () => (this.loader = false)
       );
   }
+  
   success(res) {
     if (res.status == true) {
       this.spinner.hide();
       this.collection = res.result.data;
       this.totalRec = res.result.globalCount;
+      console.log(res)
       // this.page=this.page;
       //this.limit=this.limit;
-      console.log(res)
+      
+    
     }
 
   }
@@ -280,7 +284,7 @@ export class BannersComponent implements OnInit {
     }
     this.modalService.dismissAll();
     this.api
-      .putReqAuth("admin/banner/update-status", { id: this.deletedId, status: this.statusData })
+      .putReqAuth("admin/banner/update-status", { id: this.deletedId, status: this.statusData,banner_type:'1' })
       .subscribe(
         res => this.successStatus(res),
         err => this.error(err),

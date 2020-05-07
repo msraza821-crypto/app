@@ -259,7 +259,7 @@ export class BannersComponent implements OnInit {
     }
     this.modalService.dismissAll();
     this.api
-      .putReqAuth("admin/banner/update-status", { id: this.deletedId, status: this.statusData })
+      .putReqAuth("admin/banner/update-status", { id: this.deletedId, status: this.statusData,banner_type:'2' })
       .subscribe(
         res => this.successStatus(res),
         err => this.error(err),

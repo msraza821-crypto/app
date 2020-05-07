@@ -31,15 +31,18 @@ showPage=false;
   loader = false;
   discountType="";
   selectedProduct=[];
+  displayOrderList=[];
+  imageError=false;
+  imageErrorMessage='Image is required';
 
   url1 = ''; url: string = '';
   message: string = '';
   keyValue: boolean = false;
 
-  displayOrder=[]
   page: number = 1;
   limit=10;
   totalRec=50;
+  activeOrderList=[];
 
 min:Number=0;
 max:Number=10000;
@@ -54,13 +57,14 @@ max:Number=10000;
     ) {
    
       this.createForm()
+      this.getOrderListing()
       
   }
   createForm()
   {
     this.bannerForm=this.fb.group({
       title:['',[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.NAME_MAX_LENGTH),Validators.minLength(CONFIG.NAME_MINLENGTH)]],
-      minimum_value:['',[Validators.required, rangeValidator(0, 10000),Validators.pattern(Regex.pricePattern)]],
+      // minimum_value:['',[Validators.required, rangeValidator(0, 10000),Validators.pattern(Regex.pricePattern)]],
       available_on:['',[Validators.required]],
       discount_type:['',[Validators.required]],
       discount_value:["", [Validators.required, rangeValidator(0, 10000),Validators.min(0),Validators.max(10000), Validators.pattern(Regex.phoneNumbers)]],
@@ -73,16 +77,9 @@ max:Number=10000;
     //  brand:this.addBrandControl()
     });
   }
-  counter()
-{
-  
-  for(let v=1;v<=5;v++)
-  {
-    
-    this.displayOrder[v-1]=v
-  }
+ 
 
-}
+
 getProductBrand()
 {
   this.api.getReqAuth("admin/banner/brand-products?brands="+'['+this.selectedValue+']').subscribe(res=>
@@ -232,9 +229,46 @@ options = [
     'name': 'Goldie Barber'
   }
 ];
+
+
+
+getOrderListing()
+{
+  var list=[1,2,3,4,5,6,7,8,9,10]
+  var flag=0;
+  this.api.getReqAuth("admin/banner/active-order?banner_type=2")
+ .subscribe(
+    res => {
+      if(res.status)
+      {
+        this.activeOrderList=res.result
+        for( let l of list )
+        {
+
+            flag=0;
+        
+        for(let order of this.activeOrderList)
+        {
+          if(order==l)
+          flag=1;
+        }
+        if(flag==0)
+        this.displayOrderList.push(l)
+      }
+      console.log('available order',this.displayOrderList)
+    }
+     
+    },
+    err => this.error(err),
+    () => (this.loader = false)
+  );
+
+}
+
+
 ngOnInit()
 {
-  this.counter()
+  
   this.route.params.subscribe(param=>
     {
       if(param && param['id'])
@@ -310,10 +344,10 @@ productCompare(id:any,arr)
     }
 
 
-  checked = "";
-  indeterminate = false;
-  labelPosition: 'before' | 'after' = 'after';
-  disabled = false;
+  // checked = "";
+  // indeterminate = false;
+  // labelPosition: 'before' | 'after' = 'after';
+  // disabled = false;
 
 
   selectedDatasource;
@@ -561,7 +595,7 @@ getFormData()
        formData.append('available_on', this.bannerForm.value.available_on);
        formData.append('discount_type', this.bannerForm.value.discount_type);
        formData.append('discount_value', this.bannerForm.value.discount_type);
-        formData.append('minimum_value', this.bannerForm.value.minimum_value);
+        // formData.append('minimum_value', this.bannerForm.value.minimum_value);
         formData.append('brands',JSON.stringify(this.selectedValue) );
         formData.append('products',JSON.stringify(this.selectedProduct))
         formData.append('banner_start_date',start1)
@@ -604,7 +638,7 @@ getFormData()
    formData.append('available_on', this.bannerForm.value.available_on);
    formData.append('discount_type', this.bannerForm.value.discount_type);
    formData.append('discount_value', this.bannerForm.value.discount_type);
-    formData.append('minimum_value', this.bannerForm.value.minimum_value);
+    // formData.append('minimum_value', this.bannerForm.value.minimum_value);
     formData.append('category', this.bannerForm.value.category);
     formData.append('sub_category', this.bannerForm.value.sub_category);
     formData.append('brands',JSON.stringify(this.selectedValue) );
@@ -662,7 +696,7 @@ getFormData()
     var formData=this.getFormData()
     console.log("after FormData")
     console.log('length',this.getFormData.length)
-    if(formData!=null){
+    if(formData!=null&&this.url1!=''){
       this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
         res =>this.success(res),
         err => this.error(err),
@@ -671,6 +705,12 @@ getFormData()
 
       );
     
+    }
+    else
+    {
+      this.spinner.hide();
+      this.imageError=true;
+      
     }
     
 
@@ -708,7 +748,7 @@ changeType(event) {
     this.max=100;
     this.bannerForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 100)]);
     this.bannerForm.get('discount_value').updateValueAndValidity();
-    this.placeHolderText = "Enter discounted percentage";
+    this.placeHolderText = "Enter discounted %";
     this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
   } else {
     this.bannerForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 10000)]);
@@ -749,6 +789,7 @@ console.log('from discount change')
 
 choosefile: string = "No file chosen...";
 onSelectFile(event) {
+  this.imageError=false;
   this.keyValue = true;
   if (event.target.files && event.target.files[0]) {
     var mimeType = event.target.files[0].type;
@@ -863,7 +904,7 @@ successView(res){
   var data= res.result;
 
   this.bannerForm.get('title').patchValue(res.result.title);
-  this.bannerForm.get('minimum_value').patchValue(res.result.minimum_value);
+  // this.bannerForm.get('minimum_value').patchValue(res.result.minimum_value);
   this.bannerForm.get('available_on').patchValue(res.result.available_on);
   this.changeProduct();
   this.bannerForm.get('discount_type').patchValue(res.result.discount_type);

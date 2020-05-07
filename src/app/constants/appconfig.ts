@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment.prod';
 export const CONFIG = {
     NAME_LENGTH: 20,
     ADDRESS_LENGTH: 150,
-    EMAIL_LENGTH: 60,
+    EMAIL_LENGTH: 55,
     PASSWORD_LENGTH: 30,
     PASSWORD_MIN: 8,
     PASSWORD_MAX: 16,

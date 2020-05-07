@@ -93,7 +93,7 @@
                                   
                                   <div class="form-group col-md-4">
                                       <label>  <b for="inputPassword4">Title(Ar)</b></label><br/>
-                                  abac
+                                      <p>{{data.title_ar}}</p>
                                   </div>
                                   
                                   <div class="form-group col-md-4">
@@ -144,7 +144,7 @@
 
                 <div class="form-group col-md-4">
                   <label>    <b for="inputEmail4">Status </b></label><br/>
-                  <p>{{data.status}}</p>
+                  <p>{{data.status|titlecase}}</p>
         
               </div>
 
@@ -156,7 +156,7 @@
 
             <div class="form-group col-md-4">
               <label>    <b for="inputEmail4">Description(Ar) </b></label><br/>
-              <p>Offer offer</p>
+              <p>{{data.description_ar}}</p>
     
           </div>
 

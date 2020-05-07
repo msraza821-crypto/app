@@ -75,7 +75,7 @@ getdiscount(dis)
     this.discountType='Flat'
   }
   else
-  this.discountType="% Of OFF"
+  this.discountType="Percentage"
 
 }
   viewBanner(){

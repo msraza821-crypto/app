@@ -47,7 +47,7 @@
                 <div class="col-md-1 float-left">
                   <select id="inputState" class="form-control" style="min-width:125px" [formControl]="status" (change)="filterSelectedStatus($event.target.value)">
                 
-                   
+                    <option value="">All</option>  
                     <option value="active">Active</option>  
                      <option value="inactive">Inactive</option>
                   </select>
@@ -169,7 +169,7 @@
         <div class="">
           <div class="row pt-4">
             <div class="col-md-12 frgtpass-head">
-              <p class="text-center"> Are you sure you want to active this driver ? </p>
+              <p class="text-center"> Are you sure you want to make active this driver ? </p>
             </div>
           </div>
         </div>
@@ -193,7 +193,7 @@
           <div class="">
             <div class="row pt-4">
               <div class="col-md-12 frgtpass-head">
-                <p class="text-center"> Are you sure you want to inactive this driver ? </p>
+                <p class="text-center"> Are you sure you want to make inactive this driver ? </p>
               </div>
             </div>
           </div>

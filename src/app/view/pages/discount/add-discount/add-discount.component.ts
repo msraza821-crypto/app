@@ -20,7 +20,7 @@ min:Number=0;
 max:Number=10000;
   loader = false;
   CONFIG = CONFIG;
-  placeHolderText: string = "Enter Discounted Price";
+  placeHolderText: string = "Enter Discount Price";
   loginForm: FormGroup;
   url1 = ''; url: string = '';
   message: string = '';
@@ -42,14 +42,26 @@ max:Number=10000;
   }
   FORM_ERROR = {
     title: {
-      required: ERROR_MESSAGES.D_TITLE,
+      required: ERROR_MESSAGES. TITLE_REQUIRED_ENGLISH,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_NAME}`,
+      pattern: ERROR_MESSAGES.INVALID_INPUT,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+    },
+    title_arabic: {
+      required: ERROR_MESSAGES. TITLE_REQUIRED_ARABIC,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_NAME}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     description: {
-      required: ERROR_MESSAGES.D_DESC,
+      required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
+      pattern: ERROR_MESSAGES.INVALID_INPUT,
+      minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
+    },
+    description_arabic: {
+      required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
+      maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_DESCRIPTION}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
@@ -95,6 +107,8 @@ max:Number=10000;
     this.loginForm = this._fb.group({
       title: ["", [Validators.required, Validators.pattern(Regex.spacesDatas), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.B_NAME)]],
       description: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.DESCRIPTION_LENGTH)]],
+      title_arabic: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_MAX)]],
+      description_arabic: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       promo_type: ["", [Validators.required]],
       promocode: ["", [Validators.required, Validators.minLength(CONFIG.MINCODE), Validators.maxLength(CONFIG.MAXCODE)]],
       min_order_value: ["", [Validators.required, rangeValidator(0, 10000), Validators.pattern(Regex.phoneNumbers)]],
@@ -108,8 +122,14 @@ max:Number=10000;
   get title(): FormControl {
     return this.loginForm.get("title") as FormControl;
   }
+  get title_arabic(): FormControl {
+    return this.loginForm.get("title_arabic") as FormControl;
+  }
   get description(): FormControl {
     return this.loginForm.get("description") as FormControl;
+  }
+  get description_arabic(): FormControl {
+    return this.loginForm.get("description_arabic") as FormControl;
   }
   get statusKey(): FormControl {
     return this.loginForm.get("statusKey") as FormControl;
@@ -186,6 +206,8 @@ max:Number=10000;
       var end1=moment(data['end_date']);
       
     this.loginForm.get('discount_range').patchValue({ startDate: start1, endDate:end1 });
+    this.loginForm.get('title_arabic').patchValue(data['title_ar'])
+    this.loginForm.get('description_arabic').patchValue(data['description_ar'])
       this.loginForm.get('statusKey').patchValue(data['status'])
       if(data['promo_type']==2){
         this.placeHolderText="Percentage Discount";
@@ -239,7 +261,9 @@ max:Number=10000;
         'status': this.loginForm.value.statusKey,
         'start_date': start1,
         'end_date': end1,
-        'assignment': this.loginForm.value.assignment
+        'assignment': this.loginForm.value.assignment,
+        'title_ar':this.loginForm.value.title_arabic,
+        'description_ar':this.loginForm.value.description_arabic
       }
       console.log(formData)
       this.api
@@ -286,7 +310,9 @@ max:Number=10000;
         'status': this.loginForm.value.statusKey,
         'start_date': start1,
         'end_date': end1,
-        'assignment': this.loginForm.value.assignment
+        'assignment': this.loginForm.value.assignment,
+        'title_ar':this.loginForm.value.title_arabic,
+        'description_ar':this.loginForm.value.description_arabic
       }
       console.log(formData)
       this.api
@@ -333,7 +359,7 @@ dPrice:string="(QAR)";
       this.loginForm.get('promo_discount').setValidators([Validators.required, rangeValidator(0, 100)]);
       this.loginForm.get('promo_discount').updateValueAndValidity();
       this.dPrice='(%)';
-      this.placeHolderText = "Enter Discounted Percentage";
+      this.placeHolderText = "Enter Discount Percentage";
       this.FORM_ERROR.promo_discount.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
     } else {
       this.loginForm.get('promo_discount').setValidators([Validators.required, rangeValidator(0, 10000)]);

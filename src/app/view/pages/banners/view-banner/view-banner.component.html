@@ -232,16 +232,16 @@
                                        
                                          <div class="col-md-6"  *ngIf="data.available_on==2">
                                             <label class="float-left" > <b >Category </b></label>
-                                             <p>{{data.category}}</p>
+                                             <p>{{data.category_name}}</p>
                                              <!-- <color-hue-picker [color]="data.product_colour" style="cursor: none;"></color-hue-picker> -->
                                            </div>
                                            <div class="col-md-6">
                                               <label class="float-left"  *ngIf="data.available_on==2"> <b >Sub-Category : </b></label>
-                                               <p>{{data.sub_category}}</p>
+                                               <p>{{data.sub_category_name}}</p>
                                              </div>
                                              <div class="col-md-6" >
                                                 <label class="float-left"    *ngIf="data.available_on==2"> <b >Child-Category : </b></label>
-                                                 <p>{{data.child_category}}</p>
+                                                 <p>{{data.child_category_name}}</p>
                                                </div>
                                                <!-- <div class="col-md-6">
                                                   <label class="float-left"> <b >Discount type : </b></label>
