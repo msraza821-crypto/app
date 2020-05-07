@@ -1,5 +1,5 @@
 import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl,FormArray } from '@angular/forms';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
@@ -159,20 +159,20 @@ export class AddProductComponent implements OnInit {
       product_description_en: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       product_name_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_MAX)]],
       product_description_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
-      product_size: ["", [Validators.required]],
       attribute_description_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       attribute_description_en: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
-      product_price: ["", [Validators.required, rangeValidator(0, 10000)]],
+    //  product_price: ["", [Validators.required, rangeValidator(0, 10000)]],
       product_colour: ["#ff0000", [Validators.required]],
       brand_id: ["", [Validators.required]],
-      quantity: ["", [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
+    //  quantity: ["", [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
       category_id: ["", [Validators.required]],
       subCategory: ["", [Validators.required]],
       childCategory: ["", [Validators.required]],
       discount_type: [""],
       discount_value: ["", [Validators.pattern(Regex.phoneNumbers)]],
       discount_range: [""],
-      statusKey: [""]
+      statusKey: [""] ,
+     
     });
   }
   rtl(element) {
@@ -180,6 +180,31 @@ export class AddProductComponent implements OnInit {
       element.setSelectionRange(0, 0);
     }
   }
+ 
+  // itemsData: FormArray;
+  // addItem(): void {
+    
+  //   this.itemsData = this.loginForm.controls['items'] as FormArray;
+
+  // }  
+  // deleteRow(index: number) {
+  //   // control refers to your formarray
+  //   const control = <FormArray>this.loginForm.controls['items'];
+  //   // remove the chosen row
+  //   control.removeAt(control.length - 1);
+  // }
+  orderForm: FormGroup;
+
+
+
+
+    // createItem(): FormGroup {
+    //   return this._fb.group({
+    //     product_size: [''],
+    //     quantity: ["", [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
+    //     product_price:["", [Validators.required, rangeValidator(0, 10000)]],
+    //   });
+    // }
   choosedDate(event) {
     console.log(event)
     if (event.startDate._d && event.endDate._d) {
@@ -211,7 +236,9 @@ export class AddProductComponent implements OnInit {
       }
     })
     this.createForm();
+ 
   }
+
   product_id: any;
 
 
@@ -344,7 +371,11 @@ export class AddProductComponent implements OnInit {
     return this.loginForm.get("quantity") as FormControl;
   }
 
-
+ 
+   
+  // get items() : FormArray {
+  //   return this.loginForm.get("items") as FormArray
+  // }
   get statusKey(): FormControl {
     return this.loginForm.get("statusKey") as FormControl;
   }

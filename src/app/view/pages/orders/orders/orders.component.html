@@ -72,7 +72,7 @@
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
-                  <tbody   *ngIf="myStatus=='pending'" *ngIf="collection.length>0">
+                  <tbody    *ngIf="collection.length>0">
                     <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                     itemsPerPage: limit,
                     currentPage: page,
