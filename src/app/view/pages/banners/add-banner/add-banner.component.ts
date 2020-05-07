@@ -296,19 +296,11 @@ productCompare(id:any,arr)
     }
 
 
-<<<<<<< HEAD
   checked = "";
   indeterminate = false;
   labelPosition: 'before' | 'after' = 'after';
   disabled = false;
   dataModel : any
-=======
-  // checked = "";
-  // indeterminate = false;
-  // labelPosition: 'before' | 'after' = 'after';
-  // disabled = false;
-
->>>>>>> 4c21ed19dcc7edae26776ef86d2ca82ea32ce151
 
   selectedDatasource;
   changeProduct()

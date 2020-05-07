@@ -112,7 +112,7 @@
                     <label for="inputEmail4">Product Color <span style="color:red">*</span></label>
                     <input type="text" [formControl]="product_colour" readonly class="form-control" id="inputEmail4" placeholder="Product Color">
                     <span class="error text-danger">{{_util.errorMessage(product_colour,FORM_ERROR?.product_colour)}}</span><br/>
-   <color-sketch [color]="state" (onChange)="handleChange($event)"></color-sketch><br/>
+   <color-circle [color]="state" (onChange)="handleChange($event)"></color-circle><br/>
    <b class="float-right reset-class" (click)="Reset()"><i class="fa fa-refresh" aria-hidden="true"></i></b>  
                            
                   </div> 
