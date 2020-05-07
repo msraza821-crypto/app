@@ -139,15 +139,18 @@ export const ERROR_MESSAGES = {
     LICENSE_REQUIRED:'License number  is required',
     D_TITLE:'Title is required',
     D_DESC:'Description is required',
-    D_PROMOCODE:'Promo Code is required',
-    D_PROMOVALUE:'Promo Code price is required',
-    D_RANGE:' Date Range is required',
-    D_MINORDER:'Min. Order Value is required',
+    D_PROMOCODE:'Promo code is required',
+    D_PROMOVALUE:'Promo code price is required',
+    D_RANGE:' Date range is required',
+    D_MINORDER:'Min. order value is required',
     D_TYPE:'Discount Type is required',
     D_PRICE:'Discount price is required',
     TYPE_ASSIGN:'Assignment is required',
     RANGE_PERCENTAGE:"Enter vaild percentage range 0 to 100",
-    DISCOUNT_RANGE_REQUIRED:'Please select valid date range'
+    DISCOUNT_RANGE_REQUIRED:'Please select valid date range',
+    TITLE_REQUIRED_ENGLISH:'Title is required in english',
+
+    TITLE_REQUIRED_ARABIC:'Title is required in arabic'
 
 
 

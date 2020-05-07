@@ -22,12 +22,12 @@
                   placeholder="Enter  banner title " [formControl]="title" [maxlength]="CONFIG?.TITLE_LENGTH">
                 <span class="error text-danger">{{_util.errorMessage(title,FORM_ERROR?.title)}}</span>
               </div>
-              <div class="form-group col-md-2 ">
+              <!-- <div class="form-group col-md-2 ">
                 <label><b>Min. Order Value <span class="star">*</span></b></label>
                 <input type="text" class="form-control" (keypress)="keyPress($event)"
                   placeholder="Enter min. order  value" [formControl]="minimum_value" maxlength="5">
                 <span class="error text-danger">{{_util.errorMessage(minimum_value,FORM_ERROR?.minimum_value)}}</span>
-              </div>
+              </div> -->
 
               <div class="col-md-2 float-left">
                 <label><b>Discount Type <span class="star">*</span></b></label>
@@ -55,12 +55,12 @@
           </div> -->
   
           <div class="col-md-2 float-left" >
-            <label *ngIf="bannerForm.value.discount_type==1"><b>Discounted Value<span class="star">*</span></b></label>
-            <label *ngIf="bannerForm.value.discount_type==2"><b>Discounted Percentage<span class="star">*</span></b></label>
-            <label *ngIf="bannerForm.value.discount_type==''"><b>Discounted Value<span class="star">*</span></b></label>
+            <label *ngIf="bannerForm.value.discount_type==1"><b>Flat Discount<span class="star">*</span></b></label>
+            <label *ngIf="bannerForm.value.discount_type==2"><b>In Percentage(%)<span class="star">*</span></b></label>
+            <label *ngIf="bannerForm.value.discount_type==''"><b>Flat Discount<span class="star">*</span></b></label>
             <div class="form-group ">
 
-              <input type="number" class="form-control"   placeholder="{{placeHolderText}}"
+              <input type="number" class="form-control"   placeholder="Enter the discount"
                 [formControl]="discount_value" (keypress) = "changeNumber($event)"  appOnlyNumber [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER"> 
               <span class="error text-danger"> {{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
             </div>
@@ -87,7 +87,7 @@
                 <label><b>Display Order <span class="star">*</span></b></label>
                 <select class="form-control" [formControl]="display_order">
                   <option value="">Select display order</option>
-                  <option *ngFor="let order of displayOrder" value="{{order}}">{{order}}</option>
+                  <option *ngFor="let order of displayOrderList" value="{{order}}">{{order}}</option>
                 </select>
                 <span class="error text-danger">{{_util.errorMessage(display_order,FORM_ERROR?.display_order)}}</span>
               </div>
@@ -111,7 +111,7 @@
               </div>
 
               <div class="col-md-2 float-left "  style="margin-bottom: 15px;">
-                <label><b>Start & Expiry Date <span class="star">*</span></b></label>
+                <label><b>Valid From-Valid To <span class="star">*</span></b></label>
                 <input type="text" style="min-width:190px" ngxDaterangepickerMd class="form-control"  [maxlength]="CONFIG?.DATE_MAX_LENGTH"  (choosedDate)="choosedDate($event)"
                   [formControl]="date" [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}" placeholder="Select date " />
                 <span class="error text-danger">{{_util.errorMessage(date,FORM_ERROR?.date)}}</span>
@@ -248,6 +248,7 @@
                       (change)="onSelectFile($event)">
                   </div>
                 </div>
+                <span class="error text-danger" *ngIf="imageError">{{imageErrorMessage}}</span>
                 <br />
               </div>
             </div>

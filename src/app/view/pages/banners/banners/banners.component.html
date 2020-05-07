@@ -97,7 +97,7 @@
                         <td >
                             <a [routerLink]="['/theme/banners/view',{id :i?.id}]" title="View Banner"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;    
                           <a [routerLink]="['/theme/banners/add',{id :i?.id}]" title="Edit Banner"> <i style="font-size:24px" class="fa fa-edit"></i></a>&nbsp;                      
-                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Inactive Banner"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
+                          <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='active'" title="Inactivate Banner"> <i style="font-size:24px" class="fa fa-ban "></i>&nbsp;</a> 
                           <a (click)="openVerticallyCenteredPopup(poup1,i)" *ngIf="i.status=='inactive'" title="Activate Banner">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
                           <a (click)="openVerticallyCentered(poup,i)" title="Delete Banner"> <i style="font-size:24px"
                               class="fa fa-trash-o"></i></a>

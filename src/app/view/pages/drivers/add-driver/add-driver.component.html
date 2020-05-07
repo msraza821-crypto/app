@@ -23,8 +23,8 @@
 
 
                     <div class="col-sm-3">
-                        <label><b>Email address <span style="color:red">*</span></b></label>
-                        <input type="text"  class="form-control" placeholder="Enter the email address" [formControl]="email" >
+                        <label><b>Email Address <span style="color:red">*</span></b></label>
+                        <input type="text"  class="form-control" placeholder="Enter the email address" [formControl]="email"  [maxlength]='CONFIG?.EMAIL_LENGTH'>
                         <span class="error text-danger">{{_util.errorMessage(email,FORM_ERROR?.email)}}</span>
                     </div>
 
@@ -46,10 +46,10 @@
                 
 
                     <div class="col-sm-3 mr-top1">
-                        <label><b> Mobile number <span style="color:red">*</span></b></label>
+                        <label><b> Mobile Number <span style="color:red">*</span></b></label>
                         <div class="row">
-                            <div class="col-sm-3">
-                                <select class="form-control" [formControl]="country_code" [disabled]="true" style="padding-left:0;padding-right:0px;">
+                            <div class="col-sm-3" >
+                                <select class="form-control" [formControl]="country_code" [disabled]="true" style="padding-left:0;padding-right:0px;min-width:60px">
                                     <!-- <option value="">please </option> -->
                                     <option value="">+974</option>
                                 </select>

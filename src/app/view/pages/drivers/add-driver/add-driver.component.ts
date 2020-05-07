@@ -30,6 +30,9 @@ CONFIG = CONFIG;
   message: string = '';
   keyValue: boolean = false;
   loader=false;
+  activeOrderList=[];
+  displayOrderList=[]
+  
 
   constructor(private fb:FormBuilder,
     private _util: CommonUtil,
@@ -41,6 +44,7 @@ CONFIG = CONFIG;
     ) {
  
       this.createForm()
+      this.getOrderListing()
 
       // this.driverForm.get('country_code').patchValue('+974')
      
@@ -62,7 +66,7 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
       mobile:['',[Validators.required,Validators.maxLength(CONFIG.MOBILE_LENGTH),Validators.minLength(CONFIG.MOBILE_MIN_LENGTH)]],
       plate_number:['',[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.maxLength(CONFIG.MAX_PLAT_NUMBER),Validators.minLength(CONFIG.MIN_PLATE_NUMBER)]],
       vehicle_type:['',[Validators.required]],
-      address:['',[Validators.pattern(Regex.spacesDatas),Validators.required, Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.ADDRESS_MAX_LENGTH)]]
+      address:['',[Validators.pattern(Regex.spaces),Validators.required, Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.ADDRESS_MAX_LENGTH)]]
       
       
     
@@ -219,6 +223,38 @@ this.loadDriverDetails()
   }
 
   
+  getOrderListing()
+  {
+    var list=[1,2,3,4,5,6,7,8,9,10]
+    var flag=0;
+    this.api.getReqAuth("admin/banner/active-order?banner_type=1")
+   .subscribe(
+      res => {
+        if(res.status)
+        {
+          this.activeOrderList=res.result
+          for( let l of list )
+          {
+
+              flag=0;
+          
+          for(let order of this.activeOrderList)
+          {
+            if(order==l)
+            flag=1;
+          }
+          if(flag==0)
+          this.displayOrderList.push(l)
+        }
+        console.log('available order',this.displayOrderList)
+      }
+       
+      },
+      err => this.error(err),
+      () => (this.loader = false)
+    );
+
+  }
   onSubmit()
   {
     
@@ -251,6 +287,7 @@ this.spinner.show()
       
 
 }
+
 
 
 namePress(event: any) {

@@ -1,4 +1,4 @@
-<div class="animated fadeIn" style="margin-top:30px;" *ngIf="showPage">
+<div class="animated fadeIn" style="margin-top:30px;" >
   <div class="row">
     <div class="col-sm-12 col-lg-12">
       <div class="card">
@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-md-2 float-left">
                     <label for="inputEmail4"><b>Sub-category <span class="star">*</span></b></label> <br />
-                  <select class="form-control" [formControl]="sub_category">
+                  <select class="form-control" [formControl]="sub_category" (change)=" getChildcategory()">
                       <option value=""> Select Sub-category</option>
                     <option *ngFor="let sab of subCategoryList" value="{{sab.id}}">{{sab.name}}</option>
   
@@ -47,6 +47,20 @@
   
   
                 </div>
+
+                <div class="col-md-2 float-left">
+                  <label for="inputEmail4"><b>Child-category <span class="star">*</span></b></label> <br />
+                <select class="form-control" [formControl]="child_category">
+                    <option value=""> Select Child-category</option>
+                  <option *ngFor="let sab of childCategoryList" value="{{sab.id}}">{{sab.name}}</option>
+
+
+                </select>
+                <span class="error text-danger"> {{_util.errorMessage(child_category,FORM_ERROR?.child_category)}}</span>
+
+
+
+              </div>
                 <div class="form-group col-md-2" >
                     <label for="inputEmail4"><b>Status <span class="star">*</span></b></label> <br />
                     <select id="inputState" [formControl]="status" class="form-control">
@@ -61,7 +75,8 @@
                     <label for="inputEmail4"><b>Display order <span class="star">*</span></b></label> <br />
                   <select class="form-control" [formControl]="display_order">
                       <option value="">Select display order</option>
-                    <option *ngFor='let in of counter(20) ;let i = index' [value]=i+1>{{i+1}}</option>
+                    <option *ngFor="let order of displayOrderList " value="{{order}}">{{order}}</option>
+                    <!-- <option *ngIf="displayOrderList==null">no order list</option> -->
                    
                   </select>
                   <span class="error text-danger">{{_util.errorMessage(display_order,FORM_ERROR?.display_order)}}</span>
@@ -79,8 +94,10 @@
                       <div class="file-select-name" id="noFile">{{choosefile}}</div>
                       <input type="file" name="chooseFile" id="chooseFile" accept="image/*"
                         (change)="onSelectFile($event)">
+                      
                     </div>
                   </div>
+                  <span class="error text-danger" *ngIf="imageError">{{imageErrorMessage}}</span>
                   <br />
                 </div>
               </div>

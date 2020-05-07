@@ -29,7 +29,11 @@ showPage=false;
   page: number = 1;
   limit=10;
   totalRec=50;
+  displayOrderList=[]
+  activeOrderList=[];
 
+  imageError=false;
+  imageErrorMessage='';
 
   url1 = ''; url: string = '';
   message: string = '';
@@ -44,24 +48,16 @@ showPage=false;
     private _api:AppService
     
     ) {
-   this.spinner.show();
-    this.api.getReqAuthBrands("admin/product/brand-list").pipe().subscribe(res=>{
-      if(res)
-      {this.spinner.hide()
-        this.brands=res.result;
-        this.showPage=true;
-        console.log(this.brands)
+ 
       this.createForm()
       this.getCategory()
+      this.getOrderListing()
       
     
       }
     
       
-    });
-console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
-
-  }
+ 
   createForm()
   {
     this.bannerForm=this.fb.group({
@@ -72,7 +68,7 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
       // discount_value:['',[Validators.required,Validators.pattern(Regex.pricePattern)]],
       category:['',[Validators.required]],
       sub_category:['',[Validators.required]],
-      // child_category:['',[Validators.required]],
+      child_category:['',[Validators.required]],
        status:['',[Validators.required]],
       display_order:['',[Validators.required]]
     
@@ -99,6 +95,9 @@ console.log(ERROR_MESSAGES.SUBCATEGORY_REQUIRED)
     },
     sub_category: {
       required: ERROR_MESSAGES.SUBCATEGORY_REQUIRED
+    },
+    child_category: {
+      required: ERROR_MESSAGES. CHILD_CATEGORY_REQUIRED
     },
     display_order: {
       required: ERROR_MESSAGES. DISPLAY_ORDER_REQUIRED
@@ -210,15 +209,48 @@ this.viewBanner()
     .getReqAuth("admin/banner/category-list?parent_id=0")
     .subscribe(
       res =>{
-        console.log('categort',res)
+      
   this.categoryList=res.result
-  console.log('categorlist',this.categoryList)
+  
       },
       err => this.error(err),
       () => (this.loader = false)
     );
     }
   subCategoryList;
+
+  getOrderListing()
+  {
+    var list=[1,2,3,4,5,6,7,8,9,10]
+    var flag=0;
+    this.api.getReqAuth("admin/banner/active-order?banner_type=1")
+   .subscribe(
+      res => {
+        if(res.status)
+        {
+          this.activeOrderList=res.result
+          for( let l of list )
+          {
+
+              flag=0;
+          
+          for(let order of this.activeOrderList)
+          {
+            if(order==l)
+            flag=1;
+          }
+          if(flag==0)
+          this.displayOrderList.push(l)
+        }
+        console.log('available order',this.displayOrderList)
+      }
+       
+      },
+      err => this.error(err),
+      () => (this.loader = false)
+    );
+
+  }
  getSubcategory(){
    
     this.api.getReqAuth("admin/banner/category-list?parent_id="+this.bannerForm.value.category)
@@ -232,23 +264,26 @@ this.viewBanner()
       () => (this.loader = false)
     );
   }
+
+childCategoryList=[];
+  getChildcategory(){
+   
+    this.api.getReqAuth("admin/banner/category-list?parent_id="+this.bannerForm.value.sub_category)
+    
+    .subscribe(
+      res => {
+        this.childCategoryList=res.result
+        console.log('child',this.childCategoryList)
+      },
+      err => this.error(err),
+      () => (this.loader = false)
+    );
+  }
   onSubmit()
   {
 
-    // var start1 = '';
-    // var end1 = '';
-  
-    //  if(this.bannerForm.value.date){
-    //    start1=this.bannerForm.value.date.startDate._d;
-    //    var startDate=new Date(start1)
-    //     start1 =startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
-    //    end1=this.bannerForm.value.date.endDate._d;
-    //    var endDate=new Date(end1)
-    //    end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
-    //  }
-    // console.log(start1)
-    // console.log(end1)
-    if(this.bannerForm.valid)
+    
+    if(this.bannerForm.valid&&this.url1!='')
     {
 
       this.spinner.show();
@@ -257,13 +292,11 @@ this.viewBanner()
     formData.append('banner_type','1');
    formData.append('display_order',this.bannerForm.value.display_order)
    formData.append('image', this.url1);
-  //   formData.append('available_on', this.bannerForm.value.available_on);
-  //   formData.append('discount_type', this.bannerForm.value.discount_type);
-  //   formData.append('discount_value', this.bannerForm.value.discount_type);
-  //   formData.append('minimum_value', this.bannerForm.value.minimum_value);
+  
     formData.append('category', this.bannerForm.value.category);
     formData.append('sub_category', this.bannerForm.value.sub_category);
  formData.append('status',this.bannerForm.value.status );
+ formData.append('child_category', this.bannerForm.value.child_category);
     
   
     // console.log('sss',formData)
@@ -277,21 +310,17 @@ this.viewBanner()
     
     }
     else
+    {
+    if(this.url=='')
+    {
+      this.imageError=true;
+      this.imageErrorMessage='Image is required';
+    }
     this._util.markError(this.bannerForm);
-
-    }
-
- 
     
-  keyPress(event: any) {
-    const pattern = /[0-9.]/;
-    const inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {    
-      
-        event.preventDefault();
     }
-}
+  }
+
 productList=[];
 
 getProductList()
@@ -336,6 +365,8 @@ counter(i: number) {
 }
 choosefile: string = "No file chosen...";
 onSelectFile(event) {
+  this.imageError=false;
+  this.imageErrorMessage='';
   this.keyValue = true;
   if (event.target.files && event.target.files[0]) {
     var mimeType = event.target.files[0].type;
@@ -416,11 +447,27 @@ console.log('categorlist',this.categoryList)
     () => (this.loader = false)
   );
 }
+
+productChildCate(id){
+ 
+  this.api.getReqAuth("admin/banner/category-list?parent_id="+id)
+  
+  .subscribe(
+    res => {
+      this.childCategoryList=res.result
+      console.log('child',this.childCategoryList)
+    },
+    err => this.error(err),
+    () => (this.loader = false)
+  );
+}
 successView(res){
   if(res.status==true){
+  this.spinner.hide()
   var data= res.result;
   this.productCate();
   this.productSubCate(data['category']);
+  this.productChildCate(data['sub_category']);
 
   Object.keys(this.bannerForm.controls).forEach((control) => {
 
@@ -448,6 +495,7 @@ formData.append('display_order',this.bannerForm.value.display_order)
 formData.append('image', this.url1);
 formData.append('category', this.bannerForm.value.category);
 formData.append('sub_category', this.bannerForm.value.sub_category);
+formData.append('child_category', this.bannerForm.value.child_category);
 formData.append('status',this.bannerForm.value.status );
 this.api.putReqAuth("admin/banner/edit-banner",formData).subscribe(
   res => this.success(res),
@@ -459,7 +507,10 @@ this.api.putReqAuth("admin/banner/edit-banner",formData).subscribe(
 
 }
 else
+
 this._util.markError(this.bannerForm);
+
+
 
 }
 
