@@ -13,7 +13,7 @@
 
 
           <div class="row ">
-            <form>
+            <form [formGroup]="loginForm">
                 <div class="row ">
                    
               <div class="form-group col-md-6">
@@ -112,37 +112,51 @@
                     <label for="inputEmail4">Product Color <span style="color:red">*</span></label>
                     <input type="text" [formControl]="product_colour" readonly class="form-control" id="inputEmail4" placeholder="Product Color">
                     <span class="error text-danger">{{_util.errorMessage(product_colour,FORM_ERROR?.product_colour)}}</span><br/>
-   <color-circle [color]="state" (onChange)="handleChange($event)"></color-circle><br/>
+                    <color-compact [color]="state" (onChange)="handleChange($event)"></color-compact><br/>
    <b class="float-right reset-class" (click)="Reset()"><i class="fa fa-refresh" aria-hidden="true"></i></b>  
                            
-                  </div> 
-                  <b class="float-right " (click)="addItem()"><i class="fa fa-plus" aria-hidden="true"></i></b>  
-                   <!-- <div *ngFor="let control of skills.controls; index as i">
-                <b>dfgdgd</b> -->
-                <!-- <div class="form-group col-md-3">
+                  </div>
+                  <b class="col-md-12" *ngIf="loginForm.controls.meta_data.controls.length<=10" (click)="addItem()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Attribute</b>  
+                 
+                  <div class="col-md-10" formArrayName="meta_data">
+                    <div class="row mt-3"
+                       
+                        *ngFor="let item of loginForm.controls.meta_data.controls; let i=index"
+                        [formGroupName]="i">
+                <div class="form-group col-md-3">
                     <label for="inputEmail4">Product Quantity <span style="color:red">*</span></label>
-                    <input type="text"formControlName="quantity" class="form-control" [minlength]="CONFIG?.MINORDER" [maxlength]="CONFIG?.MAXORDER" id="inputEmail4" placeholder="Product Quantity">
-    
+                    <input type="text" formControlName="quantity" class="form-control"  id="inputEmail4" placeholder="Product Quantity">
+                    <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('required')">
+                    Qantity is required</span>
                 
-                    <span class="error text-danger">{{_util.errorMessage(quantity,FORM_ERROR?.quantity)}}</span>
+                    <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('required')==false && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('range')">
+                      Quantity range in between 0 t0 10000</span>
                   </div>
                   <div class="form-group col-md-3">
                       <label for="inputEmail4">Product Size <span style="color:red">*</span></label>
                       <select id="inputState" formControlName="product_size" class="form-control">
                           <option value="">Please Select</option>
-                      <option  *ngFor="let size of sizes" [value]="size.id">{{size.size}}</option>
+                      <option  *ngFor="let size of sizes" [value]="size.size">{{size.size}}</option>
                       </select>
                   
                       
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputEmail4">Product Price(QAR) <span style="color:red">*</span></label>
-                        <input type="text" formControlName="product_price" [minlength]="CONFIG?.MINORDER" [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" placeholder="Product Price">
-        
-                    
-                        <span class="error text-danger">{{_util.errorMessage(product_price,FORM_ERROR?.product_price)}}</span>
-                      </div> -->
-                    <!-- </div>  -->
+                        <input type="text" formControlName="product_price"  class="form-control" id="inputEmail4" placeholder="Product Price">
+                        <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')">
+                          Price is required</span>
+                          <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')==false && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('range')">
+                            Price range in between 0 t0 10000</span>
+                      
+                      </div>
+                      <div class="form-group col-md-3">
+                      <a (click)="deleteRow(i)"
+                      *ngIf="i > 0"><i style="padding-top: 40px;"
+                          class="fa fa-trash text-danger"></i></a>
+                    </div> 
+                    </div>
+                    </div>
                     
                 <hr>
                    <div class="form-group col-md-4">
@@ -239,7 +253,8 @@
               <button *ngIf="this.id" type="button" class="btn btn-primary" (click)="update()">Save</button>
               <button *ngIf="this.product_id" type="button" class="btn btn-primary" (click)="submit()">Save</button>
               
-            
+           
+
             </form>
 
           </div>

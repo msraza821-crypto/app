@@ -1,5 +1,5 @@
 import { Component, OnInit,ElementRef,ViewChild } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl ,FormArray} from '@angular/forms';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
@@ -167,6 +167,34 @@ export class EditProductComponent implements OnInit {
     this.loginForm.get('product_colour').patchValue('');
     this.state = '#ff0000';
   }
+  itemsData: FormArray;
+  addItem(data) {
+    
+    this.itemsData =  <FormArray>this.loginFormEdit.controls['meta_data'];
+    this.productSiz();
+    console.log(this.loginFormEdit.controls['meta_data'])
+    console.log(data)
+this.itemsData.push(this.createItem())
+  }  
+  deleteRow(index: number) {
+    // control refers to your formarray
+    const control = <FormArray>this.loginFormEdit.controls['meta_data'];
+    // remove the chosen row
+   // alert(index)
+    control.removeAt(index);
+  }
+  orderForm: FormGroup;
+
+
+
+
+    createItem() {
+      return this._fb.group({
+        product_size: [''],
+        quantity: ['', [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
+        product_price:['', [Validators.required, rangeValidator(0, 10000)]],
+      });
+    }
   createForm() {
     this.loginForm = this._fb.group({
       product_name_en: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_MAX)]],
@@ -182,6 +210,9 @@ export class EditProductComponent implements OnInit {
       discount_range: [""],
       statusKey: [""]
     });
+  }
+  get meta_data() : FormControl {
+    return this.loginForm.get("meta_data") as FormControl
   }
   rtl(element) {
     if (element.setSelectionRange) {
@@ -456,6 +487,7 @@ export class EditProductComponent implements OnInit {
         }
       }
     
+     
     this.loginFormEdit = this._fb.group({
        product_size: [data.product_size, [Validators.required]],
       attribute_description_ar: [data.attribute_description_ar, [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
@@ -464,8 +496,14 @@ export class EditProductComponent implements OnInit {
       product_colour: [data.product_colour, [Validators.required]],
     
       quantity: [data.quantity, [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
-      statusEdit: [data.status]
+      statusEdit: [data.status],
+      meta_data:this._fb.array([this.createItem()])
+      
     });
+    for (var i = 0; i < data.attribute_meta; i++) {
+      this.addItem(data.attribute_meta[i]);
+    } 
+    this.loginFormEdit.get('meta_data').patchValue(data.attribute_meta);
   }
   @ViewChild("videoPlayer", { static: false }) videoplayer: ElementRef;
   isPlay: boolean = false;
@@ -547,9 +585,9 @@ export class EditProductComponent implements OnInit {
       this.sub_cate(data['category']);
       this.child_cate(data['sub_category'])
       Object.keys(this.loginForm.controls).forEach((control) => {
-
+if(data[control]){
         this.loginForm.get(control).patchValue(data[control]);
-
+}
       });
       this.loginForm.get('category_id').patchValue(data['category']);
 
@@ -719,19 +757,21 @@ export class EditProductComponent implements OnInit {
     }
 
   }
+  errorData:boolean=false;
   update_attributes() {
-    
+    this.errorData=true;
     if (this.loginFormEdit.valid) {
       const formData = new FormData();
       formData.append('id', this.attribute_id);   
       formData.append('product_id', this.id);   
       formData.append('attribute_description_ar', this.loginFormEdit.value.attribute_description_ar);
       formData.append('attribute_description_en', this.loginFormEdit.value.attribute_description_en);
-      formData.append('product_size', this.loginFormEdit.value.product_size);
-      formData.append('product_price', this.loginFormEdit.value.product_price);
+    //  formData.append('product_size', this.loginFormEdit.value.product_size);
+     // formData.append('product_price', this.loginFormEdit.value.product_price);
       formData.append('product_colour', this.loginFormEdit.value.product_colour);
-      formData.append('quantity', this.loginFormEdit.value.quantity);  
+    //  formData.append('quantity', this.loginFormEdit.value.quantity);  
       formData.append('status', this.loginFormEdit.value.statusEdit);
+      formData.append('meta_data',JSON.stringify(this.loginFormEdit.value.meta_data));
       var ins = this.urlForm.length;
       for (var x = 0; x < ins; x++) {
         formData.append('product_images', this.urlForm[x],this.urlForm[x].name);

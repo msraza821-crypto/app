@@ -172,6 +172,7 @@ export class AddProductComponent implements OnInit {
       discount_value: ["", [Validators.pattern(Regex.phoneNumbers)]],
       discount_range: [""],
       statusKey: [""] ,
+      meta_data:this._fb.array([this.createItem()])
      
     });
   }
@@ -180,31 +181,36 @@ export class AddProductComponent implements OnInit {
       element.setSelectionRange(0, 0);
     }
   }
+  test(){
+    alert()
+  }
  
-  // itemsData: FormArray;
-  // addItem(): void {
+ itemsData: FormArray;
+  addItem() {
     
-  //   this.itemsData = this.loginForm.controls['items'] as FormArray;
-
-  // }  
-  // deleteRow(index: number) {
-  //   // control refers to your formarray
-  //   const control = <FormArray>this.loginForm.controls['items'];
-  //   // remove the chosen row
-  //   control.removeAt(control.length - 1);
-  // }
+    this.itemsData =  <FormArray>this.loginForm.controls['meta_data'];
+    this.productSiz();
+    console.log(this.loginForm.controls['meta_data'])
+this.itemsData.push(this.createItem())
+  }  
+  deleteRow(index: number) {
+    // control refers to your formarray
+    const control = <FormArray>this.loginForm.controls['meta_data'];
+    // remove the chosen row
+    control.removeAt(index);
+  }
   orderForm: FormGroup;
 
 
 
 
-    // createItem(): FormGroup {
-    //   return this._fb.group({
-    //     product_size: [''],
-    //     quantity: ["", [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
-    //     product_price:["", [Validators.required, rangeValidator(0, 10000)]],
-    //   });
-    // }
+    createItem() {
+      return this._fb.group({
+        product_size: [''],
+        quantity: ["", [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
+        product_price:["", [Validators.required, rangeValidator(0, 10000)]],
+      });
+    }
   choosedDate(event) {
     console.log(event)
     if (event.startDate._d && event.endDate._d) {
@@ -359,7 +365,9 @@ export class AddProductComponent implements OnInit {
   }
 
   get product_price(): FormControl {
-    return this.loginForm.get("product_price") as FormControl;
+   return this.loginForm.get("product_price") as FormControl;
+    
+   // return this.loginForm.get("meta_data").get('product_size') as FormControl;
   }
   get product_colour(): FormControl {
     return this.loginForm.get("product_colour") as FormControl;
@@ -369,13 +377,14 @@ export class AddProductComponent implements OnInit {
   }
   get quantity(): FormControl {
     return this.loginForm.get("quantity") as FormControl;
+   // return this.loginForm.get("meta_data").get('quantity') as FormControl;
   }
 
  
    
-  // get items() : FormArray {
-  //   return this.loginForm.get("items") as FormArray
-  // }
+  get meta_data() : FormControl {
+    return this.loginForm.get("meta_data") as FormControl
+  }
   get statusKey(): FormControl {
     return this.loginForm.get("statusKey") as FormControl;
   }
@@ -399,6 +408,7 @@ export class AddProductComponent implements OnInit {
   }
   get product_size(): FormControl {
     return this.loginForm.get("product_size") as FormControl;
+    //return this.loginForm.get("meta_data").get('product_size') as FormControl;
   }
 
   errorMessage: string
@@ -533,8 +543,9 @@ export class AddProductComponent implements OnInit {
       this.sub_cate(data['category']);
       this.child_cate(data['sub_category'])
       Object.keys(this.loginForm.controls).forEach((control) => {
-
+    if(data[control]){
         this.loginForm.get(control).patchValue(data[control]);
+    }
 
       });
       this.loginForm.get('category_id').patchValue(data['category']);
@@ -690,9 +701,11 @@ export class AddProductComponent implements OnInit {
       this._util.markError(this.loginForm);
     }
   }
+  errorData:boolean=false;
   submit() {
-    console.log(this.loginForm.value)
+    console.log(this.loginForm.value);
     console.log(this.loginForm)
+    this.errorData=true;
     if (this.loginForm.valid) {
       var start1 = "";
       var end1 = "";
@@ -715,11 +728,11 @@ export class AddProductComponent implements OnInit {
       formData.append('product_description_ar', this.loginForm.value.product_description_ar);
       formData.append('attribute_description_ar', this.loginForm.value.attribute_description_ar);
       formData.append('attribute_description_en', this.loginForm.value.attribute_description_en);
-      formData.append('product_size', this.loginForm.value.product_size);
-      formData.append('product_price', this.loginForm.value.product_price);
+     // formData.append('product_size', this.loginForm.value.product_size);
+     // formData.append('product_price', this.loginForm.value.product_price);
       formData.append('product_colour', this.loginForm.value.product_colour);
       formData.append('brand_id', this.loginForm.value.brand_id);
-      formData.append('quantity', this.loginForm.value.quantity);
+    // formData.append('quantity', this.loginForm.value.quantity);
       formData.append('category', this.loginForm.value.category_id);
       formData.append('sub_category', this.loginForm.value.subCategory);
       formData.append('child_category', this.loginForm.value.childCategory);
@@ -727,13 +740,16 @@ export class AddProductComponent implements OnInit {
       formData.append('discount_value', this.loginForm.value.discount_value);
       formData.append('discount_start_date', (start1)?start1:null);
       formData.append('discount_end_date', (end1)?end1:null);
+      formData.append('meta_data',JSON.stringify(this.loginForm.value.meta_data));
 
 
       var ins = this.urlForm.length;
       for (var x = 0; x < ins; x++) {
         formData.append('product_images', this.urlForm[x],this.urlForm[x].name);
       }
+      if(this.url1){
       formData.append('product_images',this.url1);
+      }
       console.log(formData)
       this.api
         .postReqAuth("admin/product/add-product", formData).subscribe(

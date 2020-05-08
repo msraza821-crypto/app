@@ -101,14 +101,6 @@
           </article> 
               </aside> 
 
-                          <div class="col-md-6">
-                            <label class="float-left"> <b >Product Quantity : </b></label>
-                             <p>{{i.quantity}}</p>
-                           </div>
-                           <div class="col-md-6">
-                              <label class="float-left"> <b >Product Price(QAR) : </b></label>
-                               <p>{{i.product_price}}</p>
-                             </div>
                            
                                  <div class="col-md-6">
                                     <label class="float-left"> <b >Attribute Description(English) : </b></label>
@@ -119,15 +111,29 @@
                                        <p>{{i.attribute_description_ar}}</p>
                                      
                                      </div>
-                                     <div class="col-md-6">
-                                        <label class="float-left"> <b >Product Size : </b></label>
-                                         <p>{{i.product_size}}</p>
-                                       </div>
+
+                         
                                        <div class="col-md-6">
                                           <label class="float-left"> <b >Product Colour : </b></label>
                                            <p>{{i.product_colour}}</p>
-                                           <color-hue-picker [color]="i.product_colour" style="cursor: none;"></color-hue-picker>
+                                           <color-compact [color]="i.product_colour" style="cursor: none;"></color-compact>
                                          </div>
+                                         <br/>
+                                         <br>
+                                         <div class="col-lg-12" *ngFor="let meta of i.attribute_meta;" style="margin-top:10px;"> 
+                                         <div class="col-md-4 float-left">
+                                            <label class="float-left"> <b >Product Quantity : </b></label>
+                                             <p>{{meta.quantity}}</p>
+                                           </div>
+                                           <div class="col-md-4 float-left">
+                                              <label class="float-left"> <b >Product Price(QAR) : </b></label>
+                                               <p>{{meta.product_price}}</p>
+                                             </div>
+                                                   <div class="col-md-4 float-left">
+                                                      <label class="float-left"> <b >Product Size : </b></label>
+                                                       <p>{{meta.product_size}}</p>
+                                                     </div>
+                                                     </div>
                                 </div>
                               </div></div>
 

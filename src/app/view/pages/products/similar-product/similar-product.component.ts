@@ -1,5 +1,5 @@
 import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl,FormArray } from '@angular/forms';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
@@ -134,18 +134,44 @@ export class SimilarProductComponent implements OnInit {
    this.loginForm.get('product_colour').patchValue(hex);
     }
   }
+  itemsData: FormArray;
+  addItem() {
+    
+    this.itemsData =  <FormArray>this.loginForm.controls['meta_data'];
+    this.productSiz();
+    console.log(this.loginForm.controls['meta_data'])
+this.itemsData.push(this.createItem())
+  }  
+  deleteRow(index: number) {
+    // control refers to your formarray
+    const control = <FormArray>this.loginForm.controls['meta_data'];
+    // remove the chosen row
+    control.removeAt(index);
+  }
+  orderForm: FormGroup;
 
+
+
+
+    createItem() {
+      return this._fb.group({
+        product_size: [''],
+        quantity: ["", [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
+        product_price:["", [Validators.required, rangeValidator(0, 10000)]],
+      });
+    }
+  choose
   createForm() {
     this.loginForm = this._fb.group({
       product_name_en:  [{value:"", disabled: true}, [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
       product_description_en:  [{value:"", disabled: true},[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
      product_name_ar:  [{value:"", disabled: true}, [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
      product_description_ar: [{value:"", disabled: true}, [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
-     product_size: ["", [Validators.required]],
-     product_price: ["", [Validators.required,rangeValidator(0, 10000)]],
+   //  product_size: ["", [Validators.required]],
+    // product_price: ["", [Validators.required,rangeValidator(0, 10000)]],
      product_colour: ["", [Validators.required]],
      brand_id:  [{value:"", disabled: true}, [Validators.required]],
-     quantity: ["", [Validators.required,Validators.pattern(Regex.phoneNumber),rangeValidator(0, 10000)]],
+    // quantity: ["", [Validators.required,Validators.pattern(Regex.phoneNumber),rangeValidator(0, 10000)]],
      category_id: [{value:"", disabled: true}, [Validators.required]],
      subCategory: [{value:"", disabled: true}, [Validators.required]],
      childCategory: [{value:"", disabled: true}, [Validators.required]],     
@@ -153,7 +179,7 @@ export class SimilarProductComponent implements OnInit {
      discount_value:  [{value:"", disabled: true}, [Validators.required,rangeValidator(0, 10000),Validators.pattern(Regex.phoneNumbers)]],
      discount_range: [{value:"", disabled: true},[Validators.required]],  attribute_description_ar: ["bluew", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
      attribute_description_en: ["bluew", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
-  
+     meta_data:this._fb.array([this.createItem()])
     });
   }
   rtl(element) {
@@ -450,9 +476,9 @@ for (var x = 0; x < ins; x++) {
     this.sub_cate(data['category']);
     this.child_cate(data['sub_category'])
     Object.keys(this.loginForm.controls).forEach((control) => {
-
+if(data[control]){
       this.loginForm.get(control).patchValue(data[control]);
-
+}
     });
     this.loginForm.get('category_id').patchValue(data['category']);
 
@@ -534,18 +560,25 @@ var end1="";
     this._util.markError(this.loginForm);
   }
 }
+get meta_data() : FormControl {
+  return this.loginForm.get("meta_data") as FormControl
+}
+errorData:boolean=false;
   submit() {
     console.log(this.loginForm.value)
+    this.errorData=true;
     if (this.loginForm.valid) {
       this.spinner.show();     
       const formData = new FormData();
       formData.append('product_id',this.id);
       formData.append('attribute_description_ar', this.loginForm.value.attribute_description_ar);
       formData.append('attribute_description_en', this.loginForm.value.attribute_description_en); 
-      formData.append('product_size',this.loginForm.value.product_size);
-      formData.append('product_price',this.loginForm.value.product_price);
+     // formData.append('product_size',this.loginForm.value.product_size);
+     // formData.append('product_price',this.loginForm.value.product_price);
       formData.append('product_colour',this.loginForm.value.product_colour);     
-      formData.append('quantity', this.loginForm.value.quantity);      
+      // formData.append('quantity', this.loginForm.value.quantity);   
+      formData.append('meta_data',JSON.stringify(this.loginForm.value.meta_data));
+   
       var ins = this.urlForm.length;
       for (var x = 0; x < ins; x++) {
         formData.append('product_images', this.urlForm[x],this.urlForm[x].name);
