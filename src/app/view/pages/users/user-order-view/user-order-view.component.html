@@ -1,0 +1,182 @@
+<div class="animated fadeIn" style="margin-top:30px;">
+    <div class="row">
+      <div class="col-sm-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+      
+              <div class="row ">
+                  <div class="breadc col-md-6 float-left"> <a class="active" [routerLink]="['/theme/users']"> Users</a> / <a class="breada">View User</a></div>    
+                  <div class="col-md-6 float-left"> 
+                      <a (click)="exportDataF()"> <button type="button" [routerLink]="['/theme/users/transaction',{id:id}]"  class="btn btn-primary float-right ml-1">Transactions</button></a>
+                      <a *ngIf="data.status=='active'"> <button type="button" (click)="openVerticallyCentered(poup2,data)" class="btn btn-primary float-right ml-1">Block</button></a>
+                      <a *ngIf="data.status=='inactive'"> <button type="button" (click)="openVerticallyCentered(poup1,data)" class="btn btn-primary float-right ml-1">Activate</button></a>
+                      <a> <button type="button" (click)="openVerticallyCentered(poup,data)" class="btn btn-primary float-right ml-1">Delete</button></a>
+          
+                    </div>
+                   </div>
+            <hr>
+          </div>
+        
+          <div class="card new-card" style="margin-top: 20px;">
+            <div class="card-header">
+                <div  class="breadc"><a class="breada">User Detail</a></div>                      
+            </div>
+            <div class="card-body">
+              <div class="row ">
+                <div class="col-md-6 ">
+                  
+                  <label for=""><b>First Name :</b></label>
+                {{data.first_name}}
+                  </div>
+                
+                  <div class="col-md-6">
+                  
+                      <label for=""><b>Email :</b></label>
+                    {{data.email}}
+                      </div>
+                      <div class="col-md-6 ">
+                  
+                        <label for=""><b>Last Name :</b></label>
+                      {{data.last_name}}
+                        </div>
+                      <div class="col-md-6">
+                  
+                          <label for=""><b>Mobile Number :</b></label>
+                        (+{{data.country_code}}) {{data.mobile}}
+                          </div>
+            </div>
+            </div>
+        </div>
+  
+  
+        <div class="card new-card" style="margin-top: 20px;">
+          <div class="card-header">
+              <div  class="breadc"><a class="breada"> Order Detail</a></div>                      
+          </div>
+          <div class="card-body">
+            <div class="row ">
+              <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>S.No.</th>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Category</th>
+                       <th scope="col">Purchase Date</th>
+                       <th scope="col">Quantity</th>
+                       <th scope="col">Paid Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <!-- <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                    itemsPerPage: limit,
+                    currentPage: page,
+                    totalItems: totalRec };"> -->
+                    <tr>
+                      <td scope="row" style=" text-transform: capitalize;">1 </td>
+                      <td>Abc</td>
+                      <td> 3333</td>
+                      <td>Men</td>
+                      <td>20-02-2020</td>
+                      <td>2</td>
+                      <td>Paid Amount</td>
+                 
+                      <!-- <td><img style="height: 60px;width:60px;" class="img-circle"
+                          [src]="i.profile_picture ? i.profile_picture : 'assets/img/avatars/default.png'" /></td>
+                      <td> -->
+                                          
+                       
+  <!--   
+                      </td> -->
+                    </tr>
+    
+                  </tbody>
+                  <!-- <tbody >
+                    <tr class="text-center">
+                      <td colspan="4">No records found</td>
+                    </tr>
+                  </tbody> -->
+                </table>
+                <pagination-controls *ngIf="collection.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
+                  (pageChange)="page = $event"></pagination-controls>
+    </div>
+          </div>
+      </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #poup let-modal>
+      <!----- Header  ------>
+      <section id="modal-header"> 
+        <h5 class="p-3 primary-color-bg bg-dark text-center">Delete User</h5>
+        <div class="">
+          <div class="row pt-4">
+            <div class="col-md-12 frgtpass-head">
+              <p class="text-center"> Are you sure you want to delete this User ? </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-------------->
+      <section>
+        <div class=" frgtpass-btns mb-3">
+          <div class="row mt-3">
+            <div class="col-md-12 text-center">
+              <button type="button" class="ml-3 btn bg-dark  white" (click)="modal.close('Close click')">No</button>
+              <button type="button" class="ml-3 btn bg-dark  white" (click)="yes()">Yes</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </ng-template>
+    <ng-template #poup1 let-modal>
+        <!----- Header  ------>
+        <section id="modal-header">
+          <h5 class="p-3 primary-color-bg bg-dark text-center">Activate User</h5>
+          <div class="">
+            <div class="row pt-4">
+              <div class="col-md-12 frgtpass-head">
+                <p class="text-center"> Are you sure you want to make this user active ? </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-------------->
+        <section>
+          <div class=" frgtpass-btns mb-3">
+            <div class="row mt-3">
+              <div class="col-md-12 text-center">
+                <button type="button" class="ml-3 btn bg-dark  white" (click)="modal.close('Close click')">No</button>
+                <button type="button" class="ml-3 btn bg-dark  white" (click)="yesStatus()">Yes</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </ng-template>
+      <ng-template #poup2 let-modal>
+          <!----- Header  ------>
+          <section id="modal-header">
+            <h5 class="p-3 primary-color-bg bg-dark text-center">Block User</h5>
+            <div class="">
+              <div class="row pt-4">
+                <div class="col-md-12 frgtpass-head">
+                  <p class="text-center"> Are you sure you want to block this User ? </p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-------------->
+          <section>
+            <div class=" frgtpass-btns mb-3">
+              <div class="row mt-3">
+                <div class="col-md-12 text-center">
+                  <button type="button" class="ml-3 btn bg-dark  white" (click)="modal.close('Close click')">No</button>
+                  <button type="button" class="ml-3 btn bg-dark  white" (click)="yesStatus()">Yes</button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </ng-template>

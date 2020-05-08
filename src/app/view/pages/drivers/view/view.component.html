@@ -81,12 +81,12 @@
                                <p>{{data.address}}</p>
                              </div>
                         </div>
-                        <button [routerLink]="['/theme/banners']"  style="margin-top: 20px;" type="button" class="btn btn-primary" >Back</button> 
+                      
                     </div>
                 </div>
                 
-
-                <!-- <div class="card new-card">
+<!-- 
+                 <div class="card new-card">
                     <div class="card-header">
                         <div  class="breadc"><a class="breada"> Banner Detail(Arabic)</a></div>                      
                     </div>
@@ -101,10 +101,10 @@
                                    <p>{{data.Banner_description_ar}}</p>
                                  </div>
                         </div>
-                    </div></div> -->
-                    <!-- <div class="card " style="width:100%;">
+                    </div></div>  -->
+                    <div class="card " style="width:100%;">
                     <div class="card-header">
-                        <div  class="breadc"><a class="breada"> Shipping Information</a></div>                      
+                        <div  class="breadc"><a class="breada"> Shipping  Details</a></div>                      
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -127,18 +127,18 @@
                             </div></div>
 
 
-
+                    </div>
 
 
                             <div class="card new-card">
                               <div class="card-header">
-                                  <div  class="breadc"><a class="breada"> Orders  Information</a></div>                      
+                                  <div  class="breadc"><a class="breada"> Order Details</a></div>                      
                               </div>
                               <div class="card-body">
                                   <div class="row">
                                     <div class="col-sm-12 col-lg-12 mr-top" >
                                       <div class="card text-white ">
-                                        <div class="card-body pb-0 " style="width:100">
+                                        <div class=" pb-0 " style="width:100">
 
                                           <table class="table table-striped table-response">
                                             <thead>
@@ -147,6 +147,7 @@
                                                 <th scope="col">Product ID</th>
                                                 <th scope="col">Product Name</th>
                                                 <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
                                                 
                                               
                       
@@ -160,6 +161,12 @@
                                               <td>12</td>
                                               <td>T-shirt</td>
                                            <td>Active</td>
+                                           <td style="max-width: 150px;">
+                                            <button type="button" class="btn btn-primary">Reassign</button>
+                                            <a><i class="fa fa-eye"></i></a>
+                                            <a><i class="fa fa-edit"></i></a>
+
+                                           </td>
 
 
                                           </table>
@@ -175,10 +182,10 @@
                                   <button [routerLink]="['/theme/banners']"  style="margin-top: 20px;" type="button" class="btn btn-primary" >Back</button>
                               </div>
                           </div>
-                          </div> -->
                           </div>
                           </div>
                           </div>
+                          
                           
               </div> <!-- row.// -->
               

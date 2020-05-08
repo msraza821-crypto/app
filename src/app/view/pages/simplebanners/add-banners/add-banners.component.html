@@ -35,7 +35,7 @@
   
                 </div>
                 <div class="col-md-2 float-left">
-                    <label for="inputEmail4"><b>Sub-category <span class="star">*</span></b></label> <br />
+                    <label for="inputEmail4"><b>Sub-Category <span class="star">*</span></b></label> <br />
                   <select class="form-control" [formControl]="sub_category" (change)=" getChildcategory()">
                       <option value=""> Select Sub-category</option>
                     <option *ngFor="let sab of subCategoryList" value="{{sab.id}}">{{sab.name}}</option>
@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="col-md-2 float-left">
-                  <label for="inputEmail4"><b>Child-category <span class="star">*</span></b></label> <br />
+                  <label for="inputEmail4"><b>Child-Category <span class="star">*</span></b></label> <br />
                 <select class="form-control" [formControl]="child_category">
                     <option value=""> Select Child-category</option>
                   <option *ngFor="let sab of childCategoryList" value="{{sab.id}}">{{sab.name}}</option>
@@ -86,7 +86,7 @@
 
             <div class="row">
                 <div class="col-12">
-                    <label for="inputEmail4"><b>Banner Image </b></label> <br />
+                    <label for="inputEmail4"><b>Banner Image <span class="star">*</span> </b></label> <br />
 
                   <div class="file-upload">
                     <div class="file-select">

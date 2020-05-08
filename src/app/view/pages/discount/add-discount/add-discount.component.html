@@ -88,6 +88,8 @@
         
                     
                         <span class="error text-danger">{{_util.errorMessage(promo_discount,FORM_ERROR?.promo_discount)}}</span>
+                        <span class="error text-danger" *ngIf="loginForm.value.min_order_value<=loginForm.value.promo_discount&&loginForm.value.promo_discount!=''&&loginForm.value.promo_type==1">
+                          Discounted price can not be greater or equal to the min. order value</span>
                       </div>
                       <div class="form-group col-md-3" >
                           <label for="inputState"><b>Status <span class="star">*</span></b></label>

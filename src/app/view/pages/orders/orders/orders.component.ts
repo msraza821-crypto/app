@@ -191,6 +191,7 @@ export class OrdersComponent implements OnInit {
     if (res.status == true) {
       this.collection = res.result.data;
       this.totalRec = res.result.globelCount;
+      this.myStatus='pending'
       // this.page=this.page;
       //this.limit=this.limit;
     }
@@ -210,7 +211,7 @@ export class OrdersComponent implements OnInit {
 
   }
 
-  myStatus="pending"
+  myStatus="";
   chnageStatus()
   {
 

@@ -1,10 +1,3 @@
-.bg-dark{
-  color:white;
-}
-.btn-dark{
-  color:white;
-}
-
 .pagination {
     display: inline-block;
     padding-left: 0;
@@ -13,6 +6,22 @@
   }
   .pagination > li {
     display: inline;
+  }
+  .bg-dark{
+    color:white;
+  }
+  .btn-dark{
+    color:white;
+  }
+  .breadc{
+    padding-left:30px;
+    float:left;
+    font-weight: 500;
+    font-size:18px;
+    
+  }
+  .breada{
+    font-size: 16px;
   }
   .pagination > li > a,.pagination > li > span {
     position: relative;
@@ -111,29 +120,48 @@
     cursor: not-allowed;
     background-color: #fff;
   }
-  .breadc{
-    padding-left:30px;
-    float:left;
-    font-weight: 500;
-    font-size:18px;
-    
+
+  .card-body{
+    overflow: auto!important;
   }
-  .breada{
-    font-size: 16px;
+  .my-margin{
+    margin-right: 50px;
   }
 
+.mr-top{
+  margin-top:0;
+}
+@media screen and(max-width:500px)
+{
+    .my-margin{
+        margin-right: 0;
+    }
+   
+}
 
-  .my-position{
-    position: relative;
-    top:4px;
-  }
-  .btn-danger
-  {
-    color:white !important;
-  }
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #20a8d8;
+    width: 500px!important;
+}
 
-  .checkBox{
-    height:25px;
-    width:25px;
-    
+@media screen and(max-width:800px)
+{
+  .mr-top{
+    margin-top:20px;
   }
+ 
+}
+
+
+.nav-tabs .nav-item {
+    margin-bottom: -1px;
+    width: 50%;
+}
+
+.myth{
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #c8ced3;
+  padding-left: 4px!important;
+}

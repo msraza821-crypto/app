@@ -150,7 +150,8 @@ export const ERROR_MESSAGES = {
     DISCOUNT_RANGE_REQUIRED:'Please select valid date range',
     TITLE_REQUIRED_ENGLISH:'Title is required in english',
 
-    TITLE_REQUIRED_ARABIC:'Title is required in arabic'
+    TITLE_REQUIRED_ARABIC:'Title is required in arabic',
+    MIN_DISCOUNT_ERROR:'Discounted price can not be greater or equal to the min. order value'
 
 
 
