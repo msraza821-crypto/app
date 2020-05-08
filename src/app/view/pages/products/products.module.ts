@@ -11,8 +11,10 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 import { ColorHueModule } from 'ngx-color/hue';
 import { ColorSketchModule } from 'ngx-color/sketch';
+
 import { OnlyNumberDirective } from 'src/app/directive/only-number.directive';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { ColorCompactModule } from 'ngx-color/compact';
 const pageRoutes: Routes = [
 
   { path: '', canActivate: [],  data: { title: 'Products' },children:[{path:'',component: ProductsComponent ,data:{title:''}},
@@ -29,7 +31,7 @@ const pageRoutes: Routes = [
 @NgModule({
   imports: [
     NgxPaginationModule,NgxDaterangepickerMd,
-    CommonModule, SharedModule,ColorHueModule, ColorSketchModule,
+    CommonModule, SharedModule,ColorHueModule, ColorSketchModule,ColorCompactModule,
 
     RouterModule.forChild(pageRoutes),
     

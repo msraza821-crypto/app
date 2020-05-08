@@ -73,10 +73,11 @@
                       <th  scope="col">Actions</th>
                       <th *ngIf="myStatus=='approved'" scope="col">Mark Delivered</th>
                     </tr>
+
                   </thead >
                   <tbody *ngIf="myStatus=='pending'" >
                     <tr   *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
-                    itemsPerPage: limit,
+                      itemsPerPage: limit,
                     currentPage: page,
                     totalItems: totalRec }; let ie = index">
                     <td>

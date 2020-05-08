@@ -17,7 +17,7 @@ export class AddBannerComponent implements OnInit {
 
   // or
   
-  config:any;
+  config;
   closeResult = '';
   bannerForm:FormGroup;
 selectedValue=[];
@@ -73,7 +73,10 @@ max:Number=10000;
       child_category:['',[Validators.required]],
       date:['',[Validators.required]],
       display_order:['',[Validators.required]],
-      status:['',Validators.required]
+      status:['',Validators.required],
+      brandDatas:new FormArray([
+        new FormControl(null)
+      ])
     //  brand:this.addBrandControl()
     });
   }
@@ -178,58 +181,6 @@ getProductUsingCategory(){
  };
 
 id;
-options = [
-  {
-    '_id': '5a66d6c31d5e4e36c7711b7a',
-    'index': 0,
-    'balance': '$2,806.37',
-    'picture': 'http://placehold.it/32x32',
-    'name': 'Burns Dalton'
-  },
-  {
-    '_id': '5a66d6c3657e60c6073a2d22',
-    'index': 1,
-    'balance': '$2,984.98',
-    'picture': 'http://placehold.it/32x32',
-    'name': 'Mcintyre Lawson'
-  },
-  {
-    '_id': '5a66d6c376be165a5a7fae33',
-    'index': 2,
-    'balance': '$2,794.16',
-    'picture': 'http://placehold.it/32x32',
-    'name': 'Amie Franklin'
-  },
-  {
-    '_id': '5a66d6c3f7854b6b4d96333b',
-    'index': 3,
-    'balance': '$2,537.14',
-    'picture': 'http://placehold.it/32x32',
-    'name': 'Jocelyn Horton'
-  },
-  {
-    '_id': '5a66d6c31f967d4f3e9d84e9',
-    'index': 4,
-    'balance': '$2,141.42',
-    'picture': 'http://placehold.it/32x32',
-    'name': 'Fischer Erickson'
-  },
-  {
-    '_id': '5a66d6c34cfa8cddefb31602',
-    'index': 5,
-    'balance': '$1,398.60',
-    'picture': 'http://placehold.it/32x32',
-    'name': 'Medina Underwood'
-  },
-  {
-    '_id': '5a66d6c3d727c450794226de',
-    'index': 6,
-    'balance': '$3,915.65',
-    'picture': 'http://placehold.it/32x32',
-    'name': 'Goldie Barber'
-  }
-];
-
 
 
 getOrderListing()
@@ -264,6 +215,7 @@ getOrderListing()
   );
 
 }
+
 
 
 ngOnInit()
@@ -344,11 +296,11 @@ productCompare(id:any,arr)
     }
 
 
-  // checked = "";
-  // indeterminate = false;
-  // labelPosition: 'before' | 'after' = 'after';
-  // disabled = false;
-
+  checked = "";
+  indeterminate = false;
+  labelPosition: 'before' | 'after' = 'after';
+  disabled = false;
+  dataModel : any
 
   selectedDatasource;
   changeProduct()
@@ -382,7 +334,7 @@ productCompare(id:any,arr)
      this.config = {
       displayKey:"name", //if objects array passed which key to be displayed defaults to description
       search:true, //true/false for the search functionlity defaults to false,
-
+      customComparator: ()=>{},
      placeholder:'Select' ,// text to be displayed when no item is selected defaults to Select,
         limitTo: this.brands.length, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
         moreText: 'more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
@@ -857,8 +809,8 @@ successView(res){
     console.log('detaisl',res)
     this.brandData=res.result.brand_data
     console.log('brand dat',this.brandData)
-    
-
+    this.dataModel=this.brands
+     
     if(this.brandData==undefined)
     {
     
@@ -929,6 +881,9 @@ this.url=data['image'];
 var str = this.url.split('/');
 this.choosefile = str[str.length - 1];
 this.bannerForm.get("status").patchValue(res.result.status)
+this.bannerForm.get('brandDatas').patchValue([{id: 28, name: "Babyhug"}])
+
+console.log(this.bannerForm.value)
   
 }
 
