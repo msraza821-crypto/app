@@ -12,12 +12,12 @@
             <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
 
             <div class="col-lg-12">
-                <label for="usr">Email address:</label>
+                <label for="usr"><b>Email address:</b></label>
             <input type="email" [formControl]="email" id="inputEmail" class="form-control" [maxlength]="CONFIG?.EMAIL_LENGTH" placeholder="Email address" required="" autofocus="" autocomplete="new-password">
             <span class="error text-danger">{{_util.errorMessage(email,FORM_ERROR?.email)}}</span>         
            </div>
            <div class="col-lg-12">
-              <label for="usr">Password:</label>
+              <label for="usr"><b>Password:</b></label>
             <input [type]="show ? 'text' : 'password'"  [formControl]="password" id="inputPassword" (keyup.enter)="submit()" [minlength]="CONFIG?.PASSWORD_MIN" [maxlength]="CONFIG?.PASSWORD_MAX" class="form-control" placeholder="Password" required="" autocomplete="new-password">
           
             <span toggle="#password-field" (click)="passwordHideShow(inputPassword)" [class]="show ? 'fa fa-fw fa-eye field-icon toggle-password' : 'fa fa-fw fa-eye-slash field-icon toggle-password'" 
@@ -26,7 +26,7 @@
            <br/>
            <div class=" col-lg-12">             
                 <input type="checkbox" [formControl]="rememberMe" id="remember_me"  class="largerCheckbox" name="_remember_me" checked/>
-                <label for="remember_me">&nbsp;Remember Me</label>
+                <label for="remember_me">&nbsp;<b>Remember Me</b></label>
                 <a class="float-right" [routerLink] = "['/forgot']" id="forgot_pswd" style="margin-top: -8px;">Forgot Password?</a>  
                 <br>
            

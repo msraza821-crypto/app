@@ -114,11 +114,16 @@
                         
                               </div>
                               
-                              <div class="form-group col-md-4">
+                              <div class="form-group col-md-4" *ngIf="data.promo_type==1">
                                 <label>    <b for="inputEmail4">Discount Value</b></label><br/>
-                                <p>{{data.promo_discount}}</p>
+                                <p>{{data.promo_discount}}(QAR)</p>
                       
                             </div>
+                            <div class="form-group col-md-4" *ngIf="data.promo_type==2">
+                              <label>    <b for="inputEmail4">Discount Percentage</b></label><br/>
+                              <p>{{data.promo_discount}}%</p>
+                    
+                          </div>
                             <div class="form-group col-md-4">
                               <label>    <b for="inputEmail4">Minimum  Order Value</b></label><br/>
                               <p>{{data.min_order_value}}</p>

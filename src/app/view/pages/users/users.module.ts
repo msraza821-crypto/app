@@ -8,6 +8,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { ViewUserComponent } from './view-user/view-user.component';
+import { UserOrderViewComponent } from './user-order-view/user-order-view.component';
+import { UserTransactionComponent } from './user-transaction/user-transaction.component';
 const pageRoutes: Routes = [
 
   { path: '', 
@@ -16,7 +18,11 @@ const pageRoutes: Routes = [
     {
       path: '',
       component: UsersComponent ,data:{title:''},
-    },{ path: 'view', canActivate: [], data: { title: 'View User' }, component: ViewUserComponent }
+    },{ path: 'view', canActivate: [], data: { title: 'View User' }, component: ViewUserComponent },
+    {path:'order-view',canActivate:[],data:{title:'View Order'} ,component:UserOrderViewComponent},
+    {
+      path:"transaction",canActivate:[],data:{title:'Transaction'},component:UserTransactionComponent
+    }
   ]}
   // { path: 'view', canActivate: [], data: { title: 'View User' }, component: ViewUserComponent },
 ];
@@ -32,7 +38,7 @@ const pageRoutes: Routes = [
     RouterModule.forChild(pageRoutes),
     
   ],
-  declarations: [UsersComponent,ViewUserComponent],
+  declarations: [UsersComponent,ViewUserComponent, UserOrderViewComponent, UserTransactionComponent],
   entryComponents: []
 })
 export class UsersModule { }

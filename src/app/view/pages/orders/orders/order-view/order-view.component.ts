@@ -27,6 +27,10 @@ export class OrderViewComponent implements OnInit {
   limit=10;
   page=1;
   totalRec=10;
+  id:string=null;
+  myStatus=''
+  deletedId;
+  statusData;
   constructor(
     private _fb: FormBuilder,
     private _util: CommonUtil,
@@ -38,87 +42,24 @@ export class OrderViewComponent implements OnInit {
       this._route.params.subscribe(param => {
         if (param && param["id"]) {
           this.id=param["id"];
-        
+          this.myStatus=param['status']
         }
         })
-        console.log("from constructor")
-        this.viewBanner();
+        
   }
   
-id:string=null;
 
-avilableOn;
-productList=[]
+  ngOnInit()
+  {
 
-  ngOnInit() {
-   
-
-  }
-
-  getAvailableOn(ava){
-    if(ava=='1')
-    this.avilableOn="Brand"
-    else
-    this.avilableOn="Product"
   }
   openVerticallyCentered(poup, data) {
     this.modalService.open(poup, { centered: true });
-
-  //   this.url=this.data.image;
-  //  this.api.getReqAuth
-  }
-
-discountType;
-getdiscount(dis)
-{
-  if(dis=='1')
-  {
-    this.discountType='Flat'
-  }
-  else
-  this.discountType="% Of OFF"
-
-}
-
-  viewBanner(){
-    this.spinner.show();
-    console.log('vieew')
-    this.api
-    .getReqAuth("admin/banner/banner-detail?id="+this.id)
-    .subscribe(
-      res => this.successView(res),
-      err => this.error(err),
-      () => (this.loader = false)
-    );
-  }
-
-data:any={};
-  successView(res){
-    if(res.status==true){
-      console.log(res)
-    this.data= res.result;
-    this.flag=true
-    this.getdiscount(this.data.discount_type)
-  this.getAvailableOn(this.data.available_on)
-  this.productList=res.result.product_data
-  console.log('product',this.productList)
-    }
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 1000);
-   
-  //  this.addProperty.get('beds').patchValue(property['bed']);
-
-  }
-  
-  error(res){
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 1000);
-    this._util.markError(res.message);
+    this.deletedId = data.id;
+    this.statusData = data.status;
   }
 
 
-}
+  }
+
+

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { Router, ActivatedRoute, Route } from "@angular/router";
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -11,12 +10,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 
 @Component({
-  selector: 'app-drivers',
-  templateUrl: './drivers.component.html',
-  styleUrls: ['./drivers.component.scss']
+  selector: 'app-user-transaction',
+  templateUrl: './user-transaction.component.html',
+  styleUrls: ['./user-transaction.component.scss']
 })
-export class DriversComponent implements OnInit {
+export class UserTransactionComponent implements OnInit {
 
+ 
   collection = [];
   // pager object
   pager: any = {};
@@ -52,9 +52,12 @@ export class DriversComponent implements OnInit {
   start = "";
   end = "";
 
-  hell="hello"
   ngOnInit(): void {
-    console.log('hello',this.hell.slice(1, 3))
+  this._route.params.subscribe(params=>
+    {
+this.id=params.id;
+console.log('paramns',this.id)
+    })
     
     this.loadBanners();
 

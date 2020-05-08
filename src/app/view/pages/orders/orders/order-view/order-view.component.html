@@ -8,58 +8,133 @@
       <div class="col-sm-12 col-lg-12">
         <div class="card">
           <div class="card-header" style="padding-right:0px">
-              <div  class="breadc"><a class="active" [routerLink]="['/theme/orders']"> Orders</a> / <a class="breada">Detail Order</a></div> 
+              <div  class="breadc"><a class="active" [routerLink]="['/theme/orders']"> Orders</a> / <a class="breada">View Order</a></div> 
 
-              <div class="col-md-6 float-right" style="padding-right: 5px;">
+              <div *ngIf="myStatus=='pending'" class="col-md-6 float-right" style="padding-right: 5px;">
                   <button  (click)="openVerticallyCentered(poup2, data)" class="float-right btn btn-danger ml-1">Reject</button>
                   <button class="float-right btn btn-secondary ml-1">Accept</button>
               </div>
+              <div  *ngIf="myStatus=='approved'" class="col-md-6 float-right" style="padding-right: 5px;">
+                <button  (click)="openVerticallyCentered(assign,i)" class="float-right btn btn-primary ml-1">Assign Driver</button>
+                <button class="float-right btn btn-danger ml-1">Cancel</button>
+            </div>
              
           </div>
           <div class="card-body">
               <div class="row">
                
-                <div class="card new-card" >
-                    <div class="card-header">
-                        <div  class="breadc"><a class="breada"> Order Detail</a></div>                      
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                          <div class="col-md-6">
-                           <label class="float-left"> <b > Order ID: </b></label>
-                            <p>1234445</p>
-                          </div>
-                          <div class="col-md-6">
-                             <label class="float-left"> <b >Date & Time : </b></label>
-                              <p>12/02/2020 3:34 PM</p>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="float-left"> <b >Payment Method : </b></label>
-                                 <p>COD</p>
-                               </div>
+              
+
+                <div  *ngIf="myStatus!='delivered'" class="card new-card" >
+                  <div class="card-header">
+                      <div  class="breadc"><a class="breada"> Order Detail</a></div>                      
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                         <label class="float-left"> <b > Order ID: </b></label>
+                          <p>1234445</p>
                         </div>
-                    </div>
-                </div>
-                <div class="card new-card" style="margin-left:2%">
+                        <div class="col-md-12">
+                           <label class="float-left"> <b >Date & Time : </b></label>
+                            <p>12/02/2020 3:34 PM</p>
+                          </div>
+                          <div class="col-md-12">
+                              <label class="float-left"> <b >Payment Method : </b></label>
+                               <p>COD</p>
+                             </div>
+                      </div>
+                  </div>
+              </div>
+                <div *ngIf="myStatus!='delivered'" class="card new-card" style="margin-left:2%">
                     <div class="card-header">
                         <div  class="breadc"><a class="breada"> Shipping Details</a></div>                      
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <label class="float-left"> <b > Costumer Name : </b></label>
+                            <div class="col-md-12">
+                                <label class="float-left"> <b > Customer Name : </b></label>
                                  <p>Rahul</p>
                                </div>
-                               <div class="col-md-6">
+                               <div class="col-md-12">
                                   <label class="float-left"> <b > Mobile Number : </b></label>
                                    <p>12132332332</p>
                                  </div>
-                                 <div class="col-md-6">
+                                 <div class="col-md-12">
                                     <label class="float-left"> <b > Delivery Adress : </b></label>
                                      <p>Noida</p>
                                    </div>
                         </div>
                     </div></div>
+
+
+
+
+                    <div  *ngIf="myStatus=='delivered'" class="card new-card1" >
+                      <div class="card-header">
+                          <div  class="breadc"><a class="breada"> Order Detail</a></div>                      
+                      </div>
+                      <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-12">
+                             <label class="float-left"> <b > Order ID: </b></label>
+                              <p>1234445</p>
+                            </div>
+                            <div class="col-md-12">
+                               <label class="float-left"> <b >Date & Time : </b></label>
+                                <p>12/02/2020 3:34 PM</p>
+                              </div>
+                              <div class=" col-md-12">
+                                  <label class="float-left"> <b >Payment Method : </b></label>
+                                   <p>COD</p>
+                                 </div>
+                          </div>
+                      </div>
+                  </div>
+                    <div *ngIf="myStatus=='delivered'" class="card new-card1" style="margin-left: .5%;" >
+                        <div class="card-header">
+                            <div  class="breadc"><a class="breada"> Shipping Details</a></div>                      
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="float-left"> <b > Customer Name : </b></label>
+                                     <p>Rahul</p>
+                                   </div>
+                                   <div class="col-md-12">
+                                      <label class="float-left"> <b > Mobile Number : </b></label>
+                                       <p>12132332332</p>
+                                     </div>
+                                     <div class="col-md-12">
+                                        <label class="float-left"> <b > Delivery Adress : </b></label>
+                                         <p>Noida</p>
+                                       </div>
+                            </div>
+                        </div></div>
+                        <div *ngIf="myStatus=='delivered'" class="card new-card1"  style="margin-left: .5%;">
+                          <div class="card-header">
+                              <div  class="breadc"><a class="breada"> Driver Details</a></div>                      
+                          </div>
+                          <div class="card-body">
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <label class="float-left"> <b > Driver Name : </b></label>
+                                       <p>Rahul</p>
+                                     </div>
+                                     <div class="col-md-12">
+                                        <label class="float-left"> <b > Mobile Number : </b></label>
+                                         <p>12132332332</p>
+                                       </div>
+                                    
+                              </div>
+                          </div></div>
+  
+
+
+                    
+
+
+
                     <div class="card " style="width:100%;">
                     <div class="card-header">
                         <div  class="breadc"><a class="breada"> Product Details</a></div>                      
@@ -132,20 +207,20 @@
                                     <div class="col-sm-12 col-lg-12 mr-top" >
                                      
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <label class="float-left"> <b >Total : </b></label>
                                                  <p>3445</p>
                                                </div>
-                                               <div class="col-md-6">
+                                               <div class="col-md-12">
                                                   <label class="float-left"> <b > Shipping Charges : </b></label>
                                                    <p>121</p>
                                                  </div>
-                                                 <div class="col-md-6">
+                                                 <div class="col-md-12">
                                                     <label class="float-left"> <b > Discount : </b></label>
                                                      <p>233</p>
                                                    </div>
 
-                                                   <div class="col-md-6">
+                                                   <div class="col-md-12">
                                                     <label class="float-left"> <b > Grand Total : </b></label>
                                                      <p>232</p>
                                                    </div>
@@ -169,7 +244,7 @@
             
        
 
-            <ng-template #poup2 let-modal>
+            <ng-template #poup3 let-modal>
                 <!----- Header  ------>
                 <section id="modal-header">
                   <h5 class="p-3 primary-color-bg bg-dark text-center">Reject Order</h5>
@@ -200,4 +275,108 @@
                     </div>
                   </div>
                 </section>
+              </ng-template>
+
+
+
+
+
+
+                <ng-template #poup2 let-modal>
+                <!----- Header  ------>
+                <section id="modal-header">
+                  <h5 class="p-3 primary-color-bg bg-dark text-center">Reject Order</h5>
+                  <div class="">
+                    <div class="row pt-4">
+                      <div class="col-md-12 frgtpass-head">
+                        <p class="text-center"> Are you sure you want to reject this order ? </p>
+                        
+                        <!-- <select class="form-control" style="width:50%; margin:0 25% 0 25%">
+                          
+                          <option value="t">Please Select Reason to Reject</option>
+                          <option value=""> Reason1</option>
+                        </select> -->
+                      
+                        
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <!-------------->
+                <section>
+                  <div class=" frgtpass-btns mb-3">
+                    <div class="row mt-3">
+                      <div class="col-md-12 text-center">
+                        <button type="button" class="ml-3 ml-3 btn bg-dark  white white" (click)="modal.close('Close click')">No</button>
+                        <button type="button" class="ml-3 btn bg-dark white" (click)="yesStatus()">Yes</button>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </ng-template>
+
+
+
+
+              <ng-template #assign let-modal>
+                <!----- Header  ------>
+                <section id="modal-header">
+                  <h5 class="p-3 primary-color-bg bg-dark text-center">Assign Driver <a  (click)="modal.close('Close click')" style="position: absolute;top:5px; right:5px" ><i class="fa fa-times"></i></a></h5>
+                  
+                  <div class="">
+                    <div class="row">
+                  
+                      
+                      <div class="col-md-12 frgtpass-head">
+                       <div class="col-md-4" style="margin-top: 20px;">
+                         <input type="text" class="form-control" placeholder="Search by Name">
+                       </div>
+                    
+                        <div class="col-sm-12 col-lg-12" style="margin-top: 30px;">
+                           
+                          <div class="card text-white ">
+                            <div class="pb-0"> 
+                              <table class="table table-striped"  >
+                                <thead>
+                                  <th>S.No.</th>
+                                  <th>Name</th>
+                                  <th>Status</th>
+                                  <th>Date</th>
+                                  <th>Action</th>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>AAAAAA</td>
+                                    <td>Active</td>
+                                    <td>20-20-2020</td>
+                                    <td>
+                                      <a class="btn btn-primary" >Assign</a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                          </div>
+                          </div>
+                          </div>
+                        
+                        
+                        
+                      </div>
+                  
+                  
+                    </div>
+                  </div>
+                </section>
+                <!-------------->
+                <!-- <section>
+                  <div class=" frgtpass-btns mb-3">
+                    <div class="row mt-3">
+                      <div class="col-md-12 text-center">
+                        <button type="button" class="ml-3 ml-3 btn bg-dark  white white" (click)="modal.close('Close click')">No</button>
+                        <button type="button" class="ml-3 btn bg-dark white" (click)="yesStatus()">Yes</button>
+                      </div>
+                    </div>
+                  </div>
+                </section> -->
               </ng-template>

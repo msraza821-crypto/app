@@ -26,6 +26,7 @@ max:Number=10000;
   message: string = '';
   state: any;
   keyValue: boolean = false;
+  isDiscountTrue=false;
   constructor(
     private _fb: FormBuilder,
     private _util: CommonUtil,
@@ -196,6 +197,7 @@ max:Number=10000;
   successView(res) {
     if (res.status == true) {
       var data = res.result;
+      console.log(res)
 
       Object.keys(this.loginForm.controls).forEach((control) => {
 
@@ -231,9 +233,9 @@ max:Number=10000;
       var end1 = "";
       if(this.loginForm.value.promo_type==1)
       {
-        if(this.loginForm.value.min_order_value<=this.loginForm.value.promo_discount)
+        if(this.loginForm.value.min_order_value<=this.loginForm.value.promo_discount&&this.loginForm.value.promo_discount!='')
         {
-          this._api.showNotification('error', " Discounted Price Can't Be Greater  Than Min. Order Value!")
+          // this._api.showNotification('error', " Discounted Price Can't Be Greater  Than Min. Order Value!")
           this._util.markError(this.loginForm)
           return
         }
@@ -277,14 +279,17 @@ max:Number=10000;
     }
   }
   submit() {
+    this.isDiscountTrue=false;
     console.log(this.loginForm.value)
     if (this.loginForm.valid) {
       if(this.loginForm.value.promo_type==1)
       {
         if(this.loginForm.value.min_order_value<=this.loginForm.value.promo_discount)
         {
-          this._api.showNotification('error', " Discounted Price Can't Be Greater  Than Min. Order Value!")
-          this._util.markError(this.loginForm)
+          // this._api.showNotification('error', " Discounted Price Can't Be Greater  Than Min. Order Valis.ue!")
+
+          // this._util.markError(this.loginForm)
+          this.isDiscountTrue=true
           return
         }
       }

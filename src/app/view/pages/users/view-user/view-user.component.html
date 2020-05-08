@@ -7,7 +7,7 @@
             <div class="row ">
                 <div class="breadc col-md-6 float-left"> <a class="active" [routerLink]="['/theme/users']"> Users</a> / <a class="breada">View User</a></div>    
                 <div class="col-md-6 float-left"> 
-                    <a (click)="exportDataF()"> <button type="button" class="btn btn-primary float-right ml-1">Transactions</button></a>
+                    <a (click)="exportDataF()"> <button type="button" class="btn btn-primary float-right ml-1" [routerLink]="['/theme/users/transaction',{id:id}]" routerLinkActive="router-link-active" >Transactions</button></a>
                     <a *ngIf="data.status=='active'"> <button type="button" (click)="openVerticallyCentered(poup2,data)" class="btn btn-primary float-right ml-1">Block</button></a>
                     <a *ngIf="data.status=='inactive'"> <button type="button" (click)="openVerticallyCentered(poup1,data)" class="btn btn-primary float-right ml-1">Activate</button></a>
                     <a> <button type="button" (click)="openVerticallyCentered(poup,data)" class="btn btn-primary float-right ml-1">Delete</button></a>
@@ -16,79 +16,89 @@
                  </div>
           <hr>
         </div>
-        <div class="card-body">
-
-            <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
-            <div class="alert alert-success" *ngIf="successMessage" role="alert">{{successMessage}}</div>
-          <div class="row ">
-              <div class="col-md-3 ">
+      
+        <div class="card new-card" style="margin-top: 20px;">
+          <div class="card-header">
+              <div  class="breadc"><a class="breada">User Detail</a></div>                      
+          </div>
+          <div class="card-body">
+            <div class="row ">
+              <div class="col-md-6 ">
                 
-                <label for=""><b>First Name</b></label><br/>
+                <label for=""><b>First Name :</b></label>
               {{data.first_name}}
                 </div>
-                <div class="col-md-3 ">
+              
+                <div class="col-md-6">
                 
-                  <label for=""><b>Last Name</b></label><br/>
-                {{data.last_name}}
-                  </div>
-                <div class="col-md-3">
-                
-                    <label for=""><b>Email</b></label><br/>
+                    <label for=""><b>Email :</b></label>
                   {{data.email}}
                     </div>
-                    <div class="col-md-3 ">
+                    <div class="col-md-6 ">
                 
-                        <label for=""><b>Mobile Number</b></label><br/>
+                      <label for=""><b>Last Name :</b></label>
+                    {{data.last_name}}
+                      </div>
+                    <div class="col-md-6">
+                
+                        <label for=""><b>Mobile Number :</b></label>
                       (+{{data.country_code}}) {{data.mobile}}
                         </div>
           </div>
-         <br/><br/><br/>
-          <div class="row ">
-          <table class="table table-striped">
-              <thead>
-                <tr>
+          </div>
+      </div>
 
-                  <th scope="col">Order Id</th>
-                  <th scope="col">Total price</th>
-                  <th scope="col">Order Date</th>
-                   <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody *ngIf="collection.length>0">
-                <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
-                itemsPerPage: limit,
-                currentPage: page,
-                totalItems: totalRec };">
-                  <td scope="row" style=" text-transform: capitalize;">{{i.first_name}} {{i.last_name}}
-                  </td>
-                  <td>{{i.email}}
-                  </td>
-                  <td> ({{i.country_code}}){{i.mobile}}
-                    </td>
-                  <td> {{i.created_at}}
-                </td>
-                <td>{{i.status}}
-              </td>
-                  <td><img style="height: 60px;width:60px;" class="img-circle"
-                      [src]="i.profile_picture ? i.profile_picture : 'assets/img/avatars/default.png'" /></td>
-                  <td>
-                    <a > <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                      
-                   
 
-                  </td>
-                </tr>
-
-              </tbody>
-              <tbody *ngIf="collection.length==0">
-                <tr class="text-center">
-                  <td colspan="4">No records found</td>
-                </tr>
-              </tbody>
-            </table>
-            <pagination-controls *ngIf="collection.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
-              (pageChange)="page = $event"></pagination-controls>
-</div>
+      <div class="card new-card" style="margin-top: 20px;">
+        <div class="card-header">
+            <div  class="breadc"><a class="breada"> Order Detail</a></div>                      
         </div>
+        <div class="card-body">
+          <div class="row ">
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>S.No.</th>
+                    <th scope="col">Order Id</th>
+                    <th scope="col">Total price</th>
+                    <th scope="col">Order Date</th>
+                     <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <!-- <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                  itemsPerPage: limit,
+                  currentPage: page,
+                  totalItems: totalRec };"> -->
+                  <tr>
+                    <td scope="row" style=" text-transform: capitalize;">1 </td>
+                    <td>12334</td>
+                    <td> 3333</td>
+                    <td> 20-02-20202</td>
+                  <td>
+                    <a [routerLink]="['/theme/users/order-view',{id:id}]" routerLinkActive="router-link-active"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;   
+                </td>
+                    <!-- <td><img style="height: 60px;width:60px;" class="img-circle"
+                        [src]="i.profile_picture ? i.profile_picture : 'assets/img/avatars/default.png'" /></td>
+                    <td> -->
+                                        
+                     
+<!--   
+                    </td> -->
+                  </tr>
+  
+                </tbody>
+                <!-- <tbody >
+                  <tr class="text-center">
+                    <td colspan="4">No records found</td>
+                  </tr>
+                </tbody> -->
+              </table>
+              <pagination-controls *ngIf="collection.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
+                (pageChange)="page = $event"></pagination-controls>
+  </div>
+        </div>
+    </div>
       </div>
 
     </div>
