@@ -26,3 +26,13 @@
 .sidebar .nav-link.active .nav-icon {
     color: #fff !important;
 }
+
+.tab-content {
+    margin-top: -1px;
+    background: #fff;
+    border: 1px solid $border-color;
+    .tab-pane {
+      padding: 0;
+    }
+  }
+  
