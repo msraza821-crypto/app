@@ -88,7 +88,7 @@
                     "> {{i.description}}</td>
                       <td [title]="i.description_ar"> {{i.description_ar}}
                       </td> -->
-                      <td> {{i.created_at|dateFormat}}
+                      <td> {{this.transform(i.created_at)}}
                     </td>
                     <td  *ngIf="i.status=='Active'" >Active
                   </td>

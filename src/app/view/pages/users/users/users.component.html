@@ -87,13 +87,13 @@
                         </td>
                         <td> (+{{i.country_code}}){{i.mobile}}
                           </td>
-                        <td> {{i.created_at |dateFormat}}
+                          <td> {{this.transform(i.created_at)}}
                       </td>
-                      <td  *ngIf="i.status=='Active'" >Active
+                      <td  *ngIf="i.status=='Active'" >Activegfdg
                         </td>
-                        <td  *ngIf="i.status=='Inactive'" >Blocked
+                        <td  *ngIf="i.status=='Inactive'" >Blockeddgfd
                           </td>
-                          <td  *ngIf="i.status=='Pending'" >Pending
+                          <td  *ngIf="i.status=='Pending'" >Pendinggdg
                             </td>
                         <td>
                           <a [routerLink]="['/theme/users/view',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                      

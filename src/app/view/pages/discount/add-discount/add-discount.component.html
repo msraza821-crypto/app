@@ -84,8 +84,8 @@
                     </div>
                    <div class="form-group col-md-3">
                         <label for="inputEmail4"><b>Discounted Price{{dPrice}} <span class="star">*</span></b></label>
-                        <input type="number" [formControl]="promo_discount" (keypress) = "changeNumber($event)"  appOnlyNumber [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
-        
+                        <input type="number" [formControl]="promo_discount" (keypress) = "changeNumber($event)"   [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
+                        
                     
                         <span class="error text-danger">{{_util.errorMessage(promo_discount,FORM_ERROR?.promo_discount)}}</span>
                         <span class="error text-danger" *ngIf="loginForm.value.min_order_value<=loginForm.value.promo_discount&&loginForm.value.promo_discount!=''&&loginForm.value.promo_type==1">

@@ -67,9 +67,10 @@
             </div>
           
         </div>
-
+        
           <div class="col-md-2 float-left">
             <label><b>  Available On <span class="star">*</span></b></label>
+          
             <select class="form-control" [formControl]="available_on" (change)="changeProduct()">
               <option value="">Select availability</option>
               <option value="1">Brand</option>
@@ -94,7 +95,6 @@
               </div>
             
 
-
               <div class="col-md-2 float-left" >
                 <label><b>Status <span class="star">*</span></b></label>
                 <select class="form-control" [formControl]="status">
@@ -108,15 +108,28 @@
               
               <div class=" col-md-2" *ngIf="isBrand">
                 <label> <b>Brand <span class="star">*</span></b></label><br/>
-                 <ngx-select-dropdown (change)="selectionChanged($event)"  [formControl]="brandDatas" [multiple]="true" [config]="config" [options]="brands" ></ngx-select-dropdown>
+                <ng-multiselect-dropdown
+                [placeholder]="'Select brand'" 
+                [data]="brands" 
+                [formControl]="brandDatas" 
+                [settings]="settings"
+                [disabled]="false"
+                (onFilterChange)="onFilterChange($event)"
+                (onDropDownClose)="onDropDownClose($event)"
+                (onSelect)="onItemSelect($event)" 
+                (onDeSelect)="onDeSelect($event)"
+                (onSelectAll)="onSelectAll($event)"
+                (onDeSelectAll)="onDeSelectAll($event)">
+              </ng-multiselect-dropdown>
               </div>
-
+ 
               <div class="col-md-2 float-left "  style="margin-bottom: 15px;">
                 <label><b>Valid From-Valid To <span class="star">*</span></b></label>
                 <input type="text" style="min-width:190px" ngxDaterangepickerMd class="form-control"  [maxlength]="CONFIG?.DATE_MAX_LENGTH"  (choosedDate)="choosedDate($event)"
                   [formControl]="date" [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}" placeholder="Select date " />
                 <span class="error text-danger">{{_util.errorMessage(date,FORM_ERROR?.date)}}</span>
               </div>
+
 
               <!-- <div class=" col-md-2" *ngIf="isBrand">
                 <label> <b>Brand <span class="star">*</span></b></label><br/>

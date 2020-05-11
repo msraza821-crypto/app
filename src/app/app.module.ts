@@ -39,7 +39,7 @@ import {
   AppFooterModule,
   AppSidebarModule,
 } from '@coreui/angular';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 // Import 3rd party components
@@ -99,12 +99,12 @@ const customNotifierOptions: NotifierOptions = {
     ForgotComponent,
     ResetComponent,
     LoaderButtonComponent,
-    LoaderComponent,
+    LoaderComponent
     
   ],
   imports: [
     NotifierModule.withConfig(customNotifierOptions),
-    NgxPaginationModule,RichTextEditorAllModule,
+    NgxPaginationModule,RichTextEditorAllModule,NgMultiSelectDropDownModule,
     BrowserModule,
     AppRoutingModule,
     ColorSketchModule,

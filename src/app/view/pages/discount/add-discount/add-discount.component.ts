@@ -112,8 +112,8 @@ max:Number=10000;
       description_arabic: ["", [ Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       promo_type: ["", [Validators.required]],
       promocode: ["", [Validators.required, Validators.minLength(CONFIG.MINCODE), Validators.maxLength(CONFIG.MAXCODE)]],
-      min_order_value: ["", [Validators.required, rangeValidator(0, 10000), Validators.pattern(Regex.phoneNumbers)]],
-      promo_discount: ["", [Validators.required, rangeValidator(0, 10000),Validators.min(0),Validators.max(10000), Validators.pattern(Regex.phoneNumbers)]],
+      min_order_value: ["", [Validators.required, rangeValidator(0, 10000)]],
+      promo_discount: ["", [Validators.required, rangeValidator(0, 10000),Validators.min(0),Validators.max(10000)]],
       discount_range: ["", [Validators.required]],
       statusKey: ["", [Validators.required]],
       assignment: ["", [Validators.required]],
@@ -214,7 +214,7 @@ max:Number=10000;
       if(data['promo_type']==2){
         this.placeHolderText="Percentage Discount";
       }else{
-        this.placeHolderText="Discount Price";
+        this.placeHolderText="Enter discounted price";
       }
       setTimeout(() => {
         /** spinner ends after 5 seconds */

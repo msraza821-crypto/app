@@ -13,9 +13,7 @@ import { OnlyNumberDirective }  from './../../../../directive/only-number.direct
   styleUrls: ['./add-banner.component.scss']
 })
 export class AddBannerComponent implements OnInit {
-  
 
-  // or
   
   config;
   closeResult = '';
@@ -45,7 +43,9 @@ isImageError=false;
   limit=10;
   totalRec=50;
   activeOrderList=[];
-
+  public data = [];
+  public settings = {};
+  public selectedItems = [];
 min:Number=0;
 max:Number=10000;
   constructor(private fb:FormBuilder,
@@ -60,7 +60,52 @@ max:Number=10000;
    
       this.createForm()
       this.getOrderListing()
-      
+      this.data = [
+        { item_id: 1, item_text: 'Hanoi' },
+        { item_id: 2, item_text: 'Lang Son' },
+        { item_id: 3, item_text: 'Vung Tau' },
+        { item_id: 4, item_text: 'Hue' },
+        { item_id: 5, item_text: 'Cu Chi' }
+      ];
+      // setting and support i18n
+      this.settings = {
+        singleSelection: false,
+        idField: 'id',
+        textField: 'name',
+        enableCheckAll: true,
+        selectAllText: 'Select All',
+        unSelectAllText: 'Unselect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        maxHeight: 197,
+        itemsShowLimit: 3,
+        searchPlaceholderText: 'Brands',
+        noDataAvailablePlaceholderText: 'No data found',
+        closeDropDownOnSelection: false,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+  }
+  public FilterChange(item: any) {
+    console.log(item);
+  }
+  public onDropDownClose(item: any) {
+    console.log(item);
+  }
+
+  public onItemSelect(item: any) {
+    console.log(item);
+  }
+  public onDeSelect(item: any) {
+    console.log(item);
+  }
+
+  public onSelectAll(items: any) {
+    console.log(items);
+  }
+  public onDeSelectAll(items: any) {
+    console.log(items);
   }
   createForm()
   {
@@ -76,9 +121,7 @@ max:Number=10000;
       date:['',[Validators.required]],
       display_order:['',[Validators.required]],
       status:['',Validators.required],
-      brandDatas:new FormArray([
-        new FormControl(null)
-      ])
+      brandDatas:[[]]
     //  brand:this.addBrandControl()
     });
   }
@@ -330,26 +373,7 @@ productCompare(id:any,arr)
       {
         this.spinner.hide()
         this.brands=res.result;
-        // this.selectedDatasource=this.bran
-        // console.log(res)
        
-     this.config = {
-      displayKey:"name", //if objects array passed which key to be displayed defaults to description
-      search:true, //true/false for the search functionlity defaults to false,
-      customComparator: ()=>{},
-     placeholder:'Select' ,// text to be displayed when no item is selected defaults to Select,
-        limitTo: this.brands.length, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
-        moreText: 'more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
-        noResultsFound: 'No results found!', // text to be displayed when no items are found while searching
-        searchPlaceholder:'Search', // label thats displayed in search input,
-        searchOnKey: 'name', // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
-        clearOnSelection: false, // clears search criteria when an option is selected if set to true, default is false
-        inputDirection: 'ltr',
-       // the direction of the search input can be rtl or ltr(default)
-    
-    }
-      
-    
       }
      
       
@@ -412,7 +436,9 @@ productCompare(id:any,arr)
 
   }
 }
-
+get brandDatas(): FormControl {
+  return this.bannerForm.get("brandDatas") as FormControl;
+}
 
   get title(): FormControl {
     return this.bannerForm.get("title") as FormControl;
@@ -820,9 +846,9 @@ successView(res){
 
     console.log('detaisl',res)
     this.brandData=res.result.brand_data
-    console.log('brand dat',this.brandData)
-    this.dataModel=this.brands
-     
+    console.log(this.brandData)
+    this.dataModel=this.brandData
+  
     if(this.brandData==undefined)
     {
     
@@ -893,7 +919,7 @@ this.url=data['image'];
 var str = this.url.split('/');
 this.choosefile = str[str.length - 1];
 this.bannerForm.get("status").patchValue(res.result.status)
-this.bannerForm.get('brandDatas').patchValue([{id: 28, name: "Babyhug"}])
+this.bannerForm.get("brandDatas").patchValue(res.result.brand_data)
 
 console.log(this.bannerForm.value)
   
