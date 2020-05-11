@@ -87,7 +87,7 @@
                         </td>
                         <td> (+{{i.country_code}}){{i.mobile}}
                           </td>
-                        <td> {{i.created_at}}
+                        <td> {{i.created_at |dateFormat}}
                       </td>
                       <td  *ngIf="i.status=='Active'" >Active
                         </td>

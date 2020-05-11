@@ -22,6 +22,7 @@ CONFIG = CONFIG;
 isProduct=false;
 isBrand=false;
 showPage=false;
+imageErrorMessage:any=ERROR_MESSAGES;
   brands=[];
   inlineCheckbox='checkbox'
   loader = false;
@@ -32,8 +33,9 @@ showPage=false;
   displayOrderList=[]
   activeOrderList=[];
 
-  imageError=false;
-  imageErrorMessage='';
+  isImageError=false;
+  isWrongFormat=false;
+
 
   url1 = ''; url: string = '';
   message: string = '';
@@ -48,6 +50,7 @@ showPage=false;
     private _api:AppService
     
     ) {
+      console.log('image',this.imageErrorMessage.IMAGE_REQUIRED)
  
       this.createForm()
       this.getCategory()
@@ -68,7 +71,7 @@ showPage=false;
       // discount_value:['',[Validators.required,Validators.pattern(Regex.pricePattern)]],
       category:['',[Validators.required]],
       sub_category:['',[Validators.required]],
-      child_category:['',[Validators.required]],
+      child_category:[''],
        status:['',[Validators.required]],
       display_order:['',[Validators.required]]
     
@@ -97,7 +100,7 @@ showPage=false;
       required: ERROR_MESSAGES.SUBCATEGORY_REQUIRED
     },
     child_category: {
-      required: ERROR_MESSAGES. CHILD_CATEGORY_REQUIRED
+      // required: ERROR_MESSAGES. CHILD_CATEGORY_REQUIRED
     },
     display_order: {
       required: ERROR_MESSAGES. DISPLAY_ORDER_REQUIRED
@@ -296,6 +299,7 @@ childCategoryList=[];
     formData.append('category', this.bannerForm.value.category);
     formData.append('sub_category', this.bannerForm.value.sub_category);
  formData.append('status',this.bannerForm.value.status );
+ if(this.bannerForm.value.child_category!='')
  formData.append('child_category', this.bannerForm.value.child_category);
     
   
@@ -313,8 +317,8 @@ childCategoryList=[];
     {
     if(this.url=='')
     {
-      this.imageError=true;
-      this.imageErrorMessage='Image is required';
+      this.isImageError=true;
+  
     }
     this._util.markError(this.bannerForm);
     
@@ -365,9 +369,9 @@ counter(i: number) {
 }
 choosefile: string = "No file chosen...";
 onSelectFile(event) {
-  this.imageError=false;
-  this.imageErrorMessage='';
   this.keyValue = true;
+  this.isImageError=false;
+  this.isWrongFormat=false;
   if (event.target.files && event.target.files[0]) {
     var mimeType = event.target.files[0].type;
     var file = event.target.files[0];
@@ -383,6 +387,12 @@ onSelectFile(event) {
 
     } else {
       this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+      this.choosefile= "No file chosen...";
+      this.isWrongFormat=true;
+      this.url='';
+      this.url1='';
+    
+
       return false;
     }
 
@@ -483,7 +493,7 @@ this.choosefile = str[str.length - 1];
 
 
 update(){
-  if(this.bannerForm.valid)
+  if(this.bannerForm.valid&&!this.isWrongFormat)
   {
 
     this.spinner.show();
@@ -495,6 +505,7 @@ formData.append('display_order',this.bannerForm.value.display_order)
 formData.append('image', this.url1);
 formData.append('category', this.bannerForm.value.category);
 formData.append('sub_category', this.bannerForm.value.sub_category);
+if(this.bannerForm.value.child_category!='')
 formData.append('child_category', this.bannerForm.value.child_category);
 formData.append('status',this.bannerForm.value.status );
 this.api.putReqAuth("admin/banner/edit-banner",formData).subscribe(
@@ -507,10 +518,12 @@ this.api.putReqAuth("admin/banner/edit-banner",formData).subscribe(
 
 }
 else
-
+{
+  if(this.isWrongFormat)
+  this.isImageError=true;
 this._util.markError(this.bannerForm);
 
-
+}
 
 }
 

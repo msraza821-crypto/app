@@ -7,6 +7,8 @@ import { CommonUtil } from 'src/app/util';
 import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {DateFormatPipe} from 'src/app/pipes/date-format.pipe'
+
 @Component({
   selector: "app-view-user",
   templateUrl: "./view-user.component.html",

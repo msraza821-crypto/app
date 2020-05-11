@@ -19,41 +19,45 @@
                  
             <div class="form-group col-md-6">
               <label for="inputEmail4"><b>Name(English) <span class="star" >*</span></b></label>
-              <input type="text" [formControl]="name" class="form-control"  (onchange)="trimFunction(event)"[minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" id="inputEmail4" placeholder="Name">
+              <input type="text" [formControl]="name" class="form-control"  (onchange)="trimFunction(event)"[minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" id="inputEmail4" placeholder="Enter the category name">
 
               <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
             </div>
             
             <div class="form-group col-md-6">
-              <label for="inputPassword4"> <b>Description(English) <span class="star">*</span></b></label>
+              <label for="inputPassword4"> <b>Description(English) </b></label>
               <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4" [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_DES"
-                placeholder="Description"></textarea>
+                placeholder="Enter the  description"></textarea>
                
                 <span class="error text-danger">{{_util.errorMessage(descriptionen,FORM_ERROR?.descriptionen)}}</span>
             </div>
             
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <b>Name(Arabic) <span class="star">*</span></b></label>
-                <input type="text" [formControl]="namear" class="form-control"  [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" id="inputEmail4"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="اسم">
+                <input type="text" [formControl]="namear" class="form-control"  [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" id="inputEmail4"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="أدخل اسم الفئة
+                ">
             
               <span class="error text-danger">{{_util.errorMessage(namear,FORM_ERROR?.namear)}}</span>
             </div>
               <div class="form-group col-md-6">
-                <label for="inputPassword4"> <b>Description(Arabic) <span class="star">*</span></b></label>
+                <label for="inputPassword4"> <b>Description(Arabic) </b></label>
                 <textarea type="text" [formControl]="descriptionar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4" [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_DES"
-                  placeholder="وصف"></textarea>
+                  placeholder="أدخل الوصف"></textarea>
 
             <span class="error text-danger">{{_util.errorMessage(descriptionar,FORM_ERROR?.descriptionar)}}</span>
           </div>
             <div class="form-group col-md-12">
-              <label for="exampleFormControlFile1"> <b>Image</b></label>
+              <label for="exampleFormControlFile1"> <b>Image <span class="star">*</span></b></label>
               <div class="file-upload">
                                         <div class="file-select">
                                           <div class="file-select-button" id="fileName">Choose File</div>
                                           <div class="file-select-name" id="noFile">{{choosefile}}</div> 
                                           <input type="file" name="chooseFile" id="chooseFile" accept="image/*" (change)="onSelectFile($event)">
+                                        
                                         </div>
+                                  
                                       </div>
+                                      <span *ngIf="isImageError" class="error text-danger" style="position: relative;bottom:1px">{{imageErrorMessage.IMAGE_REQUIRED}}</span>
               <br/>
             <img style="height:100px;" [src]="url ? url : 'assets/img/avatars/default.png'" />
           </div> 

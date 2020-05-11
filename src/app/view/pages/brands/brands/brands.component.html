@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-4 float-right" style="margin:0px -14px 10px 0px">
              
-              <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1"   style="margin-right: -21px;">Reset</button></a>
+              <a> <button type="button" (click)="reset()" class="btn btn-primary float-right ml-1"   style="margin-right: -px;">Reset</button></a>
               <a> <button type="button" (click)="filter()" class="btn btn-primary float-right ml-1">Filter</button></a>
             </div>
           </div>
@@ -88,7 +88,7 @@
                     "> {{i.description}}</td>
                       <td [title]="i.description_ar"> {{i.description_ar}}
                       </td> -->
-                      <td> {{i.created_at}}
+                      <td> {{i.created_at|dateFormat}}
                     </td>
                     <td  *ngIf="i.status=='Active'" >Active
                   </td>

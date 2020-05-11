@@ -20,7 +20,7 @@ min:Number=0;
 max:Number=10000;
   loader = false;
   CONFIG = CONFIG;
-  placeHolderText: string = "Enter Discount Price";
+  placeHolderText: string = "Enter discounted price";
   loginForm: FormGroup;
   url1 = ''; url: string = '';
   message: string = '';
@@ -55,13 +55,13 @@ max:Number=10000;
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     description: {
-      required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
+      // required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.DESCRIPTION_LENGTH}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
     },
     description_arabic: {
-      required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
+      // required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.PRODUCT_DESCRIPTION}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.NAME_MINLENGTH}`,
@@ -107,9 +107,9 @@ max:Number=10000;
   createForm() {
     this.loginForm = this._fb.group({
       title: ["", [Validators.required, Validators.pattern(Regex.spacesDatas), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.B_NAME)]],
-      description: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.DESCRIPTION_LENGTH)]],
+      description: ["", [ Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.DESCRIPTION_LENGTH)]],
       title_arabic: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_MAX)]],
-      description_arabic: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+      description_arabic: ["", [ Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       promo_type: ["", [Validators.required]],
       promocode: ["", [Validators.required, Validators.minLength(CONFIG.MINCODE), Validators.maxLength(CONFIG.MAXCODE)]],
       min_order_value: ["", [Validators.required, rangeValidator(0, 10000), Validators.pattern(Regex.phoneNumbers)]],
@@ -364,12 +364,12 @@ dPrice:string="(QAR)";
       this.loginForm.get('promo_discount').setValidators([Validators.required, rangeValidator(0, 100)]);
       this.loginForm.get('promo_discount').updateValueAndValidity();
       this.dPrice='(%)';
-      this.placeHolderText = "Enter Discount Percentage";
+      this.placeHolderText = "Enter discounted price(%)";
       this.FORM_ERROR.promo_discount.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
     } else {
       this.loginForm.get('promo_discount').setValidators([Validators.required, rangeValidator(0, 10000)]);
       this.loginForm.get('promo_discount').updateValueAndValidity();
-      this.placeHolderText = "Enter Discounted Price";
+      this.placeHolderText = "Enter discounted price";
       this.dPrice='(QAR)';
       this.FORM_ERROR.promo_discount.range = ERROR_MESSAGES.RANGE;
       this.min=0;

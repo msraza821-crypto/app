@@ -13,12 +13,14 @@ import { HttpService, AppService } from 'src/app/service';
 })
 export class AddCategoryComponent implements OnInit {
 
- 
+  imageErrorMessage:any=ERROR_MESSAGES;
+  isImageError=false;
   loader = false;
   CONFIG = CONFIG;
   loginForm: FormGroup;
   url1='';url:string='';
   message:string='';
+  isWrongFormat=false;
   keyValue:boolean=false;
   constructor(
     private _fb: FormBuilder,
@@ -38,7 +40,7 @@ export class AddCategoryComponent implements OnInit {
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MAX_B}`,
     },
     descriptionen: {
-      required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
+      // required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_DES}`,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MAX_B}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
@@ -50,7 +52,7 @@ export class AddCategoryComponent implements OnInit {
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     descriptionar: {
-      required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
+      // required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_DES}`,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MAX_B}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
@@ -63,9 +65,9 @@ export class AddCategoryComponent implements OnInit {
   createForm() {
     this.loginForm = this._fb.group({
       name: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_NAME),Validators.minLength(CONFIG.MAX_B)]],
-      descriptionen: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]],
+      descriptionen: ["", [Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]],
        namear: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_NAME),Validators.minLength(CONFIG.MAX_B)]],
-       descriptionar: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]], 
+       descriptionar: ["", [Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]], 
       statusKey: ["", [Validators.required]]
     ,is_banner:[this.isRemberMeChecked]
     });
@@ -103,30 +105,38 @@ export class AddCategoryComponent implements OnInit {
   choosefile: string = "No file chosen...";
   onSelectFile(event) {
     this.keyValue = true;
+    this.isImageError=false;
+    this.isWrongFormat=false;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
-
       this.choosefile=event.target.files[0].name;
+
       const width = file.naturalWidth;
       const height = file.naturalHeight;
 
-      window.URL.revokeObjectURL( file.src );
-    //  var checkimg = file.toLowerCase();
+      window.URL.revokeObjectURL(file.src);
+      //  var checkimg = file.toLowerCase();
       const type = file.type.split('/');
-    if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+      if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
 
-    }else{
-      this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
-      return false;
-    } 
-    
-     
+      } else {
+        this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+        this.choosefile= "No file chosen...";
+        this.isWrongFormat=true;
+        this.url='';
+        this.url1=';'
+      
+
+        return false;
+      }
+
+
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event: any) => { // called once readAsDataURL is completed
-   // this.url = event.result;
-   this.url = event.target.result;
+       // this.url = event.result;
+        this.url = event.target.result;
       }
 
 
@@ -137,7 +147,7 @@ export class AddCategoryComponent implements OnInit {
       setTimeout(() => {
         this.loader = false;
         this.keyValue = false;
-        this.errorMessage="";
+        this.errorMessage = "";
       }, 3000)
       this.loader = true;
 
@@ -167,8 +177,8 @@ export class AddCategoryComponent implements OnInit {
   trueValue:number=1
   falseValue:number=0
   submit() {
-    console.log(this.loginForm.value)
-    if (this.loginForm.valid) {
+   
+    if (this.loginForm.valid&&this.url1!='') {
 
       this.loader = true;
 
@@ -193,6 +203,8 @@ export class AddCategoryComponent implements OnInit {
       );
   }
   else{
+    if(this.url1=='')
+    this.isImageError=true
     this._util.markError(this.loginForm);
 }
   }
@@ -205,7 +217,7 @@ export class AddCategoryComponent implements OnInit {
  
   update() {
     console.log(this.loginForm.value)
-    if (this.loginForm.valid) {
+    if (this.loginForm.valid&&!this.isWrongFormat) {
 
       this.loader = true;
 
@@ -230,6 +242,8 @@ export class AddCategoryComponent implements OnInit {
         () => (this.loader = false)
       );
   } else{
+    if(this.isWrongFormat)
+    this.isImageError=true
     this._util.markError(this.loginForm);
 }
 }

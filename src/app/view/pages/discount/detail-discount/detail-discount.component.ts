@@ -7,6 +7,7 @@ import { CommonUtil } from 'src/app/util';
 import { HttpService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { rangeValidator } from 'src/app/validators/range.validator';
+import { BLOCK_TAGS } from '@syncfusion/ej2-angular-richtexteditor';
 
 @Component({
   selector: "app-detail-discount",
@@ -72,3 +73,5 @@ data:any={};
   }
   
 }
+
+

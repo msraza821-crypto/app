@@ -25,7 +25,8 @@ CONFIG = CONFIG;
 isProduct=false;
 isBrand=false;
 showPage=false;
-
+imageErrorMessage:any=ERROR_MESSAGES;
+isImageError=false;
   brands=[];
   inlineCheckbox='checkbox'
   loader = false;
@@ -33,7 +34,8 @@ showPage=false;
   selectedProduct=[];
   displayOrderList=[];
   imageError=false;
-  imageErrorMessage='Image is required';
+  isWrongFormat=false;
+  
 
   url1 = ''; url: string = '';
   message: string = '';
@@ -646,8 +648,7 @@ getFormData()
     // }
     
     var formData=this.getFormData()
-    console.log("after FormData")
-    console.log('length',this.getFormData.length)
+   
     if(formData!=null&&this.url1!=''){
       this.api.postReqAuth("admin/banner/add-banner",formData).subscribe(
         res =>this.success(res),
@@ -661,7 +662,9 @@ getFormData()
     else
     {
       this.spinner.hide();
-      this.imageError=true;
+      if(this.url1=='')
+      this.isImageError=true;
+      this._util.markError(this.bannerForm)
       
     }
     
@@ -685,6 +688,8 @@ namePress(event: any) {
 
   if (pattern.test(inputChar)) {    
     
+
+
       event.preventDefault();
   }
 }
@@ -700,7 +705,7 @@ changeType(event) {
     this.max=100;
     this.bannerForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 100)]);
     this.bannerForm.get('discount_value').updateValueAndValidity();
-    this.placeHolderText = "Enter discounted %";
+    this.placeHolderText = "Enter discounted price(%)";
     this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
   } else {
     this.bannerForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 10000)]);
@@ -741,8 +746,9 @@ console.log('from discount change')
 
 choosefile: string = "No file chosen...";
 onSelectFile(event) {
-  this.imageError=false;
   this.keyValue = true;
+  this.isImageError=false;
+  this.isWrongFormat=false;
   if (event.target.files && event.target.files[0]) {
     var mimeType = event.target.files[0].type;
     var file = event.target.files[0];
@@ -758,6 +764,12 @@ onSelectFile(event) {
 
     } else {
       this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+      this.choosefile= "No file chosen...";
+      this.isWrongFormat=true;
+      this.url='';
+      this.url1=''
+    
+
       return false;
     }
 
@@ -936,8 +948,9 @@ update()
 
   var formData=this.getFormData()
   
-  if(formData!=null)
+  if(formData!=null&&!this.isWrongFormat)
   {
+    console.log('from iupdate')
   this.api
   .putReqAuth("admin/banner/edit-banner", formData).subscribe(
     res => {
@@ -947,6 +960,11 @@ update()
     () => (this.loader = false)
   );
 }else{
+  if(this.isWrongFormat)
+  {
+  this.isImageError=true;
+  this.spinner.hide()
+  }
   this._util.markError(this.bannerForm);
 }
 

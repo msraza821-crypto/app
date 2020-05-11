@@ -7,7 +7,10 @@ import { ViewBrandComponent } from './view-brand/view-brand.component';
 import { SharedModule } from '../shared/shared.module';
 import { LoaderButtonComponent } from '../shared/loader-button/loader-button.component';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
-import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
+import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module;
+import {DateFormatPipe} from 'src/app/pipes/date-format.pipe';
+
+
 const pageRoutes: Routes = [
 
   {
@@ -31,7 +34,7 @@ const pageRoutes: Routes = [
     RouterModule.forChild(pageRoutes),
 
   ],
-  declarations: [BrandsComponent, AddBrandComponent,ViewBrandComponent],
+  declarations: [BrandsComponent, AddBrandComponent,ViewBrandComponent,DateFormatPipe],
   entryComponents: []
 })
 export class BrandsModule { }

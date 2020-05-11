@@ -15,49 +15,50 @@
                 <form>
                   <div class="row ">
                       <div class="form-group col-md-6">
-                          <label for="inputEmail4"><b>Category Name(English) <span class="star" >*</span></b></label>
+                          <label for="inputEmail4"><b>Sub-Category Name(English) <span class="star" >*</span></b></label>
                           <input type="text" [formControl]="name_pe" readonly=true  class="form-control" id="inputEmail4" placeholder="Name">
     
                        
                        
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4"><b>Category Name(Arabic) <span class="star" >*</span></b></label>
+                            <label for="inputEmail4"><b>Sub-Category Name(Arabic) <span class="star" >*</span></b></label>
                             <input type="text" [formControl]="name_pa" readonly=true class="form-control" id="inputEmail4" placeholder="Name">
     
               
                       
                           </div>
                 <div class="form-group col-md-6">
-                  <label for="inputEmail4"><b>Sub-category Name(English) <span class="star" >*</span></b></label>
-                  <input type="text" [formControl]="name" class="form-control"  [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" id="inputEmail4" placeholder="Name">
+                  <label for="inputEmail4"><b>Child-Category Name(English) <span class="star" >*</span></b></label>
+                  <input type="text" [formControl]="name" class="form-control"  [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" id="inputEmail4" placeholder="Enter the child-category name">
     
                   <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
                 </div>
                 
                 <div class="form-group col-md-6">
-                  <label for="inputPassword4"><b>Sub-category Description(English) <span class="star" >*</span></b></label>
+                  <label for="inputPassword4"><b>Child-Category Description(English) </b></label>
                   <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4" [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_DES"
-                    placeholder="Description"></textarea>
+                    placeholder="Enter the description"></textarea>
                     
                     <span class="error text-danger">{{_util.errorMessage(descriptionen,FORM_ERROR?.descriptionen)}}</span>
                 </div>
                 
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4"><b>Sub-category Name(Arabic) <span class="star" >*</span></b></label>
-                    <input type="text" [formControl]="namear" class="form-control" id="inputEmail4"  [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="اسم">
+                    <label for="inputEmail4"><b>Child-Category Name(Arabic) <span class="star" >*</span></b></label>
+                    <input type="text" [formControl]="namear" class="form-control" id="inputEmail4"  [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="أدخل اسم فئة الطفل">
      
                   <span class="error text-danger">{{_util.errorMessage(namear,FORM_ERROR?.namear)}}</span>
                 </div>
                   <div class="form-group col-md-6">
-                    <label for="inputPassword4"><b>Sub-category Description(Arabic)</b></label>
+                    <label for="inputPassword4"><b>Child-Category Description(Arabic)</b></label>
                     <textarea type="text" [formControl]="descriptionar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4" [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_DES"
-                      placeholder="وصف"></textarea>
+                      placeholder="أدخل الوصف
+                      "></textarea>
                 
                 <span class="error text-danger">{{_util.errorMessage(descriptionar,FORM_ERROR?.descriptionar)}}</span>
               </div>
                 <div class="form-group col-md-12">
-                  <label for="exampleFormControlFile1"><b>Image</b></label>
+                  <label for="exampleFormControlFile1"><b>Image <span class="star">*</span></b></label>
                   <div class="file-upload">
                                         <div class="file-select">
                                           <div class="file-select-button" id="fileName">Choose File</div>
@@ -65,6 +66,7 @@
                                           <input type="file" name="chooseFile" id="chooseFile" accept="image/*" (change)="onSelectFile($event)">
                                         </div>
                                       </div>
+                                      <span *ngIf="isImageError" class="error text-danger" style="position: relative;bottom:1px">{{imageErrorMessage.IMAGE_REQUIRED}}</span>
                   <br/>              
  <img style="height:100px;" class=""[src]="url ? url : 'assets/img/avatars/default.png'" /></div>
                   
@@ -76,6 +78,10 @@
                   </select>
                   
                 <span class="error text-danger">{{_util.errorMessage(statusKey,FORM_ERROR?.statusKey)}}</span>
+                <br>
+                <br>
+                <input type="checkbox" [formControl]="is_banner" id="remember_me"  class="largerCheckbox" name="_remember_me" checked/>
+                <label for="remember_me">&nbsp; <b>Show as Banner</b></label>
               </div>
               </div>
     

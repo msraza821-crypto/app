@@ -50,6 +50,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ColorSketchModule } from 'ngx-color/sketch';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { OnlyNumberDirective } from './directive/only-number.directive';
+import { DateFormatPipe } from './pipes/date-format.pipe';
 const customNotifierOptions: NotifierOptions = {
   position: {
 		horizontal: {
@@ -98,7 +99,8 @@ const customNotifierOptions: NotifierOptions = {
     ForgotComponent,
     ResetComponent,
     LoaderButtonComponent,
-    LoaderComponent  
+    LoaderComponent,
+    
   ],
   imports: [
     NotifierModule.withConfig(customNotifierOptions),

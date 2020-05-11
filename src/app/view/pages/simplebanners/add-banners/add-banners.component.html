@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="col-md-2 float-left">
-                  <label for="inputEmail4"><b>Child-Category <span class="star">*</span></b></label> <br />
+                  <label for="inputEmail4"><b>Child-Category </b></label> <br />
                 <select class="form-control" [formControl]="child_category">
                     <option value=""> Select Child-category</option>
                   <option *ngFor="let sab of childCategoryList" value="{{sab.id}}">{{sab.name}}</option>
@@ -72,7 +72,7 @@
                   <span class="error text-danger">{{_util.errorMessage(status,FORM_ERROR?.status)}}</span>
                 </div>
                 <div class="form-group col-md-2 ">
-                    <label for="inputEmail4"><b>Display order <span class="star">*</span></b></label> <br />
+                    <label for="inputEmail4"><b>Display Order <span class="star">*</span></b></label> <br />
                   <select class="form-control" [formControl]="display_order">
                       <option value="">Select display order</option>
                     <option *ngFor="let order of displayOrderList " value="{{order}}">{{order}}</option>
@@ -97,7 +97,7 @@
                       
                     </div>
                   </div>
-                  <span class="error text-danger" *ngIf="imageError">{{imageErrorMessage}}</span>
+                  <span class="error text-danger" *ngIf="isImageError">{{imageErrorMessage.IMAGE_REQUIRED}}</span>
                   <br />
                 </div>
               </div>

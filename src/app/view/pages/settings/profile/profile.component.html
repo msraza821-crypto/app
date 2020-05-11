@@ -51,7 +51,7 @@
                                           <input type="file" name="chooseFile" id="chooseFile" accept="image/*" (change)="onSelectFile($event)">
                                         </div>
                                       </div>
-                                   
+                                      <span class="error text-danger" *ngIf="isImageError">{{imageErrorMessage.IMAGE_REQUIRED}}</span>
                                        
                                       <br/>
                                     </div>

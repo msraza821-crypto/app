@@ -7,6 +7,7 @@ import { CommonUtil } from 'src/app/util';
 import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
+
 @Component({
   selector: "app-add-childcategory",
   templateUrl: "./add-childcategory.component.html",
@@ -21,6 +22,10 @@ export class AddChildcategoryComponent implements OnInit {
   url1='';url:string='';
   message:string='';
   keyValue:boolean=false;
+  imageErrorMessage:any=ERROR_MESSAGES;
+  isImageError=false;
+  isWrongFormat=false;
+  isRemberMeChecked:boolean = false;
   constructor(
     private _fb: FormBuilder,
     private _util: CommonUtil,
@@ -40,7 +45,7 @@ export class AddChildcategoryComponent implements OnInit {
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MAX_B}`,
     },
     descriptionen: {
-      required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
+      // required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_DES}`,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MAX_B}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
@@ -52,7 +57,7 @@ export class AddChildcategoryComponent implements OnInit {
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     descriptionar: {
-      required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
+      // required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_DES}`,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MAX_B}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
@@ -67,11 +72,12 @@ export class AddChildcategoryComponent implements OnInit {
       name_pe: [this.data.name],
       name_pa: [this.data.name_ar],
       name: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_NAME),Validators.minLength(CONFIG.MAX_B)]],
-     descriptionen: ["", [Validators.required,Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]],
+     descriptionen: ["", [Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]],
       namear: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_NAME),Validators.minLength(CONFIG.MAX_B)]],
-      descriptionar: ["", [Validators.required,Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]],
+      descriptionar: ["", [Validators.pattern(Regex.spaces),Validators.maxLength(CONFIG.B_DES),Validators.minLength(CONFIG.MAX_B)]],
    
-      statusKey: ["", [Validators.required]]
+      statusKey: ["", [Validators.required]],
+      is_banner:[this.isRemberMeChecked]
     });
   }
   ngOnInit() {
@@ -110,35 +116,45 @@ export class AddChildcategoryComponent implements OnInit {
   get statusKey(): FormControl {
     return this.loginForm.get("statusKey") as FormControl;
   }
-
+  get is_banner(): FormControl {
+    return this.loginForm.get("is_banner") as FormControl;
+  }
   imageFormats: Array<string> = ['jpeg','png','jpg'];
   choosefile: string = "No file chosen...";
   onSelectFile(event) {
     this.keyValue = true;
+    this.isImageError=false;
+    this.isWrongFormat=false;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
-
       this.choosefile=event.target.files[0].name;
+
       const width = file.naturalWidth;
       const height = file.naturalHeight;
 
-      window.URL.revokeObjectURL( file.src );
-    //  var checkimg = file.toLowerCase();
+      window.URL.revokeObjectURL(file.src);
+      //  var checkimg = file.toLowerCase();
       const type = file.type.split('/');
-    if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+      if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
 
-    }else{
-      this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
-      return false;
-    } 
-    
-     
+      } else {
+        this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+        this.choosefile= "No file chosen...";
+        this.isWrongFormat=true;
+        this.url='';
+        this.url1='';
+      
+
+        return false;
+      }
+
+
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event: any) => { // called once readAsDataURL is completed
-   // this.url = event.result;
-   this.url = event.target.result;
+       // this.url = event.result;
+        this.url = event.target.result;
       }
 
 
@@ -149,7 +165,7 @@ export class AddChildcategoryComponent implements OnInit {
       setTimeout(() => {
         this.loader = false;
         this.keyValue = false;
-        this.errorMessage="";
+        this.errorMessage = "";
       }, 3000)
       this.loader = true;
 
@@ -188,7 +204,7 @@ export class AddChildcategoryComponent implements OnInit {
   }
   submit() {
     console.log(this.loginForm.value)
-    if (this.loginForm.valid) {
+    if (this.loginForm.valid&&this.url1!=='') {
 
       this.spinner.show();
 
@@ -200,6 +216,11 @@ export class AddChildcategoryComponent implements OnInit {
       formData.append('description_ar', this.loginForm.value.descriptionar.trim());
       formData.append('status', this.loginForm.value.statusKey);
       formData.append('parent_id', this.data.id);
+      if(this.loginForm.value.is_banner==true){
+        formData.append('is_banner', '1');
+      }else{
+        formData.append('is_banner','2');
+      }
       console.log(formData)
       this.api
       .postReqAuth2("admin/category/add",formData).subscribe(
@@ -208,6 +229,8 @@ export class AddChildcategoryComponent implements OnInit {
         () => (this.loader = false)
       );
   } else{
+    if(this.url1=='')
+    this.isImageError=true;
     this._util.markError(this.loginForm);
 }
 
@@ -220,8 +243,8 @@ export class AddChildcategoryComponent implements OnInit {
 
  
   update() {
-    console.log(this.loginForm.value)
-    if (this.loginForm.valid) {
+
+    if (this.loginForm.valid&&!this.isWrongFormat) {
 
       this.spinner.show();
 
@@ -234,6 +257,11 @@ export class AddChildcategoryComponent implements OnInit {
       formData.append('name_ar', this.loginForm.value.namear.trim());
       formData.append('description_ar', this.loginForm.value.descriptionar.trim());
       formData.append('status', this.loginForm.value.statusKey);
+      if(this.loginForm.value.is_banner==true){
+        formData.append('is_banner', '1');
+      }else{
+        formData.append('is_banner','1');
+      }
       console.log(formData)
       this.api
       .putReqAuth("admin/category/edit",formData).subscribe(
@@ -242,6 +270,8 @@ export class AddChildcategoryComponent implements OnInit {
         () => (this.loader = false)
       );
   } else{
+    if(this.isWrongFormat)
+    this.isImageError=true;
     this._util.markError(this.loginForm);
 }
 }
@@ -275,6 +305,7 @@ viewSubCate(){
     this.data= res.result;
     this.loginForm.get('name_pe').patchValue(this.data.name);
     this.loginForm.get('name_pa').patchValue(this.data.name_ar);
+    
   
     }
   }

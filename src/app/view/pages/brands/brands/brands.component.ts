@@ -10,6 +10,7 @@ import { HttpService, AppService } from 'src/app/service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
+import {DateFormatPipe} from 'src/app/pipes/date-format.pipe';
 
 @Component({
   selector: "app-brands",

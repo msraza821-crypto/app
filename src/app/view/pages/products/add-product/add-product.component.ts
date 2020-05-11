@@ -23,6 +23,8 @@ export class AddProductComponent implements OnInit {
   loginForm: FormGroup;
   url1 = ''; url: string = '';
   message: string = '';
+  imageErrorMessage:any=ERROR_MESSAGES;
+  isImageError=false;
   state;
   keyValue: boolean = false;
   constructor(
@@ -426,6 +428,7 @@ this.itemsData.push(this.createItem())
   isPlay: boolean = false;
   onSelectFileMultiple(event) {
     this.keyValue = true;
+    this.isImageError=false;
     if (event.target.files.length > 0) {
       var ins = event.target.files.length;
       for (var x = 0; x < ins; x++) {
@@ -444,7 +447,7 @@ this.itemsData.push(this.createItem())
 
         } else {
           this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
-          this._api.showNotification('error', this.errorMessage);
+          // this._api.showNotification('error', this.errorMessage);
           return false;
         }
 
@@ -458,7 +461,7 @@ this.itemsData.push(this.createItem())
 
 
         this.urlForm.push(event.target.files[x]);
-        console.log(this.url1)
+        console.log('image url',this.url1)
 
 
         setTimeout(() => {
@@ -703,9 +706,10 @@ this.itemsData.push(this.createItem())
   }
   errorData:boolean=false;
   submit() {
-    console.log(this.loginForm.value);
+    console.log(this.loginForm.value,'length',this.urlForm.length!=0);
     console.log(this.loginForm)
     this.errorData=true;
+    console.log('form validation',this.loginForm.valid)
     if (this.loginForm.valid) {
       var start1 = "";
       var end1 = "";
@@ -758,6 +762,8 @@ this.itemsData.push(this.createItem())
           () => (this.loader = false)
         );
     } else {
+      if(this.urlForm.length==0)
+      this.isImageError=true;
       this._util.markError(this.loginForm);
     }
   }

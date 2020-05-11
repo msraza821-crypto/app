@@ -224,6 +224,7 @@
                                 <input type="file" name="chooseFile1" multiple id="chooseFile" accept="image/*" (change)="onSelectFileMultiple($event)">
                               </div>
                             </div>
+                            <span *ngIf="isImageError" class="error text-danger" style="position: relative;bottom:1px">{{imageErrorMessage.IMAGE_REQUIRED}}</span>
                             <br>
                             <div class="col-md-12" *ngIf="urlData.length==0 ">
                               

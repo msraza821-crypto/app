@@ -23,6 +23,8 @@ export class ProfileComponent implements OnInit {
   loginForm: FormGroup;
   loginForm1:FormGroup;
   errorMessage: string = '';
+  imageErrorMessage:any=ERROR_MESSAGES;
+  isImageError=false;
   showOld:boolean=false;
   showNew:boolean=false;
   showConfirm:boolean=false;
@@ -79,6 +81,7 @@ export class ProfileComponent implements OnInit {
            this.url=this.userData.profile_picture;
           var str= this.url.split('/');
           this.choosefile=str[str.length-1];
+          
 
         
       }
@@ -114,10 +117,13 @@ export class ProfileComponent implements OnInit {
   message: string = '';
   url: string = '';
   url1: string = '';
+  wrongFormat=false;
   newdata:string;
   imageFormats: Array<string> = ['jpeg','png','jpg'];
   onSelectFile(event) {
     this.keyValue = true;
+    this.wrongFormat=false;
+    this.isImageError=false;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
@@ -130,8 +136,13 @@ this.choosefile=event.target.files[0].name;
       const type = file.type.split('/');
     if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
 
-    }else{
-      this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+    }
+    else{
+      this.errorMessage = "Please use proper format of image like jpeg,jpg and png only";
+      this.choosefile="No file chosen...";
+      this.wrongFormat=true;
+      this.url='';
+      this.url1='';
       return false;
     }      
       let reader = new FileReader();
@@ -168,7 +179,7 @@ this.choosefile=event.target.files[0].name;
  }
 
   submit() {
-    if (this.loginForm.valid) {
+    if (this.loginForm.valid&&!this.wrongFormat) {
       this.spinner.show();
       const formData = new FormData();
       if(this.url1){
@@ -187,6 +198,9 @@ this.choosefile=event.target.files[0].name;
         );
 
     } else {
+      if(this.wrongFormat)
+      this.isImageError=true
+      
       this._util.markError(this.loginForm);
     }
   }

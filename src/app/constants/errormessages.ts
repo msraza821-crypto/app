@@ -151,7 +151,8 @@ export const ERROR_MESSAGES = {
     TITLE_REQUIRED_ENGLISH:'Title is required in english',
 
     TITLE_REQUIRED_ARABIC:'Title is required in arabic',
-    MIN_DISCOUNT_ERROR:'Discounted price can not be greater or equal to the min. order value'
+    MIN_DISCOUNT_ERROR:'Discounted price can not be greater or equal to the min. order value',
+    IMAGE_REQUIRED:'Image is required'
 
 
 

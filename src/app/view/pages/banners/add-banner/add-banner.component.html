@@ -14,6 +14,7 @@
 
 
           <form [formGroup]="bannerForm" (ngSubmit)="onSubmit()">
+            <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
             <div class="row ">
 
               <div class="form-group col-md-2">
@@ -55,12 +56,12 @@
           </div> -->
   
           <div class="col-md-2 float-left" >
-            <label *ngIf="bannerForm.value.discount_type==1"><b>Flat Discount <span class="star">*</span></b></label>
-            <label *ngIf="bannerForm.value.discount_type==2"><b>In Percentage(%) <span class="star">*</span></b></label>
-            <label *ngIf="bannerForm.value.discount_type==''"><b>Flat Discount <span class="star">*</span></b></label>
+            <label *ngIf="bannerForm.value.discount_type==1"><b>Discounted Price(QAR) <span class="star">*</span></b></label>
+            <label *ngIf="bannerForm.value.discount_type==2"><b>Discounted Price(%) <span class="star">*</span></b></label>
+            <label *ngIf="bannerForm.value.discount_type==''"><b>Discounted Price(QAR) <span class="star">*</span></b></label>
             <div class="form-group ">
 
-              <input type="number" class="form-control"   placeholder="Enter the discount"
+              <input type="number" class="form-control"   placeholder="{{placeHolderText}}"
                 [formControl]="discount_value" (keypress) = "changeNumber($event)"  appOnlyNumber [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER"> 
               <span class="error text-danger"> {{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
             </div>
@@ -248,7 +249,7 @@
                       (change)="onSelectFile($event)">
                   </div>
                 </div>
-                <span class="error text-danger" *ngIf="imageError">{{imageErrorMessage}}</span>
+                <span class="error text-danger" *ngIf="isImageError">{{imageErrorMessage.IMAGE_REQUIRED}}</span>
                 <br />
               </div>
             </div>

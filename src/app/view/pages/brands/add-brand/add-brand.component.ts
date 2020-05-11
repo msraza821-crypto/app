@@ -7,6 +7,7 @@ import { CommonUtil } from 'src/app/util';
 import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
+
 @Component({
   selector: "app-add-brand",
   templateUrl: "./add-brand.component.html",
@@ -18,6 +19,10 @@ export class AddBrandComponent implements OnInit {
   loader = false;
   CONFIG = CONFIG;
   loginForm: FormGroup;
+  imageErrorMessage:any=ERROR_MESSAGES;
+  isImageError=false;
+  isWrongFormat=false;
+  
   url1 = ''; url: string = '';
   message: string = '';
   keyValue: boolean = false;
@@ -39,7 +44,7 @@ export class AddBrandComponent implements OnInit {
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MAX_B}`,
     },
     descriptionen: {
-      required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
+      // required: ERROR_MESSAGES.DESCRIPTION_ENGLISH_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_DES}`,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MAX_B}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
@@ -51,7 +56,7 @@ export class AddBrandComponent implements OnInit {
       pattern: ERROR_MESSAGES.INVALID_INPUT,
     },
     descriptionar: {
-      required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
+      // required: ERROR_MESSAGES.DESCRIPTION_ARABIC_REQUIRED,
       maxlength: `${ERROR_MESSAGES.MAX_LENGTH}${this.CONFIG.B_DES}`,
       minlength: `${ERROR_MESSAGES.MIN_LENGTH}${this.CONFIG.MAX_B}`,
       pattern: ERROR_MESSAGES.INVALID_INPUT,
@@ -64,9 +69,9 @@ export class AddBrandComponent implements OnInit {
   createForm() {
     this.loginForm = this._fb.group({
       name: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_NAME), Validators.minLength(CONFIG.MAX_B)]],
-      descriptionen: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_DES), Validators.minLength(CONFIG.MAX_B)]],
+      descriptionen: ["", [ Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_DES), Validators.minLength(CONFIG.MAX_B)]],
       namear: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_NAME), Validators.minLength(CONFIG.MAX_B)]],
-      descriptionar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_DES), Validators.minLength(CONFIG.MAX_B)]],
+      descriptionar: ["", [ Validators.pattern(Regex.spaces), Validators.maxLength(CONFIG.B_DES), Validators.minLength(CONFIG.MAX_B)]],
       statusKey: ["", [Validators.required]]
     });
   }
@@ -105,6 +110,8 @@ export class AddBrandComponent implements OnInit {
   imageFormats: Array<string> = ['jpeg', 'png', 'jpg'];
   onSelectFile(event) {
     this.keyValue = true;
+    this.isImageError=false;
+    this.isWrongFormat=false;
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
@@ -120,7 +127,11 @@ export class AddBrandComponent implements OnInit {
 
       } else {
         this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
-        return false;
+        this.choosefile= "No file chosen...";
+        this.isWrongFormat=true;
+        this.url='';
+        this.url1=""
+         return false;
       }
 
 
@@ -178,7 +189,7 @@ export class AddBrandComponent implements OnInit {
   }
   update() {
     console.log(this.loginForm.value)
-    if (this.loginForm.valid) {
+    if (this.loginForm.valid&&!this.isWrongFormat) {
 
       this.spinner.show();
       console.log(this.url1)
@@ -198,12 +209,14 @@ export class AddBrandComponent implements OnInit {
           () => (this.loader = false)
         );
     } else {
+      if(this.isWrongFormat)
+      this.isImageError=true;
       this._util.markError(this.loginForm);
     }
   }
   submit() {
     console.log(this.loginForm.value)
-    if (this.loginForm.valid) {
+    if (this.loginForm.valid&&this.url1) {
 
       this.spinner.show();
       const formData = new FormData();
@@ -221,6 +234,8 @@ export class AddBrandComponent implements OnInit {
           () => (this.loader = false)
         );
     } else {
+      if(this.url1=='')
+      this.isImageError=true;
       this._util.markError(this.loginForm);
     }
   }
