@@ -486,7 +486,7 @@ this.itemsData.push(this.createItem())
        
         }
       }
-    
+   // alert();
      
     this.loginFormEdit = this._fb.group({
        product_size: [data.product_size, [Validators.required]],
@@ -500,7 +500,9 @@ this.itemsData.push(this.createItem())
       meta_data:this._fb.array([this.createItem()])
       
     });
-    for (var i = 0; i < data.attribute_meta; i++) {
+    for (var j = 1; j < data.attribute_meta.length; j++) {
+     // alert();
+      //console.log('===',data.attribute_meta[i])
       this.addItem(data.attribute_meta[i]);
     } 
     this.loginFormEdit.get('meta_data').patchValue(data.attribute_meta);
