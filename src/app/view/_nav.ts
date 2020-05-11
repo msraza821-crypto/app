@@ -72,6 +72,12 @@ export const navItems: INavData[] = [
   icon: 'icon-pencil',
   
 },
+{
+  name: 'Reports',
+  url: '/theme/reports',
+  icon: 'icon-pencil',
+  
+},
 
 
 

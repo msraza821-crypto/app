@@ -270,6 +270,7 @@ this.viewBanner()
 
 childCategoryList=[];
   getChildcategory(){
+    this.bannerForm.get('child_category').patchValue('')
    
     this.api.getReqAuth("admin/banner/category-list?parent_id="+this.bannerForm.value.sub_category)
     
@@ -299,7 +300,7 @@ childCategoryList=[];
     formData.append('category', this.bannerForm.value.category);
     formData.append('sub_category', this.bannerForm.value.sub_category);
  formData.append('status',this.bannerForm.value.status );
- if(this.bannerForm.value.child_category!='')
+ if(this.bannerForm.value.child_category!=''&&this.bannerForm.value.child_category!=null)
  formData.append('child_category', this.bannerForm.value.child_category);
     
   
@@ -505,7 +506,7 @@ formData.append('display_order',this.bannerForm.value.display_order)
 formData.append('image', this.url1);
 formData.append('category', this.bannerForm.value.category);
 formData.append('sub_category', this.bannerForm.value.sub_category);
-if(this.bannerForm.value.child_category!='')
+if(this.bannerForm.value.child_category!=''&&this.bannerForm.value.child_category!=null)
 formData.append('child_category', this.bannerForm.value.child_category);
 formData.append('status',this.bannerForm.value.status );
 this.api.putReqAuth("admin/banner/edit-banner",formData).subscribe(

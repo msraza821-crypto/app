@@ -27,6 +27,7 @@ const routes: Routes = [
       { path: 'simplebanners',canLoad:[ActivateGuard], loadChildren: '../pages/simplebanners/simplebanners.module#SimplebannersModule'},
       { path: 'discount',canLoad:[ActivateGuard], loadChildren: '../pages/discount/discount.module#DiscountModule'},
       { path: 'drivers',canLoad:[ActivateGuard], loadChildren: '../pages/drivers/drivers.module#DriversModule'},
+      { path: 'reports',canLoad:[ActivateGuard], loadChildren: '../pages/reports/reports.module#ReportsModule'},
 
 
     
