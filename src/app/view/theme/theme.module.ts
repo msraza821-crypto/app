@@ -20,6 +20,7 @@ import {
   AppSidebarModule,
 } from '@coreui/angular';
 import { LoaderButtonComponent } from '../pages/shared/loader-button/loader-button.component';
+import { DateFormatPipe } from 'src/app/pipes/date-format.pipe';
 
 @NgModule({
   imports: [

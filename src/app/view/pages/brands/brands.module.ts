@@ -34,7 +34,7 @@ const pageRoutes: Routes = [
     RouterModule.forChild(pageRoutes),
 
   ],
-  declarations: [BrandsComponent, AddBrandComponent,ViewBrandComponent,DateFormatPipe],
+  declarations: [BrandsComponent, AddBrandComponent,ViewBrandComponent],
   entryComponents: []
 })
 export class BrandsModule { }

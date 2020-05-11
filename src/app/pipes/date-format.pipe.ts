@@ -9,7 +9,7 @@ export class DateFormatPipe implements PipeTransform {
     let arr;
     let day
     let mm=''
-   let  month=[{name:'January,', numbar:'01'},
+   let  month=[{name:'January,', number:'01'},
       {name:'February,',number:'02'}, 
       {name:'March,',number:'03'} ,
       {name:'April,',number:'04'}, 

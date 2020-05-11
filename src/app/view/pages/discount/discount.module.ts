@@ -10,6 +10,7 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 import { ColorHueModule } from 'ngx-color/hue';
 import { OnlyNumberDirective } from 'src/app/directive/only-number.directive';
+import { DecimalNumberDirective } from 'src/app/directive/decimal-number.directive';
 
 const pageRoutes: Routes = [
 
@@ -29,7 +30,7 @@ const pageRoutes: Routes = [
     RouterModule.forChild(pageRoutes),
     
   ],
-  declarations: [DiscountComponent,AddDiscountComponent,DetailDiscountComponent,OnlyNumberDirective],
+  declarations: [DiscountComponent,AddDiscountComponent,DetailDiscountComponent,OnlyNumberDirective,DecimalNumberDirective],
   entryComponents: []
 })
 export class DiscountModule { }
