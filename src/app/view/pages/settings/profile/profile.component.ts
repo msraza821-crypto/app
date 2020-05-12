@@ -127,15 +127,13 @@ export class ProfileComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
-this.choosefile=event.target.files[0].name;
-      const width = file.naturalWidth;
-      const height = file.naturalHeight;
-
+      
+    
       window.URL.revokeObjectURL( file.src );
     //  var checkimg = file.toLowerCase();
       const type = file.type.split('/');
     if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
-
+      this.choosefile=event.target.files[0].name;
     }
     else{
       this.errorMessage = "Please use proper format of image like jpeg,jpg and png only";
@@ -145,16 +143,35 @@ this.choosefile=event.target.files[0].name;
       this.url1='';
       return false;
     }      
+  
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
-      reader.onload = (event: any) => { // called once readAsDataURL is completed
-        this.url = event.target.result;
+    
+      reader.onload = () => {
+        const img = new Image();
+        img.src = reader.result as string;
+        img.onload = () => {
+          const height = img.naturalHeight;
+          const width = img.naturalWidth;
+          console.log('Width and Height', width, height);
+          if ((height >= 1024 || height <= 1200) && (width >= 750 || width <= 1000)) {
+            this.errorMessage = "Height and Width must not exceed 1100*800.";
+           // alert()
+            this.choosefile="No file chosen...";
+        //    alert(this.choosefile)
+           // this.url='';
+      this.url1='';
+      return false;
+          }else{
+            this.url = event.target.result;       
 
+            this.choosefile=event.target.files[0].name;
+    
+          }
+        }; 
       }
- 
-      
-      
       this.url1 = event.target.files[0];
+     
      // console.log(this.url1)
     //  alert(window.URL.createObjectURL(event.target.files[0]));
      
