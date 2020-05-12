@@ -12,6 +12,11 @@ import { UserOrderViewComponent } from './user-order-view/user-order-view.compon
 import { UserTransactionComponent } from './user-transaction/user-transaction.component';
 import { MomentModule } from 'ngx-moment';
 import {DateFormatPipe} from 'src/app/pipes/date-format.pipe';
+import { UserProductViewComponent } from './user-product-view/user-product-view.component';
+import { ColorCompactModule } from 'ngx-color/compact';
+import { ColorHueModule } from 'ngx-color/hue';
+import { ColorSketchModule } from 'ngx-color/sketch';
+// import { colorPickerChanged } from '@syncfusion/ej2-angular-richtexteditor';
 const pageRoutes: Routes = [
 
   { path: '', 
@@ -24,6 +29,9 @@ const pageRoutes: Routes = [
     {path:'order-view',canActivate:[],data:{title:'View Order'} ,component:UserOrderViewComponent},
     {
       path:"transaction",canActivate:[],data:{title:'Transaction'},component:UserTransactionComponent
+    },
+    {
+      path:"view-product",canActivate:[],data:{title:'Product-View'},component:UserProductViewComponent
     }
   ]}
   // { path: 'view', canActivate: [], data: { title: 'View User' }, component: ViewUserComponent },
@@ -36,7 +44,14 @@ const pageRoutes: Routes = [
 @NgModule({
   imports: [
     NgxPaginationModule,
-    CommonModule, SharedModule,NgxDaterangepickerMd,
+    CommonModule,
+     SharedModule,
+     NgxDaterangepickerMd,
+     ColorCompactModule,
+     ColorHueModule,
+     ColorSketchModule,
+
+
     RouterModule.forChild(pageRoutes),
     MomentModule.forRoot({
       relativeTimeThresholdOptions: {
@@ -45,8 +60,9 @@ const pageRoutes: Routes = [
     }),
     
     
+    
   ],
-  declarations: [UsersComponent,ViewUserComponent, UserOrderViewComponent, UserTransactionComponent],
+  declarations: [UsersComponent,ViewUserComponent, UserOrderViewComponent, UserTransactionComponent, UserProductViewComponent],
   entryComponents: []
 })
 export class UsersModule { }

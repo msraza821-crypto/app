@@ -89,14 +89,14 @@
                           </td>
                           <td> {{this.transform(i.created_at)}}
                       </td>
-                      <td  *ngIf="i.status=='Active'" >Activegfdg
+                      <td  *ngIf="i.status=='Active'" >Active
                         </td>
-                        <td  *ngIf="i.status=='Inactive'" >Blockeddgfd
+                        <td  *ngIf="i.status=='Inactive'" >Block
                           </td>
-                          <td  *ngIf="i.status=='Pending'" >Pendinggdg
+                          <td  *ngIf="i.status=='Pending'" >Pending
                             </td>
                         <td>
-                          <a [routerLink]="['/theme/users/view',{id :i?.id}]"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                      
+                          <a [routerLink]="['/theme/users/view',{id :i?.id,status:i?.status}]"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;                      
                           <a (click)="openVerticallyCentered(poup2,i)" *ngIf="i.status=='Active'"> <i style="font-size:24px;" class="fa fa-ban"></i>&nbsp; </a> 
                           <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'">   <i style="font-size:24px;color:red;" class="fa fa-ban"></i>&nbsp;</a>            
                           <a (click)="openVerticallyCentered(poup,i)"> <i style="font-size:24px"

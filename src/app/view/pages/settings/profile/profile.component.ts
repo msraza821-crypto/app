@@ -127,6 +127,7 @@ export class ProfileComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
+      console.log(file)
 this.choosefile=event.target.files[0].name;
       const width = file.naturalWidth;
       const height = file.naturalHeight;

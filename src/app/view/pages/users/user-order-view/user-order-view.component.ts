@@ -15,132 +15,97 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class UserOrderViewComponent implements OnInit {
 
+
+
   loader = false;
-  collection:any=[];
   CONFIG = CONFIG;
   loginForm: FormGroup;
   url1 = ''; url: string = '';
   message: string = '';
-  keyValue: boolean = false;
+  flag: boolean = false;
+  limit=10;
+  page=1;
+  totalRec=10;
+  id:string=null;
+  myStatus=''
+  deletedId;
+  statusData;
+  user_id;
+  collection=[]
   constructor(
     private _fb: FormBuilder,
     private _util: CommonUtil,
-    private api: HttpService,
-    private modalService: NgbModal,
-    private spinner: NgxSpinnerService,
-    private _route: ActivatedRoute,
-    private _api:AppService,
-    private router: Router) {
-  }
-
-  rtl(element) {
-    if (element.setSelectionRange) {
-      element.setSelectionRange(0, 0);
-    }
-  }
-  id: string = null;
-  ngOnInit() {
-    this._route.params.subscribe(param => {
-      if (param && param["id"]) {
-        this.id = param["id"];
-        this.viewUser();
+    private api:HttpService,
+    private spinner:NgxSpinnerService,
+    private _route:ActivatedRoute,
+    private router: Router,
+    private modalService:NgbModal) {
+      this._route.params.subscribe(param => {
+        if (param && param["id"]) {
+          this.id=param["id"];
+          this.myStatus=param['status'];
+          this.user_id=param['user_id']
+          this.viewOrder()
+        }
+        });
+        
+        
       }
-    })
+
+  ngOnInit()
+  {
 
   }
-
-  yes() {
-    this.modalService.dismissAll();
-    //var formData=new FormData();
-    //   formData.append('id',this.deletedId)
-    this.api
-      .putReqAuth("admin/user/delete", { id: this.deletedId }).subscribe(
-        res => this.successdelete(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
-  }
-   
-  deletedId: string;
-  statusData: string;
-  openVerticallyCentered(poup, dataValue) {
+  openVerticallyCentered(poup, data) {
     this.modalService.open(poup, { centered: true });
-    this.deletedId = dataValue.id;
-    this.statusData = dataValue.status;
+    this.deletedId = data.id;
+    this.statusData = data.status;
   }
-  yesStatus() {
-    console.log(this.statusData)
-    if (this.statusData == 'active') {
-      this.statusData = "Inactive";
-    } else {
-      this.statusData = "Active";
-    }
-    this.modalService.dismissAll();
-    this.api
-      .putReqAuth("admin/user/status", { id: this.deletedId, status: this.statusData })
-      .subscribe(
-        res => this.successStatus(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
-  }
-  errorMessage:string = "";
-  successMessage:string = "";
-  successStatus(res) {
-    if (res.status == true) {
-      this._api.showNotification( 'success', res.message );
-      this.viewUser();
-    } else {
-      this._api.showNotification( 'error', res.message );
-   
-    }
- 
-
-  }
-  successdelete(res) {
-    if (res.status == true) {
-      this._api.showNotification( 'success', res.message );
-      this.router.navigate(['/theme/users'])
-    } else {
-     
-      this._api.showNotification( 'error', res.message );
-    }
-
-
-  }
-
-
-  viewUser() {
+  viewOrder(){
     this.spinner.show();
+    console.log('vieew')
+  
     this.api
-      .getReqAuth("admin/user/detail?id=" + this.id)
-      .subscribe(
-        res => this.successView(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
+    .getReqAuth("admin/order/order-detail?id="+this.id)
+    .subscribe(
+      res => this.successView(res),
+      err => this.error(err),
+      () => (this.loader = false)
+    );
   }
+
 data:any={};
-  successView(res) {
-    if (res.status == true) {
-      this.data = res.result;
-    
+grandTotal:number=0;
+discount_price:number=0;
+  successView(res){
+    if(res.status==true){
+      this.spinner.hide
+    this.data= res.result[0];
+    this.collection=res.result
+  for(let col of this.collection)
+  {
+    this.discount_price=this.discount_price+Number(col.discounted_price)
+  }
+  this.grandTotal=this.discount_price+Number(this.collection[0].total_price)
+  console.log(res)
+
     }
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
-
-    //  this.addProperty.get('beds').patchValue(property['bed']);
+   
+  //  this.addProperty.get('beds').patchValue(property['bed']);
 
   }
-
-  error(res) {
+  
+  error(res){
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
-    this._api.showNotification( 'error', res.message );
+    this._util.markError(res.message);
   }
+
 
 }
