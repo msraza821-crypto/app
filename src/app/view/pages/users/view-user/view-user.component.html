@@ -8,8 +8,8 @@
                 <div class="breadc col-md-6 float-left"> <a class="active" [routerLink]="['/theme/users']"> Users</a> / <a class="breada">View User</a></div>    
                 <div class="col-md-6 float-left"> 
                     <a (click)="exportDataF()"> <button type="button" class="btn btn-primary float-right ml-1" [routerLink]="['/theme/users/transaction',{id:id}]" routerLinkActive="router-link-active" >Transactions</button></a>
-                    <a *ngIf="data.status=='active'"> <button type="button" (click)="openVerticallyCentered(poup2,data)" class="btn btn-primary float-right ml-1">Block</button></a>
-                    <a *ngIf="data.status=='inactive'"> <button type="button" (click)="openVerticallyCentered(poup1,data)" class="btn btn-primary float-right ml-1">Activate</button></a>
+                    <a *ngIf="status=='Active'"> <button type="button" (click)="openVerticallyCentered(poup2,data)" class="btn btn-primary float-right ml-1">Block</button></a>
+                    <a *ngIf="status=='Inactive'"> <button type="button" (click)="openVerticallyCentered(poup1,data)" class="btn btn-primary float-right ml-1">Activate</button></a>
                     <a> <button type="button" (click)="openVerticallyCentered(poup,data)" class="btn btn-primary float-right ml-1">Delete</button></a>
         
                   </div>
@@ -59,40 +59,42 @@
                 <thead>
                   <tr>
                     <th>S.No.</th>
-                    <th scope="col">Order Id</th>
+                    <th scope="col">ORD</th>
                     <th scope="col">Total price</th>
                     <th scope="col">Order Date</th>
+                    <th scope="col">Status</th>
+
                      <th scope="col">Actions</th>
                   </tr>
                 </thead>
-                <tbody >
-                  <!-- <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
-                  itemsPerPage: limit,
-                  currentPage: page,
-                  totalItems: totalRec };"> -->
-                  <tr>
-                    <td scope="row" style=" text-transform: capitalize;">1 </td>
-                    <td>12334</td>
-                    <td> 3333</td>
-                    <td> 20-02-20202</td>
+                <tbody *ngIf="collection.length>1" >
+                  <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                    itemsPerPage: limit,
+                    currentPage: page,
+                    totalItems: totalRec }; let ie = index">
+                    <td>
+                        {{ ((limit * (page - 1)) + ie+1) }}
+
+                    </td>
+                    <td>{{i.order_id}}</td>
+                    <td>{{i.total_price}}</td>
+                    <td>{{i.created_at|date:'dd-MM-yyyy'}}</td>
+                    <td>{{i.status}}</td>
+                    
                   <td>
-                    <a [routerLink]="['/theme/users/order-view',{id:id}]" routerLinkActive="router-link-active"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;   
-                </td>
-                    <!-- <td><img style="height: 60px;width:60px;" class="img-circle"
-                        [src]="i.profile_picture ? i.profile_picture : 'assets/img/avatars/default.png'" /></td>
-                    <td> -->
-                                        
+                    <a [routerLink]="['/theme/users/order-view',{id:i.order_id,user_id:id}]" routerLinkActive="router-link-active"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;   
+                
+                             
                      
-<!--   
-                    </td> -->
+
                   </tr>
   
                 </tbody>
-                <!-- <tbody >
+                <tbody *ngIf="collection.length==1">
                   <tr class="text-center">
-                    <td colspan="4">No records found</td>
+                    <td colspan="10">No records found</td>
                   </tr>
-                </tbody> -->
+                </tbody>
               </table>
               <pagination-controls *ngIf="collection.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
                 (pageChange)="page = $event"></pagination-controls>

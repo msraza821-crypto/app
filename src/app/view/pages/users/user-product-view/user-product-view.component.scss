@@ -2,12 +2,6 @@ form{
     width:100%;
     margin-left:10px;
 }
-.bg-dark{
-    color:white;
-  }
-  .btn-dark{
-    color:white;
-  }
 /******************Home Page CSS*****************/
 .banner-block figure img {
     width: 100%;
@@ -28,20 +22,11 @@ agm-map {
     margin-right:10px;
 }
   .new-card{
-      width: 49%;
-      
+      width: 49%;margin-left: 10px;
   }
-  .new-card1{
-    width: 33%;
-
-    label{
-        display:block;
-    }
-    p{
-        display: block;
-    }
-}
-
+  .new-carder{
+    width: 99%;margin-left: 10px;
+  }
   .gallery-wrap .img-big-wrap img {
     height: 450px;
     width: auto;
@@ -69,7 +54,7 @@ agm-map {
     border-radius: 4px;
     cursor: zoom-in;
 }
-  .file-upload{display:block;text-align:center;font-family: Helvetica, Arial, sans-serif;font-size: 12px;width:60%;}
+  .file-upload{display:block;text-align:center;font-family: Helvetica, Arial, sans-serif;font-size: 12px;width:40%;}
 .file-upload .file-select{display:block;border: 2px solid #dce4ec;color: #34495e;cursor:pointer;height:40px;line-height:40px;text-align:left;background:#FFFFFF;overflow:hidden;position:relative;}
 .file-upload .file-select .file-select-button{background:#dce4ec;padding:0 10px;display:inline-block;height:40px;line-height:40px;}
 .file-upload .file-select .file-select-name{line-height:40px;display:inline-block;padding:0 10px;}
@@ -351,19 +336,3 @@ header {
         opacity: 1;
     }
 }
-.breadc{
-    padding-left:10px;
-    float:left;
-    font-weight: 500;
-    font-size:18px;
-    
-  }
-  .breada{
-    font-size: 16px;
-  }
-
-  .new-card{
-      width: 99%;
-      margin-left:.5%;
-      margin-right:.5%;
-      }

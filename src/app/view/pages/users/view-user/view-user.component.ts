@@ -24,6 +24,11 @@ export class ViewUserComponent implements OnInit {
   url1 = ''; url: string = '';
   message: string = '';
   keyValue: boolean = false;
+  limit=10;
+  page=1;
+  status;
+  totalRec=10;
+  orderList=[];
   constructor(
     private _fb: FormBuilder,
     private _util: CommonUtil,
@@ -45,6 +50,7 @@ export class ViewUserComponent implements OnInit {
     this._route.params.subscribe(param => {
       if (param && param["id"]) {
         this.id = param["id"];
+        this.status=param['status']
         this.viewUser();
       }
     })
@@ -125,8 +131,13 @@ export class ViewUserComponent implements OnInit {
 data:any={};
   successView(res) {
     if (res.status == true) {
+      this.spinner.hide()
       this.data = res.result;
-    
+      console.log(this.data)
+      this.collection=this.data.order_list
+      console.log(this.collection)
+      console.log('length',this.collection.length)
+
     }
     setTimeout(() => {
       /** spinner ends after 5 seconds */
