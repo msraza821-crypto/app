@@ -26,7 +26,8 @@ const pageRoutes: Routes = [
   declarations: [BannersComponent, ViewBannerComponent, AddBannerComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(pageRoutes),NgMultiSelectDropDownModule,
+    RouterModule.forChild(pageRoutes),
+    NgMultiSelectDropDownModule,
     SharedModule,
     ReactiveFormsModule,
     FormsModule,

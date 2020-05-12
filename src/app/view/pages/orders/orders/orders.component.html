@@ -67,15 +67,15 @@
                       <th scope="col">Order Date</th>
                      
                       <th scope="col">Order Id</th>
-                      <th *ngIf="myStatus=='approved'" scope="col">Driver's Name</th>
-                      <th *ngIf="myStatus=='approved'" scope="col">Status</th>
+                      <th *ngIf="loginForm.value.status=='approved'" scope="col">Driver's Name</th>
+                      <th *ngIf="loginForm.value.status=='approved'" scope="col">Status</th>
                      
                       <th  scope="col">Actions</th>
-                      <th *ngIf="myStatus=='approved'" scope="col">Mark Delivered</th>
+                      <th *ngIf="loginForm.value.status=='approved'" scope="col">Mark Delivered</th>
                     </tr>
 
                   </thead >
-                  <tbody *ngIf="myStatus=='pending'" >
+                  <tbody *ngIf="loginForm.value.status=='pending'" >
                     <tr   *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                       itemsPerPage: limit,
                     currentPage: page,
@@ -84,12 +84,14 @@
                         {{ ((limit * (page - 1)) + ie+1) }}
 
                     </td>
-                      <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
-                        <td>{{i.name_ar}}
-                      </td>
-                     
-                      <td> {{i.created_at}}
+                    <td>{{i.first_name}}&nbsp;{{i.last_name}}
                     </td>
+                    <td> {{i.created_at}}
+                    </td>
+                      <td scope="row" style=" text-transform: capitalize;">{{i.id}}</td>
+                       
+                     
+                     
                     <!-- <td  *ngIf="i.status=='Active'" >Active
                   </td>
                   <td  *ngIf="i.status=='Inactive'" >Inactive
@@ -97,7 +99,7 @@
                    
                      
                       <td style="max-width:150px;">
-                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:myStatus}]" title="View Order" class="my-position"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
+                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:loginForm.value.status}]" title="View Order" class="my-position"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
                         <a  title="Accept Order" (click)="openVerticallyCentered(accept,i)" class="btn btn-secondary">Accept</a>&nbsp;                      
                         <a (click)="openVerticallyCentered(poup2,i)" title="Reject Order" class="btn btn-danger">Reject</a> 
                         <!-- <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
@@ -109,7 +111,7 @@
 
 
 
-                  <tbody  *ngIf="myStatus=='approved'">
+                  <tbody  *ngIf="loginForm.value.status=='approved'">
                     <tr  *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                     itemsPerPage: limit,
                     currentPage: page,
@@ -118,18 +120,18 @@
                         {{ ((limit * (page - 1)) + ie+1) }}
 
                     </td>
-                      <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
-                        <td>{{i.name_ar}}
-                      </td>
-                   
-                      <td> {{i.created_at}}
+                    <td>{{i.first_name}}&nbsp;{{i.last_name}}
                     </td>
+                    <td> {{i.created_at}}
+                    </td>
+                      <td scope="row" style=" text-transform: capitalize;">{{i.id}}</td>
+                       
                     <td>Abc</td>
                     <td>Active</td>
                    
                      
                       <td style="max-width:120px;">
-                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:myStatus}]" title="View Order" class="my-position"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
+                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:loginForm.value.status}]" title="View Order" class="my-position"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
                         <!-- <a  title="Assign Driver" ></a>&nbsp;                       -->
                         <a (click)="openVerticallyCentered(poup3,i)" title="Assign Driver" class="btn btn-primary" style="color:white;margin-left:10px">Assign Driver</a> 
                         <!-- <a (click)="openVerticallyCentered(poup3,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
@@ -142,7 +144,7 @@
 
 
 
-                  <tbody *ngIf="myStatus=='delivered'" >
+                  <tbody *ngIf="loginForm.value.status=='delivered'" >
                     <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                     itemsPerPage: limit,
                     currentPage: page,
@@ -151,17 +153,17 @@
                         {{ ((limit * (page - 1)) + ie+1) }}
 
                     </td>
-                      <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
-                        <td>{{i.name_ar}}
-                      </td>
-              
-                      <td> {{i.created_at}}
+                    <td>{{i.first_name}}&nbsp;{{i.last_name}}
                     </td>
+                    <td> {{i.created_at}}
+                    </td>
+                      <td scope="row" style=" text-transform: capitalize;">{{i.id}}</td>
+                       
                    
                    
                      
                       <td>
-                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:myStatus}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
+                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:loginForm.value.status}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
                         <!-- <a  title="Assign Driver" ></a>&nbsp;                       -->
                         <!-- <a (click)="openVerticallyCentered(poup2,i)" title="Reject Order" class="btn btn-danger">Reject</a>  -->
                         <!-- <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
@@ -172,7 +174,7 @@
                   </tbody>
 
 
-                  <tbody *ngIf="myStatus=='rejected'">
+                  <tbody *ngIf="loginForm.value.status=='rejected'">
                     <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                     itemsPerPage: limit,
                     currentPage: page,
@@ -181,23 +183,25 @@
                         {{ ((limit * (page - 1)) + ie+1) }}
 
                     </td>
-                      <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
-                        <td>{{i.name_ar}}
-                     
+                    
+                      <td>{{i.first_name}}&nbsp;{{i.last_name}}
+                      </td>
                       <td> {{i.created_at}}
-                    </td>
+                      </td>
+                        <td scope="row" style=" text-transform: capitalize;">{{i.id}}</td>
+                         
                    
                    
                      
                       <td>
-                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:myStatus}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>   
+                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:loginForm.value.status}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>   
                                        
                       
                       </td>
                     </tr>
                   </tbody>
 
-                  <tbody  *ngIf="myStatus=='cancelled'" >
+                  <tbody  *ngIf="loginForm.value.status=='cancelled'" >
                     <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                     itemsPerPage: limit,
                     currentPage: page,
@@ -206,17 +210,16 @@
                         {{ ((limit * (page - 1)) + ie+1) }}
 
                     </td>
-                      <td scope="row" style=" text-transform: capitalize;">{{i.name}}</td>
-                        <td>{{i.name_ar}}
-                      </td>
-                  
-                      <td> {{i.created_at}}
+                    <td>{{i.first_name}}&nbsp;{{i.last_name}}
                     </td>
-                   
+                    <td> {{i.created_at}}
+                    </td>
+                      <td scope="row" style=" text-transform: capitalize;">{{i.id}}</td>
+                       
                    
                      
                       <td>
-                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:myStatus}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
+                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:loginForm.value.status}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
                  
                       </td>
                     </tr>

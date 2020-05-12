@@ -306,3 +306,9 @@ header {
         opacity: 1;
     }
 }
+.star{
+    color:red;
+}
+label{
+    font-weight: 600;
+}
