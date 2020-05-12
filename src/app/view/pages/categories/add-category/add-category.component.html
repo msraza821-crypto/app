@@ -27,7 +27,7 @@
             <div class="form-group col-md-6">
               <label for="inputPassword4"> <b>Description(English) </b></label>
               <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4" [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_DES"
-                placeholder="Enter the  description"></textarea>
+                placeholder="Enter the description"></textarea>
                
                 <span class="error text-danger">{{_util.errorMessage(descriptionen,FORM_ERROR?.descriptionen)}}</span>
             </div>

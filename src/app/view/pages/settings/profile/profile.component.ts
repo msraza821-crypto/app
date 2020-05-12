@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
   showOld:boolean=false;
   showNew:boolean=false;
   showConfirm:boolean=false;
-  choosefile:string="No file chosen...";
+  choosefile;
   constructor(
     private _fb: FormBuilder,
     private api: HttpService,
@@ -81,7 +81,7 @@ export class ProfileComponent implements OnInit {
            this.url=this.userData.profile_picture;
           var str= this.url.split('/');
           this.choosefile=str[str.length-1];
-          
+          console.log('chhose',this.choosefile)
 
         
       }
@@ -131,7 +131,7 @@ export class ProfileComponent implements OnInit {
 this.choosefile=event.target.files[0].name;
       const width = file.naturalWidth;
       const height = file.naturalHeight;
-
+console.log('height',height)
       window.URL.revokeObjectURL( file.src );
     //  var checkimg = file.toLowerCase();
       const type = file.type.split('/');

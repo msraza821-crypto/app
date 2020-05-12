@@ -62,30 +62,30 @@ export class ViewUserComponent implements OnInit {
     //var formData=new FormData();
     //   formData.append('id',this.deletedId)
     this.api
-      .putReqAuth("admin/user/delete", { id: this.deletedId }).subscribe(
+      .putReqAuth("admin/user/delete", { id:this.id}).subscribe(
         res => this.successdelete(res),
         err => this.error(err),
         () => (this.loader = false)
       );
   }
    
-  deletedId: string;
+  deletedId=this.id
   statusData: string;
   openVerticallyCentered(poup, dataValue) {
     this.modalService.open(poup, { centered: true });
-    this.deletedId = dataValue.id;
+    
     this.statusData = dataValue.status;
   }
   yesStatus() {
-    console.log(this.statusData)
-    if (this.statusData == 'active') {
-      this.statusData = "Inactive";
+    console.log(this.status)
+    if (this.status == 'Active') {
+      this.status = "Inactive";
     } else {
-      this.statusData = "Active";
+      this.status= "Active";
     }
     this.modalService.dismissAll();
     this.api
-      .putReqAuth("admin/user/status", { id: this.deletedId, status: this.statusData })
+      .putReqAuth("admin/user/status", { id: this.id, status: this.status})
       .subscribe(
         res => this.successStatus(res),
         err => this.error(err),
@@ -98,6 +98,7 @@ export class ViewUserComponent implements OnInit {
     if (res.status == true) {
       this._api.showNotification( 'success', res.message );
       this.viewUser();
+      // this.ngOnInit()
     } else {
       this._api.showNotification( 'error', res.message );
    
