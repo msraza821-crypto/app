@@ -17,29 +17,29 @@
                 <div class="row ">
                    
               <div class="form-group col-md-6">
-                <label for="inputEmail4">Product Name(English) <span style="color:red">*</span></label>
-                <input type="text" [formControl]="product_name_en" class="form-control" id="inputEmail4" placeholder="Product Name">
+                <label for="inputEmail4"><b>Product Name(English) <span class="star">*</span></b></label>
+                <input type="text" [formControl]="product_name_en" class="form-control" id="inputEmail4" placeholder="Enter the product name">
 
             
                 <span class="error text-danger">{{_util.errorMessage(product_name_en,FORM_ERROR?.product_name_en)}}</span>
               </div>
               
               <div class="form-group col-md-6">
-                <label for="inputPassword4">Product Description(English) <span style="color:red">*</span></label>
+                <label for="inputPassword4"><b>Product Description(English)</b> </label>
                 <textarea type="text" [formControl]="product_description_en" class="form-control" id="inputPassword4"
-                  placeholder="Product Description"></textarea>
+                  placeholder="Enter description"></textarea>
               
                   <span class="error text-danger">{{_util.errorMessage(product_description_en,FORM_ERROR?.product_description_en)}}</span>
               </div>
               
               <div class="form-group col-md-6">
-                  <label for="inputEmail4">Product Name(Arabic) <span style="color:red">*</span></label>
+                  <label for="inputEmail4"><b>Product Name(Arabic) <span class="star">*</span></b></label>
                   <input type="text" [formControl]="product_name_ar" class="form-control" id="inputEmail4"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="اسم المنتج">
               
                 <span class="error text-danger">{{_util.errorMessage(product_name_ar,FORM_ERROR?.product_name_ar)}}</span>
               </div>
                 <div class="form-group col-md-6">
-                  <label for="inputPassword4">Product Description(Arabic) <span style="color:red">*</span></label>
+                  <label for="inputPassword4"><b>Product Description(Arabic) </b></label>
                   <textarea type="text" [formControl]="product_description_ar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
                     placeholder="وصف المنتج"></textarea>
                  
@@ -48,7 +48,7 @@
             <div class="form-group col-md-3">
                 <label for="inputState">Brand <span style="color:red">*</span></label>
                 <select id="inputState" [formControl]="brand_id" class="form-control">
-                  <option value="">Please Select</option>
+                  <option value="">Select brand</option>
                   <option  *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</option>
                
                 </select>
@@ -58,25 +58,25 @@
             <div class="form-group col-md-3">
                 <label for="inputState">Category <span style="color:red">*</span></label>
                 <select id="inputState" [formControl]="category_id" (change)='onOptionsSelectedSub($event)' class="form-control">
-                  <option value="">Please Select</option>
+                  <option value="">Select category </option>
                   <option  *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
                 </select>
             
               <span class="error text-danger">{{_util.errorMessage(category_id,FORM_ERROR?.category_id)}}</span>
             </div>
             <div class="form-group col-md-3">
-                <label for="inputState">Sub-category <span style="color:red">*</span></label>
+                <label for="inputState">Sub-Category <span style="color:red">*</span></label>
                 <select id="inputState" [formControl]="subCategory" (change)='onOptionsSelectedChild($event)' class="form-control">
-                  <option value="">Please Select</option>
+                  <option value="">Select Sub-category</option>
                   <option  *ngFor="let category of subcategories" [value]="category.id">{{category.name}}</option>
                 </select>
             
               <span class="error text-danger">{{_util.errorMessage(subCategory,FORM_ERROR?.subCategory)}}</span>
             </div>
             <div class="form-group col-md-3">
-                <label for="inputState">Child-category <span style="color:red">*</span></label>
+                <label for="inputState">Child-Category <span style="color:red">*</span></label>
                 <select id="inputState" [formControl]="childCategory"   class="form-control">
-                  <option value="">Please Select</option>
+                  <option value="">Select Child-category</option>
                   <option  *ngFor="let category of childcategories" [value]="category.id">{{category.name}}</option>
                 </select>
             
@@ -96,9 +96,9 @@
      
                 
                     <div class="form-group col-md-4">
-                      <label for="inputPassword4">Attribute Description(English)<span style="color:red">*</span></label>
+                      <label for="inputPassword4">Attribute Description(English)</label>
                       <textarea type="text" [formControl]="attribute_description_en" class="form-control" id="inputPassword4"
-                        placeholder="Attribute Description"></textarea>
+                        placeholder="Enter the attribute description"></textarea>
                     
                         <span class="error text-danger">{{_util.errorMessage(attribute_description_en,FORM_ERROR?.attribute_description_en)}}</span>
                     </div>

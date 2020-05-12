@@ -49,14 +49,14 @@ export class OrdersComponent implements OnInit {
   end = "";
   ngOnInit(): void {
     this.createForm();
-    this.loadBrands();
+    this.loadOrders();
 
   }
 
   createForm() {
     this.loginForm = this._fb.group({
       search: [""],
-      status: [""],
+      status: ["pending"],
       range: [""]
     });
   }
@@ -166,7 +166,7 @@ export class OrdersComponent implements OnInit {
 
     return result;
 }
-  loadBrands() {
+  loadOrders() {
     var start1 = '';
     var end1 = '';
     //  console.log(this.loginForm.value)
@@ -178,7 +178,7 @@ export class OrdersComponent implements OnInit {
        var endDate=new Date(end1)
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
-     var url="admin/brand/list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=0";
+     var url="admin/order/order-list?search="+this.loginForm.value.search+"&status="+this.loginForm.value.status+"&fromDate="+start1+"&toDate="+end1+"&page="+this.page+"&limit="+this.limit+"&isExport=0";
     this.api
       .getReqAuth(url)
       .subscribe(
@@ -191,7 +191,8 @@ export class OrdersComponent implements OnInit {
     if (res.status == true) {
       this.collection = res.result.data;
       this.totalRec = res.result.globelCount;
-      this.myStatus='pending'
+      console.log(this.collection)
+    
       // this.page=this.page;
       //this.limit=this.limit;
     }
@@ -207,7 +208,7 @@ export class OrdersComponent implements OnInit {
   filterSelected(selectedValue) {
     console.log('selected value= ' + selectedValue)
     this.limit = selectedValue;
-    this.loadBrands();
+    this.loadOrders();
 
   }
 
@@ -222,7 +223,7 @@ console.log(this.myStatus)
   onScroll() {
     const currentDataLength = this.page * this.limit;
     console.log(currentDataLength, this.totalRec);
-    this.loadBrands();
+    this.loadOrders();
   }
   //initializing p to one
   p: number = 1;
@@ -241,15 +242,16 @@ console.log(this.myStatus)
   }
   reset() {
     this.createForm();
+
     this.selected = {};
     this.exportData = 0;
     this.start = "";
     this.end = "";
-    this.loadBrands();
+    this.loadOrders();
   }
   filter() {
     console.log(this.loginForm.value)
-    this.loadBrands();
+    this.loadOrders();
   }
   yes() {
     this.modalService.dismissAll();

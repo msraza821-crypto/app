@@ -95,17 +95,28 @@ max:Number=10000;
   }
 
   public onItemSelect(item: any) {
-    console.log(item);
+    this.selectedValue.push(item.id)
+    console.log(this.selectedValue)
+    this.getProductBrand()
   }
   public onDeSelect(item: any) {
     console.log(item);
+    this.selectedValue=this.productCompare(item.id,this.selectedValue)
+    this.getProductBrand()
   }
 
   public onSelectAll(items: any) {
-    console.log(items);
+    this.selectedValue=[];
+    for(let item of items)
+    {
+      this.selectedValue.push(item.id)
+    }
+    console.log(this.selectedValue)
+    this.getProductBrand()
   }
   public onDeSelectAll(items: any) {
-    console.log(items);
+    this.selectedValue=[]
+    this.productList=[]
   }
   createForm()
   {
