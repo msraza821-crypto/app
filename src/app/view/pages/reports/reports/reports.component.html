@@ -50,7 +50,17 @@
           </div>
           <div class="card-body">
             <div class="col-sm-12 col-lg-12">
-
+              <div class="chart-wrapper">
+                <canvas baseChart 
+                    [datasets]="lineChartData" 
+                    [labels]="lineChartLabels" 
+                    [options]="lineChartOptions"
+                    [colors]="lineChartColors" 
+                    [legend]="lineChartLegend" 
+                    [chartType]="lineChartType" 
+                    [plugins]="lineChartPlugins">
+                </canvas>
+            </div>
               <div class="card text-white ">
                 <div class=" pb-0 ">
                   <table class="table table-striped" style="overflow: auto;padding:20px">

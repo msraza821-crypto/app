@@ -9,14 +9,35 @@ import { HttpService, AppService } from 'src/app/service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
-
+import { ChartDataSets, ChartOptions } from 'chart.js';
+import { Color, Label } from 'ng2-charts';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit {
+  lineChartData: any = [
+    { data: [85, 72, 78, 75, 77, 75], label: 'Crude oil prices' },
+  ];
 
+  lineChartLabels: any= ['January', 'February', 'March', 'April', 'May', 'June'];
+
+  lineChartOptions = {
+    responsive: true,
+  };
+
+  lineChartColors: any = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(255,255,0,0.28)',
+    },
+  ];
+
+  lineChartLegend = true;
+  lineChartPlugins = [];
+  lineChartType = 'line';
+  
   collection = [];
   // pager object
   pager: any = {};

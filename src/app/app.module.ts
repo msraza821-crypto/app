@@ -109,7 +109,7 @@ const customNotifierOptions: NotifierOptions = {
     AppRoutingModule,
     ColorSketchModule,
     NgxSpinnerModule,
-    AppAsideModule,
+    AppAsideModule,ChartsModule,
     AppBreadcrumbModule.forRoot(),
     AppFooterModule,
     AppHeaderModule,

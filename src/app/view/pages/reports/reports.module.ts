@@ -9,7 +9,7 @@ import { LoaderButtonComponent } from '../shared/loader-button/loader-button.com
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module;
 import {DateFormatPipe} from 'src/app/pipes/date-format.pipe';
-
+import { ChartsModule } from 'ng2-charts';
 
 const pageRoutes: Routes = [
 
@@ -30,7 +30,7 @@ const pageRoutes: Routes = [
     CommonModule,
     SharedModule,
     NgxPaginationModule,
-    NgxDaterangepickerMd,
+    NgxDaterangepickerMd,ChartsModule,
     RouterModule.forChild(pageRoutes)
 
   ]
