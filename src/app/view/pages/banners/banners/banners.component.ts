@@ -109,55 +109,69 @@ export class BannersComponent implements OnInit {
   get range(): FormControl {
     return this.loginForm.get("range") as FormControl;
   }
-  download_csv() {
-    var data = [
-      ['Foo', 'programmer'],
-      ['Bar', 'bus driver'],
-      ['Moo', 'Reindeer Hunter']
-   ];
-    var csv = 'Name,Title\n';
-    data.forEach(function(row) {
-            csv += row.join(',');
-            csv += "\n";
-    });
+//   download_csv() {
+//     var data = [
+//       ['Foo', 'programmer'],
+//       ['Bar', 'bus driver'],
+//       ['Moo', 'Reindeer Hunter']
+//    ];
+//     var csv = 'Name,Title\n';
+//     data.forEach(function(row) {
+//             csv += row.join(',');
+//             csv += "\n";
+//     });
   
-    console.log(csv);
-    var hiddenElement = document.createElement('a');
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-    hiddenElement.target = '_blank';
-    hiddenElement.download = 'people.csv';
-    hiddenElement.click();
+//     console.log(csv);
+//     var hiddenElement = document.createElement('a');
+//     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+//     hiddenElement.target = '_blank';
+//     hiddenElement.download = 'people.csv';
+//     hiddenElement.click();
+//   }
+
+//   convertArrayOfObjectsToCSV(args) {
+//     var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+//     data = args.data || null;
+//     if (data == null || !data.length) {
+//         return null;
+//     }
+
+//     columnDelimiter = args.columnDelimiter || ',';
+//     lineDelimiter = args.lineDelimiter || '\n';
+
+//     keys = Object.keys(data[0]);
+
+//     result = '';
+//     result += keys.join(columnDelimiter);
+//     result += lineDelimiter;
+
+//     data.forEach(function(item) {
+//         ctr = 0;
+//         keys.forEach(function(key) {
+//             if (ctr > 0) result += columnDelimiter;
+
+//             result += item[key];
+//             ctr++;
+//         });
+//         result += lineDelimiter;
+//     });
+
+//     return result;
+// }
+
+
+
+
+add3Dots(string, limit) {
+  var dots = "...";
+  if (string.length > limit) {
+    // you can also use substr instead of substring
+    string = string.substring(0, limit) + dots;
+    return string
   }
-
-  convertArrayOfObjectsToCSV(args) {
-    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
-
-    data = args.data || null;
-    if (data == null || !data.length) {
-        return null;
-    }
-
-    columnDelimiter = args.columnDelimiter || ',';
-    lineDelimiter = args.lineDelimiter || '\n';
-
-    keys = Object.keys(data[0]);
-
-    result = '';
-    result += keys.join(columnDelimiter);
-    result += lineDelimiter;
-
-    data.forEach(function(item) {
-        ctr = 0;
-        keys.forEach(function(key) {
-            if (ctr > 0) result += columnDelimiter;
-
-            result += item[key];
-            ctr++;
-        });
-        result += lineDelimiter;
-    });
-
-    return result;
+  else
+  return string
 }
   loadBanners() {
     this.spinner.show();

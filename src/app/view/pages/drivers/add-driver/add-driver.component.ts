@@ -211,15 +211,15 @@ this.loadDriverDetails()
   successView(res){
     this.spinner.hide();
     console.log(res)
-    this.driverForm.get('name').patchValue(res.result.name)
-    this.driverForm.get('email').patchValue(res.result.email)
-    var mobile=res.result.contact_number.slice(3)
-    this.driverForm.get('mobile').patchValue(res.result.contact_number.slice(6))
+    this.driverForm.get('name').patchValue(res.result.driver_detail.name)
+    this.driverForm.get('email').patchValue(res.result.driver_detail.email)
+    // var mobile=res.result.driver_detail.contact_number.slice(3)
+    this.driverForm.get('mobile').patchValue(res.result.driver_detail.contact_number.slice(6))
 
-    this.driverForm.get('license').patchValue(res.result.license_number)
-    this.driverForm.get('plate_number').patchValue(res.result.plate_number)
-    this.driverForm.get('vehicle_type').patchValue(res.result.vehicle_type)
-    this.driverForm.get('address').patchValue(res.result.address)
+    this.driverForm.get('license').patchValue(res.result.driver_detail.license_number)
+    this.driverForm.get('plate_number').patchValue(res.result.driver_detail.plate_number)
+    this.driverForm.get('vehicle_type').patchValue(res.result.driver_detail.vehicle_type)
+    this.driverForm.get('address').patchValue(res.result.driver_detail.address)
   }
 
   
@@ -380,7 +380,7 @@ update()
 
 
     let data={name:this.driverForm.value.name,
-      email:this.driverForm.value.email,contact_number:this.driverForm.value.mobile,
+      email:this.driverForm.value.email,contact_number:this.countryCode+this.driverForm.value.mobile,
       licence_number:this.driverForm.value.license,vehicle_type:this.driverForm.value.vehicle_type,
       address:this.driverForm.value.address,plate_number:this.driverForm.value.plate_number,
     id:this.id}

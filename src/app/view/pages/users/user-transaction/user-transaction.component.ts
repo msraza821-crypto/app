@@ -183,7 +183,7 @@ Mystatus='active'
        var endDate=new Date(end1)
        end1 =endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
       }
-      var url="admin/driver/list?status="+this.loginForm.value.status+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&search_string="+this.loginForm.value.search;
+      var url="admin/transaction/transaction-list?user_id="+this.id+"&status="+this.loginForm.value.status+"&start_date="+start1+"&end_date="+end1+"&page="+this.page+"&limit="+this.limit+"&search_string="+this.loginForm.value.search;
       this.api
       .getReqAuth(url)
       .subscribe(

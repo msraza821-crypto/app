@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
   showOld:boolean=false;
   showNew:boolean=false;
   showConfirm:boolean=false;
-  choosefile:string="No file chosen...";
+  choosefile;
   constructor(
     private _fb: FormBuilder,
     private api: HttpService,
@@ -81,7 +81,7 @@ export class ProfileComponent implements OnInit {
            this.url=this.userData.profile_picture;
           var str= this.url.split('/');
           this.choosefile=str[str.length-1];
-          
+          console.log('chhose',this.choosefile)
 
         
       }
@@ -140,36 +140,50 @@ export class ProfileComponent implements OnInit {
       this.choosefile="No file chosen...";
       this.wrongFormat=true;
       this.url='';
+      this.isImageError=true
       this.url1='';
       return false;
-    }      
+    }     
+    
+    
+    let reader1 = new FileReader();
+    reader1.readAsDataURL(event.target.files[0]); // read file as data url
+  
+    // reader1.onload = () => {
+    //   this.url=event.targe.result;
+    // }
   
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
     
-      reader.onload = () => {
+      reader.onload = (event:any) => {
         const img = new Image();
         img.src = reader.result as string;
         img.onload = () => {
           const height = img.naturalHeight;
           const width = img.naturalWidth;
           console.log('Width and Height', width, height);
-          if ((height >= 1024 || height <= 1200) && (width >= 750 || width <= 1000)) {
-            this.errorMessage = "Height and Width must not exceed 1100*800.";
+          if ((height <=CONFIG.PROFILE_MIN_HEIGHT || height >=CONFIG.PROFILE_MAX_HEIGHT) || (width <= CONFIG.PROFILE_MIN_WIDTH || width >= CONFIG.PROFILE_MAX_WIDTH)) {
+            this.errorMessage =`Please upload the image of required size which is min height ${CONFIG.PROFILE_MIN_HEIGHT}, max height ${CONFIG.PROFILE_MAX_HEIGHT} and min width ${CONFIG.PROFILE_MIN_WIDTH}, max width ${CONFIG.PROFILE_MAX_WIDTH}.`;
            // alert()
             this.choosefile="No file chosen...";
         //    alert(this.choosefile)
-           // this.url='';
+           this.url='';
       this.url1='';
+      this.wrongFormat=true;
+      this.isImageError=true;
+    
       return false;
-          }else{
-            this.url = event.target.result;       
-
+          }
+          else{
+             
+            this.url=event.target.result;
             this.choosefile=event.target.files[0].name;
     
           }
         }; 
       }
+      
       this.url1 = event.target.files[0];
      
      // console.log(this.url1)
