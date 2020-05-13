@@ -47,37 +47,37 @@
                     <div class="card-body">
                         <div class="row">
                           <div class="col-md-6">
-                           <label class="float-left"> <b > Driver Name: </b></label>
+                           <label class="float-left"> <b > Driver Name: &nbsp;</b></label>
                             <p>{{data.name}}</p>
                           </div>
                           <div class="col-md-6">
-                             <label class="float-left"> <b >Mobile Number: </b></label>
+                             <label class="float-left"> <b >Mobile Number: &nbsp; </b></label>
                               <p>{{data.contact_number}}</p>
                             </div>
 
                             <div class="col-md-6">
-                              <label class="float-left"> <b >Email : </b></label>
+                              <label class="float-left"> <b >Email :  &nbsp;</b></label>
                                <p>{{data.email}}</p>
                              </div>
 
 
 
                              <div class="col-md-6">
-                              <label class="float-left"> <b >License Number: </b></label>
+                              <label class="float-left"> <b >License Number: &nbsp; </b></label>
                                <p>{{data.license_number}}</p>
                              </div>
                              <div class="col-md-6">
-                              <label class="float-left"> <b >Plate Number: </b></label>
+                              <label class="float-left"> <b >Plate Number: &nbsp; </b></label>
                                <p>{{data.plate_number}}</p>
                              </div>
                              <div class="col-md-6">
-                              <label class="float-left"> <b >Vehicle Type: </b></label>
+                              <label class="float-left"> <b >Vehicle Type: &nbsp; </b></label>
                                <p>{{data.vehicle_type}}</p>
                              </div>
 
 
                              <div class="col-md-6">
-                              <label class="float-left"> <b >Address: </b></label>
+                              <label class="float-left"> <b >Address: &nbsp; </b></label>
                                <p>{{data.address}}</p>
                              </div>
                         </div>
@@ -102,86 +102,61 @@
                                  </div>
                         </div>
                     </div></div>  -->
-                    <div class="card " style="width:100%;">
-                    <div class="card-header">
-                        <div  class="breadc"><a class="breada"> Shipping  Details</a></div>                      
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                           <label class="float-left"> <b >Customer Name : </b></label>
-                            <p> qnaanb</p>
-                          </div>
-                          <div class="col-md-6">
-                             <label class="float-left"> <b >Mobile Number: </b></label>
-                              <p>90734079882389034</p>
-                            </div>
-                            
-                            <div class="col-md-6">
-                               <label class="float-left"> <b >Delivery Address: </b></label>
-                                <p> noida,india</p>
-                              </div>
-                            
-                                       
+                   
+
+
+                    <div class="card new-card" style="margin-top: 20px;">
+                        <div class="card-header">
+                            <div  class="breadc"><a class="breada"> Order Detail</a></div>                      
+                        </div>
+                        <div class="card-body">
+                          <div class="row ">
+                            <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                      <th>S.No.</th>
+                                      <th scope="col">Order Id</th>
+                                      <th scope="col">Total price</th>
+                                      <th scope="col">Order Date</th>
+                                      <th scope="col">Status</th>
+                  
+                                       <th scope="col">Actions</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody *ngIf="collection.length>0" >
+                                    <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                                      itemsPerPage: limit,
+                                      currentPage: page,
+                                      totalItems: totalRec }; let ie = index">
+                                      <td>
+                                          {{ (ie+1) }}
+                  
+                                      </td>
+                                      <td>ORD{{i.order_id}}</td>
+                                      <td>QAR {{i.total_price}}</td>
+                                      <td>{{i.created_at|date:'dd-MM-yyyy'}}</td>
+                                      <td style=" text-transform: capitalize;">{{i.status}}</td>
+                                      
+                                    <td>
+                                      <a [routerLink]="['/theme/drivers/order-view',{id :i?.order_id,driver_id:id}]" title="View Order"> <button type="button" class="btn btn-primary">View</button></a>&nbsp;&nbsp;    
+                                      <a (click)="openVerticallyCenteredDriver(poup3,i)" title="Assign Driver" ><button type="button" class="btn btn-dark">Reassign Driver</button></a> 
+                               
+                                             
+                                     
+                
+                                  </tr>
+                  
+                                </tbody>
+                                <tbody *ngIf="collection.length==0">
+                                  <tr class="text-center">
+                                    <td colspan="10">No records found</td>
+                                  </tr>
+                                </tbody>
+                              </table>
                               
-                            </div></div>
-
-
+                  </div>
+                        </div>
                     </div>
-
-
-                            <div class="card new-card">
-                              <div class="card-header">
-                                  <div  class="breadc"><a class="breada"> Order Details</a></div>                      
-                              </div>
-                              <div class="card-body">
-                                  <div class="row">
-                                    <div class="col-sm-12 col-lg-12 mr-top" >
-                                      <div class="card text-white ">
-                                        <div class=" pb-0 " style="width:100">
-
-                                          <table class="table table-striped table-response">
-                                            <thead>
-                                              <tr >
-                                                <th scope="col">S.No.</th>
-                                                <th scope="col">Product ID</th>
-                                                <th scope="col">Product Name</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Action</th>
-                                                
-                                              
-                      
-                      
-                          
-                                              </tr>
-                                            </thead>
-                                            <tbody  >
-                                              <tr>                                             
-                                                 <td>1</td>
-                                              <td>12</td>
-                                              <td>T-shirt</td>
-                                           <td>Active</td>
-                                           <td style="max-width: 150px;">
-                                            <button type="button" class="btn btn-primary">Reassign</button>
-                                            <a><i class="fa fa-eye"></i></a>
-                                            <a><i class="fa fa-edit"></i></a>
-
-                                           </td>
-
-
-                                          </table>
-                      
-                                        </div>
-                                        
-                                      </div>
-                      
-                      
-                                    </div>
-                                    
-                                  </div>
-                                  <button [routerLink]="['/theme/banners']"  style="margin-top: 20px;" type="button" class="btn btn-primary" >Back</button>
-                              </div>
-                          </div>
                           </div>
                           </div>
                           </div>
@@ -191,4 +166,75 @@
               
             </div> <!-- card.// -->
             
-       
+            <ng-template #poup3 let-modal>
+                <!----- Header  ------>
+                <section id="modal-header">
+                  <h5 class="p-3 primary-color-bg bg-dark text-center">Assign Driver <a  (click)="modal.close('Close click')" style="position: absolute;top:5px; right:5px" ><i class="fa fa-times"></i></a></h5>
+                  
+                  <div class="">
+                    <div class="row">
+                  
+                      
+                      <div class="col-md-12 frgtpass-head">
+                       <div class="col-md-4" style="margin-top: 20px;">
+                         <input type="text" class="form-control" placeholder="Search by Name"  (input)="searchDriver($event.target.value)" [formControl]="search_string">
+                       </div>
+                     
+                    
+                        <div class="col-sm-12 col-lg-12" style="margin-top: 30px;">
+                           
+                          <div class="card text-white ">
+                            <div class="pb-0"> 
+                              <table class="table table-striped"  >
+                                <thead>
+                                  <th>S.No.</th>
+                                  <th>Name</th>
+                                  <th>Status</th>
+                                  <th>Date</th>
+                                  <th>Action</th>
+                                </thead>
+                                <tbody  *ngIf="drivers.length>0">
+                                  <tr *ngFor="let i of drivers; let ie = index">  
+                                    <td>{{ie+1}}</td>
+                                     <td [title]='i.name'>{{this.add3Dots(i.name,15)}}
+                                      </td>
+                                    <td *ngIf="i.is_available==0">Available</td>
+                                    <td *ngIf="i.is_available==1">Not Available</td>
+                                    <td> {{i.created_at | date:'dd-MM-yyyy'}}
+                                    </td>
+                                    <td>
+                                      <a (click)="assignedDriver(i)"><button type="button" class="btn btn-dark">Assign</button></a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                                  <tbody  *ngIf="drivers.length==0">
+                                      <td colspan="5" style="text-align: center;">
+                                        No records found
+                                        </td>
+                                </tbody>
+                              </table>
+                          </div>
+                          </div>
+                          </div>
+                        
+                        
+                        
+                      </div>
+                  
+                  
+                    </div>
+                  </div>
+                </section>
+                <!-------------->
+                <!-- <section>
+                  <div class=" frgtpass-btns mb-3">
+                    <div class="row mt-3">
+                      <div class="col-md-12 text-center">
+                        <button type="button" class="ml-3 ml-3 btn bg-dark  white white" (click)="modal.close('Close click')">No</button>
+                        <button type="button" class="ml-3 btn bg-dark white" (click)="yesStatus()">Yes</button>
+                      </div>
+                    </div>
+                  </div>
+                </section> -->
+              </ng-template>
+          

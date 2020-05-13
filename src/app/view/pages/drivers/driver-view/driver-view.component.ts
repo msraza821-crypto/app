@@ -4,21 +4,18 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 import { ERROR_MESSAGES, CONFIG, Regex } from 'src/app/constants';
 import { CommonUtil } from 'src/app/util';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { rangeValidator } from 'src/app/validators/range.validator';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { throwIfEmpty } from 'rxjs/operators';
-
 
 @Component({
-  selector: 'app-order-view',
-  templateUrl: './order-view.component.html',
-  styleUrls: ['./order-view.component.scss']
+  selector: 'app-driver-view',
+  templateUrl: './driver-view.component.html',
+  styleUrls: ['./driver-view.component.scss']
 })
-export class OrderViewComponent implements OnInit {
+export class DriverViewComponent implements OnInit {
 
- 
+
 
   loader = false;
   CONFIG = CONFIG;
@@ -47,7 +44,7 @@ export class OrderViewComponent implements OnInit {
         if (param && param["id"]) {
           this.id=param["id"];
           this.myStatus=param['status'];
-          this.user_id=param['user_id']
+          this.user_id=param['driver_id']
           this.viewOrder()
         }
         });
@@ -59,6 +56,7 @@ export class OrderViewComponent implements OnInit {
   {
 
   }
+  
   openVerticallyCentered(poup, data) {
     this.modalService.open(poup, { centered: true });
     this.deletedId = data.id;
@@ -89,6 +87,7 @@ shippingCharges:number=0;
       this.collection=res.result;
       this.data=res.result[0];
     if(this.collection.length>0){ 
+      this.collection=res.result
       for(let col of this.collection)
         {
           this.discount_price=this.discount_price+Number(col.discounted_price);
@@ -114,6 +113,5 @@ shippingCharges:number=0;
     this._util.markError(res.message);
   }
 
-  }
 
-
+}

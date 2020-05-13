@@ -8,156 +8,161 @@
       <div class="col-sm-12 col-lg-12">
         <div class="card">
           <div class="card-header" style="padding-right:0px">
-              <div  class="breadc"><a class="active" [routerLink]="['/theme/orders']"> Orders</a> / <a class="breada">View Order</a></div> 
+              <div  class="breadc"><a class="active" [routerLink]="['/theme/orders']"> Orders</a> /  <a class="breada">View Order</a></div> 
 
-              <div *ngIf="myStatus=='pending'" class="col-md-6 float-right" style="padding-right: 5px;">
+              <!-- <div *ngIf="myStatus=='pending'" class="col-md-6 float-right" style="padding-right: 5px;">
                   <button  (click)="openVerticallyCentered(poup2, data)" class="float-right btn btn-danger ml-1">Reject</button>
                   <button class="float-right btn btn-secondary ml-1">Accept</button>
               </div>
               <div  *ngIf="myStatus=='approved'" class="col-md-6 float-right" style="padding-right: 5px;">
                 <button  (click)="openVerticallyCentered(assign,i)" class="float-right btn btn-primary ml-1">Assign Driver</button>
                 <button class="float-right btn btn-danger ml-1">Cancel</button>
-            </div>
+            </div> -->
              
           </div>
           <div class="card-body">
-              <div class="row">
-               
-              
+            <div class="row">
+             
+            
 
-                <div  *ngIf="myStatus!='delivered'" class="card new-card" >
+              <div   class="card new-card" >
+                <div class="card-header">
+                    <div  class="breadc"><a class="breada"> Order Detail</a></div>                      
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                       <label class="float-left"> <b > Order ID: </b></label>
+                        <p>{{data.id}}</p>
+                      </div>
+                      <div class="col-md-12">
+                         <label class="float-left"> <b >Date & Time : </b></label>
+                          <p>{{data.created_at}}</p>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="float-left"> <b >Payment Method : </b></label>
+                             <p>COD</p>
+                           </div>
+                    </div>
+                </div>
+            </div>
+              <div class="card new-card" style="margin-left:2%">
                   <div class="card-header">
-                      <div  class="breadc"><a class="breada"> Order Detail</a></div>                      
+                      <div  class="breadc"><a class="breada"> Shipping Details</a></div>                      
                   </div>
                   <div class="card-body">
                       <div class="row">
-                        <div class="col-md-12">
-                         <label class="float-left"> <b > Order ID: </b></label>
-                          <p>1234445</p>
-                        </div>
-                        <div class="col-md-12">
-                           <label class="float-left"> <b >Date & Time : </b></label>
-                            <p>12/02/2020 3:34 PM</p>
-                          </div>
                           <div class="col-md-12">
-                              <label class="float-left"> <b >Payment Method : </b></label>
-                               <p>COD</p>
+                              <label class="float-left"> <b > Customer Name : </b></label>
+                               <p>{{data.person_name}}</p>
                              </div>
+                             <div class="col-md-12">
+                                <label class="float-left"> <b > Mobile Number : </b></label>
+                                 <p>{{data.mobile}}</p>
+                               </div>
+                               <div class="col-md-12">
+                                  <label class="float-left"> <b > Delivery Address : </b></label>
+                                   <p>{{data.address}}</p>
+                                 </div>
                       </div>
-                  </div>
-              </div>
-                <div *ngIf="myStatus!='delivered'" class="card new-card" style="margin-left:2%">
+                  </div></div>
+
+
+
+<!-- 
+                  <div class="card new-card1" >
                     <div class="card-header">
-                        <div  class="breadc"><a class="breada"> Shipping Details</a></div>                      
+                        <div  class="breadc"><a class="breada"> Order Detail</a></div>                      
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12">
-                                <label class="float-left"> <b > Customer Name : </b></label>
-                                 <p>Rahul</p>
+                          <div class="col-md-12">
+                           <label class="float-left"> <b > Order ID: </b></label>
+                            <p>1234445</p>
+                          </div>
+                          <div class="col-md-12">
+                             <label class="float-left"> <b >Date & Time : </b></label>
+                              <p>12/02/2020 3:34 PM</p>
+                            </div>
+                            <div class=" col-md-12">
+                                <label class="float-left"> <b >Payment Method : </b></label>
+                                 <p>COD</p>
                                </div>
-                               <div class="col-md-12">
-                                  <label class="float-left"> <b > Mobile Number : </b></label>
-                                   <p>12132332332</p>
-                                 </div>
-                                 <div class="col-md-12">
-                                    <label class="float-left"> <b > Delivery Adress : </b></label>
-                                     <p>Noida</p>
-                                   </div>
                         </div>
-                    </div></div>
-
-
-
-
-                    <div  *ngIf="myStatus=='delivered'" class="card new-card1" >
+                    </div>
+                </div> -->
+                 
+                <!-- <div *ngIf="myStatus=='delivered'" class="card new-card1" style="margin-left: .5%;" >
                       <div class="card-header">
-                          <div  class="breadc"><a class="breada"> Order Detail</a></div>                      
+                          <div  class="breadc"><a class="breada"> Shipping Details</a></div>                      
                       </div>
                       <div class="card-body">
                           <div class="row">
-                            <div class="col-md-12">
-                             <label class="float-left"> <b > Order ID: </b></label>
-                              <p>1234445</p>
-                            </div>
-                            <div class="col-md-12">
-                               <label class="float-left"> <b >Date & Time : </b></label>
-                                <p>12/02/2020 3:34 PM</p>
-                              </div>
-                              <div class=" col-md-12">
-                                  <label class="float-left"> <b >Payment Method : </b></label>
-                                   <p>COD</p>
+                              <div class="col-md-12">
+                                  <label class="float-left"> <b > Customer Name : </b></label>
+                                   <p>Rahul</p>
                                  </div>
+                                 <div class="col-md-12">
+                                    <label class="float-left"> <b > Mobile Number : </b></label>
+                                     <p>12132332332</p>
+                                   </div>
+                                   <div class="col-md-12">
+                                      <label class="float-left"> <b > Delivery Adress : </b></label>
+                                       <p>Noida</p>
+                                     </div>
                           </div>
-                      </div>
-                  </div>
-                    <div *ngIf="myStatus=='delivered'" class="card new-card1" style="margin-left: .5%;" >
+                      </div></div> -->
+                     
+                     
+                      <!-- <div *ngIf="myStatus=='delivered'" class="card new-card1"  style="margin-left: .5%;">
                         <div class="card-header">
-                            <div  class="breadc"><a class="breada"> Shipping Details</a></div>                      
+                            <div  class="breadc"><a class="breada"> Driver Details</a></div>                      
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label class="float-left"> <b > Customer Name : </b></label>
+                                    <label class="float-left"> <b > Driver Name : </b></label>
                                      <p>Rahul</p>
                                    </div>
                                    <div class="col-md-12">
                                       <label class="float-left"> <b > Mobile Number : </b></label>
                                        <p>12132332332</p>
                                      </div>
-                                     <div class="col-md-12">
-                                        <label class="float-left"> <b > Delivery Adress : </b></label>
-                                         <p>Noida</p>
-                                       </div>
+                                  
                             </div>
                         </div></div>
-                        <div *ngIf="myStatus=='delivered'" class="card new-card1"  style="margin-left: .5%;">
-                          <div class="card-header">
-                              <div  class="breadc"><a class="breada"> Driver Details</a></div>                      
-                          </div>
-                          <div class="card-body">
-                              <div class="row">
-                                  <div class="col-md-12">
-                                      <label class="float-left"> <b > Driver Name : </b></label>
-                                       <p>Rahul</p>
-                                     </div>
-                                     <div class="col-md-12">
-                                        <label class="float-left"> <b > Mobile Number : </b></label>
-                                         <p>12132332332</p>
-                                       </div>
-                                    
-                              </div>
-                          </div></div>
-  
+ -->
 
 
-                    
+                  
 
 
 
-                    <div class="card " style="width:100%;">
-                    <div class="card-header">
-                        <div  class="breadc"><a class="breada"> Product Details</a></div>                      
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
+                  <div class="card " style="width:100%;">
+                  <div class="card-header">
+                      <div  class="breadc"><a class="breada"> Product Details</a></div>                      
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
 
-                            <div class="card-body pb-0 ">
-                                <table class="table table-striped table-response">
+                          <div class="card-body pb-0 ">
+                              <table class="table table-striped table-response">
                                   <thead>
                                     <tr >
                                       <th scope="col">S.No.</th>
-                                      <th scope="col">Product ID</th>
+                                      
                                       <th scope="col">Product Name</th>
-                                      <th scope="col">Price</th>
-                                      <th scope="col">Color</th>
-                                      <th scope="col">Size</th>
-                                      <th scope="col">Quantity</th>
+                                     
+                                      <th scope="col">Product Color</th>
+                                      <th scope="col">Product Size</th>
+                                    
                                       
-                                      <th scope="col">Status</th>
+                                      <th scope="col">Product Status</th>
                                       <th scope="col">Brand</th>
-                                      
-                                      <th scope="col">Action</th>
+                                      <th scope="col">Quantity</th>
+                                      <th scope="col">Price</th>
+                                      <th>Total</th>
+                                    
                                    
                                       
                                     
@@ -166,75 +171,56 @@
                 
                                     </tr>
                                   </thead>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>1234</td>
-                                    <td>IPhone</td>
-                                    <td>100000</td>
-                                    <td>Black</td>
-                                    <td>M</td>
-                                    <td>2</td>
-                                    <td>Active</td>
-                                    <td>Apple</td>
-                                    <td><a><i class="fa fa-eye"></i></a></td>
-                                </tr>
-
-
+                                  <tr  *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                                  itemsPerPage: limit,
+                                  currentPage: page,
+                                  totalItems: totalRec }; let ie = index">
+                                  <td>
+                                      {{ ((limit * (page - 1)) + ie+1) }}
+              
+                                  </td>
+                                 
+                                    <td ><a [routerLink]="['/theme/users/view-product',{id:i.product_id}]" style=" text-transform: capitalize;" >{{i.product_name}}</a></td>
+                                    
+                                    <td> <div  [style.background-color]="i.colour" style="height:15px;width:20px;"></div></td>
+                                    <td>{{i.size}}</td>
+                                    
+                                    <td style=" text-transform: capitalize;">{{i.product_status}}</td>
+                                    <td style=" text-transform: capitalize;">{{i.brand_name}}</td>
+                                    <td>{{i.quantity}}</td>
+                                    <td>QAR {{i.price}}</td>
+                                   
+                                    <td>QAR {{i.quantity*i.price}}</td>
+                                              </tr>
+                                              <tr><td colspan="8">     <label class="float-right" > 
+                                                  <b > Grand Total : </b></label></td> <td >  &nbsp; QAR {{grandTotal}}</td></tr>
+                                             
+                                                <tr><td colspan="8" style="    border-top: 0px;">      <label class="float-right" > 
+                                                  <b > Shipping Charges :  </b></label></td><td style="    border-top: 0px;"> &nbsp;  QAR {{shippingCharges}}</td></tr>
+                                                  <tr><td colspan="8" style="    border-top: 0px;">    <label class="float-right" > 
+                                                    <b > Discount Price :  </b></label></td><td style="    border-top: 0px;"> &nbsp; QAR {{discount_price}}</td></tr>
+                                                    <tr><td colspan="8" style="    border-top: 0px;">     <label class="float-right" > 
+                                                      <b > Total Payable Amount:  </b></label></td><td style="    border-top: 0px;">  &nbsp;  QAR {{(grandTotal+shippingCharges-discount_price)}}</td></tr>
                                   <tbody>
                                       
                                   </tbody>
                                 
                                 </table>
-                                <!-- <pagination-controls *ngIf="productList.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
-                                  (pageChange)="page = $event"></pagination-controls>
-                 -->
-            
-                              </div>
-                            
+                             
+                           
+               
+           
+                            </div>
+                          
+                      </div>
+                          </div></div>
+
+
+
+
+
                         </div>
-                            </div></div>
-
-
-
-
-
-                            <div class="card new-card" style="width:100%">
-                              <div class="card-header">
-                                  <div  class="breadc"><a class="breada"> Price Details</a></div>                      
-                              </div>
-                              <div class="card-body">
-                                  <div class="row">
-                                    <div class="col-sm-12 col-lg-12 mr-top" >
-                                     
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label class="float-left"> <b >Total : </b></label>
-                                                 <p>3445</p>
-                                               </div>
-                                               <div class="col-md-12">
-                                                  <label class="float-left"> <b > Shipping Charges : </b></label>
-                                                   <p>121</p>
-                                                 </div>
-                                                 <div class="col-md-12">
-                                                    <label class="float-left"> <b > Discount : </b></label>
-                                                     <p>233</p>
-                                                   </div>
-
-                                                   <div class="col-md-12">
-                                                    <label class="float-left"> <b > Grand Total : </b></label>
-                                                     <p>232</p>
-                                                   </div>
-                                        </div>
-                      
-                      
-                                    </div>
-                                    
-                                  </div>
-                                  <button [routerLink]="['/theme/orders']"  style="margin-top: 20px;" type="button" class="btn btn-primary" >Back</button>
-                              </div>
-                          </div>
-                          </div>
-                          </div>
+                        </div>
                           </div>
                           </div>
                           
@@ -379,4 +365,4 @@
                     </div>
                   </div>
                 </section> -->
-              </ng-template>
+              </ng-template>s

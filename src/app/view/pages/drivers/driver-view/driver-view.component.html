@@ -8,7 +8,7 @@
       <div class="col-sm-12 col-lg-12">
         <div class="card">
           <div class="card-header" style="padding-right:0px">
-              <div  class="breadc"><a class="active" [routerLink]="['/theme/users']"> Users</a> / <a [routerLink]="['/theme/users/view',{id:user_id}]"   class="breada">View User</a> / <a class="breada">View Order</a></div> 
+              <div  class="breadc"><a class="active" [routerLink]="['/theme/drivers']"> Drivers</a> / <a [routerLink]="['/theme/drivers/view',{id:user_id}]"   class="breada">View driver</a> / <a class="breada">View Order</a></div> 
 
               <!-- <div *ngIf="myStatus=='pending'" class="col-md-6 float-right" style="padding-right: 5px;">
                   <button  (click)="openVerticallyCentered(poup2, data)" class="float-right btn btn-danger ml-1">Reject</button>
@@ -33,11 +33,11 @@
                       <div class="row">
                         <div class="col-md-12">
                          <label class="float-left"> <b > Order ID: </b></label>
-                          <p>ORD{{data.id}}</p>
+                          <p>{{data?.id}}</p>
                         </div>
                         <div class="col-md-12">
                            <label class="float-left"> <b >Date & Time : </b></label>
-                            <p>{{data.created_at}}</p>
+                            <p>{{data?.created_at}}</p>
                           </div>
                           <div class="col-md-12">
                               <label class="float-left"> <b >Payment Method : </b></label>
@@ -147,66 +147,66 @@
 
                             <div class="card-body pb-0 ">
                                 <table class="table table-striped table-response">
-                                  <thead>
-                                    <tr >
-                                      <th scope="col">S.No.</th>
+                                    <thead>
+                                      <tr >
+                                        <th scope="col">S.No.</th>
+                                        
+                                        <th scope="col">Product Name</th>
+                                       
+                                        <th scope="col">Product Color</th>
+                                        <th scope="col">Product Size</th>
                                       
-                                      <th scope="col">Product Name</th>
+                                        
+                                        <th scope="col">Product Status</th>
+                                        <th scope="col">Brand</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Price</th>
+                                        <th>Total</th>
+                                      
                                      
-                                      <th scope="col">Product Color</th>
-                                      <th scope="col">Product Size</th>
-                                    
+                                        
                                       
-                                      <th scope="col">Product Status</th>
-                                      <th scope="col">Brand</th>
-                                      <th scope="col">Quantity</th>
-                                      <th scope="col">Price</th>
-                                      <th>Total</th>
-                                    
-                                   
-                                      
-                                    
-            
-            
-                
-                                    </tr>
-                                  </thead>
-                                  <tr  *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
-                                  itemsPerPage: limit,
-                                  currentPage: page,
-                                  totalItems: totalRec }; let ie = index">
-                                  <td>
-                                      {{ ((limit * (page - 1)) + ie+1) }}
               
-                                  </td>
-                                 
-                                    <td ><a [routerLink]="['/theme/users/view-product',{id:i.product_id}]" style=" text-transform: capitalize;" >{{i.product_name}}</a></td>
-                                    
-                                    <td> <div  [style.background-color]="i.colour" style="height:15px;width:20px;"></div></td>
-                                    <td>{{i.size}}</td>
-                                    
-                                    <td style=" text-transform: capitalize;">{{i.product_status}}</td>
-                                    <td style=" text-transform: capitalize;">{{i.brand_name}}</td>
-                                    <td>{{i.quantity}}</td>
-                                    <td>QAR {{i.price}}</td>
+              
+                  
+                                      </tr>
+                                    </thead>
+                                    <tr  *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                                    itemsPerPage: limit,
+                                    currentPage: page,
+                                    totalItems: totalRec }; let ie = index">
+                                    <td>
+                                        {{ ((limit * (page - 1)) + ie+1) }}
+                
+                                    </td>
                                    
-                                    <td>QAR {{i.quantity*i.price}}</td>
-                                              </tr>
-                                              <tr><td colspan="8">     <label class="float-right" > 
-                                                  <b > Grand Total : </b></label></td> <td >  &nbsp; QAR {{grandTotal}}</td></tr>
-                                             
-                                                <tr><td colspan="8" style="    border-top: 0px;">      <label class="float-right" > 
-                                                  <b > Shipping Charges :  </b></label></td><td style="    border-top: 0px;"> &nbsp;  QAR {{shippingCharges}}</td></tr>
-                                                  <tr><td colspan="8" style="    border-top: 0px;">    <label class="float-right" > 
-                                                    <b > Discount Price :  </b></label></td><td style="    border-top: 0px;"> &nbsp; QAR {{discount_price}}</td></tr>
-                                                    <tr><td colspan="8" style="    border-top: 0px;">     <label class="float-right" > 
-                                                      <b > Total Payable Amount:  </b></label></td><td style="    border-top: 0px;">  &nbsp;  QAR {{(grandTotal+shippingCharges-discount_price)}}</td></tr>
-                                  <tbody>
+                                      <td ><a [routerLink]="['/theme/users/view-product',{id:i.product_id}]" style=" text-transform: capitalize;" >{{i.product_name}}</a></td>
                                       
-                                  </tbody>
-                                
-                                </table>
-                             
+                                      <td> <div  [style.background-color]="i.colour" style="height:15px;width:20px;"></div></td>
+                                      <td>{{i.size}}</td>
+                                      
+                                      <td style=" text-transform: capitalize;">{{i.product_status}}</td>
+                                      <td style=" text-transform: capitalize;">{{i.brand_name}}</td>
+                                      <td>{{i.quantity}}</td>
+                                      <td>QAR {{i.price}}</td>
+                                     
+                                      <td>QAR {{i.quantity*i.price}}</td>
+                                                </tr>
+                                                <tr><td colspan="8">     <label class="float-right" > 
+                                                    <b > Grand Total : </b></label></td> <td >  &nbsp; QAR {{grandTotal}}</td></tr>
+                                               
+                                                  <tr><td colspan="8" style="    border-top: 0px;">      <label class="float-right" > 
+                                                    <b > Shipping Charges :  </b></label></td><td style="    border-top: 0px;"> &nbsp;  QAR {{shippingCharges}}</td></tr>
+                                                    <tr><td colspan="8" style="    border-top: 0px;">    <label class="float-right" > 
+                                                      <b > Discount Price :  </b></label></td><td style="    border-top: 0px;"> &nbsp; QAR {{discount_price}}</td></tr>
+                                                      <tr><td colspan="8" style="    border-top: 0px;">     <label class="float-right" > 
+                                                        <b > Total Payable Amount:  </b></label></td><td style="    border-top: 0px;">  &nbsp;  QAR {{(grandTotal+shippingCharges-discount_price)}}</td></tr>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                  
+                                  </table>
+                               
                  
              
                               </div>

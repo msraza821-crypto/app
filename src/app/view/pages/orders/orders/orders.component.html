@@ -118,12 +118,13 @@
                         {{ ((limit * (page - 1)) + ie+1) }}
 
                     </td>
+                    <td scope="row" style=" text-transform: capitalize;">ORD{{i.id}}</td>
                     <td style=" text-transform: capitalize;">{{i.first_name}}&nbsp;{{i.last_name}}
                     </td>
                     <td> {{this.transform(i.created_at)}}
                     </td>
                      
-                      <td scope="row" style=" text-transform: capitalize;">{{i.id}}</td>
+                     
                        
                     <td style=" text-transform: capitalize;">{{i?.driver_name}}</td>
                     <td style=" text-transform: capitalize;">{{i.status}}
@@ -151,13 +152,13 @@
                         {{ ((limit * (page - 1)) + ie+1) }}
 
                     </td>
+                    <td scope="row" style=" text-transform: capitalize;">ORD{{i.id}}</td>
                     <td>{{i.first_name}}&nbsp;{{i.last_name}}
                     </td>
                     <td> {{this.transform(i.created_at)}}
                     </td>
                      
-                      <td scope="row" style=" text-transform: capitalize;">{{i.id}}</td>
-                       
+                     
                       <td style=" text-transform: capitalize;">{{i.status}}
                       </td>
                      
@@ -279,8 +280,9 @@
             
             <div class="col-md-12 frgtpass-head">
              <div class="col-md-4" style="margin-top: 20px;">
-               <input type="text" class="form-control" placeholder="Search by Name">
+               <input type="text" class="form-control" placeholder="Search by Name"  (input)="searchDriver($event.target.value)" [formControl]="search_string">
              </div>
+           
           
               <div class="col-sm-12 col-lg-12" style="margin-top: 30px;">
                  
@@ -294,18 +296,22 @@
                         <th>Date</th>
                         <th>Action</th>
                       </thead>
-                      <tbody  *ngFor="let i of drivers; let ie = index">
-                        <tr>
+                      <tbody  *ngIf="drivers.length>0">
+                        <tr *ngFor="let i of drivers; let ie = index">  
                           <td>{{ie+1}}</td>
-                          <td>{{i.name}}</td>
+                          <td [title]='i.name'>{{this.add3Dots(i.name,20)}}</td>
                           <td *ngIf="i.is_available==0">Available</td>
                           <td *ngIf="i.is_available==1">Not Available</td>
-                          <td> {{i.created_at | date:'mm'}}
-                          </td>
+                          <td>{{i.created_at|date:'dd-MM-yyyy'}}</td>
                           <td>
-                            <a (click)="assignedDriver(i)"class="btn btn-primary" >Assign</a>
+                            <a (click)="assignedDriver(i)"><button type="button" class="btn btn-dark">Assign</button></a>
                           </td>
                         </tr>
+                      </tbody>
+                        <tbody  *ngIf="drivers.length==0">
+                            <td colspan="5" style="text-align: center;">
+                              No records found
+                              </td>
                       </tbody>
                     </table>
                 </div>
