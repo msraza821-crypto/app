@@ -89,12 +89,9 @@
                                   {{ ((limit * (page - 1)) + ie+1) }}
           
                               </td>
-                                  <td scope="row">{{i.name}}</td>
-                                    <!-- <td scope="row">{{i.driver_start_date}}
-                                  </td>
-                                  <td>{{i.driver_end_date}}</td> -->
-                                  <td> {{i.email}}
-                                  </td>
+                              <td scope="row"  style=" text-transform: capitalize;" title="{{i.name}}">{{this.add3Dots(i.name,20)}}</td>
+                                  
+                                  <td scope="row"  style=" text-transform: capitalize;" title="{{i.email}}">{{this.add3Dots(i.email,20)}}</td>
                                   <td> {{i.contact_number}}
                                     </td>
                               

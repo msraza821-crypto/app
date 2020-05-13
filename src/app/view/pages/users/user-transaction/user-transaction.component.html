@@ -41,8 +41,8 @@
                   <select id="inputState" class="form-control" style="min-width:125px" [formControl]="status" (change)="filterSelectedStatus($event.target.value)">
                 
                     <option value="">All</option>  
-                    <option value="active">Active</option>  
-                     <option value="inactive">Inactive</option>
+                    <option value="cod">COD</option>  
+                     <option value="online">Online</option>
                   </select>
                 </div>
           </div>
@@ -76,25 +76,21 @@
                                   {{ ((limit * (page - 1)) + ie+1) }}
           
                               </td>
-                                  <td scope="row">12312324432</td>
+                                  <td scope="row">{{i.order_id}}</td>
                                     <!-- <td scope="row">{{i.driver_start_date}}
                                   </td>
                                   <td>{{i.driver_end_date}}</td> -->
-                                  <td>20-29-2020
-                                  </td>
-                                  <td> COD
-                                    </td>
+                                  <td>{{i.purchase_date|date:'dd-MM-yyyy'}}</td>
                               
-<!--                                
-                              <td  *ngIf="i.status=='active'" >Active
-                                </td>
-                                <td  *ngIf="i.status=='inactive'" >Inactive
-                                </td> -->
-                                <td>20-02-2020</td>
+                
+                          
+                             
+                                <td>{{i.payment_mode}}</td>
                                  
                                   <td>
-                                     1500
+                                     {{i.purchase_date|date:'dd-MM-yyyy'}}
                                   </td>
+                                  <td>{{i.bill_amount}} QAR</td>
                                 </tr>
                               </tbody>
                               <tbody *ngIf="collection.length==0">

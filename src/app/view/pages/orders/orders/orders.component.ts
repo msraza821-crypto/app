@@ -6,9 +6,11 @@ import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpService } from 'src/app/service';
+import { HttpService, AppService } from 'src/app/service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ERROR_MESSAGES } from 'src/app/constants';
+import { CommonUtil } from 'src/app/util';
 
 @Component({
   selector: "app-orders",
@@ -43,22 +45,89 @@ export class OrdersComponent implements OnInit {
     private api: HttpService,
     private _fb: FormBuilder,
     private store: Store<any>,
+    private _api:AppService,
+    private _util: CommonUtil
   ) {
+  }
+  FORM_ERROR = {
+    reason: {
+      required: ERROR_MESSAGES.REASON_REQUIRED
+    },
   }
   start = "";
   end = "";
   ngOnInit(): void {
     this.createForm();
+    this.createFormReason();
     this.loadOrders();
+this.rejectReasons();
 
   }
+  transform(str:string): string{
+    let arr;
+    let day
+    let mm=''
+   let  month=[{name:'January,', number:'01'},
+      {name:'February,',number:'02'}, 
+      {name:'March,',number:'03'} ,
+      {name:'April,',number:'04'}, 
+      {name:'May,',number:'05'}, 
+     {name:'June,',number:'06'}, 
+      {name:'July,',number:'07'}, 
+      {name:'August,',number:'08'}, 
+      {name:'September,',number:'09'}, 
+      {name:'October,',number:'10'}, 
+      {name:'November,',number:'11'} ,
+      {name:'December,',number:'12'} 
+      
+    ];
+    arr= str.split(' ')
+    day=arr[0].split('t')
+    if(arr[0]=='1st')
+    day=arr[0].split('s')
+    if(arr[0]=='2nd')
+    day=arr[0].split('n')
+ 
+  
+   for(let m of month)
+   {
+     if(arr[1]==m['name'])
+     mm=m['number']
+   }
 
+  day[0]=Number(day[0])
+  if(day[0]<10)
+day[0]='0'+day[0]  
+    return day[0]+"-"+mm+'-'+arr[2]
+
+  }
+  loginFormReason:FormGroup;
+  createFormReason() {
+    this.loginFormReason = this._fb.group({
+      reason: ["",Validators.required],
+   
+    });
+  }
   createForm() {
     this.loginForm = this._fb.group({
       search: [""],
       status: ["pending"],
       range: [""]
     });
+  }
+  yesStatusReject(){
+    if(this.loginFormReason.valid){
+      this.modalService.dismissAll();
+    this.api
+      .putReqAuth("admin/order/change-status", { id: this.deletedId, status: this.statusData,reason:this.loginFormReason.value.reason })
+      .subscribe(
+        res => this.successStatus(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
+    }else{
+      this._util.markError(this.loginFormReason);
+    }
   }
   defaultValue() {
     this.selected = '';
@@ -85,8 +154,10 @@ export class OrdersComponent implements OnInit {
       err=> this.error(err),()=> (this.loader= false)
     );
   }
-  
-
+  reasons:any=[];
+rejectReasons(){
+  this.reasons=[{'id':1,reason:'Reason1'},{'id':2,reason:'Reason2'}];
+}
   downloadFile(data: File) {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
@@ -106,7 +177,9 @@ export class OrdersComponent implements OnInit {
     }
     window.URL.revokeObjectURL(url);
   }
- 
+  get reason(): FormControl {
+    return this.loginFormReason.get("reason") as FormControl;
+  }
   get search(): FormControl {
     return this.loginForm.get("search") as FormControl;
   }
@@ -166,6 +239,26 @@ export class OrdersComponent implements OnInit {
 
     return result;
 }
+driverlist() {
+  this.api
+    .getReqAuth("admin/driver/available-driver").subscribe(
+      res => this.successDriver(res),
+      err => this.error(err),
+      () => (this.loader = false)
+    );
+}
+drivers: any = [];
+successDriver(res: any) {
+  if (res.status) {
+    // console.log(res)
+    this.drivers = res.result;
+  }
+}
+changeStatus(selectedValue) {
+  //this.status = selectedValue;
+  this.loadOrders();
+
+}
   loadOrders() {
     var start1 = '';
     var end1 = '';
@@ -190,7 +283,7 @@ export class OrdersComponent implements OnInit {
   success(res) {
     if (res.status == true) {
       this.collection = res.result.data;
-      this.totalRec = res.result.globelCount;
+      this.totalRec = res.result.globalCount;
       console.log(this.collection)
     
       // this.page=this.page;
@@ -207,7 +300,7 @@ export class OrdersComponent implements OnInit {
   }
   filterSelected(selectedValue) {
     console.log('selected value= ' + selectedValue)
-    this.limit = selectedValue;
+   // this.limit = selectedValue;
     this.loadOrders();
 
   }
@@ -219,6 +312,15 @@ export class OrdersComponent implements OnInit {
     this.myStatus=this.loginForm.value.status
 console.log(this.myStatus)  
 
+  }
+  assignedDriver(i){
+    this.api
+    .postReqAuth("admin/driver/assign-driver", { driver_id: i.id, order_id: this.deletedId })
+    .subscribe(
+      res => this.successStatus(res),
+      err => this.error(err),
+      () => (this.loader = false)
+    );
   }
   onScroll() {
     const currentDataLength = this.page * this.limit;
@@ -232,17 +334,23 @@ console.log(this.myStatus)
   pageChanged(event) {
     console.log("pageChanged")
   }
-  openVerticallyCentered(poup, data) {
+  openVerticallyCentered(poup, data,status) {
     this.modalService.open(poup, { centered: true });
     this.deletedId = data.id;
-    this.statusData = data.status;
+    this.statusData=status;
+  }
+  openVerticallyCenteredDriver(poup, data) {
+    this.modalService.open(poup, { centered: true });
+    this.deletedId = data.id;
+  this.driverlist();
   }
   choosedDate(event) {
     console.log(event)
   }
   reset() {
-    this.createForm();
-
+  //  this.createForm();
+  this.loginForm.get('search').patchValue('')
+  this.loginForm.get('range').patchValue('')
     this.selected = {};
     this.exportData = 0;
     this.start = "";
@@ -251,63 +359,43 @@ console.log(this.myStatus)
   }
   filter() {
     console.log(this.loginForm.value)
+
     this.loadOrders();
   }
-  yes() {
-    this.modalService.dismissAll();
-    //var formData=new FormData();
-    //   formData.append('id',this.deletedId)
-    this.api
-      .putReqAuth("admin/brand/delete", { id: this.deletedId }).subscribe(
-        res => this.successdelete(res),
-        err => this.error(err),
-        () => (this.loader = false)
-      );
-  }
 
-  yesStatus() {
-    if (this.statusData == 'Active') {
-      this.statusData = "Inactive";
-    } else {
-      this.statusData = "Active";
-    }
-    this.modalService.dismissAll();
+
+  markDelivered(id,status){
+    this.statusData=status;
     this.api
-      .putReqAuth("admin/brand/status", { id: this.deletedId, status: this.statusData })
+      .putReqAuth("admin/order/change-status", { id: id, status: status })
       .subscribe(
         res => this.successStatus(res),
         err => this.error(err),
         () => (this.loader = false)
       );
   }
-
+  yesStatusAccept() {
+    this.modalService.dismissAll();
+    this.api
+      .putReqAuth("admin/order/change-status", { id: this.deletedId, status: this.statusData })
+      .subscribe(
+        res => this.successStatus(res),
+        err => this.error(err),
+        () => (this.loader = false)
+      );
+  }
   successStatus(res) {
     if (res.status == true) {
-      this.successMessage = res.message;
+      this.modalService.dismissAll();
+      this.loginForm.get('status').patchValue(this.statusData)
+      this._api.showNotification( 'success', res.message );
       this.ngOnInit();
     } else {
-      this.errorMessage = res.message;
+      this._api.showNotification( 'error', res.message );
    
     }
-    setTimeout(() => {
-      this.errorMessage = "";
-      this.successMessage = "";
-    }, 3000);
+  
 
   }
-  successdelete(res) {
-    if (res.status == true) {
-      this.successMessage = res.message;
-      this.page = 1;
-      this.ngOnInit();
-    } else {
-      this.errorMessage = res.message;
-    
-    }
-    setTimeout(() => {
-      this.errorMessage = "";
-      this.successMessage = "";
-    }, 3000);
 
-  }
 }

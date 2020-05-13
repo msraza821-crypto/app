@@ -452,13 +452,48 @@ this.itemsData.push(this.createItem())
         }
 
 
-        let reader = new FileReader();
-        reader.readAsDataURL(event.target.files[x]); // read file as data url
-        reader.onload = (event: any) => { // called once readAsDataURL is completed
+        let reader1 = new FileReader();
+        reader1.readAsDataURL(event.target.files[x]); // read file as data url
+        reader1.onload = (event: any) => { // called once readAsDataURL is completed
           // this.url = event.result;
           this.urlData.push(event.target.result);
+          // this.url = event.target.result;
         }
 
+        // let reader = new FileReader();
+        // reader.readAsDataURL(event.target.files[0]); // read file as data url
+      
+        // reader.onload = () => {
+        
+        //   const img = new Image();
+        //   img.src = reader.result as string;
+        //   img.onload = () => {
+        //     const height = img.naturalHeight;
+        //     const width = img.naturalWidth;
+        //     console.log('Width and Height', width, height);
+        //     if ((height <= CONFIG.PRODUCT_MIN_HEIGHT || height >= CONFIG.PRODUCT_MAX_HEIGHT) || (width <= CONFIG.PRODUCT_MIN_WIDTH || width >= CONFIG.PRODUCT_MAX_WIDTH)) {
+        //       this.errorMessage = "Height and Width must not exceed 1100*800.";
+        //      // alert()
+        //       this.choosefile="No file chosen...";
+        //   //    alert(this.choosefile)
+        //      // this.url='';
+        //         this.url1='';
+        //         this.url=''
+        //         this.isImageError=true
+        //         return false;
+        //     }
+        //     else{
+        //       // this.url = event.target.result;
+        //       console.log(this.url,'url')      
+    
+        //       this.choosefile=event.target.files[0].name;
+      
+        //     }
+        //   }; 
+         
+        // }
+    
+    
 
         this.urlForm.push(event.target.files[x]);
         console.log('image url',this.url1)

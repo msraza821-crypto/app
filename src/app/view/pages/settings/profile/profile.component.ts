@@ -127,35 +127,65 @@ export class ProfileComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       var mimeType = event.target.files[0].type;
       var file = event.target.files[0];
-      console.log(file)
-this.choosefile=event.target.files[0].name;
-      const width = file.naturalWidth;
-      const height = file.naturalHeight;
-console.log('height',height)
+      
+    
       window.URL.revokeObjectURL( file.src );
     //  var checkimg = file.toLowerCase();
       const type = file.type.split('/');
     if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
-
+      this.choosefile=event.target.files[0].name;
     }
     else{
       this.errorMessage = "Please use proper format of image like jpeg,jpg and png only";
       this.choosefile="No file chosen...";
       this.wrongFormat=true;
       this.url='';
+      this.isImageError=true
       this.url1='';
       return false;
-    }      
+    }     
+    
+    
+    let reader1 = new FileReader();
+    reader1.readAsDataURL(event.target.files[0]); // read file as data url
+  
+    // reader1.onload = () => {
+    //   this.url=event.targe.result;
+    // }
+  
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
-      reader.onload = (event: any) => { // called once readAsDataURL is completed
-        this.url = event.target.result;
-
+    
+      reader.onload = (event:any) => {
+        const img = new Image();
+        img.src = reader.result as string;
+        img.onload = () => {
+          const height = img.naturalHeight;
+          const width = img.naturalWidth;
+          console.log('Width and Height', width, height);
+          if ((height <=CONFIG.PROFILE_MIN_HEIGHT || height >=CONFIG.PROFILE_MAX_HEIGHT) || (width <= CONFIG.PROFILE_MIN_WIDTH || width >= CONFIG.PROFILE_MAX_WIDTH)) {
+            this.errorMessage =`Please upload the image of required size which is min height ${CONFIG.PROFILE_MIN_HEIGHT}, max height ${CONFIG.PROFILE_MAX_HEIGHT} and min width ${CONFIG.PROFILE_MIN_WIDTH}, max width ${CONFIG.PROFILE_MAX_WIDTH}.`;
+           // alert()
+            this.choosefile="No file chosen...";
+        //    alert(this.choosefile)
+           this.url='';
+      this.url1='';
+      this.wrongFormat=true;
+      this.isImageError=true;
+    
+      return false;
+          }
+          else{
+             
+            this.url=event.target.result;
+            this.choosefile=event.target.files[0].name;
+    
+          }
+        }; 
       }
- 
-      
       
       this.url1 = event.target.files[0];
+     
      // console.log(this.url1)
     //  alert(window.URL.createObjectURL(event.target.files[0]));
      

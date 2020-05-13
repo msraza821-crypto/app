@@ -25,7 +25,7 @@
               
               <div class="form-group col-md-6">
                 <label for="inputPassword4"><b>Description(English)  </b></label>
-                <textarea type="text" [formControl]="description" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_LENGTH" class="form-control" id="inputPassword4"
+                <textarea type="text" [formControl]="description" [minlength]="CONFIG?.NAME_MINLENGTH"  [maxlength]="CONFIG?.B_DES" class="form-control" id="inputPassword4"
                   placeholder="Enter the description"></textarea>
               
                   <span class="error text-danger">{{_util.errorMessage(description,FORM_ERROR?.description)}}</span>
@@ -40,7 +40,7 @@
               
               <div class="form-group col-md-6">
                 <label for="inputPassword4"><b>Description(Arabic) </b></label>
-                <textarea type="text" [formControl]=" description_arabic"  style="direction:RTL;" onkeyup="rtl(this);" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.DESCRIPTION_LENGTH" class="form-control" id="inputPassword4"
+                <textarea type="text" [formControl]=" description_arabic"  style="direction:RTL;" onkeyup="rtl(this);" [minlength]="CONFIG?.NAME_MINLENGTH"  [maxlength]="CONFIG?.B_DES" class="form-control" id="inputPassword4"
                   placeholder="وصف المنتج"></textarea>
               
                   <span class="error text-danger">{{_util.errorMessage(description_arabic,FORM_ERROR?.description_arabic)}}</span>

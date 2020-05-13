@@ -150,12 +150,47 @@ export class AddChildcategoryComponent implements OnInit {
       }
 
 
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-      reader.onload = (event: any) => { // called once readAsDataURL is completed
+      let reader1 = new FileReader();
+      reader1.readAsDataURL(event.target.files[0]); // read file as data url
+      reader1.onload = (event: any) => { // called once readAsDataURL is completed
        // this.url = event.result;
         this.url = event.target.result;
       }
+
+
+      let reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+    
+      reader.onload = () => {
+      
+        const img = new Image();
+        img.src = reader.result as string;
+        img.onload = () => {
+          const height = img.naturalHeight;
+          const width = img.naturalWidth;
+          console.log('Width and Height', width, height);
+          if ((height <= CONFIG.CATEGORY_MIN_HEIGHT || height >= CONFIG.CATEGORY_MAX_HEIGHT) || (width <= CONFIG.CATEGORY_MIN_WIDTH || width >= CONFIG.CATEGORY_MAX_WIDTH)) {
+            this.errorMessage = `Please upload the image of required size which is min height ${CONFIG.CATEGORY_MIN_HEIGHT}, max height ${CONFIG.CATEGORY_MAX_HEIGHT} and min width ${CONFIG.CATEGORY_MIN_WIDTH}, max width ${CONFIG.CATEGORY_MAX_WIDTH}.`;
+           // alert()
+            this.choosefile="No file chosen...";
+        //    alert(this.choosefile)
+           this.url='';
+              this.url1='';
+              this.isImageError=true;
+              this.isWrongFormat=true;
+              return false;
+          }
+          else{
+           
+  
+            this.choosefile=event.target.files[0].name;
+    
+          }
+        }; 
+       
+      }
+  
+  
 
 
       this.url1 = event.target.files[0];

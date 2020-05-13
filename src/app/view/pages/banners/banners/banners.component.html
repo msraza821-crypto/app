@@ -82,7 +82,8 @@
                       currentPage: page,
                       totalItems: totalRec };let ie=index">
                       <td>  {{ ((limit * (page - 1)) + ie+1) }}</td>
-                        <td scope="row">{{i.title}}</td>
+                        <!-- <td scope="row">{{i.title}}</td> -->
+                        <td scope="row"  title="{{i.title}}">{{this.add3Dots(i.title,20)}}</td>
                           <td scope="row">{{i.banner_start_date |  date: 'dd-MM-yyyy'}}
                         </td>
                         <td> {{i.banner_end_date |  date: 'dd-MM-yyyy'}}</td>

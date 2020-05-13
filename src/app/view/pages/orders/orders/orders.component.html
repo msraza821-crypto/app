@@ -42,11 +42,10 @@
               </div>
 
               <div class="col-md-1 float-left" style="min-width:150px" >
-                <select id="inputState" class="form-control" [formControl]="status" (change)="chnageStatus()">
-                  <option value="">All</option>
-               
+                <select id="inputState" class="form-control" [formControl]="status" (change)="changeStatus($event.target.value)">
+              
                   <option value="pending">Pending</option> 
-                    <option value="approved">Approved</option>
+                    <option value="accepted">Accepted</option>
                     <option value="delivered">Delivered</option>
                     <option value="rejected">Rejected</option>
                     <option value="cancelled">Cancelled</option>
@@ -63,15 +62,16 @@
                   <thead>
                     <tr >
                         <th scope="col">S. No.</th>
+                        <th scope="col">Order Id</th>
                       <th scope="col">User Details</th>
                       <th scope="col">Order Date</th>
                      
-                      <th scope="col">Order Id</th>
-                      <th *ngIf="loginForm.value.status=='approved'" scope="col">Driver's Name</th>
-                      <th *ngIf="loginForm.value.status=='approved'" scope="col">Status</th>
+                     
+                      <th *ngIf="loginForm.value.status=='accepted'" scope="col">Driver's Name</th>
+                      <th scope="col">Status</th>
                      
                       <th  scope="col">Actions</th>
-                      <th *ngIf="loginForm.value.status=='approved'" scope="col">Mark Delivered</th>
+                      <th *ngIf="loginForm.value.status=='accepted'" scope="col">Mark Delivered</th>
                     </tr>
 
                   </thead >
@@ -84,34 +84,32 @@
                         {{ ((limit * (page - 1)) + ie+1) }}
 
                     </td>
-                    <td>{{i.first_name}}&nbsp;{{i.last_name}}
+                    <td scope="row" style=" text-transform: capitalize;">ORD{{i.id}}</td>
+                    <td style=" text-transform: capitalize;">{{i.first_name}}&nbsp;{{i.last_name}}
                     </td>
-                    <td> {{i.created_at}}
+                    <td> {{this.transform(i.created_at)}}
                     </td>
-                      <td scope="row" style=" text-transform: capitalize;">{{i.id}}</td>
+                     
                        
                      
                      
-                    <!-- <td  *ngIf="i.status=='Active'" >Active
+                  <td style=" text-transform: capitalize;">{{i.status}}
                   </td>
-                  <td  *ngIf="i.status=='Inactive'" >Inactive
-                    </td> -->
+               
                    
                      
                       <td style="max-width:150px;">
-                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:loginForm.value.status}]" title="View Order" class="my-position"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
-                        <a  title="Accept Order" (click)="openVerticallyCentered(accept,i)" class="btn btn-secondary">Accept</a>&nbsp;                      
-                        <a (click)="openVerticallyCentered(poup2,i)" title="Reject Order" class="btn btn-danger">Reject</a> 
-                        <!-- <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
-                        <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px" -->
-                            <!-- class="fa fa-trash-o"></i></a> -->
+                          <a [routerLink]="['/theme/orders/view',{id :i?.id}]" title="View Order" ><button type="button" class="btn btn-primary">View</button></a>&nbsp;&nbsp;    
+                        <a  title="Accept Order" (click)="openVerticallyCentered(accept,i,'accepted')" ><button type="button" class="btn btn-primary">Accept</button></a>&nbsp;                      
+                        <a (click)="openVerticallyCentered(poup2,i,'rejected')" title="Reject Order"><button type="button" class="btn btn-dark">Reject</button></a> 
+                   
                       </td>
                     </tr>
                   </tbody>
 
 
 
-                  <tbody  *ngIf="loginForm.value.status=='approved'">
+                  <tbody  *ngIf="loginForm.value.status=='accepted'">
                     <tr  *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                     itemsPerPage: limit,
                     currentPage: page,
@@ -120,113 +118,59 @@
                         {{ ((limit * (page - 1)) + ie+1) }}
 
                     </td>
-                    <td>{{i.first_name}}&nbsp;{{i.last_name}}
+                    <td style=" text-transform: capitalize;">{{i.first_name}}&nbsp;{{i.last_name}}
                     </td>
-                    <td> {{i.created_at}}
+                    <td> {{this.transform(i.created_at)}}
                     </td>
+                     
                       <td scope="row" style=" text-transform: capitalize;">{{i.id}}</td>
                        
-                    <td>Abc</td>
-                    <td>Active</td>
+                    <td style=" text-transform: capitalize;">{{i?.driver_name}}</td>
+                    <td style=" text-transform: capitalize;">{{i.status}}
+                    </td>
                    
                      
                       <td style="max-width:120px;">
-                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:loginForm.value.status}]" title="View Order" class="my-position"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
-                        <!-- <a  title="Assign Driver" ></a>&nbsp;                       -->
-                        <a (click)="openVerticallyCentered(poup3,i)" title="Assign Driver" class="btn btn-primary" style="color:white;margin-left:10px">Assign Driver</a> 
-                        <!-- <a (click)="openVerticallyCentered(poup3,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
-                        <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px" -->
-                            <!-- class="fa fa-trash-o"></i></a> -->
+                          <a [routerLink]="['/theme/orders/view',{id :i?.id}]" title="View Order"> <button type="button" class="btn btn-primary">View</button></a>&nbsp;&nbsp;    
+                         <a (click)="openVerticallyCenteredDriver(poup3,i)" title="Assign Driver" ><button type="button" class="btn btn-dark">Assign Driver</button></a> 
+                  
                       </td>
-                      <td><input class="checkBox" type="checkbox"  title="Mark Delivered"></td>
+                      <td (click)="markDelivered(i?.id,'delivered')"><input class="checkBox" type="checkbox"  title="Mark Delivered"></td>
                     </tr>
                   </tbody>
 
 
 
-                  <tbody *ngIf="loginForm.value.status=='delivered'" >
-                    <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
-                    itemsPerPage: limit,
-                    currentPage: page,
-                    totalItems: totalRec }; let ie = index">
-                    <td>
-                        {{ ((limit * (page - 1)) + ie+1) }}
-
-                    </td>
-                    <td>{{i.first_name}}&nbsp;{{i.last_name}}
-                    </td>
-                    <td> {{i.created_at}}
-                    </td>
-                      <td scope="row" style=" text-transform: capitalize;">{{i.id}}</td>
-                       
-                   
-                   
-                     
-                      <td>
-                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:loginForm.value.status}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
-                        <!-- <a  title="Assign Driver" ></a>&nbsp;                       -->
-                        <!-- <a (click)="openVerticallyCentered(poup2,i)" title="Reject Order" class="btn btn-danger">Reject</a>  -->
-                        <!-- <a (click)="openVerticallyCentered(poup1,i)" *ngIf="i.status=='Inactive'" title="Unblock Brand">   <i style="font-size:24px;color:red" class="fa fa-ban"></i>&nbsp;</a>
-                        <a (click)="openVerticallyCentered(poup,i)" title="Delete Brand"> <i style="font-size:24px" -->
-                            <!-- class="fa fa-trash-o"></i></a> -->
-                      </td>
-                    </tr>
-                  </tbody>
-
-
-                  <tbody *ngIf="loginForm.value.status=='rejected'">
-                    <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
-                    itemsPerPage: limit,
-                    currentPage: page,
-                    totalItems: totalRec }; let ie = index">
-                    <td>
-                        {{ ((limit * (page - 1)) + ie+1) }}
-
-                    </td>
-                    
-                      <td>{{i.first_name}}&nbsp;{{i.last_name}}
-                      </td>
-                      <td> {{i.created_at}}
-                      </td>
-                        <td scope="row" style=" text-transform: capitalize;">{{i.id}}</td>
-                         
-                   
-                   
-                     
-                      <td>
-                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:loginForm.value.status}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>   
-                                       
-                      
-                      </td>
-                    </tr>
-                  </tbody>
-
-                  <tbody  *ngIf="loginForm.value.status=='cancelled'" >
-                    <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
-                    itemsPerPage: limit,
-                    currentPage: page,
-                    totalItems: totalRec }; let ie = index">
-                    <td>
-                        {{ ((limit * (page - 1)) + ie+1) }}
-
-                    </td>
-                    <td>{{i.first_name}}&nbsp;{{i.last_name}}
-                    </td>
-                    <td> {{i.created_at}}
-                    </td>
-                      <td scope="row" style=" text-transform: capitalize;">{{i.id}}</td>
-                       
-                   
-                     
-                      <td>
-                          <a [routerLink]="['/theme/orders/view',{id :i?.id,status:loginForm.value.status}]" title="View Order"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;&nbsp;    
                  
+                  <tbody  *ngIf="loginForm.value.status=='cancelled' || loginForm.value.status=='rejected' ||  loginForm.value.status=='delivered'" >
+                    <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
+                    itemsPerPage: limit,
+                    currentPage: page,
+                    totalItems: totalRec }; let ie = index">
+                    <td>
+                        {{ ((limit * (page - 1)) + ie+1) }}
+
+                    </td>
+                    <td>{{i.first_name}}&nbsp;{{i.last_name}}
+                    </td>
+                    <td> {{this.transform(i.created_at)}}
+                    </td>
+                     
+                      <td scope="row" style=" text-transform: capitalize;">{{i.id}}</td>
+                       
+                      <td style=" text-transform: capitalize;">{{i.status}}
+                      </td>
+                     
+                      <td>
+                        <a [routerLink]="['/theme/orders/view',{id :i?.id}]" title="View Order"> <button type="button" class="btn btn-primary">View</button></a>&nbsp;&nbsp;    
                       </td>
                     </tr>
                   </tbody>
                   <tbody *ngIf="collection.length==0">
-                    <tr class="text-center">
-                      <td colspan="6">No records found</td>
+                    <tr class="text-center" >
+                      <td colspan="6" *ngIf="loginForm.value.status=='cancelled' || loginForm.value.status=='rejected' ||  loginForm.value.status=='delivered'">No records found</td>
+                      <td colspan="8" *ngIf="loginForm.value.status=='accepted'">No records found</td>
+                      <td colspan="7" *ngIf="loginForm.value.status=='pending'">No records found</td>
                     </tr>
                   </tbody>
                 </table>
@@ -284,30 +228,7 @@
     </div>
   </section>
 </ng-template>
-<ng-template #poup1 let-modal>
-    <!----- Header  ------>
-    <section id="modal-header">
-      <h5 class="p-3 primary-color-bg bg-dark text-center">Active Brand</h5>
-      <div class="">
-        <div class="row pt-4">
-          <div class="col-md-12 frgtpass-head">
-            <p class="text-center"> Are you sure you want to active this brand ? </p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-------------->
-    <section>
-      <div class=" frgtpass-btns mb-3">
-        <div class="row mt-3">
-          <div class="col-md-12 text-center">
-            <button type="button" class="ml-3 btn bg-dark white" (click)="modal.close('Close click')">No</button>
-            <button type="button" class="ml-3 btn bg-dark white" (click)="yesStatus()">Yes</button>
-          </div>
-        </div>
-      </div>
-    </section>
-  </ng-template>
+
   <ng-template #poup2 let-modal>
       <!----- Header  ------>
       <section id="modal-header">
@@ -318,11 +239,13 @@
               <p class="text-center">Select a reason to reject : </p>
               </div>
               <div class="col-md-4 float-left" style='margin-bottom: 50px;' >
-              <select class="form-control">
+              <select class="form-control" [formControl]="reason">
                 
-                <option value="t">Please Select</option>
-                <option value=""> Reason1</option>
+                <option value="">Please Select</option>
+                <option  *ngFor="let reason of reasons" [value]="reason.reason">{{reason.reason}}</option>
               </select>
+             
+              <span class="error text-danger">{{_util.errorMessage(reason,FORM_ERROR?.reason)}}</span>
             
             </div>  
           
@@ -335,7 +258,7 @@
           <div class="row mt-3">
             <div class="col-md-12 text-center">
               <button type="button" class="ml-3 ml-3 btn bg-dark  white white" (click)="modal.close('Close click')">No</button>
-              <button type="button" class="ml-3 btn bg-dark white" (click)="yesStatus()">Yes</button>
+              <button type="button" class="ml-3 btn bg-dark white" (click)="yesStatusReject()">Yes</button>
             </div>
           </div>
         </div>
@@ -371,14 +294,16 @@
                         <th>Date</th>
                         <th>Action</th>
                       </thead>
-                      <tbody>
+                      <tbody  *ngFor="let i of drivers; let ie = index">
                         <tr>
-                          <td>1</td>
-                          <td>AAAAAA</td>
-                          <td>Active</td>
-                          <td>20-20-2020</td>
+                          <td>{{ie+1}}</td>
+                          <td>{{i.name}}</td>
+                          <td *ngIf="i.is_available==0">Available</td>
+                          <td *ngIf="i.is_available==1">Not Available</td>
+                          <td> {{i.created_at | date:'mm'}}
+                          </td>
                           <td>
-                            <a class="btn btn-primary" >Assign</a>
+                            <a (click)="assignedDriver(i)"class="btn btn-primary" >Assign</a>
                           </td>
                         </tr>
                       </tbody>
@@ -432,7 +357,7 @@
           <div class="row mt-3">
             <div class="col-md-12 text-center">
               <button type="button" class="ml-3 ml-3 btn bg-dark  white white" (click)="modal.close('Close click')">No</button>
-              <button type="button" class="ml-3 btn bg-dark white" (click)="yesStatus()">Yes</button>
+              <button type="button" class="ml-3 btn bg-dark white" (click)="yesStatusAccept()">Yes</button>
             </div>
           </div>
         </div>
