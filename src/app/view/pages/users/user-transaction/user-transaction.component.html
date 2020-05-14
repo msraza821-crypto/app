@@ -76,7 +76,7 @@
                                   {{ ((limit * (page - 1)) + ie+1) }}
           
                               </td>
-                                  <td scope="row">{{i.order_id}}</td>
+                                  <td scope="row">ORD{{i.order_id}}</td>
                                     <!-- <td scope="row">{{i.driver_start_date}}
                                   </td>
                                   <td>{{i.driver_end_date}}</td> -->
@@ -85,12 +85,12 @@
                 
                           
                              
-                                <td>{{i.payment_mode}}</td>
+                                <td  style=" text-transform: capitalize;">{{i.payment_mode}}</td>
                                  
                                   <td>
                                      {{i.purchase_date|date:'dd-MM-yyyy'}}
                                   </td>
-                                  <td>{{i.bill_amount}} QAR</td>
+                                  <td>QAR {{i.bill_amount}}</td>
                                 </tr>
                               </tbody>
                               <tbody *ngIf="collection.length==0">
