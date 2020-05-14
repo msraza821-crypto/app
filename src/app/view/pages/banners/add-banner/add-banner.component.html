@@ -62,7 +62,7 @@
             <div class="form-group ">
 
               <input type="number" class="form-control"   placeholder="{{placeHolderText}}"
-                [formControl]="discount_value" (keypress) = "changeNumber($event)"  appOnlyNumber [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER"> 
+                [formControl]="discount_value" (keypress) = "changeNumber($event)" (keypress)='keyPress($event)'  [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER"> 
               <span class="error text-danger"> {{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
             </div>
           
@@ -130,38 +130,6 @@
                 <span class="error text-danger">{{_util.errorMessage(date,FORM_ERROR?.date)}}</span>
               </div>
 
-
-              <!-- <div class=" col-md-2" *ngIf="isBrand">
-                <label> <b>Brand <span class="star">*</span></b></label><br/>
-              
-                  <div ngbDropdown class="" style="width:100%">
-                    <button class="btn btn-outline-primary form-control" id="dropdownForm1" type="button"  ngbDropdownToggle style="width:100%;padding-left:10px;padding-right:0;text-align: left;color:#5c6873">Select Brand
-                      </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownForm1" style="width:100% !important">
-  
-                      <div style="overflow:auto ;max-height:300px">
-                        <table style="width:100%">
-                          <thead>
-  
-                          </thead>
-                          <tbody>
-                            <tr  *ngFor="let brand of brands">
-                              <td style="padding-left: 10px;"><input type="checkbox"  (change)="brandChange($event,brand.id)" [checked]="getChecked(brand.id)"></td>
-                            <td style="padding-left: 10px;">{{brand.name}}</td>
-                             
-                            </tr>
-                           
-                          </tbody>
-                        </table>
-                          </div>
-                      <div class="dropdown-divider"></div>
-  
-                      <button type="button" class="my-button" (click)="getProductBrand()" ngbDropdownItem>Done.</button>
-  
-                    </div>
-                  </div>
-              
-              </div> -->
 
 
 

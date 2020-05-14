@@ -12,6 +12,7 @@ import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 import { ColorHueModule } from 'ngx-color/hue';
 import { ColorSketchModule } from 'ngx-color/sketch';
 
+
 import { OnlyNumberDirective } from 'src/app/directive/only-number.directive';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { ColorCompactModule } from 'ngx-color/compact';
@@ -36,7 +37,7 @@ const pageRoutes: Routes = [
     RouterModule.forChild(pageRoutes),
     
   ],
-  declarations: [ProductsComponent,AddProductComponent,SimilarProductComponent,DetailProductComponent,EditProductComponent],
+  declarations: [ProductsComponent,AddProductComponent,SimilarProductComponent,DetailProductComponent,EditProductComponent,OnlyNumberDirective],
   entryComponents: []
 })
 export class ProductsModule { }

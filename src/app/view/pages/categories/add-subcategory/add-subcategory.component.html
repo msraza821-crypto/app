@@ -16,28 +16,28 @@
             <form>
               <div class="row ">
                   <div class="form-group col-md-6">
-                      <label for="inputEmail4"><b>Category Name(English) <span class="star">*</span></b></label>
+                      <label for="inputEmail4"><b>Category Name(En) <span class="star">*</span></b></label>
                       <input type="text" [formControl]="name_pe" readonly=true class="form-control" id="inputEmail4" placeholder="Name">
 
                    
                    
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4"><b>Category Name(Arabic) <span class="star">*</span></b></label>
+                        <label for="inputEmail4"><b>Category Name(Ar) <span class="star">*</span></b></label>
                         <input type="text" [formControl]="name_pa" readonly=true class="form-control" id="inputEmail4" style="direction:RTL;" placeholder="اسم">
 
           
                   
                       </div>
             <div class="form-group col-md-6">
-              <label for="inputEmail4"><b>Sub-Category Name(English) <span class="star">*</span></b></label>
+              <label for="inputEmail4"><b>Sub-Category Name(En) <span class="star">*</span></b></label>
               <input type="text" [formControl]="name" class="form-control" id="inputEmail4"  [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" placeholder="Enter the sub-category name">
 
               <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
             </div>
             
             <div class="form-group col-md-6">
-              <label for="inputPassword4"><b>Sub-Category Description(English) </b></label>
+              <label for="inputPassword4"><b>Sub-Category Description(En) </b></label>
               <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4" [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_DES"
                 placeholder="Enter the description"></textarea>
   
@@ -45,13 +45,13 @@
             </div>
             
             <div class="form-group col-md-6">
-                <label for="inputEmail4"><b>Sub-Category Name(Arabic) <span class="star">*</span></b></label>
+                <label for="inputEmail4"><b>Sub-Category Name(Ar) <span class="star">*</span></b></label>
                 <input type="text" [formControl]="namear" class="form-control" id="inputEmail4"  [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="أدخل اسم الفئة الفرعية">
           
               <span class="error text-danger">{{_util.errorMessage(namear,FORM_ERROR?.namear)}}</span>
             </div>
               <div class="form-group col-md-6">
-                <label for="inputPassword4"><b>Sub-Category Description(Arabic) </b></label>
+                <label for="inputPassword4"><b>Sub-Category Description(Ar) </b></label>
                 <textarea type="text" [formControl]="descriptionar" class="form-control"   style="direction:RTL;" [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_DES" onkeyup="rtl(this);" id="inputPassword4"
                   placeholder="أدخل الوصف"></textarea>
  

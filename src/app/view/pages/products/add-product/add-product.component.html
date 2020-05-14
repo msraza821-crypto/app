@@ -14,33 +14,34 @@
 
           <div class="row ">
             <form [formGroup]="loginForm">
+              <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{errorMessage}}</div>
                 <div class="row ">
                    
               <div class="form-group col-md-6">
-                <label for="inputEmail4"><b>Product Name(English) <span class="star">*</span></b></label>
-                <input type="text" [formControl]="product_name_en" class="form-control" id="inputEmail4" placeholder="Enter the product name">
+                <label for="inputEmail4"><b>Product Name(En) <span class="star">*</span></b></label>
+                <input type="text" [formControl]="product_name_en" class="form-control" id="inputEmail4" placeholder="Enter the product name" [maxlength]='CONFIG?.PRODUCT_MAX'>
 
             
                 <span class="error text-danger">{{_util.errorMessage(product_name_en,FORM_ERROR?.product_name_en)}}</span>
               </div>
               
               <div class="form-group col-md-6">
-                <label for="inputPassword4"><b>Product Description(English)</b> </label>
-                <textarea type="text" [formControl]="product_description_en" class="form-control" id="inputPassword4"
-                  placeholder="Enter description"></textarea>
+                <label for="inputPassword4"><b>Product Description(En)</b> </label>
+                <textarea type="text" [formControl]="product_description_en" [maxlength]='CONFIG?.PRODUCT_DESCRIPTION' class="form-control" id="inputPassword4"
+                  placeholder="Enter the description"></textarea>
               
                   <span class="error text-danger">{{_util.errorMessage(product_description_en,FORM_ERROR?.product_description_en)}}</span>
               </div>
               
               <div class="form-group col-md-6">
-                  <label for="inputEmail4"><b>Product Name(Arabic) <span class="star">*</span></b></label>
-                  <input type="text" [formControl]="product_name_ar" class="form-control" id="inputEmail4"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="اسم المنتج">
+                  <label for="inputEmail4"><b>Product Name(Ar) <span class="star">*</span></b></label>
+                  <input type="text" [formControl]="product_name_ar" [maxlength]='CONFIG?.PRODUCT_MAX' class="form-control" id="inputEmail4"   style="direction:RTL;" onkeyup="rtl(this);" placeholder="اسم المنتج">
               
                 <span class="error text-danger">{{_util.errorMessage(product_name_ar,FORM_ERROR?.product_name_ar)}}</span>
               </div>
                 <div class="form-group col-md-6">
-                  <label for="inputPassword4"><b>Product Description(Arabic) </b></label>
-                  <textarea type="text" [formControl]="product_description_ar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
+                  <label for="inputPassword4"><b>Product Description(Ar) </b></label>
+                  <textarea type="text" [formControl]="product_description_ar" class="form-control"  [maxlength]='CONFIG?.PRODUCT_DESCRIPTION'   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
                     placeholder="وصف المنتج"></textarea>
                  
               <span class="error text-danger">{{_util.errorMessage(product_description_ar,FORM_ERROR?.product_description_ar)}}</span>
@@ -96,15 +97,15 @@
      
                 
                     <div class="form-group col-md-4">
-                      <label for="inputPassword4">Attribute Description(English)</label>
-                      <textarea type="text" [formControl]="attribute_description_en" class="form-control" id="inputPassword4"
+                      <label for="inputPassword4">Attribute Description(En)</label>
+                      <textarea type="text" [formControl]="attribute_description_en"    [maxlength]='CONFIG?.B_DES' class="form-control" id="inputPassword4"
                         placeholder="Enter the attribute description"></textarea>
                     
                         <span class="error text-danger">{{_util.errorMessage(attribute_description_en,FORM_ERROR?.attribute_description_en)}}</span>
                     </div>
                     <div class="form-group col-md-4">
-                      <label for="inputPassword4">Attribute Description(Arabic)<span style="color:red">*</span></label>
-                      <textarea type="text" [formControl]="attribute_description_ar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
+                      <label for="inputPassword4">Attribute Description(Ar)</label>
+                      <textarea type="text" [formControl]="attribute_description_ar"    [maxlength]='CONFIG?.B_DES' class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
                       placeholder="وصف السمة"></textarea>
                      
                   <span class="error text-danger">{{_util.errorMessage(attribute_description_ar,FORM_ERROR?.attribute_description_ar)}}</span>
@@ -125,12 +126,12 @@
                         [formGroupName]="i">
                 <div class="form-group col-md-3">
                     <label for="inputEmail4">Product Quantity <span style="color:red">*</span></label>
-                    <input type="text" formControlName="quantity" class="form-control"  id="inputEmail4" placeholder="Product Quantity">
+                    <input type="text" formControlName="quantity" class="form-control" (keypress)="_util.keyPress($event)"  id="inputEmail4" placeholder="Product Quantity" [maxlength]='CONFIG?.MAX_PRICE'>
                     <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('required')">
                     Qantity is required</span>
                 
                     <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('required')==false && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('range')">
-                      Quantity range in between 0 t0 10000</span>
+                      Quantity range in between 0 to 10000</span>
                   </div>
                   <div class="form-group col-md-3">
                       <label for="inputEmail4">Product Size <span style="color:red">*</span></label>
@@ -143,11 +144,11 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputEmail4">Product Price(QAR) <span style="color:red">*</span></label>
-                        <input type="text" formControlName="product_price"  class="form-control" id="inputEmail4" placeholder="Product Price">
+                        <input type="text" formControlName="product_price"  (keypress)="_util.keyPress($event)"   class="form-control" id="inputEmail4" placeholder="Product Price" [maxlength]='CONFIG?.MAX_PRICE'>
                         <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')">
                           Price is required</span>
-                          <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')==false && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('range')">
-                            Price range in between 0 t0 10000</span>
+                          <span class="error text-danger"  *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')==false && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('range')">
+                            Price range in between 0 to 10000</span>
                       
                       </div>
                       <div class="form-group col-md-3">
@@ -161,7 +162,7 @@
                 <hr>
                    <div class="form-group col-md-4">
                       <label for="inputState">Discount range date</label>
-                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range" class="form-control" (datesUpdated)="choosedDate($event)" (keydown)="onKeydown($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-DD-MM'}"
+                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range" class="form-control" (datesUpdated)="choosedDate($event)" (keydown)="onKeydown($event)"   [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
                   
                     placeholder="Discount Date Range"  />
                     <span class="error text-danger">{{_util.errorMessage(discount_range,FORM_ERROR?.discount_range)}}</span>
@@ -179,10 +180,14 @@
                     </div>
                    <div class="form-group col-md-3">
                         <label for="inputEmail4">Discount Price{{dPrice}}</label>
-                        <input type="text" [formControl]="discount_value"  (keypress) = "changeNumber($event)" appOnlyNumber [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
+                        <input type="text" [formControl]="discount_value" appOnlyNumber  (keypress)="_util.keyPress($event)" (keypress) = "changeNumber($event)" appOnlyNumber [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
         
                     
                         <span class="error text-danger">{{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
+                                     
+                        
+                        <span class="error text-danger" *ngIf="loginForm.value.min_order_value<=loginForm.value.promo_discount&&loginForm.value.promo_discount!=''&&loginForm.value.promo_type==1">
+                          Discounted price can not be greater or equal to the min. order value</span>
                       </div>
                       <div class="form-group col-md-3" *ngIf="this.id">
                           <label for="inputState">Status</label>

@@ -16,7 +16,7 @@
                 <div class="row ">
                    
               <div class="form-group col-md-6">
-                <label for="inputEmail4"><b>Title(English)<span class="star">*</span></b></label>
+                <label for="inputEmail4"><b>Title(En)<span class="star">*</span></b></label>
                 <input type="text" [formControl]="title" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.B_NAME" class="form-control" id="inputEmail4" placeholder="Enter the title">
 
             
@@ -24,14 +24,14 @@
               </div>
               
               <div class="form-group col-md-6">
-                <label for="inputPassword4"><b>Description(English)  </b></label>
+                <label for="inputPassword4"><b>Description(En)  </b></label>
                 <textarea type="text" [formControl]="description" [minlength]="CONFIG?.NAME_MINLENGTH"  [maxlength]="CONFIG?.B_DES" class="form-control" id="inputPassword4"
                   placeholder="Enter the description"></textarea>
               
                   <span class="error text-danger">{{_util.errorMessage(description,FORM_ERROR?.description)}}</span>
               </div>
               <div class="form-group col-md-6">
-                <label for="inputEmail4"><b>Title(Arabic) <span class="star">*</span></b></label>
+                <label for="inputEmail4"><b>Title(Ar) <span class="star">*</span></b></label>
                 <input type="text" [formControl]="title_arabic" style="direction:RTL;" onkeyup="rtl(this);" [minlength]="CONFIG?.NAME_MINLENGTH" [maxlength]="CONFIG?.B_NAME" class="form-control" id="inputEmail4" placeholder="أدخل العنوان">
 
             
@@ -39,7 +39,7 @@
               </div>
               
               <div class="form-group col-md-6">
-                <label for="inputPassword4"><b>Description(Arabic) </b></label>
+                <label for="inputPassword4"><b>Description(Ar) </b></label>
                 <textarea type="text" [formControl]=" description_arabic"  style="direction:RTL;" onkeyup="rtl(this);" [minlength]="CONFIG?.NAME_MINLENGTH"  [maxlength]="CONFIG?.B_DES" class="form-control" id="inputPassword4"
                   placeholder="وصف المنتج"></textarea>
               

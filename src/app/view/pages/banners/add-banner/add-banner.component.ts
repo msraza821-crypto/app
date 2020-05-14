@@ -714,8 +714,11 @@ getFormData()
 
     if (!pattern.test(inputChar)) {    
       
+      
         event.preventDefault();
     }
+    if(inputChar=='')
+    event.preventDefault();
 }
 
 
