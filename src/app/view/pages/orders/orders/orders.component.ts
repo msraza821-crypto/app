@@ -108,6 +108,14 @@ day[0]='0'+day[0]
    
     });
   }
+  
+  loginFormDriver:FormGroup;
+  createFormDriver() {
+    this.loginFormDriver = this._fb.group({
+      search_string: [""],
+   
+    });
+  }
   createForm() {
     this.loginForm = this._fb.group({
       search: [""],
@@ -189,6 +197,10 @@ rejectReasons(){
   get range(): FormControl {
     return this.loginForm.get("range") as FormControl;
   }
+  get search_string(): FormControl {
+    return this.loginFormDriver.get("search_string") as FormControl;
+  }
+  
   download_csv() {
     var data = [
       ['Foo', 'programmer'],
@@ -240,8 +252,9 @@ rejectReasons(){
     return result;
 }
 driverlist() {
+  this.spinner.show();
   this.api
-    .getReqAuth("admin/driver/available-driver").subscribe(
+    .getReqAuth("admin/driver/available-driver?search_string="+this.loginFormDriver.value.search_string).subscribe(
       res => this.successDriver(res),
       err => this.error(err),
       () => (this.loader = false)
@@ -249,12 +262,14 @@ driverlist() {
 }
 drivers: any = [];
 successDriver(res: any) {
+  this.spinner.hide();
   if (res.status) {
     // console.log(res)
     this.drivers = res.result;
   }
 }
 changeStatus(selectedValue) {
+  this.collection=[];
   //this.status = selectedValue;
   this.loadOrders();
 
@@ -262,6 +277,7 @@ changeStatus(selectedValue) {
   loadOrders() {
     var start1 = '';
     var end1 = '';
+    this.spinner.show();
     //  console.log(this.loginForm.value)
      if(this.loginForm.value.range){
        start1=this.loginForm.value.range.startDate._d;
@@ -281,6 +297,7 @@ changeStatus(selectedValue) {
       );
   }
   success(res) {
+    this.spinner.hide();
     if (res.status == true) {
       this.collection = res.result.data;
       this.totalRec = res.result.globalCount;
@@ -314,6 +331,7 @@ console.log(this.myStatus)
 
   }
   assignedDriver(i){
+    this.spinner.show();
     this.api
     .postReqAuth("admin/driver/assign-driver", { driver_id: i.id, order_id: this.deletedId })
     .subscribe(
@@ -321,6 +339,21 @@ console.log(this.myStatus)
       err => this.error(err),
       () => (this.loader = false)
     );
+  }
+  searchDriver(value){
+    
+    this.driverlist();
+  }
+  add3Dots(string, limit)
+  {
+    var dots = "...";
+    if(string.length > limit)
+    {
+      // you can also use substr instead of substring
+      string = string.substring(0,limit) + dots;
+    }
+  
+      return string;
   }
   onScroll() {
     const currentDataLength = this.page * this.limit;
@@ -340,9 +373,11 @@ console.log(this.myStatus)
     this.statusData=status;
   }
   openVerticallyCenteredDriver(poup, data) {
+    this.createFormDriver();
     this.modalService.open(poup, { centered: true });
     this.deletedId = data.id;
   this.driverlist();
+ 
   }
   choosedDate(event) {
     console.log(event)
@@ -365,6 +400,7 @@ console.log(this.myStatus)
 
 
   markDelivered(id,status){
+    this.spinner.show();
     this.statusData=status;
     this.api
       .putReqAuth("admin/order/change-status", { id: id, status: status })
@@ -375,6 +411,7 @@ console.log(this.myStatus)
       );
   }
   yesStatusAccept() {
+    this.spinner.show();
     this.modalService.dismissAll();
     this.api
       .putReqAuth("admin/order/change-status", { id: this.deletedId, status: this.statusData })
@@ -385,6 +422,7 @@ console.log(this.myStatus)
       );
   }
   successStatus(res) {
+    this.spinner.hide();
     if (res.status == true) {
       this.modalService.dismissAll();
       this.loginForm.get('status').patchValue(this.statusData)

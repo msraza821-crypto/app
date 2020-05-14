@@ -11,7 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AddDriverComponent } from './add-driver/add-driver.component';
 import { ViewComponent } from './view/view.component';
-
+import { DriverViewComponent } from './driver-view/driver-view.component';
 
 
 const pageRoutes: Routes = [
@@ -21,13 +21,15 @@ const pageRoutes: Routes = [
     children: [{ path: '', canActivate: [], data:{title:'Drivers'},component: DriversComponent },
     {
       path:'addDriver',canActivate:[],data:{title:'Add Driver'}, component:AddDriverComponent },
-    {path:'view', canActivate:[],data:{title:'View'},component:ViewComponent}
+    {path:'view', canActivate:[],data:{title:'View'},component:ViewComponent},
+    {path:'order-view', canActivate:[],data:{title:'View'},component:DriverViewComponent}
   ]
+  
   }
 ];
 
 @NgModule({
-  declarations: [DriversComponent, AddDriverComponent, ViewComponent],
+  declarations: [DriversComponent, AddDriverComponent, ViewComponent,DriverViewComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(pageRoutes),

@@ -59,7 +59,7 @@
                 <thead>
                   <tr>
                     <th>S.No.</th>
-                    <th scope="col">ORD</th>
+                    <th scope="col">Order Id</th>
                     <th scope="col">Total price</th>
                     <th scope="col">Order Date</th>
                     <th scope="col">Status</th>
@@ -67,7 +67,7 @@
                      <th scope="col">Actions</th>
                   </tr>
                 </thead>
-                <tbody *ngIf="collection.length>1" >
+                <tbody *ngIf="collection.length>0" >
                   <tr *ngFor="let i of collection  | paginate: { id: 'listing_pagination',
                     itemsPerPage: limit,
                     currentPage: page,
@@ -76,10 +76,10 @@
                         {{ ((limit * (page - 1)) + ie+1) }}
 
                     </td>
-                    <td>{{i.order_id}}</td>
-                    <td>{{i.total_price}}</td>
+                    <td>ORD{{i.order_id}}</td>
+                    <td>QAR {{i.total_price}}</td>
                     <td>{{i.created_at|date:'dd-MM-yyyy'}}</td>
-                    <td>{{i.status}}</td>
+                    <td style=" text-transform: capitalize;">{{i.status}}</td>
                     
                   <td>
                     <a [routerLink]="['/theme/users/order-view',{id:i.order_id,user_id:id}]" routerLinkActive="router-link-active"> <i style="font-size:24px" class="fa fa-eye"></i></a>&nbsp;   
@@ -90,7 +90,7 @@
                   </tr>
   
                 </tbody>
-                <tbody *ngIf="collection.length==1">
+                <tbody *ngIf="collection.length==0">
                   <tr class="text-center">
                     <td colspan="10">No records found</td>
                   </tr>

@@ -77,17 +77,28 @@ export class UserOrderViewComponent implements OnInit {
 data:any={};
 grandTotal:number=0;
 discount_price:number=0;
+shippingCharges:number=0;
   successView(res){
     if(res.status==true){
-      this.spinner.hide
-    this.data= res.result[0];
-    this.collection=res.result
-  for(let col of this.collection)
+      this.spinner.hide();
+      console.log(res.result)
+      if(res.result.length>0){
+      this.collection=res.result;
+      this.data=res.result[0];
+ if(this.collection.length>0){ 
+  this.data= res.result[0];
+  console.log(this.data)
+ 
+for(let col of this.collection)
   {
-    this.discount_price=this.discount_price+Number(col.discounted_price)
+    this.discount_price=this.discount_price+Number(col.discounted_price);
+    this.grandTotal=this.grandTotal+(col.quantity*col.price)
+    this.shippingCharges=this.shippingCharges+(col.shipping_charges)
   }
-  this.grandTotal=this.discount_price+Number(this.collection[0].total_price)
+}
+
   console.log(res)
+}
 
     }
     setTimeout(() => {

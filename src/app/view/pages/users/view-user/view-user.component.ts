@@ -135,10 +135,11 @@ data:any={};
       this.spinner.hide()
       this.data = res.result;
       console.log(this.data)
+      if(this.data.order_list[0]!=null){
       this.collection=this.data.order_list
       console.log(this.collection)
       console.log('length',this.collection.length)
-
+      }
     }
     setTimeout(() => {
       /** spinner ends after 5 seconds */
