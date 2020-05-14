@@ -28,6 +28,7 @@ export class EditProductComponent implements OnInit {
   url1 = ''; url: string = '';
   message: string = '';
   state;
+  isImageError=false;
   keyValue: boolean = false;
   constructor(
     private _fb: FormBuilder,
@@ -417,16 +418,68 @@ this.itemsData.push(this.createItem())
   urlForm: any = [];
   choosefileData: any = [];
   choosefileDatas: string = "No file chosen...";
+  // onSelectFileMultiple(event) {
+  //   this.keyValue = true;
+  //   if (event.target.files.length > 0) {
+  //     var ins = event.target.files.length;
+  //     for (var x = 0; x < ins; x++) {
+
+  //       var mimeType = event.target.files[x].type;
+  //       var file = event.target.files[x];
+
+  //       this.choosefileData.push(event.target.files[x].name);
+  //       const width = file.naturalWidth;
+  //       const height = file.naturalHeight;
+
+  //       window.URL.revokeObjectURL(file.src);
+  //       //  var checkimg = file.toLowerCase();
+  //       const type = file.type.split('/');
+  //       if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+
+  //       } else {
+  //         this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+  //         return false;
+  //       }
+
+
+  //       let reader = new FileReader();
+  //       reader.readAsDataURL(event.target.files[x]); // read file as data url
+  //       reader.onload = (event: any) => { // called once readAsDataURL is completed
+  //         // this.url = event.result;
+  //         this.urlData.push(event.target.result);
+  //       }
+
+
+  //       this.urlForm.push(event.target.files[0]);
+  //       console.log(this.url1)
+
+
+  //       setTimeout(() => {
+  //         this.loader = false;
+  //         this.keyValue = false;
+  //         this.errorMessage = "";
+  //       }, 3000)
+  //       this.loader = true;
+
+  //     }
+  //   }
+  //   this.choosefileDatas = this.choosefileData.join();
+  // }
   onSelectFileMultiple(event) {
     this.keyValue = true;
+    this.isImageError=false;
     if (event.target.files.length > 0) {
       var ins = event.target.files.length;
       for (var x = 0; x < ins; x++) {
 
         var mimeType = event.target.files[x].type;
+        console.log('type',mimeType)
         var file = event.target.files[x];
 
-        this.choosefileData.push(event.target.files[x].name);
+        // this.choosefileData.push(event.target.files[x].name);
+
+
+
         const width = file.naturalWidth;
         const height = file.naturalHeight;
 
@@ -434,23 +487,74 @@ this.itemsData.push(this.createItem())
         //  var checkimg = file.toLowerCase();
         const type = file.type.split('/');
         if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+          this.choosefileData.push(event.target.files[x].name);
 
         } else {
           this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
+          // this._api.showNotification('error', this.errorMessage);
           return false;
         }
 
 
-        let reader = new FileReader();
-        reader.readAsDataURL(event.target.files[x]); // read file as data url
-        reader.onload = (event: any) => { // called once readAsDataURL is completed
+        let reader1 = new FileReader();
+        reader1.readAsDataURL(event.target.files[x]); // read file as data url
+        reader1.onload = (event: any) => { // called once readAsDataURL is completed
           // this.url = event.result;
           this.urlData.push(event.target.result);
+          // this.url = event.target.result;
         }
 
+        
+        console.log(this.urlData,'urldata')
+        this.urlForm.push(event.target.files[x]);
+        console.log('image url',this.url1)
 
-        this.urlForm.push(event.target.files[0]);
-        console.log(this.url1)
+
+
+        let reader = new FileReader();
+        reader.readAsDataURL(event.target.files[x]); // read file as data url
+      
+        reader.onload = () => {
+        
+          const img = new Image();
+          img.src = reader.result as string;
+          img.onload = () => {
+            const height = img.naturalHeight;
+            const width = img.naturalWidth;
+            console.log('Width and Height', width, height);
+            if ((height <= CONFIG.PRODUCT_MIN_HEIGHT || height >= CONFIG.PRODUCT_MAX_HEIGHT) || (width <= CONFIG.PRODUCT_MIN_WIDTH || width >= CONFIG.PRODUCT_MAX_WIDTH)) {
+              this.errorMessage = `Please upload the image of required size which is min height ${CONFIG.PRODUCT_MIN_HEIGHT}, max height ${CONFIG.PRODUCT_MAX_HEIGHT} and min width ${CONFIG.PRODUCT_MIN_WIDTH}, max width ${CONFIG.PRODUCT_MAX_WIDTH}.`;
+             // alert()
+              // this.choosefile="No file chosen...";
+          //    alert(this.choosefile)
+             // this.url='';
+                this.url1='';
+                this.url=''
+                // this.isImageError=true
+                console.log('urldata',this.urlData)
+                console.log(this.choosefileDatas)
+                console.log('lenght',this.urlData.length)
+                if(this.urlData.length>0)
+                {
+              this.urlData.splice(this.urlData.length-1,1);
+               this.choosefileData.splice(this.choosefileData.length-1,1)
+               this.choosefileDatas = this.choosefileData.join();
+               if(this.choosefileData.length==0)
+               this.choosefileDatas="No file chosen";
+            }
+                // this.choosefileDatas,splice(this.choosefileDatas.length,1)
+                return false;
+            }
+            else{
+              // this.url = event.target.result;
+              console.log(this.url,'url')      
+    
+              // this.choosefile=event.target.files[0].name;
+      
+            }
+          }; 
+         
+        }
 
 
         setTimeout(() => {

@@ -61,13 +61,14 @@
                 <table class="table table-striped">
                   <thead>
                     <tr>
-                        <th scope="col">S.No</th>
-                      <th scope="col">Name(English)</th>
-                      <th scope="col">Name(Arabic)</th>
+                        <th scope="col">S.No.</th>
+                      <th scope="col">Name(En)</th>
+                      <th scope="col">Name(Ar)</th>
                      <th scope="col">Brand</th>
+                     <th scope="col">Category</th>
                       <th scope="col">Status</th>
                       <th scope="col">Created at</th>
-                      <th scope="col">Actions</th>
+                      <th scope="col" style='padding-left:70px'>Actions</th>
                     </tr>
                   </thead>
                   <tbody *ngIf="collection.length>0">
@@ -79,9 +80,9 @@
                         {{ ((limit * (page - 1)) + ie+1) }}
 
                     </td>
-                      <td scope="row" style=" text-transform: capitalize;">{{this.add3Dots(i.product_name_en,20)}}
+                      <td scope="row" style=" text-transform: capitalize;" title="{{i.product_name_en}}">{{this.add3Dots(i.product_name_en,20)}}
                       </td>
-                      <td scope="row" style=" text-transform: capitalize;">{{this.add3Dots(i.product_name_ar,20)}}
+                      <td scope="row" style=" text-transform: capitalize;" title="{{i.product_name_ar}}">{{this.add3Dots(i.product_name_ar,20)}}
                         </td>
                     
                     
@@ -89,6 +90,8 @@
                    
                   <td>{{i.brand_name_en}}
                       
+                    </td>
+                    <td scope="row" style=" text-transform: capitalize;" title="{{i.category_name}}">{{this.add3Dots(i.category_name,20)}}
                     </td>
                    
                     <td>{{i.status}}

@@ -10,6 +10,7 @@ import { ViewBannerComponent } from './view-banner/view-banner.component';
 import { AddBannerComponent } from './add-banner/add-banner.component'; 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { OnlyNumberDirective } from 'src/app/directive/only-number.directive';
 const pageRoutes: Routes = [
 
   {

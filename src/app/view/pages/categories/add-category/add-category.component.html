@@ -18,14 +18,14 @@
               <div class="row ">
                  
             <div class="form-group col-md-6">
-              <label for="inputEmail4"><b>Name(English) <span class="star" >*</span></b></label>
+              <label for="inputEmail4"><b>Name(En) <span class="star" >*</span></b></label>
               <input type="text" [formControl]="name" class="form-control"  (onchange)="trimFunction(event)"[minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" id="inputEmail4" placeholder="Enter the category name">
 
               <span class="error text-danger">{{_util.errorMessage(name,FORM_ERROR?.name)}}</span>
             </div>
             
             <div class="form-group col-md-6">
-              <label for="inputPassword4"> <b>Description(English) </b></label>
+              <label for="inputPassword4"> <b>Description(En) </b></label>
               <textarea type="text" [formControl]="descriptionen" class="form-control" id="inputPassword4" [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_DES"
                 placeholder="Enter the description"></textarea>
                
@@ -33,14 +33,14 @@
             </div>
             
             <div class="form-group col-md-6">
-                <label for="inputEmail4"> <b>Name(Arabic) <span class="star">*</span></b></label>
+                <label for="inputEmail4"> <b>Name(Ar) <span class="star">*</span></b></label>
                 <input type="text" [formControl]="namear" class="form-control"  [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_NAME" id="inputEmail4"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="أدخل اسم الفئة
                 ">
             
               <span class="error text-danger">{{_util.errorMessage(namear,FORM_ERROR?.namear)}}</span>
             </div>
               <div class="form-group col-md-6">
-                <label for="inputPassword4"> <b>Description(Arabic) </b></label>
+                <label for="inputPassword4"> <b>Description(Ar) </b></label>
                 <textarea type="text" [formControl]="descriptionar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4" [minlength]="CONFIG?.MAX_B" [maxlength]="CONFIG?.B_DES"
                   placeholder="أدخل الوصف"></textarea>
 

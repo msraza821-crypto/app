@@ -8,6 +8,7 @@ import { HttpService, AppService } from 'src/app/service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { rangeValidator } from 'src/app/validators/range.validator';
 import { ColorEvent } from 'ngx-color';
+import { OnlyNumberDirective }  from './../../../../directive/only-number.directive';
 
 import * as moment from 'moment';
 @Component({
@@ -158,13 +159,13 @@ export class AddProductComponent implements OnInit {
   createForm() {
     this.loginForm = this._fb.group({
       product_name_en: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_MAX)]],
-      product_description_en: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+      product_description_en: ["",[Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       product_name_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_MAX)]],
-      product_description_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
-      attribute_description_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
-      attribute_description_en: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+      product_description_ar: ["", [Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+      attribute_description_ar: ["", [ Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+      attribute_description_en: ["", [Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
     //  product_price: ["", [Validators.required, rangeValidator(0, 10000)]],
-      product_colour: ["#ff0000", [Validators.required]],
+      product_colour: ["", [Validators.required]],
       brand_id: ["", [Validators.required]],
     //  quantity: ["", [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
       category_id: ["", [Validators.required]],
@@ -434,9 +435,13 @@ this.itemsData.push(this.createItem())
       for (var x = 0; x < ins; x++) {
 
         var mimeType = event.target.files[x].type;
+        console.log('type',mimeType)
         var file = event.target.files[x];
 
-        this.choosefileData.push(event.target.files[x].name);
+        // this.choosefileData.push(event.target.files[x].name);
+
+
+
         const width = file.naturalWidth;
         const height = file.naturalHeight;
 
@@ -444,6 +449,7 @@ this.itemsData.push(this.createItem())
         //  var checkimg = file.toLowerCase();
         const type = file.type.split('/');
         if (type[0] === 'image' && this.imageFormats.includes(type[1].toLowerCase())) {
+          this.choosefileData.push(event.target.files[x].name);
 
         } else {
           this.errorMessage = "Please use proper format of image like jpeg,jpg and png only.";
@@ -460,43 +466,57 @@ this.itemsData.push(this.createItem())
           // this.url = event.target.result;
         }
 
-        // let reader = new FileReader();
-        // reader.readAsDataURL(event.target.files[0]); // read file as data url
-      
-        // reader.onload = () => {
         
-        //   const img = new Image();
-        //   img.src = reader.result as string;
-        //   img.onload = () => {
-        //     const height = img.naturalHeight;
-        //     const width = img.naturalWidth;
-        //     console.log('Width and Height', width, height);
-        //     if ((height <= CONFIG.PRODUCT_MIN_HEIGHT || height >= CONFIG.PRODUCT_MAX_HEIGHT) || (width <= CONFIG.PRODUCT_MIN_WIDTH || width >= CONFIG.PRODUCT_MAX_WIDTH)) {
-        //       this.errorMessage = "Height and Width must not exceed 1100*800.";
-        //      // alert()
-        //       this.choosefile="No file chosen...";
-        //   //    alert(this.choosefile)
-        //      // this.url='';
-        //         this.url1='';
-        //         this.url=''
-        //         this.isImageError=true
-        //         return false;
-        //     }
-        //     else{
-        //       // this.url = event.target.result;
-        //       console.log(this.url,'url')      
-    
-        //       this.choosefile=event.target.files[0].name;
-      
-        //     }
-        //   }; 
-         
-        // }
-    
-    
-
+        console.log(this.urlData,'urldata')
         this.urlForm.push(event.target.files[x]);
         console.log('image url',this.url1)
+
+
+
+        let reader = new FileReader();
+        reader.readAsDataURL(event.target.files[x]); // read file as data url
+      
+        reader.onload = () => {
+        
+          const img = new Image();
+          img.src = reader.result as string;
+          img.onload = () => {
+            const height = img.naturalHeight;
+            const width = img.naturalWidth;
+            console.log('Width and Height', width, height);
+            if ((height <= CONFIG.PRODUCT_MIN_HEIGHT || height >= CONFIG.PRODUCT_MAX_HEIGHT) || (width <= CONFIG.PRODUCT_MIN_WIDTH || width >= CONFIG.PRODUCT_MAX_WIDTH)) {
+              this.errorMessage = `Please upload the image of required size which is min height ${CONFIG.PRODUCT_MIN_HEIGHT}, max height ${CONFIG.PRODUCT_MAX_HEIGHT} and min width ${CONFIG.PRODUCT_MIN_WIDTH}, max width ${CONFIG.PRODUCT_MAX_WIDTH}.`;
+             // alert()
+              // this.choosefile="No file chosen...";
+          //    alert(this.choosefile)
+             // this.url='';
+                this.url1='';
+                this.url=''
+                // this.isImageError=true
+                console.log('urldata',this.urlData)
+                console.log(this.choosefileDatas)
+                console.log('lenght',this.urlData.length)
+                if(this.urlData.length>0)
+                {
+              this.urlData.splice(this.urlData.length-1,1);
+               this.choosefileData.splice(this.choosefileData.length-1,1)
+               this.choosefileDatas = this.choosefileData.join();
+               if(this.choosefileData.length==0)
+               this.choosefileDatas="No file chosen";
+            }
+                // this.choosefileDatas,splice(this.choosefileDatas.length,1)
+                return false;
+            }
+            else{
+              // this.url = event.target.result;
+              console.log(this.url,'url')      
+    
+              // this.choosefile=event.target.files[0].name;
+      
+            }
+          }; 
+         
+        }
 
 
         setTimeout(() => {
@@ -527,6 +547,7 @@ this.itemsData.push(this.createItem())
 
       } else {
         this.errorMessage = "Please use proper format of video like webm,mp4 or ogv only.";
+        this.choosefile= "No file chosen...";
         this._api.showNotification('error', this.errorMessage);
         return false;
       }
@@ -690,7 +711,7 @@ this.itemsData.push(this.createItem())
       var end1 = "";
 
       this.spinner.show();
-      if (this.loginForm.value.discount_range) {
+      if (this.loginForm.valid&&this.urlData.length>0) {
 
         start1 = this.loginForm.value.discount_range.startDate._d;
 
@@ -736,16 +757,18 @@ this.itemsData.push(this.createItem())
           () => (this.loader = false)
         );
     } else {
+      if(this.urlData.length==0)
+      this.isImageError=true
       this._util.markError(this.loginForm);
     }
   }
   errorData:boolean=false;
   submit() {
-    console.log(this.loginForm.value,'length',this.urlForm.length!=0);
+    console.log(this.loginForm.value,'length',this.urlData.length!=0);
     console.log(this.loginForm)
     this.errorData=true;
     console.log('form validation',this.loginForm.valid)
-    if (this.loginForm.valid) {
+    if (this.loginForm.valid&&this.urlData.length>0) {
       var start1 = "";
       var end1 = "";
 
@@ -797,7 +820,7 @@ this.itemsData.push(this.createItem())
           () => (this.loader = false)
         );
     } else {
-      if(this.urlForm.length==0)
+      if(this.urlData.length==0)
       this.isImageError=true;
       this._util.markError(this.loginForm);
     }
