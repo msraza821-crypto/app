@@ -117,7 +117,7 @@
    <b class="float-right reset-class" (click)="Reset()"><i class="fa fa-refresh" aria-hidden="true"></i></b>  
                            
                   </div>
-                  <b class="col-md-12" *ngIf="loginForm.controls.meta_data.controls.length<=10" (click)="addItem()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Attribute</b>  
+                  <b class="col-md-12" *ngIf="loginForm.controls.meta_data.controls.length<=10" (click)="addItem()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Variant</b>  
                  
                   <div class="col-md-10" formArrayName="meta_data">
                     <div class="row mt-3"
@@ -161,8 +161,13 @@
                     
                 <hr>
                    <div class="form-group col-md-4">
+<<<<<<< HEAD
                       <label for="inputState">Discount Range Date</label>
                   <input type="text" ngxDaterangepickerMd  [formControl]="discount_range"   class="form-control" (datesUpdated)="choosedDate($event)" (keydown)="onKeydown($event)" minDate  [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
+=======
+                      <label for="inputState">Discount range date</label>
+                  <input type="text" ngxDaterangepickerMd [minDate]="mindate" [formControl]="discount_range" class="form-control" (datesUpdated)="choosedDate($event)" (keydown)="onKeydown($event)"   [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
+>>>>>>> a6a669c95c78a5fb1c7ce35d3a1f8af714db7943
                   
                     placeholder="Select date"  />
                     <span class="error text-danger">{{_util.errorMessage(discount_range,FORM_ERROR?.discount_range)}}</span>
@@ -179,15 +184,25 @@
                       <span class="error text-danger">{{_util.errorMessage(discount_type,FORM_ERROR?.discount_type)}}</span>
                     </div>
                    <div class="form-group col-md-3">
+<<<<<<< HEAD
                         <label for="inputEmail4">Discounted Price{{dPrice}}</label>
                         <input type="text" [formControl]="discount_value"   (keypress)="_util.keyPress($event)" (keypress) = "changeNumber($event)" appOnlyNumber [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
+=======
+                        <label for="inputEmail4">Discount Price{{dPrice}}</label>
+                        <input type="text" [formControl]="discount_value" appOnlyNumber  (keypress)="_util.keyPress($event)"  [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
+>>>>>>> a6a669c95c78a5fb1c7ce35d3a1f8af714db7943
         
                     
                         <span class="error text-danger">{{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
                                      
                         
+<<<<<<< HEAD
                         <!-- <span class="error text-danger" *ngIf="loginForm.value.product_price<=loginForm.value.discount_value&&loginForm.value.discount_value!=''&&loginForm.value.discount_type==1">
                           Discounted price can not be greater or equal to the product price</span> -->
+=======
+                        <span class="error text-danger" *ngIf="errorMessage">
+                          {{errorMessage}}</span>
+>>>>>>> a6a669c95c78a5fb1c7ce35d3a1f8af714db7943
                       </div>
                       <div class="form-group col-md-3" *ngIf="this.id">
                           <label for="inputState">Status</label>

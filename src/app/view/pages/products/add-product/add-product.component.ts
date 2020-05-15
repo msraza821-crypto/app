@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { rangeValidator } from 'src/app/validators/range.validator';
 import { ColorEvent } from 'ngx-color';
 import { OnlyNumberDirective }  from './../../../../directive/only-number.directive';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import * as moment from 'moment';
 // import { ThemeService } from 'ng2-charts';
@@ -63,6 +64,7 @@ export class AddProductComponent implements OnInit {
       this.loginForm.get('product_colour').patchValue(hex);
     }
   }
+
   FORM_ERROR = {
     product_name_en: {
       required: ERROR_MESSAGES.NAME_ENGLISH_REQUIRED,
@@ -243,6 +245,7 @@ this.itemsData.push(this.createItem())
       this.loginForm.get('discount_range').updateValueAndValidity();
     }
   }
+  mindate=moment();
   id: string = null;
   ngOnInit() {
     this.productSize();
@@ -263,9 +266,36 @@ this.itemsData.push(this.createItem())
       }
     })
     this.createForm();
- 
+    this.loginForm.get('discount_value').valueChanges
+    .pipe(debounceTime(this.debounce), distinctUntilChanged())
+    .subscribe(query => {
+      this.errorMessage="";
+     var arrayDtata=<FormArray>this.loginForm.controls['meta_data'].value;
+     for(var i=0;i<arrayDtata.length;i++){
+    //   console.log(typeof Number(arrayDtata[i].product_price)+'  '+typeof Number(this.loginForm.get('discount_value').value));
+      if(Number(arrayDtata[i].product_price)<Number(this.loginForm.get('discount_value').value)){
+      //  alert();
+        this.errorMessage="Discount Price must be less than Product Price";
+        return false;
+      }
+     }
+    });
+    this.loginForm.controls['meta_data'].valueChanges
+    .pipe(debounceTime(this.debounce), distinctUntilChanged())
+    .subscribe(query => {
+      this.errorMessage="";
+     var arrayDtata=<FormArray>this.loginForm.controls['meta_data'].value;
+     for(var i=0;i<arrayDtata.length;i++){
+      console.log(typeof Number(arrayDtata[i].product_price)+'  '+typeof Number(this.loginForm.get('discount_value').value));
+      if(Number(arrayDtata[i].product_price)<Number(this.loginForm.get('discount_value').value)){
+      //  alert();
+        this.errorMessage="Discount Price must be less than Product Price";
+        return false;
+      }
+     }
+    });
   }
-
+  private debounce: number = 400;
   product_id: any;
 
 

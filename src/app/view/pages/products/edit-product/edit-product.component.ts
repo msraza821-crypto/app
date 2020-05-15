@@ -600,13 +600,13 @@ this.itemsData.push(this.createItem())
    // alert();
      
     this.loginFormEdit = this._fb.group({
-       product_size: [data.product_size, [Validators.required]],
+    //   product_size: [data.product_size, [Validators.required]],
       attribute_description_ar: [data.attribute_description_ar, [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       attribute_description_en: [data.attribute_description_en, [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
-      product_price: [data.product_price, [Validators.required, rangeValidator(0, 10000)]],
+    //  product_price: [data.product_price, [Validators.required, rangeValidator(0, 10000)]],
       product_colour: [data.product_colour, [Validators.required]],
     
-      quantity: [data.quantity, [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
+     // quantity: [data.quantity, [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
       statusEdit: [data.status],
       meta_data:this._fb.array([this.createItem()])
       
@@ -884,6 +884,7 @@ if(data[control]){
   errorData:boolean=false;
   update_attributes() {
     this.errorData=true;
+    console.log(this.loginFormEdit.value)
     if (this.loginFormEdit.valid) {
       const formData = new FormData();
       formData.append('id', this.attribute_id);   

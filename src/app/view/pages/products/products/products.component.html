@@ -126,7 +126,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <pagination-controls *ngIf="collection.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll()"
+                <pagination-controls *ngIf="collection.length>0" id="listing_pagination" maxSize="5" directionLinks="true" (click)="onScroll($event)"
                   (pageChange)="page = $event"></pagination-controls>
 
               </div>
