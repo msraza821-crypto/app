@@ -95,7 +95,7 @@
                 <hr>
                    <div class="form-group col-md-4">
                       <label for="inputState">Discount Range Date</label>
-                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range"   class="form-control"   (keydown)="onKeydown($event)"    [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
+                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range"  [minDate]="mindate"  class="form-control"   (keydown)="onKeydown($event)"    [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
                   
                     placeholder="Select date"     />
                     <span class="error text-danger">{{_util.errorMessage(discount_range,FORM_ERROR?.discount_range)}}</span>
@@ -441,7 +441,7 @@
                           [formGroupName]="i" style="margin-left:15px;">
                   <div class="form-group col-md-3  ">
                       <label for="inputEmail4">Quantity <span style="color:red">*</span></label>
-                      <input type="text" formControlName="quantity" class="form-control"  id="inputEmail4" [maxlength]='CONFIG?.MAX_PRICE' placeholder="Quantity">
+                      <input type="text" formControlName="quantity" class="form-control" (keypress)="_util.keyPress($event)" id="inputEmail4" [maxlength]='CONFIG?.MAX_PRICE' placeholder="Quantity">
                       <span class="error text-danger" *ngIf="errorData==1 && loginFormEdit.controls.meta_data.controls[i].controls.quantity.hasError('required')">
                       Qantity is required</span>
                   

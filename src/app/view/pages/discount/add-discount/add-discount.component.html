@@ -65,7 +65,7 @@
                 <hr>
                    <div class="form-group col-md-4">
                       <label for="inputState"><b>Date Range <span class="star">*</span></b></label>
-                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range" class="form-control" (choosedDate)="choosedDate($event)" [maxlength]="CONFIG?.DATE_MAX_LENGTH"  [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
+                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range" [minDate]='mindate' class="form-control" (choosedDate)="choosedDate($event)" [maxlength]="CONFIG?.DATE_MAX_LENGTH"  [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
                   
                     placeholder="Select date"  />
                     <span class="error text-danger">{{_util.errorMessage(discount_range,FORM_ERROR?.discount_range)}}</span>
@@ -84,7 +84,7 @@
                     </div>
                    <div class="form-group col-md-3">
                         <label for="inputEmail4"><b>Discounted Price{{dPrice}} <span class="star">*</span></b></label>
-                        <input type="number" [formControl]="promo_discount" (keypress) = "changeNumber($event)"   [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
+                        <input type="number" [formControl]="promo_discount"   appOnlyNumber (keypress) = "changeNumber($event)"   [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
                         
                     
                         <span class="error text-danger">{{_util.errorMessage(promo_discount,FORM_ERROR?.promo_discount)}}</span>

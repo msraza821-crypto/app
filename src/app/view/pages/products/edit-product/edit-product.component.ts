@@ -750,7 +750,7 @@ if(data[control]){
 
   min: Number = 0;
   max: Number = 10000;
-  
+  mindate=moment();
   changeNumber(e) {
     var str = e.target.value;
     var input = e.target;

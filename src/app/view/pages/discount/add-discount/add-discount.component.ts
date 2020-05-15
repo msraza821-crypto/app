@@ -103,7 +103,7 @@ max:Number=10000;
 
     },
   };
-
+  mindate=moment();
   createForm() {
     this.loginForm = this._fb.group({
       title: ["", [Validators.required, Validators.pattern(Regex.spacesDatas), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.B_NAME)]],
@@ -212,10 +212,13 @@ max:Number=10000;
     this.loginForm.get('description_arabic').patchValue(data['description_ar'])
       this.loginForm.get('statusKey').patchValue(data['status'])
       if(data['promo_type']==2){
-        this.placeHolderText="Percentage Discount";
+        this.placeHolderText="Enter discounted price(%)";
+        this.max=100
       }else{
         this.placeHolderText="Enter discounted price";
+        this.max=10000
       }
+
       setTimeout(() => {
         /** spinner ends after 5 seconds */
         this.spinner.hide();

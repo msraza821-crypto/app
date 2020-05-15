@@ -203,7 +203,7 @@ id:string=null;
     this.createForm();
   }
 
-
+  mindate=moment();
   min: Number = 0;
   max: Number = 10000;
   maxPrice(e) {
@@ -216,7 +216,8 @@ id:string=null;
       if (value > this.max) {
         return false;
       }
-      // this..get('product_price').patchValue(str)
+      // this.loginForm.get('meta_data.controls[i].controls.product_price').patchValue(str)
+      // console.log(this.loginForm.meta_data.controls.product_price)
     }
 
   }

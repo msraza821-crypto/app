@@ -717,8 +717,7 @@ getFormData()
       
         event.preventDefault();
     }
-    if(inputChar=='')
-    event.preventDefault();
+  
 }
 
 
@@ -947,6 +946,8 @@ successView(res){
   this.changeProduct();
   this.bannerForm.get('discount_type').patchValue(res.result.discount_type);
   this.changeDiscountType()
+  if(res.result.discount_type==2)
+  this.max=100;
 
   this.bannerForm.get('discount_value').patchValue(res.result.discount_value);
   if(res.result.available_on=='2')

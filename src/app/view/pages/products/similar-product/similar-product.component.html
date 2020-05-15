@@ -93,7 +93,7 @@
       
                    <div class="form-group col-md-4">
                       <label for="inputState">Discount Range Date</label>
-                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range" class="form-control" (choosedDate)="choosedDate($event)"  [maxlength]="CONFIG?.DATE_MAX_LENGTH" [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
+                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range" class="form-control" (choosedDate)="choosedDate($event)" [minDate]='mindate' [maxlength]="CONFIG?.DATE_MAX_LENGTH" [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
                   
                     placeholder="Discount Date Range"  />
                     <span class="error text-danger">{{_util.errorMessage(discount_range,FORM_ERROR?.discount_range)}}</span>
@@ -170,13 +170,10 @@
                           <input type="text" formControlName="product_price"  class="form-control"  (keyPress)="maxPrice($event)" id="inputEmail4"  (keypress)="_util.keyPress($event)"      [maxlength]='CONFIG?.MAX_PRICE' placeholder="Product price">
                           <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')">
                             Price is required</span>
-<<<<<<< HEAD
-                            <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')==false && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('range')">
-                              Price range in between 0 to 10000</span>
-=======
+                            <!-- <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')==false && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('range')">
+                              Price range in between 0 to 10000</span> -->
                             <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')==false && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('range')">
-                              Price range in between 0 t0 10000</span>
->>>>>>> a6a669c95c78a5fb1c7ce35d3a1f8af714db7943
+                              Price range in between 0 to 10000</span>
                         
                         </div>
                         <div class="form-group col-md-3">
