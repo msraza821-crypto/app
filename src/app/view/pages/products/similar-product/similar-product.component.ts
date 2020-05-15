@@ -164,9 +164,9 @@ this.itemsData.push(this.createItem())
   createForm() {
     this.loginForm = this._fb.group({
       product_name_en:  [{value:"", disabled: true}, [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
-      product_description_en:  [{value:"", disabled: true},[Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+      product_description_en:  [{value:"", disabled: true},[Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
      product_name_ar:  [{value:"", disabled: true}, [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_MAX)]],
-     product_description_ar: [{value:"", disabled: true}, [Validators.required,Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+     product_description_ar: [{value:"", disabled: true}, [Validators.pattern(Regex.spacesDatas),Validators.minLength(CONFIG.NAME_MINLENGTH),Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
    //  product_size: ["", [Validators.required]],
     // product_price: ["", [Validators.required,rangeValidator(0, 10000)]],
      product_colour: ["", [Validators.required]],
@@ -177,8 +177,9 @@ this.itemsData.push(this.createItem())
      childCategory: [{value:"", disabled: true}, [Validators.required]],     
      discount_type:  [{value:"", disabled: true}, [Validators.required]],
      discount_value:  [{value:"", disabled: true}, [Validators.required,rangeValidator(0, 10000),Validators.pattern(Regex.phoneNumbers)]],
-     discount_range: [{value:"", disabled: true},[Validators.required]],  attribute_description_ar: ["bluew", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
-     attribute_description_en: ["bluew", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+     discount_range: [{value:"", disabled: true},[Validators.required]],
+     attribute_description_ar: ["", [ Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+     attribute_description_en: ["", [ Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
      meta_data:this._fb.array([this.createItem()])
     });
   }
@@ -202,6 +203,23 @@ id:string=null;
     this.createForm();
   }
 
+
+  min: Number = 0;
+  max: Number = 10000;
+  maxPrice(e) {
+    var str = e.target.value;
+    var input = e.target;
+    var value = Number(input.value);
+    var key = Number(e.key);
+    if (Number.isInteger(key)) {
+      value = Number("" + value + key);
+      if (value > this.max) {
+        return false;
+      }
+      // this..get('product_price').patchValue(str)
+    }
+
+  }
   productSiz(){
     this.api
     .getReqAuth("admin/product/product-size").subscribe(
@@ -470,11 +488,13 @@ for (var x = 0; x < ins; x++) {
   }
   @ViewChild("videoPlayer", { static: false }) videoplayer: ElementRef;
   isPlay: boolean = false;
+  discountType;
   successView(res){
     if(res.status==true){
     var data= res.result;
     this.sub_cate(data['category']);
     this.child_cate(data['sub_category'])
+    console.log(data)
     Object.keys(this.loginForm.controls).forEach((control) => {
 if(data[control]){
       this.loginForm.get(control).patchValue(data[control]);
@@ -486,6 +506,8 @@ if(data[control]){
     this.loginForm.get('childCategory').patchValue(data['child_category']);
     var start1=moment(data['discount_start_date']);
     var end1=moment(data['discount_end_date']);
+    this.discountType=data.discount_type;
+    console.log('thsss',this.discountType)
     
   this.loginForm.get('discount_range').patchValue({ startDate: start1, endDate:end1 });
   //  this.loginForm.get

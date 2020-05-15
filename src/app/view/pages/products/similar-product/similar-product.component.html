@@ -14,7 +14,7 @@
                 <div class="row ">
                    
               <div class="form-group col-md-6">
-                <label for="inputEmail4">Product Name(English)<span style="color:red">*</span></label>
+                <label for="inputEmail4">Product Name(En) <span style="color:red">*</span></label>
                 <input type="text" [formControl]="product_name_en" class="form-control" id="inputEmail4" placeholder="Product Name">
 
             
@@ -22,7 +22,7 @@
               </div>
               
               <div class="form-group col-md-6">
-                <label for="inputPassword4">Product Description(English)<span style="color:red">*</span></label>
+                <label for="inputPassword4">Product Description(En)</label>
                 <textarea type="text" [formControl]="product_description_en" class="form-control" id="inputPassword4"
                   placeholder="Product Description"></textarea>
               
@@ -30,20 +30,20 @@
               </div>
               
               <div class="form-group col-md-6">
-                  <label for="inputEmail4">Product Name(Arabic)<span style="color:red">*</span></label>
+                  <label for="inputEmail4">Product Name(Ar) <span style="color:red">*</span></label>
                   <input type="text" [formControl]="product_name_ar" class="form-control" id="inputEmail4"  style="direction:RTL;" onkeyup="rtl(this);" placeholder="اسم المنتج">
               
                 <span class="error text-danger">{{_util.errorMessage(product_name_ar,FORM_ERROR?.product_name_ar)}}</span>
               </div>
                 <div class="form-group col-md-6">
-                  <label for="inputPassword4">Product Description(Arabic)<span style="color:red">*</span></label>
+                  <label for="inputPassword4">Product Description(Ar)</label>
                   <textarea type="text" [formControl]="product_description_ar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
                     placeholder="وصف المنتج"></textarea>
                  
               <span class="error text-danger">{{_util.errorMessage(product_description_ar,FORM_ERROR?.product_description_ar)}}</span>
             </div>
             <div class="form-group col-md-3">
-                <label for="inputState">Brand<span style="color:red">*</span></label>
+                <label for="inputState">Brand <span style="color:red">*</span></label>
                 <select id="inputState" [formControl]="brand_id" class="form-control">
                   <option value="">Please Select</option>
                   <option  *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</option>
@@ -53,7 +53,7 @@
               <span class="error text-danger">{{_util.errorMessage(brand_id,FORM_ERROR?.brand_id)}}</span>
             </div>
             <div class="form-group col-md-3">
-                <label for="inputState">Category<span style="color:red">*</span></label>
+                <label for="inputState">Category <span style="color:red">*</span></label>
                 <select id="inputState" [formControl]="category_id" (change)='onOptionsSelectedSub($event)' class="form-control">
                   <option value="">Please Select</option>
                   <option  *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
@@ -62,7 +62,7 @@
               <span class="error text-danger">{{_util.errorMessage(category_id,FORM_ERROR?.category_id)}}</span>
             </div>
             <div class="form-group col-md-3">
-                <label for="inputState">Sub-category<span style="color:red">*</span></label>
+                <label for="inputState">Sub-Category <span style="color:red">*</span></label>
                 <select id="inputState" [formControl]="subCategory" (change)='onOptionsSelectedChild($event)' class="form-control">
                   <option value="">Please Select</option>
                   <option  *ngFor="let category of subcategories" [value]="category.id">{{category.name}}</option>
@@ -71,7 +71,7 @@
               <span class="error text-danger">{{_util.errorMessage(subCategory,FORM_ERROR?.subCategory)}}</span>
             </div>
             <div class="form-group col-md-3">
-                <label for="inputState">Child-category<span style="color:red">*</span></label>
+                <label for="inputState">Child-Category <span style="color:red">*</span></label>
                 <select id="inputState" [formControl]="childCategory"   class="form-control">
                   <option value="">Please Select</option>
                   <option  *ngFor="let category of childcategories" [value]="category.id">{{category.name}}</option>
@@ -92,8 +92,8 @@
       
       
                    <div class="form-group col-md-4">
-                      <label for="inputState">Discount range date</label>
-                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range" class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-DD-MM'}"
+                      <label for="inputState">Discount Range Date</label>
+                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range" class="form-control" (choosedDate)="choosedDate($event)"  [maxlength]="CONFIG?.DATE_MAX_LENGTH" [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
                   
                     placeholder="Discount Date Range"  />
                     <span class="error text-danger">{{_util.errorMessage(discount_range,FORM_ERROR?.discount_range)}}</span>
@@ -102,15 +102,16 @@
                         <label for="inputState">Discount Type</label>
                         <select id="inputState" [formControl]="discount_type" class="form-control">
                           <option value="">Please Select</option>
-                          <option value="1">Percentage</option>
-                          <option value="2">Fixed</option>
+                          <option value="2">Percentage</option>
+                          <option value="1">Flat</option>
                           
                         </select>
                     
                       <span class="error text-danger">{{_util.errorMessage(discount_type,FORM_ERROR?.discount_type)}}</span>
                     </div>
                    <div class="form-group col-md-4">
-                        <label for="inputEmail4">Discount Price</label>
+                        <label for="inputEmail4" *ngIf="discountType==1">Discounted Price(QAR)</label>
+                        <label for="inputEmail4" *ngIf="discountType==2">Discounted Price(%)</label>
                         <input type="text" [formControl]="discount_value" class="form-control" id="inputEmail4" placeholder="Discount price">
         
                     
@@ -119,21 +120,21 @@
                       
                    
                       <div class="form-group col-md-4">
-                        <label for="inputPassword4">Attribute Description(English)<span style="color:red">*</span></label>
-                        <textarea type="text" [formControl]="attribute_description_en" class="form-control" id="inputPassword4"
+                        <label for="inputPassword4">Attribute Description(En)</label>
+                        <textarea type="text" [formControl]="attribute_description_en" class="form-control"       [maxlength]='CONFIG?.PRODUCT_DESCRIPTION' id="inputPassword4"
                           placeholder="Attribute Description"></textarea>
                       
                           <span class="error text-danger">{{_util.errorMessage(attribute_description_en,FORM_ERROR?.attribute_description_en)}}</span>
                       </div>
                       <div class="form-group col-md-4">
-                        <label for="inputPassword4">Attribute Description(Arabic)<span style="color:red">*</span></label>
-                        <textarea type="text" [formControl]="attribute_description_ar" class="form-control"   style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
+                        <label for="inputPassword4">Attribute Description(Ar)</label>
+                        <textarea type="text" [formControl]="attribute_description_ar" class="form-control"        [maxlength]='CONFIG?.PRODUCT_DESCRIPTION' style="direction:RTL;" onkeyup="rtl(this);" id="inputPassword4"
                         placeholder="وصف السمة"></textarea>
                        
                     <span class="error text-danger">{{_util.errorMessage(attribute_description_ar,FORM_ERROR?.attribute_description_ar)}}</span>
                   </div>  <div class="form-group col-md-4">
                       <label for="inputEmail4">Product Color <span style="color:red">*</span></label>
-                      <input type="text" [formControl]="product_colour" readonly class="form-control" id="inputEmail4" placeholder="Product Color">
+                      <input type="text" [formControl]="product_colour" readonly class="form-control" id="inputEmail4" placeholder="Product color">
                       <span class="error text-danger">{{_util.errorMessage(product_colour,FORM_ERROR?.product_colour)}}</span><br/>
                       <color-compact [color]="state" (onChange)="handleChange($event)"></color-compact><br/>
      <b class="float-right reset-class" (click)="Reset()"><i class="fa fa-refresh" aria-hidden="true"></i></b>  
@@ -148,17 +149,17 @@
                           [formGroupName]="i">
                   <div class="form-group col-md-3">
                       <label for="inputEmail4">Product Quantity <span style="color:red">*</span></label>
-                      <input type="text" formControlName="quantity" class="form-control"  id="inputEmail4" placeholder="Product Quantity">
+                      <input type="text" formControlName="quantity" class="form-control"  id="inputEmail4" placeholder="Product quantity"      (keypress)="_util.keyPress($event)"     [maxlength]='CONFIG?.MAX_PRICE'>
                       <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('required')">
                       Qantity is required</span>
                   
                       <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('required')==false && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('range')">
-                        Quantity range in between 0 t0 10000</span>
+                        Quantity range in between 0 to 10000</span>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputEmail4">Product Size <span style="color:red">*</span></label>
                         <select id="inputState" formControlName="product_size" class="form-control">
-                            <option value="">Please Select</option>
+                            <option value="">Select size</option>
                         <option  *ngFor="let size of sizes" [value]="size.size">{{size.size}}</option>
                         </select>
                     
@@ -166,11 +167,11 @@
                       </div>
                       <div class="form-group col-md-3">
                           <label for="inputEmail4">Product Price(QAR) <span style="color:red">*</span></label>
-                          <input type="text" formControlName="product_price"  class="form-control" id="inputEmail4" placeholder="Product Price">
+                          <input type="text" formControlName="product_price"  class="form-control"  (keyPress)="maxPrice($event)" id="inputEmail4"  (keypress)="_util.keyPress($event)"      [maxlength]='CONFIG?.MAX_PRICE' placeholder="Product price">
                           <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')">
                             Price is required</span>
                             <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')==false && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('range')">
-                              Price range in between 0 t0 10000</span>
+                              Price range in between 0 to 10000</span>
                         
                         </div>
                         <div class="form-group col-md-3">
@@ -184,7 +185,7 @@
                   <hr>
                       <div class="form-group col-md-6">
            
-                          <label for="exampleFormControlFile1">Product Video</label>
+                          <label for="exampleFormControlFile1">Upload Video</label>
                           <div class="file-upload">
                                         <div class="file-select">
                                           <div class="file-select-button" id="fileName">Product Video</div>
@@ -202,7 +203,7 @@
                                         </div>  </div>
                        
                         <div class="form-group col-md-6">
-                          <label for="exampleFormControlFile1">Product Image</label>
+                          <label for="exampleFormControlFile1">Upload Images <span style="color:red">*</span></label>
                           <div class="file-upload">
                               <div class="file-select">
                                 <div class="file-select-button" id="fileName">Product Images</div>

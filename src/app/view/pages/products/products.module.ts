@@ -37,7 +37,7 @@ const pageRoutes: Routes = [
     RouterModule.forChild(pageRoutes),
     
   ],
-  declarations: [ProductsComponent,AddProductComponent,SimilarProductComponent,DetailProductComponent,EditProductComponent,OnlyNumberDirective],
+  declarations: [ProductsComponent,AddProductComponent,SimilarProductComponent,DetailProductComponent,EditProductComponent],
   entryComponents: []
 })
 export class ProductsModule { }

@@ -11,7 +11,7 @@
                 
               <div class="card new-card">
                   <div class="card-header">
-                      <div  class="breadc"><a class="breada"> Product Detail(English)</a></div>                      
+                      <div  class="breadc"><a class="breada"> Product Detail(En)</a></div>                      
                   </div>
                   <div class="card-body">
                       <div class="row">
@@ -28,7 +28,7 @@
               </div>
               <div class="card new-card">
                   <div class="card-header">
-                      <div  class="breadc"><a class="breada"> Product Detail(Arabic)</a></div>                      
+                      <div  class="breadc"><a class="breada"> Product Detail(Ar)</a></div>                      
                   </div>
                   <div class="card-body">
                       <div class="row">
@@ -67,20 +67,26 @@
                              
                                        <div class="col-md-6">
                                           <label class="float-left"> <b >Discount Start Date : </b></label>
-                                           <p>{{data.discount_start_date}}</p>
+                                           <p>{{data.discount_start_date|date:'dd-MM-yyyy'}}</p>
                                          </div>
                                          <div class="col-md-6">
                                             <label class="float-left"> <b >Discount End Date : </b></label>
-                                             <p>{{data.discount_end_date}}</p>
+                                             <p>{{data.discount_end_date|date:'dd-MM-yyyy'}}</p>
                                            </div>
                                            <div class="col-md-6">
-                                              <label class="float-left"> <b >Discount type : </b></label>
+                                              <label class="float-left"> <b >Discount Type : </b></label>
                                                <p *ngIf="data.discount_type==1">Percentage</p>
-                                               <p *ngIf="data.discount_type==2">Fixed</p>
+                                               <p *ngIf="data.discount_type==2">Flat</p>
                                              </div>
-                                             <div class="col-md-6">
-                                                <label class="float-left"> <b >Discount Value : </b></label>
-                                                 <p>{{data.discount_value}}</p>
+                                             <div class="col-md-6"  *ngIf="data.discount_type==2">
+                                                <label class="float-left"><b >Discount Price : </b></label>
+                                            
+                                                 <p>{{data.discount_value}} QAR</p>
+                                               </div>
+                                               <div class="col-md-6"  *ngIf="data.discount_type==1">
+                                                <label class="float-left"> <b >Discount Price (in %) : </b></label>
+                                            
+                                                 <p>{{data.discount_value}}%</p>
                                                </div>
                             </div>
                           </div></div>
@@ -91,7 +97,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row" >
-                                    <aside class="col-sm-12 border-right">
+                                    <aside class="col-sm-12 ">
  <article class="gallery-wrap"> 
            
           <div class="img-small-wrap">
@@ -103,11 +109,11 @@
 
                            
                                  <div class="col-md-6">
-                                    <label class="float-left"> <b >Attribute Description(English) : </b></label>
+                                    <label class="float-left"> <b >Attribute Description(En) : </b></label>
                                      <p>{{i.attribute_description_en}}</p>
                                    </div>
                                    <div class="col-md-6">
-                                      <label class="float-left"> <b >Attribute Description(Arabic) : </b></label>
+                                      <label class="float-left"> <b >Attribute Description(Ar) : </b></label>
                                        <p>{{i.attribute_description_ar}}</p>
                                      
                                      </div>
@@ -121,15 +127,15 @@
                                          <br/>
                                          <br>
                                          <div class="col-lg-12" *ngFor="let meta of i.attribute_meta;" style="margin-top:10px;"> 
-                                         <div class="col-md-4 float-left">
+                                         <div class="col-md-5 float-left">
                                             <label class="float-left"> <b >Product Quantity : </b></label>
                                              <p>{{meta.quantity}}</p>
                                            </div>
-                                           <div class="col-md-4 float-left">
-                                              <label class="float-left"> <b >Product Price(QAR) : </b></label>
-                                               <p>{{meta.product_price}}</p>
+                                           <div class="col-md-5 float-left">
+                                              <label class="float-left"> <b >Product Price: </b></label>
+                                               <p>{{meta.product_price}} QAR</p>
                                              </div>
-                                                   <div class="col-md-4 float-left">
+                                                   <div class="col-md-6 float-left">
                                                       <label class="float-left"> <b >Product Size : </b></label>
                                                        <p>{{meta.product_size}}</p>
                                                      </div>

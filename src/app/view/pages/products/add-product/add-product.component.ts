@@ -11,6 +11,7 @@ import { ColorEvent } from 'ngx-color';
 import { OnlyNumberDirective }  from './../../../../directive/only-number.directive';
 
 import * as moment from 'moment';
+// import { ThemeService } from 'ng2-charts';
 @Component({
   selector: "app-add-product",
   templateUrl: "./add-product.component.html",
@@ -28,6 +29,22 @@ export class AddProductComponent implements OnInit {
   isImageError=false;
   state;
   keyValue: boolean = false;
+  // model={start: new Date(), end: ''}
+  now = new Date();
+  year = this.now.getFullYear();
+  month = this.now.getMonth();
+  day = this.now.getDay();
+
+  // mindate = moment({year:2020,month:06, day: 06})
+  // minDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  // maxDate = moment({year: this.year +16, month: this.month, day: this.day}).format('DD-MM-YYYY');
+  // model={minDate:this.minDate,maxDate:this.maxDate}
+//   minDate = moment(new Date()).format('YYYY-MM-DD')
+// maxDate ="2018-09-08"
+
+
+
+
   constructor(
     private _fb: FormBuilder,
     private _util: CommonUtil,
@@ -36,6 +53,7 @@ export class AddProductComponent implements OnInit {
     private _route: ActivatedRoute,
     private _api: AppService,
     private router: Router) {
+     
   }
   handleChange(event: ColorEvent) {
     if (event.color.hex) {
@@ -164,7 +182,7 @@ export class AddProductComponent implements OnInit {
       product_description_ar: ["", [Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       attribute_description_ar: ["", [ Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       attribute_description_en: ["", [Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
-    //  product_price: ["", [Validators.required, rangeValidator(0, 10000)]],
+     product_price: ["", [Validators.required, rangeValidator(0, 10000)]],
       product_colour: ["", [Validators.required]],
       brand_id: ["", [Validators.required]],
     //  quantity: ["", [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
@@ -625,9 +643,9 @@ this.itemsData.push(this.createItem())
     }
     console.log(data.productMedia);
     if (data['discount_type'] == 2) {
-      this.placeHolderText = "Discount Price";
+      this.placeHolderText = "Discounted price";
     } else {
-      this.placeHolderText = "Percentage Discount";
+      this.placeHolderText = "Discounted price(%)";
     }
 
     setTimeout(() => {
@@ -638,7 +656,7 @@ this.itemsData.push(this.createItem())
     //  this.addProperty.get('beds').patchValue(property['bed']);
 
   }
-  placeHolderText = "Discount Price";
+  placeHolderText = "Discounted price";
   dPrice: string = '(QAR)';
 
   min: Number = 0;
@@ -672,7 +690,7 @@ this.itemsData.push(this.createItem())
       this.loginForm.get('discount_range').updateValueAndValidity();
       this.dPrice = "(%)";
 
-      this.placeHolderText = "Percentage Discount";
+      this.placeHolderText = "Discounted price(%)";
       this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
     } else if (event.target.value == 1) {
       this.loginForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 10000)]);
@@ -681,13 +699,13 @@ this.itemsData.push(this.createItem())
       this.loginForm.get('discount_type').updateValueAndValidity();
       this.loginForm.get('discount_range').setValidators([Validators.required]);
       this.loginForm.get('discount_range').updateValueAndValidity();
-      this.placeHolderText = "Discount Price";
+      this.placeHolderText = "Discounted price";
       this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE;
       this.dPrice = "(QAR)";
       this.min = 0;
       this.max = 10000;
     } else {
-      this.placeHolderText = "Discount Price";
+      this.placeHolderText = "Discounted price";
       this.min = 0;
       this.max = 10000;
       this.loginForm.get('discount_range').patchValue('');
@@ -721,6 +739,9 @@ this.itemsData.push(this.createItem())
         var endDate = new Date(end1)
         end1 = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
       }
+
+
+
       const formData = new FormData();
       formData.append('id', this.id);
       formData.append('product_name_en', this.loginForm.value.product_name_en);
@@ -764,6 +785,7 @@ this.itemsData.push(this.createItem())
   }
   errorData:boolean=false;
   submit() {
+    console.log( this.loginForm.value.discount_range,"===========================")
     console.log(this.loginForm.value,'length',this.urlData.length!=0);
     console.log(this.loginForm)
     this.errorData=true;

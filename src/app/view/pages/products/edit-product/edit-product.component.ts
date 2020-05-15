@@ -48,6 +48,9 @@ export class EditProductComponent implements OnInit {
       this.loginForm.get('product_colour').patchValue(hex);
     }
   }
+
+
+  ranges
   add3Dots(string, limit) {
     var dots = "...";
     if (string.length > limit) {
@@ -168,6 +171,10 @@ export class EditProductComponent implements OnInit {
     this.loginForm.get('product_colour').patchValue('');
     this.state = '#ff0000';
   }
+
+  
+
+
   itemsData: FormArray;
   addItem(data) {
     
@@ -193,15 +200,15 @@ this.itemsData.push(this.createItem())
       return this._fb.group({
         product_size: [''],
         quantity: ['', [Validators.required, Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
-        product_price:['', [Validators.required, rangeValidator(0, 10000)]],
+        product_price:['', [Validators.required,   Validators.pattern(Regex.phoneNumber), rangeValidator(0, 10000)]],
       });
     }
   createForm() {
     this.loginForm = this._fb.group({
       product_name_en: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_MAX)]],
-      product_description_en: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+      product_description_en: ["", [ Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
       product_name_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_MAX)]],
-      product_description_ar: ["", [Validators.required, Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
+      product_description_ar: ["", [ Validators.pattern(Regex.spaces), Validators.minLength(CONFIG.NAME_MINLENGTH), Validators.maxLength(CONFIG.PRODUCT_DESCRIPTION)]],
        brand_id: ["", [Validators.required]],
       category_id: ["", [Validators.required]],
       subCategory: ["", [Validators.required]],
@@ -719,10 +726,14 @@ if(data[control]){
     //   }
     // }
 
-    if (data['discount_type'] == 2) {
-      this.placeHolderText = "Discount Price";
+    if (data['discount_type'] == 1) {
+      this.placeHolderText = "Discounted Price";
+      this.max=10000;
+      this.dPrice= '(QAR)';
     } else {
-      this.placeHolderText = "Percentage Discount";
+      this.placeHolderText = "Discounted price(%)";
+      this.max=100;
+      this.dPrice = "(%)";
     }
 
     setTimeout(() => {
@@ -734,11 +745,12 @@ if(data[control]){
 
   }
   collection:any=[];
-  placeHolderText = "Discount Price";
+  placeHolderText = "Discounted Price";
   dPrice: string = '(QAR)';
 
   min: Number = 0;
   max: Number = 10000;
+  
   changeNumber(e) {
     var str = e.target.value;
     var input = e.target;
@@ -746,9 +758,14 @@ if(data[control]){
     var key = Number(e.key);
     if (Number.isInteger(key)) {
       value = Number("" + value + key);
+      // if(this.id!=null){
+      //   console.log('thsi id',this.loginForm.value.discount_value)
+      //   value=value+Number(this.loginForm.value.discount_valuecreate
+      // }
       if (value > this.max) {
         return false;
       }
+      
       this.loginForm.get('discount_value').patchValue(str)
     }
 
@@ -768,7 +785,7 @@ if(data[control]){
       this.loginForm.get('discount_range').updateValueAndValidity();
       this.dPrice = "(%)";
 
-      this.placeHolderText = "Percentage Discount";
+      this.placeHolderText = "Discounted price(%)";
       this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE_PERCENTAGE;
     } else if (event.target.value == 1) {
       this.loginForm.get('discount_value').setValidators([Validators.required, rangeValidator(0, 10000)]);
@@ -777,13 +794,13 @@ if(data[control]){
       this.loginForm.get('discount_type').updateValueAndValidity();
       this.loginForm.get('discount_range').setValidators([Validators.required]);
       this.loginForm.get('discount_range').updateValueAndValidity();
-      this.placeHolderText = "Discount Price";
+      this.placeHolderText = "Discounted Price";
       this.FORM_ERROR.discount_value.range = ERROR_MESSAGES.RANGE;
       this.dPrice = "(QAR)";
       this.min = 0;
       this.max = 10000;
     } else {
-      this.placeHolderText = "Discount Price";
+      this.placeHolderText = "Discounted Price";
       this.min = 0;
       this.max = 10000;
       this.loginForm.get('discount_range').patchValue('');
@@ -796,6 +813,7 @@ if(data[control]){
       this.loginForm.get('discount_range').setValidators([]);
       this.loginForm.get('discount_range').updateValueAndValidity();
       this.dPrice = "(QAR)";
+
     }
 
   }
@@ -962,5 +980,13 @@ if(data[control]){
 
 
   }
+//   ranges: any = {
+//     Today: [moment(), moment()],
+//     Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+//     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+//     'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+//     'This Month': [moment().startOf('month'), moment().endOf('month')],
+//     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+// };
 
 }
