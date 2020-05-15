@@ -117,7 +117,7 @@
    <b class="float-right reset-class" (click)="Reset()"><i class="fa fa-refresh" aria-hidden="true"></i></b>  
                            
                   </div>
-                  <b class="col-md-12" *ngIf="loginForm.controls.meta_data.controls.length<=10" (click)="addItem()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Attribute</b>  
+                  <b class="col-md-12" *ngIf="loginForm.controls.meta_data.controls.length<=10" (click)="addItem()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Variant</b>  
                  
                   <div class="col-md-10" formArrayName="meta_data">
                     <div class="row mt-3"
@@ -147,7 +147,7 @@
                         <input type="text" formControlName="product_price"  (keypress)="_util.keyPress($event)"   class="form-control" id="inputEmail4" placeholder="Product Price" [maxlength]='CONFIG?.MAX_PRICE'>
                         <span class="error text-danger" *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')">
                           Price is required</span>
-                          <span class="error text-danger"  *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')==false && loginForm.controls.meta_data.controls[i].controls.quantity.hasError('range')">
+                          <span class="error text-danger"  *ngIf="errorData==1 && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('required')==false && loginForm.controls.meta_data.controls[i].controls.product_price.hasError('range')">
                             Price range in between 0 to 10000</span>
                       
                       </div>
@@ -162,7 +162,7 @@
                 <hr>
                    <div class="form-group col-md-4">
                       <label for="inputState">Discount range date</label>
-                  <input type="text" ngxDaterangepickerMd  [formControl]="discount_range" class="form-control" (datesUpdated)="choosedDate($event)" (keydown)="onKeydown($event)"   [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
+                  <input type="text" ngxDaterangepickerMd [minDate]="mindate" [formControl]="discount_range" class="form-control" (datesUpdated)="choosedDate($event)" (keydown)="onKeydown($event)"   [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
                   
                     placeholder="Discount Date Range"  />
                     <span class="error text-danger">{{_util.errorMessage(discount_range,FORM_ERROR?.discount_range)}}</span>
@@ -180,14 +180,14 @@
                     </div>
                    <div class="form-group col-md-3">
                         <label for="inputEmail4">Discount Price{{dPrice}}</label>
-                        <input type="text" [formControl]="discount_value" appOnlyNumber  (keypress)="_util.keyPress($event)" (keypress) = "changeNumber($event)" appOnlyNumber [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
+                        <input type="text" [formControl]="discount_value" appOnlyNumber  (keypress)="_util.keyPress($event)"  [minlength]="CONFIG?.MINORDER" [max]=max [min]=min [maxlength]="CONFIG?.MAXORDER" class="form-control" id="inputEmail4" [placeholder]="placeHolderText">
         
                     
                         <span class="error text-danger">{{_util.errorMessage(discount_value,FORM_ERROR?.discount_value)}}</span>
                                      
                         
-                        <span class="error text-danger" *ngIf="loginForm.value.min_order_value<=loginForm.value.promo_discount&&loginForm.value.promo_discount!=''&&loginForm.value.promo_type==1">
-                          Discounted price can not be greater or equal to the min. order value</span>
+                        <span class="error text-danger" *ngIf="errorMessage">
+                          {{errorMessage}}</span>
                       </div>
                       <div class="form-group col-md-3" *ngIf="this.id">
                           <label for="inputState">Status</label>

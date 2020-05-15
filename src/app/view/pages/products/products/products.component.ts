@@ -178,7 +178,7 @@ export class ProductsComponent implements OnInit {
     this.reverse = !this.reverse;
   }
 
-  onScroll() {
+  onScroll(event) {
     const currentDataLength = this.page * this.limit;
     console.log(currentDataLength, this.totalRec);
     this.loadBrands();
