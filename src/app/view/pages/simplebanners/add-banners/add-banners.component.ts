@@ -421,7 +421,7 @@ onSelectFile(event) {
         const width = img.naturalWidth;
         console.log('Width and Height', width, height);
         if ((height <= CONFIG.BANNER_MIN_HEIGHT || height >= CONFIG.BANNER_MAX_HEIGHT) || (width <= CONFIG.BANNER_MIN_WIDTH || width >= CONFIG.BANNER_MAX_WIDTH)) {
-          this.errorMessage = `Please upload the image of required size which is min height ${CONFIG.BANNER_MIN_HEIGHT}, max height ${CONFIG.BANNER_MAX_HEIGHT} and min width ${CONFIG.BANNER_MIN_WIDTH}, max width ${CONFIG.BANNER_MAX_HEIGHT}.`;
+          this.errorMessage = `Please upload the image of required size which is min height ${CONFIG.BANNER_MIN_HEIGHT}, max height ${CONFIG.BANNER_MAX_HEIGHT} and min width ${CONFIG.BANNER_MIN_WIDTH}, max width ${CONFIG.BANNER_MAX_WIDTH}.`;
          // alert()
           this.choosefile="No file chosen...";
       //    alert(this.choosefile)

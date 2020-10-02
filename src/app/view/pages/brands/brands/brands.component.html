@@ -28,9 +28,17 @@
               </select>
             </div>
             <div class="col-md-1 float-left">               
-              <input type="text" ngxDaterangepickerMd style="min-width:190px" [maxlength]="CONFIG?.DATE_MAX_LENGTH" class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
+              <!-- <input type="text" ngxDaterangepickerMd style="min-width:190px" [maxlength]="CONFIG?.DATE_MAX_LENGTH" class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
               [formControl]="range"
-                placeholder="Filter Date"  />
+                placeholder="Filter Date"  /> -->
+                
+            </div>
+            <div class="col-md-1 float-left">               
+              <!-- <input type="text" ngxDaterangepickerMd style="min-width:190px" [maxlength]="CONFIG?.DATE_MAX_LENGTH" class="form-control" (choosedDate)="choosedDate($event)"   [locale]="{applyLabel: 'ok', format: 'YYYY-MM-DD'}"
+              [formControl]="range"
+                placeholder="Filter Date"  /> -->
+                <input type='date'
+                
             </div>
             <div class="col-md-4 float-right" style="margin:0px -14px 10px 0px">
              
@@ -57,7 +65,7 @@
                 <table class="table table-striped">
                   <thead>
                     <tr>
-                        <th scope="col">S. No.</th>
+                        <th scope="col">S.No.</th>
                       <th scope="col">Name(En)</th>
                       <th scope="col">Name(Ar)</th>
                       <!-- <th scope="col">Description(En)</th>
